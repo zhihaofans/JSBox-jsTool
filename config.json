@@ -8,14 +8,14 @@
   "info": {
     "types": 15,
     "author": "zhuangzhihao",
-    "website": "https://github.com/zhuangzhihao/JSBox",
+    "website": "https://github.com/zhuangzhihao-io/JSBox-jsTool",
     "name": "jsTool",
-    "url": "https://github.com/zhuangzhihao/JSBox",
+    "url": "https://cdn.jsdelivr.net/gh/zhuangzhihao-io/JSBox-jsTool/.output/JSBox-jsTool.box",
     "version": "0.0.1"
   },
   "settings": {
     "minOSVer": "13.0.0",
-    "minSDKVer": "1.55.0",
+    "minSDKVer": "2.0.0",
     "rotateDisabled": false,
     "autoKeyboardEnabled": false,
     "keyboardToolbarEnabled": false,
