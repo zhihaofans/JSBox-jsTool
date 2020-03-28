@@ -193,21 +193,48 @@ let getUserInfo = () => {
                             events: {
                                 didSelect: function (_sender, indexPath, _data) {
                                     const _g = _data.split("：");
-                                    $ui.alert({
-                                        title: _g[0],
-                                        message: _g[1],
-                                        actions: [{
-                                            title: "分享",
-                                            disabled: false, // Optional
-                                            handler: function () {
-                                                $share.sheet([_g[1]]);
+                                    switch (indexPath.row) {
+                                        case 13:
+                                            if (userInfo.headUrl) {
+                                                $ui.preview({
+                                                    title: "头像",
+                                                    url: userInfo.headUrl
+                                                });
                                             }
-                                        }, {
-                                            title: "关闭",
-                                            disabled: false, // Optional
-                                            handler: function () {}
-                                        }]
-                                    });
+                                            break;
+                                        case 14:
+                                            if (userInfo.blog) {
+                                                $ui.preview({
+                                                    title: "博客",
+                                                    url: userInfo.blog
+                                                });
+                                            }
+                                            break;
+                                        case 16:
+                                            if (userInfo.qq) {
+                                                $ui.preview({
+                                                    title: "QQ",
+                                                    url: `https://wpa.qq.com/msgrd?v=3&uin=${userInfo.qq}&site=acfun.cn&menu=yes`
+                                                });
+                                            }
+                                            break;
+                                        default:
+                                            $ui.alert({
+                                                title: _g[0],
+                                                message: _g[1],
+                                                actions: [{
+                                                    title: "分享",
+                                                    disabled: false, // Optional
+                                                    handler: function () {
+                                                        $share.sheet([_g[1]]);
+                                                    }
+                                                }, {
+                                                    title: "关闭",
+                                                    disabled: false, // Optional
+                                                    handler: function () {}
+                                                }]
+                                            });
+                                    }
                                 }
                             }
                         }]
@@ -387,12 +414,17 @@ let signIn = () => {
                             title: "查看今日运势",
                             disabled: false, // Optional
                             handler: function () {
-                                const todayAlmanac = signinResult.almanac;
+                                $ui.alert({
+                                    title: "签到结果",
+                                    message: signinResult,
+                                });
+
+                                /* const todayAlmanac = signinResult.almanac;
                                 $ui.alert({
                                     title: todayAlmanac.fortune,
                                     message: `宜(${todayAlmanac.avoids.toString()})\n` +
                                         `忌(${todayAlmanac.suits.toString()})`,
-                                });
+                                }); */
                             }
                         }, {
                             title: "关闭",
