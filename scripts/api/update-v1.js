@@ -1,9 +1,8 @@
 let urlData = require("./urlData.js");
 
-function getConfig() {
-    const file = $file.read("/config.json");
-    return JSON.parse(file);
-}
+let getConfig = () => {
+    return JSON.parse($file.read("/config.json"));
+};
 
 function checkUpdate(jsonUrl, appId) {
     const appVersion = getConfig().info.version;
@@ -110,7 +109,7 @@ let checkUpdateV2 = (appId) => {
     });
 };
 
-function installJs(updateUrl, updateName, updateIcon) {
+let installJs = (updateUrl, updateName, updateIcon) => {
     const url =
         "jsbox://import?url=" +
         $text.URLEncode(updateUrl) +
@@ -119,7 +118,22 @@ function installJs(updateUrl, updateName, updateIcon) {
         "&icon=" +
         $text.URLEncode(updateIcon);
     $app.openURL(url);
-}
+};
+/**
+ * 判断两个版本字符串的大小
+ * @param  {string} v1 原始版本
+ * @param  {string} v2 目标版本
+ * @return {number}    如果原始版本大于目标版本，则返回大于0的数值, 如果原始小于目标版本则返回小于0的数值。0当然是两个版本都相等拉。
+ */
+let compareVersion = (v1, v2) => {
+    // 比较NaN
+    // 感谢：https://gist.github.com/puterjam/8518259
+    var _v1 = v1.split("."),
+        _v2 = v2.split("."),
+        _r = _v1[0] - _v2[0];
+    return _r == 0 && v1 != v2 ? compareVersion(_v1.splice(1).join("."), _v2.splice(1).join(".")) : _r;
+};
 module.exports = {
-    checkUpdate: checkUpdate
+    checkUpdate,
+    checkUpdateV2
 };
