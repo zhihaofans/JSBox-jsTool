@@ -1067,7 +1067,7 @@ let getVideoDanmuku = mid => {
 let getWallet = () => {
     if (isLogin()) {
         $http.get({
-            url: _URL.BILIBILI.GET_WALLET
+            url: _URL.BILIBILI.GET_WALLET + _userData.access_key
         }).then(function (resp) {
             var data = resp.data;
             $console.info(data);
@@ -1081,8 +1081,53 @@ let getWallet = () => {
                             `硬币：${walletData.coin}\n` +
                             `vip(老爷?)：${walletData.vip==1?"已开通":"未开通"}\n` +
                             `硬币换银瓜子额度：${walletData.coin_2_silver_left}\n` +
-                            `银瓜子换硬币额度：${walletData.silver_2_coin_left}\n`,
+                            `银瓜子换硬币额度：${walletData.silver_2_coin_left}\n` +
+                            `银瓜子换硬币：${walletData.status==1?"允许":"不允许"}`,
                         actions: [{
+                            title: "换硬币",
+                            disabled: !(walletData.silver_2_coin_left > 0 && walletData.status > 0),
+                            handler: function () {
+                                if (walletData.silver_2_coin_left > 0 && walletData.status > 0) {
+                                    $http.post({
+                                        url: _URL.BILIBILI.SILVER_TO_COIN,
+                                        header: {
+                                            "User-Agent": "bili-universal/9290 CFNetwork/1125.2 Darwin/19.4.0 os/ios model/iPhone 11 mobi_app/iphone osVer/13.4 network/2",
+                                            "Content-Type": "application/x-www-form-urlencoded"
+                                        },
+                                        body: {
+                                            access_key: _userData.access_key
+                                        },
+                                        handler: function (resp) {
+                                            var data = resp.data;
+                                            $console.info(data);
+                                            if (data) {
+                                                if (data.code == 0) {
+                                                    let silver2coinData = data.data;
+                                                    $ui.alert({
+                                                        title: data.message || data.msg || "兑换成功",
+                                                        message: `金瓜子：${silver2coinData.gold}\n` +
+                                                            `银瓜子：${silver2coinData.silver}\n` +
+                                                            `硬币：${silver2coinData.coin}\n`
+                                                    });
+                                                } else {
+                                                    $ui.alert({
+                                                        title: `错误${data.code}`,
+                                                        message: data.message || data.msg || "未知错误",
+                                                    });
+                                                }
+                                            } else {
+                                                $ui.alert({
+                                                    title: "错误",
+                                                    message: "空白数据",
+                                                });
+                                            }
+                                        }
+                                    });
+                                } else {
+                                    $ui.error("错误，额度已空");
+                                }
+                            }
+                        }, {
                             title: "OK",
                             disabled: false,
                             handler: function () {}
@@ -1090,10 +1135,15 @@ let getWallet = () => {
                     });
                 } else {
                     $ui.alert({
-                        title: "错误",
+                        title: `错误${data.code}`,
                         message: data.message || data.msg || "未知错误",
                     });
                 }
+            } else {
+                $ui.alert({
+                    title: "错误",
+                    message: "空白数据",
+                });
             }
         });
     } else {

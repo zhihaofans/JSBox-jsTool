@@ -1,4 +1,4 @@
-$include("./codePrototype.js");
+$include("./api/codePrototype.js");
 
 // 模块
 let mofish = require("./view/mofish.js");
