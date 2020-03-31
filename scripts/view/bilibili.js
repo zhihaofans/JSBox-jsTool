@@ -28,7 +28,7 @@ let init = (url) => {
                         },
                         {
                             title: "直播",
-                            rows: ["获取直播间拥有礼物", "查看vTuber状态", "查看拥有的粉丝勋章"]
+                            rows: ["获取直播间拥有礼物", "查看vTuber状态", "查看拥有的粉丝勋章", "瓜子钱包"]
                         }
                     ]
                 },
@@ -233,6 +233,11 @@ let init = (url) => {
                                     case 2:
                                         biliApi.checkAccessKey() ?
                                             biliApi.getFansMedalList() :
+                                            $ui.error("未登录");
+                                        break;
+                                    case 3:
+                                        biliApi.isLogin() ?
+                                            biliApi.getWallet() :
                                             $ui.error("未登录");
                                         break;
                                     default:

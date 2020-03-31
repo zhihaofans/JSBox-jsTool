@@ -1,6 +1,7 @@
 $include("./codePrototype.js");
 let sys = require("./system.js"),
     cheerio = require("cheerio"),
+    _URL = require("./urlData.js"),
     appScheme = require("./app_scheme.js");
 let _api = {
     getVideoInfo: "https://api.kaaass.net/biliapi/video/info?jsonerr=true&id=",
@@ -278,7 +279,9 @@ let removeAccessKey = () => {
     $cache.remove(_cacheKey.access_key);
     $ui.toast("已清除access key");
 };
-
+let isLogin = () => {
+    return checkAccessKey();
+}
 let checkAccessKey = () => {
     if (_userData.access_key) {
         return true;
@@ -1061,6 +1064,42 @@ let getVideoDanmuku = mid => {
         });
     });
 };
+let getWallet = () => {
+    if (isLogin()) {
+        $http.get({
+            url: _URL.BILIBILI.GET_WALLET
+        }).then(function (resp) {
+            var data = resp.data;
+            $console.info(data);
+            if (data) {
+                if (data.code == 0) {
+                    let walletData = data.data;
+                    $ui.alert({
+                        title: "钱包余额",
+                        message: `金瓜子：${walletData.gold}\n` +
+                            `银瓜子：${walletData.silver}\n` +
+                            `硬币：${walletData.coin}\n` +
+                            `vip(老爷?)：${walletData.vip==1?"已开通":"未开通"}\n` +
+                            `硬币换银瓜子额度：${walletData.coin_2_silver_left}\n` +
+                            `银瓜子换硬币额度：${walletData.silver_2_coin_left}\n`,
+                        actions: [{
+                            title: "OK",
+                            disabled: false,
+                            handler: function () {}
+                        }]
+                    });
+                } else {
+                    $ui.alert({
+                        title: "错误",
+                        message: data.message || data.msg || "未知错误",
+                    });
+                }
+            }
+        });
+    } else {
+
+    }
+}
 module.exports = {
     getVideoInfo,
     getAccessKey,
@@ -1075,4 +1114,6 @@ module.exports = {
     getLiveGiftList,
     getLiveroomInfo,
     getFansMedalList,
+    isLogin,
+    getWallet,
 };
