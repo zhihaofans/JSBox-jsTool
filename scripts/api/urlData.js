@@ -9,6 +9,7 @@ let UPDATE_CONFIG_GITHUB = "https://github.com/zhuangzhihao-io/JSBox-jsTool/raw/
         GET_LIVE_GIFT_LIST: "https://api.live.bilibili.com/xlive/app-room/v1/gift/bag_list?access_key=",
         GET_WALLET: "https://api.live.bilibili.com/pay/v1/Exchange/getStatus?access_key=",
         SILVER_TO_COIN: "https://api.live.bilibili.com/pay/v1/Exchange/silver2coin",
+        MANGA_CLOCK_IN: "https://manga.bilibili.com/twirp/activity.v1.Activity/ClockIn"
     };
 module.exports = {
     UPDATE_CONFIG_GITHUB,

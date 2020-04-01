@@ -29,6 +29,10 @@ let init = (url) => {
                         {
                             title: "直播",
                             rows: ["获取直播间拥有礼物", "查看vTuber状态", "查看拥有的粉丝勋章", "瓜子钱包"]
+                        },
+                        {
+                            title: "漫画",
+                            rows: ["签到"]
                         }
                     ]
                 },
@@ -242,6 +246,17 @@ let init = (url) => {
                                         break;
                                     default:
                                         $ui.error("暂未支持");
+                                }
+                                break;
+                            case 3:
+                                switch (indexPath.row) {
+                                    case 0:
+                                        biliApi.isLogin() ?
+                                            biliApi.mangaClockin() :
+                                            $ui.error("未登录");
+                                        break;
+                                    default:
+                                        $ui.error("未知错误");
                                 }
                                 break;
                             default:

@@ -437,7 +437,7 @@ let getVideo = (vid, _biliData) => {
 let getVideoData = (vid, page, quality, access_key) => {
     $ui.loading(true);
     $http.get({
-        url: `${_api.getVideoData}&id=${vid}&page=${page}&quality${quality}&access_key=${access_key}`,
+        url: `${_URL.BILIBILI.GET_VIDEO_DATA}&id=${vid}&page=${page}&quality${quality}&access_key=${access_key}`,
         handler: function (videoResp) {
             var videoData = videoResp.data;
             if (videoData.status == "OK") {
@@ -536,7 +536,7 @@ let showDownList = (thisFile, copyStr) => {
 let getAccessKey = (userName, password) => {
     $ui.loading(true);
     $http.post({
-        url: _api.getAccessKey,
+        url: _URL.BILIBILI.GET_ACCESS_KEY,
         header: {
             "Content-Type": "application/x-www-form-urlencoded"
         },
@@ -601,7 +601,7 @@ let loginBilibili = (loginUrl, bodyStr, headers) => {
 let getUserInfo = () => {
     // furtherInfo: 是否获取详细用户信息
     if (checkAccessKey()) {
-        const url = `${_api.getUserInfo}&access_key=${_userData.access_key}&furtherInfo=true`;
+        const url = `${_URL.BILIBILI.GET_USER_INFO}&access_key=${_userData.access_key}&furtherInfo=true`;
         $ui.loading(true);
         $http.get({
             url: url,
@@ -1149,7 +1149,63 @@ let getWallet = () => {
     } else {
 
     }
-}
+};
+let mangaClockin = () => {
+    $ui.loading(true);
+    $http.get({
+        url: `${_api.getUserInfo}&access_key=${_userData.access_key}&furtherInfo=true`
+    }).then(function (getResp) {
+        var userData = getResp.data;
+        if (userData.status == "OK") {
+            const user_info = userData.info;
+            $http.post({
+                url: _URL.BILIBILI.MANGA_CLOCK_IN,
+                header: {
+                    "Content-Type": "application/x-www-form-urlencoded",
+                    "User-Agent": "comic-universal/802 CFNetwork/1125.2 Darwin/19.4.0 os/ios model/iPhone 11 mobi_app/iphone_comic osVer/13.4 network/2"
+                },
+                body: {
+                    platform: "ios",
+                    uid: user_info.mid,
+                    access_key: _userData.access_key
+                },
+                handler: function (postResp) {
+                    var clockinData = postResp.data;
+                    $console.info(clockinData);
+                    $ui.loading(false);
+                    if (clockinData) {
+                        /* $ui.alert({
+                            title: "签到结果",
+                            message: clockinData,
+                        }); */
+                        if (clockinData.code == 0) {
+                            $ui.alert({
+                                title: "签到结果",
+                                message: "签到成功",
+                            });
+                        } else {
+                            $ui.alert({
+                                title: `错误：${clockinData.code}`,
+                                message: clockinData.msg,
+                            });
+                        }
+                    } else {
+                        $ui.alert({
+                            title: "签到失败",
+                            message: "服务器返回空白结果",
+                        });
+                    }
+                }
+            });
+        } else {
+            $ui.loading(false);
+            $ui.alert({
+                title: userData.code,
+                message: userData.info,
+            });
+        }
+    });
+};
 module.exports = {
     getVideoInfo,
     getAccessKey,
@@ -1166,4 +1222,5 @@ module.exports = {
     getFansMedalList,
     isLogin,
     getWallet,
+    mangaClockin,
 };
