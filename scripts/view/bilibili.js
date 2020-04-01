@@ -57,7 +57,7 @@ let init = (url) => {
                                                     title: "清空登录缓存重新登录",
                                                     disabled: false, // Optional
                                                     handler: function () {
-                                                        biliApi.removeAccessKey();
+                                                        biliApi.removeLoginData();
                                                         login();
                                                     }
                                                 }, {

@@ -3,24 +3,17 @@ let sys = require("./system.js"),
     cheerio = require("cheerio"),
     _URL = require("./urlData.js"),
     appScheme = require("./app_scheme.js");
-let _api = {
-    getVideoInfo: "https://api.kaaass.net/biliapi/video/info?jsonerr=true&id=",
-    getVideoData: "https://api.kaaass.net/biliapi/video/resolve?jsonerr=true",
-    getAccessKey: "https://api.kaaass.net/biliapi/user/login?jsonerr=true&direct=true",
-    getUserInfo: "https://api.kaaass.net/biliapi/user/info?jsonerr=true",
-    getVideoData: "https://api.kaaass.net/biliapi/video/resolve?jsonerr=true&direct=true",
-    getLiveGiftList: "https://api.live.bilibili.com/xlive/app-room/v1/gift/bag_list?access_key="
-};
 let _cacheKey = {
-    access_key: "bilibili_access_key",
-    uid: "bilibili_uid",
-};
-var _userData = {
-    access_key: "",
-    loginData: {},
-    uid: 0
-};
-let _cacheDir = ".cache/bilibili/";
+        access_key: "bilibili_access_key",
+        uid: "bilibili_uid",
+    },
+    _userData = {
+        access_key: "",
+        loginData: {},
+        uid: 0
+    },
+    _cacheDir = ".cache/bilibili/",
+    kaaassUA = "JSBox-jsTool/0.1 (github:zhuangzhihao-io) <zhuang@zhihao.io>"; // 请尊重API提供者
 
 // function
 
@@ -108,7 +101,10 @@ let getLiveGiftList = (liveData = undefined, mode = 0) => {
     const accessKey = checkAccessKey() ? _userData.access_key : undefined;
     if (accessKey) {
         $http.get({
-            url: _api.getLiveGiftList + accessKey,
+            url: _URL.BILIBILI.GET_LIVE_GIFT_LIST + accessKey,
+            header: {
+                "User-Agent": kaaassUA
+            },
             handler: function (resp) {
                 const giftResult = resp.data;
                 if (giftResult.code == 0) {
@@ -270,12 +266,16 @@ let saveLoginData = (access_key, uid) => {
     $cache.set(_cacheKey.uid, uid);
 };
 let removeLoginData = () => {
+    _userData.access_key = "";
+    _userData.uid = 0;
     $cache.remove(_cacheKey.access_key);
     $cache.remove(_cacheKey.uid);
+    $ui.toast("已清除登录数据");
 };
 let loadLoginData = () => {
     const cacheKey = $cache.get(_cacheKey.access_key);
     const uid = $cache.get(_cacheKey.uid);
+    $console.info(`cacheKey:${cacheKey}\nuid:${uid}`);
     if (cacheKey) {
         _userData.access_key = cacheKey;
     }
@@ -296,29 +296,29 @@ let loadAccessKey = () => {
     }
 };
 
-let removeAccessKey = () => {
-    removeLoginData();
-    $ui.toast("已清除access key");
-};
 let isLogin = () => {
     return checkAccessKey();
-}
+};
 let checkAccessKey = () => {
     if (_userData.access_key) {
         return true;
-    } else {/* 
-        const accessKeyFromCache = loadAccessKey();
-        if (accessKeyFromCache) {
-            _userData.access_key = accessKeyFromCache;
-            return true;
-        } */
+    } else {
+        /* 
+                const accessKeyFromCache = loadAccessKey();
+                if (accessKeyFromCache) {
+                    _userData.access_key = accessKeyFromCache;
+                    return true;
+                } */
         return false;
     }
 };
 
 let getVideoInfo = vid => {
     $http.get({
-        url: _api.getVideoInfo + vid,
+        url: _URL.BILIBILI.GET_VIDEO_INFO + vid,
+        header: {
+            "User-Agent": kaaassUA
+        },
         handler: function (resp) {
             const data = resp.data;
             if (resp.response.statusCode == 200) {
@@ -1173,60 +1173,58 @@ let getWallet = () => {
     }
 };
 let mangaClockin = () => {
-    $ui.loading(true);
-    $http.get({
-        url: `${_api.getUserInfo}&access_key=${_userData.access_key}&furtherInfo=true`
-    }).then(function (getResp) {
-        var userData = getResp.data;
-        if (userData.status == "OK") {
-            const user_info = userData.info;
-            $http.post({
-                url: _URL.BILIBILI.MANGA_CLOCK_IN,
-                header: {
-                    "Content-Type": "application/x-www-form-urlencoded",
-                    "User-Agent": "comic-universal/802 CFNetwork/1125.2 Darwin/19.4.0 os/ios model/iPhone 11 mobi_app/iphone_comic osVer/13.4 network/2"
-                },
-                body: {
-                    platform: "ios",
-                    uid: user_info.mid,
-                    access_key: _userData.access_key
-                },
-                handler: function (postResp) {
-                    var clockinData = postResp.data;
-                    $console.info(clockinData);
-                    $ui.loading(false);
-                    if (clockinData) {
-                        /* $ui.alert({
+    if (_userData.access_key == 0) {
+        $ui.alert({
+            title: "签到失败",
+            message: "access_key为空，请登录",
+        });
+    } else if (_userData.uid == 0) {
+        $ui.alert({
+            title: "签到失败",
+            message: "用户id为空，请获取用户信息",
+        });
+    } else {
+        $ui.loading(true);
+        $http.post({
+            url: _URL.BILIBILI.MANGA_CLOCK_IN,
+            header: {
+                "Content-Type": "application/x-www-form-urlencoded",
+                "User-Agent": "comic-universal/802 CFNetwork/1125.2 Darwin/19.4.0 os/ios model/iPhone 11 mobi_app/iphone_comic osVer/13.4 network/2"
+            },
+            body: {
+                platform: "ios",
+                uid: _userData.uid,
+                access_key: _userData.access_key
+            },
+            handler: function (postResp) {
+                var clockinData = postResp.data;
+                $console.info(clockinData);
+                $ui.loading(false);
+                if (clockinData) {
+                    /* $ui.alert({
+                        title: "签到结果",
+                        message: clockinData,
+                    }); */
+                    if (clockinData.code == 0) {
+                        $ui.alert({
                             title: "签到结果",
-                            message: clockinData,
-                        }); */
-                        if (clockinData.code == 0) {
-                            $ui.alert({
-                                title: "签到结果",
-                                message: "签到成功",
-                            });
-                        } else {
-                            $ui.alert({
-                                title: `错误：${clockinData.code}`,
-                                message: clockinData.msg,
-                            });
-                        }
+                            message: "签到成功",
+                        });
                     } else {
                         $ui.alert({
-                            title: "签到失败",
-                            message: "服务器返回空白结果",
+                            title: `错误：${clockinData.code}`,
+                            message: clockinData.msg,
                         });
                     }
+                } else {
+                    $ui.alert({
+                        title: "签到失败",
+                        message: "服务器返回空白结果",
+                    });
                 }
-            });
-        } else {
-            $ui.loading(false);
-            $ui.alert({
-                title: userData.code,
-                message: userData.info,
-            });
-        }
-    });
+            }
+        });
+    }
 };
 module.exports = {
     getVideoInfo,
@@ -1235,7 +1233,7 @@ module.exports = {
     getUserInfo,
     saveAccessKey,
     init,
-    removeAccessKey,
+    removeLoginData,
     getVideoData,
     getVideo,
     getVidFromUrl,
