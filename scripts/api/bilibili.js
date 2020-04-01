@@ -12,11 +12,13 @@ let _api = {
     getLiveGiftList: "https://api.live.bilibili.com/xlive/app-room/v1/gift/bag_list?access_key="
 };
 let _cacheKey = {
-    access_key: "bilibili_access_key"
+    access_key: "bilibili_access_key",
+    uid: "bilibili_uid",
 };
 var _userData = {
     access_key: "",
     loginData: {},
+    uid: 0
 };
 let _cacheDir = ".cache/bilibili/";
 
@@ -24,7 +26,7 @@ let _cacheDir = ".cache/bilibili/";
 
 let init = () => {
     //初始化，加载缓存
-    loadAccessKey();
+    loadLoginData();
     return checkAccessKey();
 };
 
@@ -261,10 +263,29 @@ let saveCache = (mode, str) => {
         })
     });
 };
-
+let saveLoginData = (access_key, uid) => {
+    _userData.access_key = access_key;
+    _userData.uid = uid;
+    $cache.set(_cacheKey.access_key, access_key);
+    $cache.set(_cacheKey.uid, uid);
+};
+let removeLoginData = () => {
+    $cache.remove(_cacheKey.access_key);
+    $cache.remove(_cacheKey.uid);
+};
+let loadLoginData = () => {
+    const cacheKey = $cache.get(_cacheKey.access_key);
+    const uid = $cache.get(_cacheKey.uid);
+    if (cacheKey) {
+        _userData.access_key = cacheKey;
+    }
+    if (uid) {
+        _userData.uid = uid;
+    }
+};
 let saveAccessKey = access_key => {
     _userData.access_key = access_key;
-    $cache.set(_cacheKey.access_key, access_key);
+    $cache.set(_cacheKey.access_key, _userData.access_key);
     $ui.toast("已保存access key");
 };
 
@@ -276,7 +297,7 @@ let loadAccessKey = () => {
 };
 
 let removeAccessKey = () => {
-    $cache.remove(_cacheKey.access_key);
+    removeLoginData();
     $ui.toast("已清除access key");
 };
 let isLogin = () => {
@@ -285,12 +306,12 @@ let isLogin = () => {
 let checkAccessKey = () => {
     if (_userData.access_key) {
         return true;
-    } else {
+    } else {/* 
         const accessKeyFromCache = loadAccessKey();
         if (accessKeyFromCache) {
             _userData.access_key = accessKeyFromCache;
             return true;
-        }
+        } */
         return false;
     }
 };
@@ -578,7 +599,7 @@ let loginBilibili = (loginUrl, bodyStr, headers) => {
             if (loginData.code == 0) {
                 var success = saveCache("bilibiliPassport", loginResp.rawData);
                 $console.info(`cache:${success}`);
-                saveAccessKey(loginData.data.token_info.access_token);
+                saveLoginData(loginData.data.token_info.access_token, loginData.data.token_info.mid);
                 $console.info(`loginData.access_token:${_userData.access_key}`);
                 $ui.loading(false);
                 $input.text({
@@ -628,6 +649,7 @@ let getUserInfo = () => {
                         favourite: user_further.favourite2,
                         subscribeComic: user_further.sub_comic
                     };
+                    saveLoginData(user.accessKey, user.uid);
                     const userDataList = [
                         `用户昵称：${user.userName}`,
                         `用户uid：${ user.uid}`,
