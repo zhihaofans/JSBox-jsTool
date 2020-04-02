@@ -2,6 +2,7 @@ $include("./codePrototype.js");
 let sys = require("./system.js"),
     cheerio = require("cheerio"),
     _URL = require("./urlData.js"),
+    _BILIURL = require("./urlData.js").BILIBILI,
     appScheme = require("./app_scheme.js");
 let _cacheKey = {
         access_key: "bilibili_access_key",
@@ -1226,6 +1227,15 @@ let mangaClockin = () => {
         });
     }
 };
+let getCoverFromGalmoe = vid => {
+    return $http.get({
+        url: _BILIURL.COVER_GALMOE + vid
+    });
+    /* .then(function (resp) {
+            var data = resp.data;
+
+        }); */
+};
 module.exports = {
     getVideoInfo,
     getAccessKey,
@@ -1243,4 +1253,5 @@ module.exports = {
     isLogin,
     getWallet,
     mangaClockin,
+    getCoverFromGalmoe,
 };

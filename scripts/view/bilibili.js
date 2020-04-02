@@ -24,7 +24,7 @@ let init = (url) => {
                         },
                         {
                             title: "视频",
-                            rows: ["获取视频信息", "AV&BV互转"]
+                            rows: ["获取视频信息", "AV&BV互转", "获取投稿封面"]
                         },
                         {
                             title: "直播",
@@ -202,6 +202,51 @@ let init = (url) => {
                                                             }
                                                         });
                                                         break;
+                                                }
+                                            }
+                                        });
+                                        break;
+                                    case 2:
+                                        $input.text({
+                                            placeholder: "av/bv",
+                                            text: "av795121244",
+                                            handler: function (vid) {
+                                                if (vid.length > 0) {
+                                                    if (vid.startsWith("av") || vid.startsWith("bv")) {
+                                                        $ui.loading(true);
+                                                        biliApi.getCoverFromGalmoe(vid).then(function (resp) {
+                                                            var data = resp.data;
+                                                            $ui.loading(false);
+                                                            if (data) {
+                                                                if (data.result == 0) {
+                                                                    $ui.alert({
+                                                                        title: "错误",
+                                                                        message: "服务器返回空白结果",
+                                                                    });
+                                                                } else {
+                                                                    $ui.preview({
+                                                                        title: vid,
+                                                                        url: data.url
+                                                                    });
+                                                                }
+                                                            } else {
+                                                                $ui.alert({
+                                                                    title: "错误",
+                                                                    message: "服务器返回空白数据",
+                                                                });
+                                                            }
+                                                        });
+                                                    } else {
+                                                        $ui.alert({
+                                                            title: "错误",
+                                                            message: "请输入正确的av或者bv",
+                                                        });
+                                                    }
+                                                } else {
+                                                    $ui.alert({
+                                                        title: "错误",
+                                                        message: "请输入av或者bv",
+                                                    });
                                                 }
                                             }
                                         });
