@@ -1,6 +1,7 @@
 let _url = require("../api/urlData.js");
 let QU = require("../api/quickUtil.js");
-let mainList = ["meowv/wallpaper"];
+let mainList = ["meowv/wallpaper","meowv/cat"];
+
 let initListView = () => {
     $ui.push({
         props: {
@@ -19,6 +20,9 @@ let initListView = () => {
                     switch (row) {
                         case 0:
                             meomvwallpaper();
+                            break;
+                        case 1:
+                            meowvRandomCat();
                             break;
                         default:
                             $ui.toast("暂不支持该功能，请等待更新");
@@ -103,7 +107,9 @@ let meomvwallpaper = () => {
         }
     });
 };
-
+let meowvRandomCat = () =>{
+  QU.quicklookImageUrl("https://api.meowv.com/common/cat");
+};
 module.exports = {
     initListView
 };
