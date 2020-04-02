@@ -13,6 +13,7 @@ let acfun = require("./view/acfun.js");
 let instagram = require("./view/instagram.js");
 let freeSms = require("./view/free_sms_getter.js");
 let weather = require("./view/weather.js");
+let misc = require("./view/misc.js");
 
 let urlCheck = require("./api/urlCheck.js");
 
@@ -100,6 +101,7 @@ module.exports = {
     instagram: instagram.init,
     freeSms: freeSms.init,
     weather: weather.init,
+    misc: misc.initListView,
     contextOpen,
     gotoUrl,
     scanQrcodeToGo,

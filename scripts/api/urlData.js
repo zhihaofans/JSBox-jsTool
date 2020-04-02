@@ -11,9 +11,13 @@ let UPDATE_CONFIG_GITHUB = "https://github.com/zhuangzhihao-io/JSBox-jsTool/raw/
         SILVER_TO_COIN: "https://api.live.bilibili.com/pay/v1/Exchange/silver2coin",
         MANGA_CLOCK_IN: "https://manga.bilibili.com/twirp/activity.v1.Activity/ClockIn",
         COVER_GALMOE: "https://www.galmoe.com/t.php?aid=",
+    },
+    MEOWV = {
+        WALLPAPER: "https://api.meowv.com/wallpaper",
     };
 module.exports = {
     UPDATE_CONFIG_GITHUB,
     UPDATE_CONFIG_JSDELIVR,
     BILIBILI,
+    MEOWV,
 };
