@@ -1,19 +1,20 @@
 $include("./api/codePrototype.js");
 
 // 模块
-let mofish = require("./view/mofish.js");
-let cdn = require("./view/cdn.js");
-let kuaidi = require("./view/kuaidi.js");
-let smmsv2 = require("./view/sm_ms_v2.js");
-let image = require("./view/image.js");
-let bilibili = require("./view/bilibili.js");
-let musicSearch = require("./view/music_search.js");
-let zhihuDaily = require("./view/zhihu_daily.js");
-let acfun = require("./view/acfun.js");
-let instagram = require("./view/instagram.js");
-let freeSms = require("./view/free_sms_getter.js");
-let weather = require("./view/weather.js");
-let misc = require("./view/misc.js");
+let mofish = require("./view/mofish.js"),
+    cdn = require("./view/cdn.js"),
+    kuaidi = require("./view/kuaidi.js"),
+    smmsv2 = require("./view/sm_ms_v2.js"),
+    image = require("./view/image.js"),
+    bilibili = require("./view/bilibili.js"),
+    musicSearch = require("./view/music_search.js"),
+    zhihuDaily = require("./view/zhihu_daily.js"),
+    acfun = require("./view/acfun.js"),
+    instagram = require("./view/instagram.js"),
+    freeSms = require("./view/free_sms_getter.js"),
+    weather = require("./view/weather.js"),
+    misc = require("./view/misc.js"),
+    covid19 = require("./view/covid-19.js");
 
 let urlCheck = require("./api/urlCheck.js");
 
@@ -102,6 +103,7 @@ module.exports = {
     freeSms: freeSms.init,
     weather: weather.init,
     misc: misc.initListView,
+    covid19: covid19.init,
     contextOpen,
     gotoUrl,
     scanQrcodeToGo,
