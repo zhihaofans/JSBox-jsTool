@@ -17,10 +17,18 @@ let UPDATE_CONFIG_GITHUB =
   MEOWV = {
     WALLPAPER: "https://api.meowv.com/wallpaper",
     SOUL: "https://api.meowv.com/soul"
+  },
+  ISOYU = {
+    BING: "https://api.isoyu.com/bing_images.php",
+  },
+  API_66MZ8_COM = {
+    PHONE_WALLPAPER: "https://api.66mz8.com/api/rand.img.php?type=%E5%A3%81%E7%BA%B8",
   };
 module.exports = {
   UPDATE_CONFIG_GITHUB,
   UPDATE_CONFIG_JSDELIVR,
   BILIBILI,
   MEOWV,
+  ISOYU,
+  API_66MZ8_COM,
 };
