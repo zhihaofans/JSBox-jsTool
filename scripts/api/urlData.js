@@ -17,15 +17,10 @@ let UPDATE_CONFIG_GITHUB =
   MEOWV = {
     WALLPAPER: "https://api.meowv.com/wallpaper",
     SOUL: "https://api.meowv.com/soul"
-  },
-  COVID19 = {
-    MAIN_DATA_JSON: "https://raw.githubusercontent.com/canghailan/Wuhan-2019-nCoV/master/Wuhan-2019-nCoV.json",
-    MAIN_DATA_JSON_JSDELIVR: "https://cdn.jsdelivr.net/gh/canghailan/Wuhan-2019-nCoV@master/Wuhan-2019-nCoV.json",
   };
 module.exports = {
   UPDATE_CONFIG_GITHUB,
   UPDATE_CONFIG_JSDELIVR,
   BILIBILI,
   MEOWV,
-  COVID19
 };

@@ -1,7 +1,8 @@
 $include("./api/codePrototype.js");
 
 // 模块
-let mofish = require("./view/mofish.js"),
+let urlCheck = require("./api/urlCheck.js"),
+    mofish = require("./view/mofish.js"),
     cdn = require("./view/cdn.js"),
     kuaidi = require("./view/kuaidi.js"),
     smmsv2 = require("./view/sm_ms_v2.js"),
@@ -13,10 +14,7 @@ let mofish = require("./view/mofish.js"),
     instagram = require("./view/instagram.js"),
     freeSms = require("./view/free_sms_getter.js"),
     weather = require("./view/weather.js"),
-    misc = require("./view/misc.js"),
-    covid19 = require("./view/covid-19.js");
-
-let urlCheck = require("./api/urlCheck.js");
+    misc = require("./view/misc.js");
 
 let gotoUrl = url => {
     const newUrl = $text.URLDecode(url);
@@ -103,7 +101,6 @@ module.exports = {
     freeSms: freeSms.init,
     weather: weather.init,
     misc: misc.initListView,
-    covid19: covid19.init,
     contextOpen,
     gotoUrl,
     scanQrcodeToGo,
