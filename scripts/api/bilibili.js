@@ -1236,6 +1236,21 @@ let getCoverFromGalmoe = vid => {
 
         }); */
 };
+let vipCheckin= ()  => {
+  $http.post({
+    url: _URL.BILIBILI.VIP_CHECKIN,
+    header: {
+      "User-Agent": "bili-universal/9290 CFNetwork/1125.2 Darwin/19.4.0"
+    },
+    body: {
+      access_key:_userData.access_key
+    },
+    handler: resp => {
+      var data = resp.data;
+      $console.info(data)
+    }
+  });
+};
 module.exports = {
     getVideoInfo,
     getAccessKey,
@@ -1254,4 +1269,5 @@ module.exports = {
     getWallet,
     mangaClockin,
     getCoverFromGalmoe,
+    vipCheckin,
 };

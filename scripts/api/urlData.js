@@ -4,7 +4,6 @@ let UPDATE_CONFIG_GITHUB =
   "https://cdn.jsdelivr.net/gh/zhuangzhihao-io/JSBox-jsTool@master/config.json",
   BILIBILI = {
     GET_VIDEO_INFO: "https://api.kaaass.net/biliapi/video/info?jsonerr=true&id=",
-    GET_VIDEO_DATA: "https://api.kaaass.net/biliapi/video/resolve?jsonerr=true",
     GET_ACCESS_KEY: "https://api.kaaass.net/biliapi/user/login?jsonerr=true&direct=true",
     GET_USER_INFO: "https://api.kaaass.net/biliapi/user/info?jsonerr=true",
     GET_VIDEO_DATA: "https://api.kaaass.net/biliapi/video/resolve?jsonerr=true&direct=true",
@@ -12,7 +11,8 @@ let UPDATE_CONFIG_GITHUB =
     GET_WALLET: "https://api.live.bilibili.com/pay/v1/Exchange/getStatus?access_key=",
     SILVER_TO_COIN: "https://api.live.bilibili.com/pay/v1/Exchange/silver2coin",
     MANGA_CLOCK_IN: "https://manga.bilibili.com/twirp/activity.v1.Activity/ClockIn",
-    COVER_GALMOE: "https://www.galmoe.com/t.php?aid="
+    COVER_GALMOE: "https://www.galmoe.com/t.php?aid=",
+    VIP_CHECKIN:"https://api.bilibili.com/x/vip/privilege/receive",
   },
   MEOWV = {
     WALLPAPER: "https://api.meowv.com/wallpaper",
