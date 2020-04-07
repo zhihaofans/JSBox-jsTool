@@ -29,6 +29,8 @@ let initListView = () => {
               break;
             case "isoyu/bing":
               isoyuBing();
+            case "66mz8/phoneWallpaper":
+              api66mz8_PhoneWallpaper();
               break;
             default:
               $ui.toast("暂不支持该功能，请等待更新");
@@ -157,6 +159,13 @@ let meomvSoul = () => {
 let isoyuBing = () => {
   $ui.preview({
     title: "isoyu/bing",
+    url: _url.ISOYU.BING
+  });
+};
+
+let api66mz8_PhoneWallpaper = () => {
+  $ui.preview({
+    title: "66mz8/phoneWallpaper",
     url: _url.ISOYU.BING
   });
 };
