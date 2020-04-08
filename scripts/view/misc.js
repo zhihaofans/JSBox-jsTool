@@ -29,6 +29,7 @@ let initListView = () => {
               break;
             case "isoyu/bing":
               isoyuBing();
+              break;
             case "66mz8/phoneWallpaper":
               api66mz8_PhoneWallpaper();
               break;
