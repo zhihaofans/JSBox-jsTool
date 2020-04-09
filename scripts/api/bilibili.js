@@ -1251,6 +1251,15 @@ let vipCheckin= ()  => {
     }
   });
 };
+let laterToWatch = () =>{
+  $http.get({
+    url: _URL.BILIBILI.LATER_TO_WATCH + _userData.access_key,
+    handler: resp => {
+      var data = resp.data;
+      $console.info(data);
+    }
+  });
+};
 module.exports = {
     getVideoInfo,
     getAccessKey,
@@ -1270,4 +1279,5 @@ module.exports = {
     mangaClockin,
     getCoverFromGalmoe,
     vipCheckin,
+    laterToWatch,
 };

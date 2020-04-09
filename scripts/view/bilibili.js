@@ -20,7 +20,7 @@ let init = (url) => {
                 props: {
                     data: [{
                             title: "账号",
-                            rows: ["登录账号", "获取用户信息"]
+                            rows: ["登录账号", "获取用户信息","稍后再看"]
                         },
                         {
                             title: "视频",
@@ -72,6 +72,9 @@ let init = (url) => {
                                         biliApi.checkAccessKey() ?
                                             biliApi.getUserInfo() :
                                             $ui.error("未登录");
+                                        break;
+                                        case 2:
+                                        biliApi.laterToWatch();
                                         break;
                                     default:
                                         $ui.error("未知错误");

@@ -12,7 +12,8 @@ let UPDATE_CONFIG_GITHUB =
     SILVER_TO_COIN: "https://api.live.bilibili.com/pay/v1/Exchange/silver2coin",
     MANGA_CLOCK_IN: "https://manga.bilibili.com/twirp/activity.v1.Activity/ClockIn",
     COVER_GALMOE: "https://www.galmoe.com/t.php?aid=",
-    VIP_CHECKIN:"https://api.bilibili.com/x/vip/privilege/receive",
+    VIP_CHECKIN: "https://api.bilibili.com/x/vip/privilege/receive",
+    LATER_TO_WATCH: "https://api.bilibili.com/x/v2/history/toview?access_key="
   },
   MEOWV = {
     WALLPAPER: "https://api.meowv.com/wallpaper",
