@@ -544,7 +544,34 @@ let showDownList = (thisFile, copyStr) => {
                             text: copyStr,
                             handler: function (text) {
                                 copyStr.copy();
-                                $share.sheet([_data]);
+                                $ui.menu({
+                                    items: ["分享", "使用外部播放器打开", "使用Alook浏览器打开"],
+                                    handler: function (title, idx) {
+                                        switch (idx) {
+                                            case 0:
+                                                $share.sheet([_data]);
+                                                break;
+                                            case 1:
+                                                $ui.menu({
+                                                    items: ["AVPlayer", "nplayer"],
+                                                    handler: function (titlePlayer, idxPlayer) {
+                                                        switch (idxPlayer) {
+                                                            case 0:
+                                                                appScheme.avplayerVideo(_data);
+                                                                break;
+                                                            case 1:
+                                                                appScheme.nplayerVideo(_data);
+                                                                break;
+                                                        }
+                                                    }
+                                                });
+                                                break;
+                                            case 2:
+                                                appScheme.alookBrowserOpen(_data);
+                                                break;
+                                        }
+                                    }
+                                });
                             }
                         });
                     } else {
@@ -1266,23 +1293,18 @@ let laterToWatch = () => {
                     let laterList = data.data.list;
                     $ui.push({
                         props: {
-                            title: "稍后再看"
+                            title: `稍后再看-${data.data.count}`
                         },
                         views: [{
                             type: "list",
                             props: {
-                                data: laterList.map(v => v.title.replace(/\【/g,"[").replace(/\】/g,"]"))
+                                data: laterList.map(v => v.title.replace(/\【/g, "[").replace(/\】/g, "]"))
                             },
                             layout: $layout.fill,
                             events: {
                                 didSelect: function (_sender, indexPath, _data) {
-                                    const section = indexPath.section;
                                     const row = indexPath.row;
-                                    const thisVideo = laterList[row];
-                                    $ui.alert({
-                                        title: `${thisVideo.bvid}/${thisVideo.aid}`,
-                                        message: JSON.stringify(thisVideo),
-                                    });
+                                    getVideoInfo(laterList[row].aid);
                                 }
                             }
                         }]

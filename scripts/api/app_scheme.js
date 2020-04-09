@@ -53,6 +53,12 @@ let nplayerVideo = url => {
 let documentsOpen = url => {
     $app.openURL(`r${url}`);
 };
+let bilibiliVideo = vid => {
+    $app.openURL(getBilibiliVideoUrl(vid));
+};
+let getBilibiliVideoUrl = vid => {
+    return `bilibili://video/${vid}`;
+};
 module.exports = {
     alookBrowserOpen,
     chromeBrowserOpen,
@@ -65,5 +71,7 @@ module.exports = {
     avplayerVideo,
     nplayerVideo,
     documentsOpen,
-    safariPreview
+    safariPreview,
+    bilibiliVideo,
+    getBilibiliVideoUrl,
 };
