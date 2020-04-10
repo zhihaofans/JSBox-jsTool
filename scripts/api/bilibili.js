@@ -544,7 +544,34 @@ let showDownList = (thisFile, copyStr) => {
                             text: copyStr,
                             handler: function (text) {
                                 copyStr.copy();
-                                $share.sheet([_data]);
+                                $ui.menu({
+                                    items: ["分享", "使用外部播放器打开", "使用Alook浏览器打开"],
+                                    handler: function (title, idx) {
+                                        switch (idx) {
+                                            case 0:
+                                                $share.sheet([_data]);
+                                                break;
+                                            case 1:
+                                                $ui.menu({
+                                                    items: ["AVPlayer", "nplayer"],
+                                                    handler: function (titlePlayer, idxPlayer) {
+                                                        switch (idxPlayer) {
+                                                            case 0:
+                                                                appScheme.avplayerVideo(_data);
+                                                                break;
+                                                            case 1:
+                                                                appScheme.nplayerVideo(_data);
+                                                                break;
+                                                        }
+                                                    }
+                                                });
+                                                break;
+                                            case 2:
+                                                appScheme.alookBrowserOpen(_data);
+                                                break;
+                                        }
+                                    }
+                                });
                             }
                         });
                     } else {
@@ -1236,29 +1263,63 @@ let getCoverFromGalmoe = vid => {
 
         }); */
 };
-let vipCheckin= ()  => {
-  $http.post({
-    url: _URL.BILIBILI.VIP_CHECKIN,
-    header: {
-      "User-Agent": "bili-universal/9290 CFNetwork/1125.2 Darwin/19.4.0"
-    },
-    body: {
-      access_key:_userData.access_key
-    },
-    handler: resp => {
-      var data = resp.data;
-      $console.info(data)
-    }
-  });
+let vipCheckin = () => {
+    $http.post({
+        url: _URL.BILIBILI.VIP_CHECKIN,
+        header: {
+            "User-Agent": "bili-universal/9290 CFNetwork/1125.2 Darwin/19.4.0"
+        },
+        body: {
+            access_key: _userData.access_key
+        },
+        handler: resp => {
+            var data = resp.data;
+            $console.info(data)
+        }
+    });
 };
-let laterToWatch = () =>{
-  $http.get({
-    url: _URL.BILIBILI.LATER_TO_WATCH + _userData.access_key,
-    handler: resp => {
-      var data = resp.data;
-      $console.info(data);
+let laterToWatch = () => {
+    if (_userData.access_key) {
+        $http.get({
+            url: _URL.BILIBILI.LATER_TO_WATCH + _userData.access_key,
+            header: {
+                "User-Agent": "bili-universal/9290 CFNetwork/1125.2 Darwin/19.4.0 os/ios model/iPhone 11 mobi_app/iphone osVer/13.4.1 network/1"
+            }
+        }).then(function (resp) {
+            var data = resp.data;
+            $console.info(data);
+            if (data.data) {
+                if (data.data.count > 0) {
+                    let laterList = data.data.list;
+                    $ui.push({
+                        props: {
+                            title: `稍后再看-${data.data.count}`
+                        },
+                        views: [{
+                            type: "list",
+                            props: {
+                                data: laterList.map(v => v.title.replace(/\【/g, "[").replace(/\】/g, "]"))
+                            },
+                            layout: $layout.fill,
+                            events: {
+                                didSelect: function (_sender, indexPath, _data) {
+                                    const row = indexPath.row;
+                                    getVideoInfo(laterList[row].aid);
+                                }
+                            }
+                        }]
+                    });
+                } else {
+                    $ui.error("稍后再看列表是空白的，请添加");
+                }
+            } else {
+                $ui.error("空白数据");
+            }
+
+        });
+    } else {
+        $ui.error("请登录");
     }
-  });
 };
 module.exports = {
     getVideoInfo,
