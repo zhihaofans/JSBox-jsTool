@@ -1,56 +1,50 @@
 $include("./codePrototype.js");
-let sys = require("./system.js");
-let appScheme = require("./app_scheme.js");
-let urlCheck = require("./urlCheck.js");
-let _url = {
-    login: "https://id.app.acfun.cn/rest/app/login/signin",
-    getUserInfo: "https://api-new.app.acfun.cn/rest/app/user/personalInfo",
-    downloadVideo: "https://api-new.app.acfun.cn/rest/app/play/playInfo/mp4",
-    getVideoInfo: "https://api-new.app.acfun.cn/rest/app/douga/info?dougaId=",
-    signIn: "https://api-new.app.acfun.cn/rest/app/user/signIn",
-    getUploaderVideo: "https://api-new.app.acfun.cn/rest/app/user/resource/query"
-};
+let sys = require("./system.js"),
+    appScheme = require("./app_scheme.js"),
+    _URL = require("./urlData.js"),
+    _ACFUN = _URL.ACFUN,
+    urlCheck = require("./urlCheck.js");
 let acVideoSiteList = [
-    "acfun://detail/video/",
-    "https://www.acfun.cn/v/ac",
-    "https://m.acfun.cn/v/?"
-];
-let acUploaderSiteList = [
-    "acfun://detail/upPage/",
-    "https://www.acfun.cn/u/",
-    "https://m.acfun.cn/upPage/"
-];
-let _cacheDir = ".cache/acfun/";
-let acHeaders = {
-    "Content-Type": "application/x-www-form-urlencoded",
-    "User-Agent": "AcFun/6.17.0 (iPhone; iOS 13.4; Scale/2.00)",
-    "deviceType": 0,
-    "market": "appstore",
-    "appVersion": "6.17.0.349",
-};
-let _cacheKey = {
-    acPassToken: "acfun_acPassToken",
-    token: "acfun_token",
-    acSecurity: "acfun_acSecurity",
-    auth_key: "acfun_auth_key",
-    userid: "acfun_userid",
-    uploaderVideo_lastUid: "acfun_uploaderVideo_lastUid",
-    uploaderVideo_lastPage: "acfun_uploaderVideo_lastPage_",
-    lastClickedVid: "acfun_lastClickedVid",
-};
-var acUserData = {
-    acPassToken: "",
-    token: "",
-    acSecurity: "",
-    isLogin: false,
-    auth_key: "",
-    userid: "",
+        _ACFUN.ACFUN_DETAIL_VIDEO,
+        _ACFUN.ACFUN_WWW_V_AC,
+        _ACFUN.ACFUN_M_V_AC
+    ],
+    acUploaderSiteList = [
+        _ACFUN.ACFUN_DETAIL_UPPAGE,
+        _ACFUN.ACFUN_WWW_V_AC,
+        _ACFUN.ACFUN_M_V_AC
+    ],
+    _cacheDir = ".cache/acfun/",
+    acHeaders = {
+        "Content-Type": "application/x-www-form-urlencoded",
+        "User-Agent": "AcFun/6.17.0 (iPhone; iOS 13.4; Scale/2.00)",
+        "deviceType": 0,
+        "market": "appstore",
+        "appVersion": "6.17.0.349",
+    },
+    _cacheKey = {
+        acPassToken: "acfun_acPassToken",
+        token: "acfun_token",
+        acSecurity: "acfun_acSecurity",
+        auth_key: "acfun_auth_key",
+        userid: "acfun_userid",
+        uploaderVideo_lastUid: "acfun_uploaderVideo_lastUid",
+        uploaderVideo_lastPage: "acfun_uploaderVideo_lastPage_",
+        lastClickedVid: "acfun_lastClickedVid",
+    },
+    acUserData = {
+        acPassToken: "",
+        token: "",
+        acSecurity: "",
+        isLogin: false,
+        auth_key: "",
+        userid: "",
 
-};
+    };
 let login = (id, pwd) => {
     $ui.loading(true);
     $http.post({
-        url: _url.login,
+        url: _ACFUN.LOGIN,
         header: acHeaders,
         body: {
             username: id,
@@ -139,7 +133,7 @@ let getUserInfo = () => {
             thisHeaders.Cookie = postCookies;
             // $console.info(thisHeaders);
             $http.get({
-                url: _url.getUserInfo,
+                url: _ACFUN.GET_USER_INFO,
                 header: thisHeaders,
             }).then(function (resp) {
                 var userResult = resp.data;
@@ -215,7 +209,7 @@ let getUserInfo = () => {
                                             if (userInfo.qq) {
                                                 $ui.preview({
                                                     title: "QQ",
-                                                    url: `https://wpa.qq.com/msgrd?v=3&uin=${userInfo.qq}&site=acfun.cn&menu=yes`
+                                                    url: _ACFUN.ADD_FRIENDS + userInfo.qq
                                                 });
                                             }
                                             break;
@@ -278,7 +272,7 @@ let getVideoInfo = () => {
 let getVideoPid = vid => {
     $ui.loading(true);
     $http.get({
-        url: _url.getVideoInfo + vid,
+        url: _ACFUN.GET_VIDEO_INFO + vid,
         handler: function (resp) {
             var videoResult = resp.data;
             $console.info(videoResult);
@@ -312,7 +306,7 @@ let getVideoPid = vid => {
 let downloadVideo = (vid, pid) => {
     $console.info(`vid:${vid}\npid:${pid}`);
     $http.post({
-        url: _url.downloadVideo + `?resourceId=${vid}&videoId=${pid}`,
+        url: _ACFUN.DOWNLOAD_VIDEO + `?resourceId=${vid}&videoId=${pid}`,
         header: {
             /* Cookie: getCookies() */
         },
@@ -326,9 +320,9 @@ let downloadVideo = (vid, pid) => {
                 const cdnUrl = thisVideoFile.cdnUrls;
                 const cdnTitleList = cdnUrl.map(function (x) {
                     const thisUrl = x.url;
-                    if (thisUrl.startsWith("http://tx-video.acfun.cn/")) {
+                    if (thisUrl.startsWith(_URL.ACFUN.VIDEO_CDN_TXCDN)) {
                         return "腾讯源";
-                    } else if (thisUrl.startsWith("http://ali-video.acfun.cn/")) {
+                    } else if (thisUrl.startsWith(_URL.ACFUN.VIDEO_CDN_ALICDN)) {
                         return "阿里源";
                     } else {
                         return "未知源";
@@ -399,7 +393,7 @@ let downloadVideo = (vid, pid) => {
 let signIn = () => {
     isLogin() ?
         $http.post({
-            url: _url.signIn,
+            url: _ACFUN.SIGN_IN,
             header: {
                 Cookie: getCookies(),
                 acPlatform: "IPHONE"
@@ -422,7 +416,7 @@ let signIn = () => {
 };
 let getUploaderVideo = (uid, page = 1, count = 20) => {
     $http.post({
-        url: _url.getUploaderVideo,
+        url: _ACFUN.GET_UPLOADER_VIDEO,
         header: {
             "Content-Type": "application/x-www-form-urlencoded"
         },
@@ -504,7 +498,7 @@ let showUploaderVideoList = acData => {
                             const vid = videoList[indexPath.row].dougaId;
                             if (indexPath.section == 1) {
                                 $cache.set(_cacheKey.lastClickedVid, vid);
-                                $share.sheet([`https://www.acfun.cn/v/ac${vid}`]);
+                                $share.sheet([appScheme.getAcfunVideoWebUrl(vid)]);
                             } else {
                                 $ui.error("这里长按无效，请在视频列表长按");
                             }
@@ -516,7 +510,7 @@ let showUploaderVideoList = acData => {
                             const vid = videoList[indexPath.row].dougaId;
                             if (indexPath.section == 1) {
                                 $cache.set(_cacheKey.lastClickedVid, vid);
-                                $share.sheet([`acfun://detail/video/${vid}`]);
+                                $share.sheet([appScheme.getAcfunVideoUrl(vid)]);
                             } else {
                                 $ui.error("这里长按无效，请在视频列表长按");
                             }
@@ -529,7 +523,7 @@ let showUploaderVideoList = acData => {
                             if (indexPath.section == 1) {
                                 $cache.set(_cacheKey.lastClickedVid, vid);
                                 $quicklook.open({
-                                    image: `https://www.acfun.cn/v/ac${vid}`.getQrcode()
+                                    image: appScheme.getAcfunVideoWebUrl(vid).getQrcode()
                                 });
                             } else {
                                 $ui.error("这里长按无效，请在视频列表长按");
@@ -543,7 +537,7 @@ let showUploaderVideoList = acData => {
                             if (indexPath.section == 1) {
                                 $cache.set(_cacheKey.lastClickedVid, vid);
                                 $quicklook.open({
-                                    image: `acfun://detail/video/${vid}`.getQrcode()
+                                    image: appScheme.getAcfunVideoUrl(vid).getQrcode()
                                 });
                             } else {
                                 $ui.error("这里长按无效，请在视频列表长按");
@@ -576,7 +570,7 @@ let showUploaderVideoList = acData => {
                                         title = `[上次]` + title
                                     }
                                 }
-                                html += `<li><a href="acfun://detail/video/${thisVideo.dougaId}">${title}</a></li>`;
+                                html += `<li><a href="${appScheme.getAcfunVideoUrl(thisVideo.dougaId)}">${title}</a></li>`;
                             }
                             html += "</ul></body></html>"
                             if (!$file.exists(dir)) {
@@ -624,7 +618,7 @@ let getVidFromUrl = url => {
     var vid = undefined;
     if (urlCheck.isAcfunVideoUrl(url)) {
         acVideoSiteList.map(s => {
-            if (s == "https://m.acfun.cn/v/?") {
+            if (s == _URL.ACFUN.ACFUN_M_V_AC) {
                 var newUrl = url.remove(s);
                 const paramsList = newUrl.split("&");
                 paramsList.map(p => {
