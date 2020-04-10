@@ -409,28 +409,7 @@ let signIn = () => {
                 signinResult.result == 0 ?
                     $ui.alert({
                         title: "签到成功",
-                        message: signinResult.msg,
-                        actions: [{
-                            title: "查看今日运势",
-                            disabled: false, // Optional
-                            handler: function () {
-                                $ui.alert({
-                                    title: "签到结果",
-                                    message: signinResult,
-                                });
-
-                                /* const todayAlmanac = signinResult.almanac;
-                                $ui.alert({
-                                    title: todayAlmanac.fortune,
-                                    message: `宜(${todayAlmanac.avoids.toString()})\n` +
-                                        `忌(${todayAlmanac.suits.toString()})`,
-                                }); */
-                            }
-                        }, {
-                            title: "关闭",
-                            disabled: false, // Optional
-                            handler: function () {}
-                        }]
+                        message: signinResult
                     }) :
                     $ui.alert({
                         title: `错误代码${signinResult.result}`,
