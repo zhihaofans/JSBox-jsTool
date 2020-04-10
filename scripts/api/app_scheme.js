@@ -1,3 +1,4 @@
+let _URL = require("./urlData.js");
 let alookBrowserOpen = url => {
     $app.openURL(`Alook://${$text.URLEncode(url)}`);
 };
@@ -54,13 +55,16 @@ let bilibiliVideo = vid => {
     $app.openURL(getBilibiliVideoUrl(vid));
 };
 let getBilibiliVideoUrl = vid => {
-    return `bilibili://video/${vid}`;
+    return _URL.BILIBILI.BILIBILI_VIDEO + vid;
 };
 let acfunVideo = vid => {
     $app.openURL(getAcfunVideoUrl(vid));
 };
 let getAcfunVideoUrl = vid => {
-    return `acfun://detail/video/${vid}`;
+    return _URL.ACFUN.ACFUN_DETAIL_VIDEO + vid;
+};
+let getAcfunVideoWebUrl = vid => {
+    return _URL.ACFUN.ACFUN_WWW_V_AC + vid;
 };
 module.exports = {
     alookBrowserOpen,
@@ -78,4 +82,5 @@ module.exports = {
     getBilibiliVideoUrl,
     acfunVideo,
     getAcfunVideoUrl,
+    getAcfunVideoWebUrl,
 };

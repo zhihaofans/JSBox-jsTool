@@ -1,6 +1,7 @@
-let biliApi = require("../api/bilibili.js");
-let biliAvbv = require("../api/bilibili-avbv.js");
-let urlCheck = require("../api/urlCheck.js");
+let biliApi = require("../api/bilibili.js"),
+    biliAvbv = require("../api/bilibili-avbv.js"),
+    urlCheck = require("../api/urlCheck.js"),
+    _BILIURL = require("./urlData.js").BILIBILI;
 let debugVid = "90035938";
 
 let init = (url) => {
@@ -20,7 +21,7 @@ let init = (url) => {
                 props: {
                     data: [{
                             title: "账号",
-                            rows: ["登录账号", "获取用户信息","稍后再看"]
+                            rows: ["登录账号", "获取用户信息", "稍后再看"]
                         },
                         {
                             title: "视频",
@@ -73,7 +74,7 @@ let init = (url) => {
                                             biliApi.getUserInfo() :
                                             $ui.error("未登录");
                                         break;
-                                        case 2:
+                                    case 2:
                                         biliApi.laterToWatch();
                                         break;
                                     default:
@@ -91,7 +92,7 @@ let init = (url) => {
                                                         $input.text({
                                                             type: $kbType.url,
                                                             autoFontSize: true,
-                                                            text: `https://b23.tv/av${debugVid}`,
+                                                            text: _BILIURL.B23_TV_VIDEO + debugVid,
                                                             placeholder: "输入视频网址",
                                                             handler: function (url) {
                                                                 if (url.length > 0) {

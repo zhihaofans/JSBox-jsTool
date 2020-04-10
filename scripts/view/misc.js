@@ -121,7 +121,7 @@ let meomvwallpaper = () => {
     });
 };
 let meowvRandomCat = () => {
-  QU.quicklookImageUrl("https://api.meowv.com/common/cat");
+  QU.quicklookImageUrl(_url.MEOWV.CAT);
 };
 let meomvSoul = () => {
   $ui.loading(true);

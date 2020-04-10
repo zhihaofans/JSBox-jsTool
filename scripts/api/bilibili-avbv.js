@@ -1,5 +1,6 @@
 // 感谢：https://www.zhihu.com/question/381784377/answer/1099438784
 // 感谢：https://www.v2ex.com/t/655569
+let _BILIBILI = require("./urlData.js").BILIBILI;
 let table = "fZodR9XQDSUm21yCkr6zBqiveYah8bt4xsWpHnJE7jL5VG3guMTKNPAwcF",
     tr = new Object();
 for (var i = 0; i < 58; i++) {
@@ -29,7 +30,7 @@ let getOnline = (type, id) => {
     // bvid: resp.data.data.bvid,
     // aid: resp.data.data.aid
     return $http.get({
-        url: `http://api.bilibili.com/x/web-interface/archive/stat?${type}id=${id}`
+        url: `${_BILIBILI.AV_BV_ONLINE}?${type}id=${id}`
     });
 };
 let getAvOnline = bv => {

@@ -351,7 +351,7 @@ let getVideoInfo = vid => {
                                 handler: () => {
                                     $ui.preview({
                                         title: "av" + vid,
-                                        url: `https://www.bilibili.com/av${vid}`
+                                        url: _BILIURL.BILIBILI_WWW_VIDEO + vid
                                     });
                                 }
                             }]
@@ -704,7 +704,7 @@ let getUserInfo = () => {
                                 handler: () => {
                                     $ui.preview({
                                         title: user.userName,
-                                        url: `https://space.bilibili.com/${user.uid}`
+                                        url: _BILIURL.BILIBILI_SPACE + user.uid
                                     });
                                 }
                             }]
@@ -813,7 +813,7 @@ function LiveroomInfo(liveroomInfoData) {
 let getLiveroomInfo = mid => {
     $ui.loading(true);
     $http.get({
-        url: `https://api.vtbs.moe/v1/detail/${mid}`
+        url: _URL.API_VTBS_MOE.V1_DETAIL + mid
     }).then(function (resp) {
         $ui.loading(false);
         if (resp.error) {
@@ -831,7 +831,7 @@ let getLiveroomInfo = mid => {
                         title: "打开网页",
                         disabled: false,
                         handler: function () {
-                            appScheme.safariPreview(`https://vtbs.moe/detail/${mid}`)
+                            appScheme.safariPreview(_URL.API_VTBS_MOE.WEB_DETAIL + mid)
                         }
                     }, {
                         title: "关闭",
@@ -852,7 +852,7 @@ let getLiveroomInfo = mid => {
 let getFansMedalList = () => {
     $ui.loading(true);
     if (_userData.access_key) {
-        const link = `https://api.live.bilibili.com/fans_medal/v2/HighQps/received_medals?access_key=${_userData.access_key}`;
+        const link = _BILIURL.LIVE_FANS_MEDAL + _userData.access_key;
         $http.get({
             url: link
         }).then(function (resp) {
@@ -896,7 +896,7 @@ let getFansMedalList = () => {
                                             const liveData = indexPath.section == 0 ?
                                                 onlineList[indexPath.row] :
                                                 offlineList[indexPath.row];
-                                            $app.openURL(`https://live.bilibili.com/${liveData.room_id}`);
+                                            $app.openURL(_BILIURL.LIVE_WEB_ROOM + liveData.room_id);
                                         }
                                     }, {
                                         title: "通过vtbs.moe获取vTuber信息",
@@ -979,7 +979,7 @@ let getFansMedalList = () => {
 };
 let sendLiveGift = (user_id, room_id, gift_type, gift_id, gift_number) => {
     $ui.loading(true);
-    const url = `https://api.live.bilibili.com/gift/v2/live/bag_send?access_key=${_userData.access_key}&bag_id=${gift_id}&biz_id=${room_id}&gift_id=${gift_type}&gift_num=${gift_number}&ruid=${user_id}`;
+    const url = `${_BILIURL.LIVE_GIFT_SEND}?access_key=${_userData.access_key}&bag_id=${gift_id}&biz_id=${room_id}&gift_id=${gift_type}&gift_num=${gift_number}&ruid=${user_id}`;
     $http.get({
         url: url
     }).then(function (resp) {
@@ -1005,7 +1005,7 @@ let sendLiveGiftList = (liveData, giftList, index = 0) => {
     $ui.loading(true);
     if (giftList.length > 0) {
         const thisGift = giftList[index],
-            url = `https://api.live.bilibili.com/gift/v2/live/bag_send?access_key=${_userData.access_key}&ruid=${liveData.target_id}&biz_id=${liveData.room_id}&bag_id=${thisGift.bagId}&gift_id=${thisGift.giftId}&gift_num=${thisGift.number}`;
+            url = `${_BILIURL.LIVE_GIFT_SEND}?access_key=${_userData.access_key}&ruid=${liveData.target_id}&biz_id=${liveData.room_id}&bag_id=${thisGift.bagId}&gift_id=${thisGift.giftId}&gift_num=${thisGift.number}`;
         if (index == 0) {
             $console.info(`共有${giftList.length}组礼物`);
         }
@@ -1044,7 +1044,7 @@ let sendLiveGiftList = (liveData, giftList, index = 0) => {
 };
 let getVideoDanmuku = mid => {
     $ui.loading(true);
-    const danmukuUrl = `https://comment.bilibili.com/${mid}.xml`;
+    const danmukuUrl = `${_BILIURL.DANMUKU_LIST}${mid}.xml`;
     $http.get({
         url: danmukuUrl
     }).then(function (resp) {

@@ -13,11 +13,21 @@ let UPDATE_CONFIG_GITHUB =
     MANGA_CLOCK_IN: "https://manga.bilibili.com/twirp/activity.v1.Activity/ClockIn",
     COVER_GALMOE: "https://www.galmoe.com/t.php?aid=",
     VIP_CHECKIN: "https://api.bilibili.com/x/vip/privilege/receive",
-    LATER_TO_WATCH: "https://api.bilibili.com/x/v2/history/toview?access_key="
+    LATER_TO_WATCH: "https://api.bilibili.com/x/v2/history/toview?access_key=",
+    BILIBILI_VIDEO: "bilibili://video/",
+    AV_BV_ONLINE: "http://api.bilibili.com/x/web-interface/archive/stat",
+    BILIBILI_WWW_VIDEO: "https://www.bilibili.com/av",
+    BILIBILI_SPACE: "https://space.bilibili.com/",
+    LIVE_FANS_MEDAL: "https://api.live.bilibili.com/fans_medal/v2/HighQps/received_medals?access_key=",
+    LIVE_WEB_ROOM: "https://live.bilibili.com/",
+    LIVE_GIFT_SEND: "https://api.live.bilibili.com/gift/v2/live/bag_send",
+    DANMUKU_LIST: "https://comment.bilibili.com/",
+    B23_TV_VIDEO: "https://b23.tv/av",
   },
   MEOWV = {
     WALLPAPER: "https://api.meowv.com/wallpaper",
-    SOUL: "https://api.meowv.com/soul"
+    SOUL: "https://api.meowv.com/soul",
+    CAT: "https://api.meowv.com/common/cat",
   },
   ISOYU = {
     BING: "https://api.isoyu.com/bing_images.php",
@@ -31,8 +41,21 @@ let UPDATE_CONFIG_GITHUB =
     DOWNLOAD_VIDEO: "https://api-new.app.acfun.cn/rest/app/play/playInfo/mp4",
     GET_VIDEO_INFO: "https://api-new.app.acfun.cn/rest/app/douga/info?dougaId=",
     SIGN_IN: "https://api-new.app.acfun.cn/rest/app/user/signIn",
-    GET_UPLOADER_VIDEO: "https://api-new.app.acfun.cn/rest/app/user/resource/query"
-};;
+    GET_UPLOADER_VIDEO: "https://api-new.app.acfun.cn/rest/app/user/resource/query",
+    ACFUN_DETAIL_VIDEO: "acfun://detail/video/",
+    ACFUN_WWW_V_AC: "https://www.acfun.cn/v/ac",
+    ACFUN_M_V_AC: "https://m.acfun.cn/v/?",
+    ACFUN_DETAIL_UPPAGE: "acfun://detail/upPage/",
+    ACFUN_WWW_UPPAGE: "https://www.acfun.cn/u/",
+    ACFUN_M_UPPAGE: "https://m.acfun.cn/upPage/",
+    VIDEO_CDN_ALICDN: "http://ali-video.acfun.cn/",
+    VIDEO_CDN_TXCDN: "http://tx-video.acfun.cn/",
+    ADD_FRIENDS: "https://wpa.qq.com/msgrd?v=3&site=acfun.cn&menu=yes&uin=",
+  },
+  API_VTBS_MOE = {
+    V1_DETAIL: "https://api.vtbs.moe/v1/detail/",
+    WEB_DETAIL: "https://vtbs.moe/detail/",
+  };
 module.exports = {
   UPDATE_CONFIG_GITHUB,
   UPDATE_CONFIG_JSDELIVR,
@@ -40,5 +63,6 @@ module.exports = {
   MEOWV,
   ISOYU,
   API_66MZ8_COM,
-  ACFUN
+  ACFUN,
+  API_VTBS_MOE,
 };
