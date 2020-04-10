@@ -22,9 +22,6 @@ let firefoxBrowserOpen = url => {
         url: url
     });
 };
-let acfunVideo = vid => {
-    $app.openURL(`acfun://detail/video/${vid}`);
-};
 let safariPreview = (url) => {
     $safari.open({
         url: url
@@ -59,13 +56,18 @@ let bilibiliVideo = vid => {
 let getBilibiliVideoUrl = vid => {
     return `bilibili://video/${vid}`;
 };
+let acfunVideo = vid => {
+    $app.openURL(getAcfunVideoUrl(vid));
+};
+let getAcfunVideoUrl = vid => {
+    return `acfun://detail/video/${vid}`;
+};
 module.exports = {
     alookBrowserOpen,
     chromeBrowserOpen,
     qqBrowserOpen,
     alookBrowserDownload,
     firefoxBrowserOpen,
-    acfunVideo,
     safariReadMode,
     safariAddReadingItem,
     avplayerVideo,
@@ -74,4 +76,6 @@ module.exports = {
     safariPreview,
     bilibiliVideo,
     getBilibiliVideoUrl,
+    acfunVideo,
+    getAcfunVideoUrl,
 };

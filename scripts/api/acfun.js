@@ -11,11 +11,12 @@ let _url = {
     getUploaderVideo: "https://api-new.app.acfun.cn/rest/app/user/resource/query"
 };
 let acVideoSiteList = [
-    "acfun://detail/upPage/",
+    "acfun://detail/video/",
     "https://www.acfun.cn/v/ac",
     "https://m.acfun.cn/v/?"
 ];
 let acUploaderSiteList = [
+    "acfun://detail/upPage/",
     "https://www.acfun.cn/u/",
     "https://m.acfun.cn/upPage/"
 ];

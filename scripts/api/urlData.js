@@ -24,7 +24,15 @@ let UPDATE_CONFIG_GITHUB =
   },
   API_66MZ8_COM = {
     PHONE_WALLPAPER: "https://api.66mz8.com/api/rand.img.php?type=%E5%A3%81%E7%BA%B8",
-  };
+  },
+  ACFUN = {
+    LOGIN: "https://id.app.acfun.cn/rest/app/login/signin",
+    GET_USER_INFO: "https://api-new.app.acfun.cn/rest/app/user/personalInfo",
+    DOWNLOAD_VIDEO: "https://api-new.app.acfun.cn/rest/app/play/playInfo/mp4",
+    GET_VIDEO_INFO: "https://api-new.app.acfun.cn/rest/app/douga/info?dougaId=",
+    SIGN_IN: "https://api-new.app.acfun.cn/rest/app/user/signIn",
+    GET_UPLOADER_VIDEO: "https://api-new.app.acfun.cn/rest/app/user/resource/query"
+};;
 module.exports = {
   UPDATE_CONFIG_GITHUB,
   UPDATE_CONFIG_JSDELIVR,
@@ -32,4 +40,5 @@ module.exports = {
   MEOWV,
   ISOYU,
   API_66MZ8_COM,
+  ACFUN
 };
