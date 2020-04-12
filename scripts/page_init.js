@@ -14,7 +14,8 @@ let urlCheck = require("./api/urlCheck.js"),
     instagram = require("./view/instagram.js"),
     freeSms = require("./view/free_sms_getter.js"),
     weather = require("./view/weather.js"),
-    misc = require("./view/misc.js");
+    misc = require("./view/misc.js"),
+    jshuwen = require("./view/jshuwen.js");
 
 let gotoUrl = url => {
     const newUrl = $text.URLDecode(url);
@@ -101,6 +102,7 @@ module.exports = {
     freeSms: freeSms.init,
     weather: weather.init,
     misc: misc.initListView,
+    jshuwen: jshuwen.getList,
     contextOpen,
     gotoUrl,
     scanQrcodeToGo,

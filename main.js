@@ -1,5 +1,5 @@
 let page = require("./scripts/page_init.js");
-let siteListL10n = ["MO_FISH", "ACFUN", "BILIBILI", "INSTAGRAM", "ZHIHU_DAILY"];
+let siteListL10n = ["MO_FISH", "ACFUN", "BILIBILI", "INSTAGRAM", "ZHIHU_DAILY","技术文"];
 let moreListL10n = ["CDN", "KUAIDI", "SM_MS", "IMAGE", "MUSIC_SEARCH", "免费短信接收", "天气查询", "杂项"];
 let siteList = siteListL10n.map(x => $l10n(x));
 let moreList = moreListL10n.map(x => $l10n(x));
@@ -89,6 +89,9 @@ let init = () => {
                                         break;
                                     case 4:
                                         page.zhihuDaily();
+                                        break;
+                                    case 5:
+                                        page.jshuwen();
                                         break;
                                     default:
                                         $ui.error("错误选项");

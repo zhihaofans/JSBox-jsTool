@@ -55,6 +55,9 @@ let UPDATE_CONFIG_GITHUB =
   API_VTBS_MOE = {
     V1_DETAIL: "https://api.vtbs.moe/v1/detail/",
     WEB_DETAIL: "https://vtbs.moe/detail/",
+  },
+  JISHUWEN = {
+    MAIN: "https://www.jishuwen.com/?p=",
   };
 module.exports = {
   UPDATE_CONFIG_GITHUB,
@@ -65,4 +68,5 @@ module.exports = {
   API_66MZ8_COM,
   ACFUN,
   API_VTBS_MOE,
+  JISHUWEN,
 };
