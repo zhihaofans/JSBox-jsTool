@@ -15,6 +15,7 @@ let urlCheck = require("./api/urlCheck.js"),
     freeSms = require("./view/free_sms_getter.js"),
     weather = require("./view/weather.js"),
     misc = require("./view/misc.js"),
+    dailyCheckin = require("./view/daily_check_in.js"),
     jshuwen = require("./view/jshuwen.js");
 
 let gotoUrl = url => {
@@ -103,6 +104,7 @@ module.exports = {
     weather: weather.init,
     misc: misc.initListView,
     jshuwen: jshuwen.getList,
+    dailyCheckin: dailyCheckin.initView,
     contextOpen,
     gotoUrl,
     scanQrcodeToGo,
