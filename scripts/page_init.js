@@ -15,6 +15,7 @@ let urlCheck = require("./api/urlCheck.js"),
     freeSms = require("./view/free_sms_getter.js"),
     weather = require("./view/weather.js"),
     misc = require("./view/misc.js"),
+    dmzj = require("./api/dmzj.js"),
     dailyCheckin = require("./view/daily_check_in.js"),
     jshuwen = require("./view/jshuwen.js");
 
@@ -25,7 +26,7 @@ let gotoUrl = url => {
     } else {
         $ui.alert({
             title: "内容错误",
-            message: "不是完整链接",
+            message: "不是完整链接"
         });
     }
 };
@@ -61,7 +62,7 @@ let contextOpen = query => {
             } else {
                 $ui.alert({
                     title: "外部调用错误",
-                    message: "空白url",
+                    message: "空白url"
                 });
             }
             break;
@@ -71,7 +72,7 @@ let contextOpen = query => {
         default:
             $ui.alert({
                 title: "外部调用错误",
-                message: "发现未支持的外部调用",
+                message: "发现未支持的外部调用"
             });
     }
 };
@@ -105,7 +106,8 @@ module.exports = {
     misc: misc.initListView,
     jshuwen: jshuwen.getList,
     dailyCheckin: dailyCheckin.initView,
+    dmzj: dmzj.init,
     contextOpen,
     gotoUrl,
-    scanQrcodeToGo,
+    scanQrcodeToGo
 };
