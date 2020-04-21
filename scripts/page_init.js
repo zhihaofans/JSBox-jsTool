@@ -15,9 +15,10 @@ let urlCheck = require("./api/urlCheck.js"),
     freeSms = require("./view/free_sms_getter.js"),
     weather = require("./view/weather.js"),
     misc = require("./view/misc.js"),
-    dmzj = require("./api/dmzj.js"),
+    dmzj = require("./view/dmzj.js"),
     dailyCheckin = require("./view/daily_check_in.js"),
-    jshuwen = require("./view/jshuwen.js");
+    jshuwen = require("./view/jshuwen.js"),
+    sbtscq = require("./view/xbtscq.js");
 
 let gotoUrl = url => {
     const newUrl = $text.URLDecode(url);
@@ -107,6 +108,7 @@ module.exports = {
     jshuwen: jshuwen.getList,
     dailyCheckin: dailyCheckin.initView,
     dmzj: dmzj.init,
+    xbtscq: xbtscq.init,
     contextOpen,
     gotoUrl,
     scanQrcodeToGo

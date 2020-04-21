@@ -6,7 +6,8 @@ let siteListL10n = [
     "INSTAGRAM",
     "ZHIHU_DAILY",
     "技术文",
-    "每日签到"
+    "每日签到",
+    "小编体生成器"
 ];
 let moreListL10n = [
     "CDN",
@@ -117,6 +118,9 @@ let init = () => {
                                             break;
                                         case 6:
                                             page.dailyCheckin();
+                                            break;
+                                        case 7:
+                                            page.xbtscq();
                                             break;
                                         default:
                                             $ui.error("错误选项");
