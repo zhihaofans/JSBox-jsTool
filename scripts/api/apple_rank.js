@@ -27,3 +27,7 @@ function iosRank(mode) {
             return undefined;
     }
 }
+
+module.exports = {
+    iosRank
+};

@@ -18,7 +18,8 @@ let urlCheck = require("./api/urlCheck.js"),
     dmzj = require("./view/dmzj.js"),
     dailyCheckin = require("./view/daily_check_in.js"),
     jshuwen = require("./view/jshuwen.js"),
-    sbtscq = require("./view/xbtscq.js");
+    xbtscq = require("./view/xbtscq.js"),
+    appleRank = require("./view/apple_rank.js");
 
 let gotoUrl = url => {
     const newUrl = $text.URLDecode(url);
@@ -109,6 +110,7 @@ module.exports = {
     dailyCheckin: dailyCheckin.initView,
     dmzj: dmzj.init,
     xbtscq: xbtscq.init,
+    appleRank: appleRank.initView,
     contextOpen,
     gotoUrl,
     scanQrcodeToGo

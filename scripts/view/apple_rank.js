@@ -1,4 +1,42 @@
-let _apple = require("../api/urlData.js").APPLE;
+let appleRank = require("../api/apple_rank.js");
+
+function rankResultItem(_title, _url, _icon = undefined) {
+    this.title = _title;
+    this.url = _url;
+    this.icon = _icon;
+}
+
+function showResultList(mode) {
+    $ui.loading(true);
+    appleRank.iosRank(mode).then(function (resp) {
+        var data = resp.data;
+        if (data) {
+            const resultData = data.feed;
+            const rankResultList = resultData.entry.map(item => new rankResultItem(item.title.label, item.id.label, item["im:image"][0].label));
+            $ui.loading(false);
+            $ui.push({
+                props: {
+                    title: resultData.title.label.replace("iTunes Store：", "")
+                },
+                views: [{
+                    type: "list",
+                    props: {
+                        data: rankResultList.map(item => item.title)
+                    },
+                    layout: $layout.fill,
+                    events: {
+                        didSelect: function (_sender, indexPath, _data) {
+                            $app.openURL(rankResultList[indexPath.row].url);
+                        }
+                    }
+                }]
+            });
+        } else {
+            $ui.loading(false);
+            $ui.error("错误数据");
+        }
+    });
+}
 
 function initView() {
     $ui.push({
@@ -9,7 +47,7 @@ function initView() {
             type: "list",
             props: {
                 data: [{
-                    title: "iOS",
+                    title: "iOS(CN)",
                     rows: ["免费APP", "收费APP", "畅销APP"]
                 }]
             },
@@ -23,6 +61,16 @@ function initView() {
                             // iOS
                             switch (row) {
                                 case 0:
+                                    showResultList("FREE_APP");
+                                    break;
+                                case 1:
+                                    showResultList("PAID_APP");
+                                    break;
+                                case 2:
+                                    showResultList("GROSSING_APP");
+                                    break;
+                                default:
+                                    $ui.error("未知错误");
                             }
 
                     }
@@ -31,3 +79,7 @@ function initView() {
         }]
     });
 }
+
+module.exports = {
+    initView
+};
