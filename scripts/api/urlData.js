@@ -58,6 +58,13 @@ let UPDATE_CONFIG_GITHUB =
   },
   JISHUWEN = {
     MAIN: "https://www.jishuwen.com/?p=",
+  },
+  APPLE = {
+    IOS_APP_STORE_RANK: {
+      FREE_APP: "https://itunes.apple.com/cn/rss/topfreeapplications/limit=100/genre=25129/json",
+      PAID_APP: "https://itunes.apple.com/cn/rss/toppaidapplications/limit=100/genre=25129/json",
+      GROSSING_APP: "https://itunes.apple.com/cn/rss/topgrossingapplications/limit=100/genre=25129/json"
+    }
   };
 module.exports = {
   UPDATE_CONFIG_GITHUB,
@@ -69,4 +76,5 @@ module.exports = {
   ACFUN,
   API_VTBS_MOE,
   JISHUWEN,
+  APPLE,
 };
