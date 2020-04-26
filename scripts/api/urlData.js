@@ -61,9 +61,10 @@ let UPDATE_CONFIG_GITHUB =
   },
   APPLE = {
     IOS_APP_STORE_RANK: {
-      FREE_APP: "https://itunes.apple.com/cn/rss/topfreeapplications/limit=100/genre=25129/json",
-      PAID_APP: "https://itunes.apple.com/cn/rss/toppaidapplications/limit=100/genre=25129/json",
-      GROSSING_APP: "https://itunes.apple.com/cn/rss/topgrossingapplications/limit=100/genre=25129/json"
+      HOST: "https://itunes.apple.com/",
+      FREE_APP: "/rss/topfreeapplications/limit=100/genre=25129/json",
+      PAID_APP: "/rss/toppaidapplications/limit=100/genre=25129/json",
+      GROSSING_APP: "/rss/topgrossingapplications/limit=100/genre=25129/json"
     }
   };
 module.exports = {
