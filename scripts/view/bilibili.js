@@ -71,7 +71,7 @@ let init = url => {
                                                                   "获取用户信息",
                                                               disabled: false, // Optional
                                                               handler: function() {
-                                                                  biliApi.getUserInfo();
+                                                                  biliApi.getMyInfo();
                                                               }
                                                           },
                                                           {
@@ -93,9 +93,10 @@ let init = url => {
                                                 : login();
                                             break;
                                         case 1:
-                                            biliApi.checkAccessKey()
+                                        $ui.error("该功能暂停使用");
+                                            /*biliApi.checkAccessKey()
                                                 ? biliApi.getUserInfo()
-                                                : $ui.error("未登录");
+                                                : $ui.error("未登录");*/
                                             break;
                                         case 2:
                                             biliApi.laterToWatch();

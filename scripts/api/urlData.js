@@ -23,7 +23,7 @@ let UPDATE_CONFIG_GITHUB =
     LIVE_GIFT_SEND: "https://api.live.bilibili.com/gift/v2/live/bag_send",
     DANMUKU_LIST: "https://comment.bilibili.com/",
     B23_TV_VIDEO: "https://b23.tv/av",
-    MY_INFO: "https://app.bilibili.com/x/v2/account/mine?platform=ios&access_key=",
+    MY_INFO: "https://app.bilibili.com/x/v2/account/mine",
     GET_SIGN_URL: "https://api.kaaass.net/biliapi/urlgene"
   },
   MEOWV = {
