@@ -24,7 +24,10 @@ let UPDATE_CONFIG_GITHUB =
     DANMUKU_LIST: "https://comment.bilibili.com/",
     B23_TV_VIDEO: "https://b23.tv/av",
     MY_INFO: "https://app.bilibili.com/x/v2/account/mine",
-    GET_SIGN_URL: "https://api.kaaass.net/biliapi/urlgene"
+    GET_SIGN_URL: "https://api.kaaass.net/biliapi/urlgene",
+    BILIOB:{
+      VIDEO:"https://www.biliob.com/video/av"
+    }
   },
   MEOWV = {
     WALLPAPER: "https://api.meowv.com/wallpaper",
