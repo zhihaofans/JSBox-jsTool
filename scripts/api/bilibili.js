@@ -20,13 +20,11 @@ let _cacheKey = {
             "bili-universal/9320 CFNetwork/1125.2 Darwin/19.5.0 os/ios model/iPhone 11 mobi_app/iphone osVer/13.4.5 network/1"
     };
 // function
-
-let init = () => {
+function init() {
     //初始化，加载缓存
     loadLoginData();
     return checkAccessKey();
-};
-
+}
 function GiftData(_giftId, _bagId, _number) {
     this.giftId = _giftId;
     this.bagId = _bagId;
@@ -337,7 +335,7 @@ let getVidFromUrl = url => {
     return newUrl;
 };
 
-let saveCache = (mode, str) => {
+function saveCache(mode, str) {
     $file.mkdir(_cacheDir + mode);
     return $file.write({
         path: `${_cacheDir}${mode}/${sys.getNowUnixTime()}.json`,
@@ -345,21 +343,21 @@ let saveCache = (mode, str) => {
             string: str
         })
     });
-};
-let saveLoginData = (access_key, uid) => {
+}
+function saveLoginData(access_key, uid) {
     _userData.access_key = access_key;
     _userData.uid = uid;
     $cache.set(_cacheKey.access_key, access_key);
     $cache.set(_cacheKey.uid, uid);
-};
-let removeLoginData = () => {
+}
+function removeLoginData() {
     _userData.access_key = "";
     _userData.uid = 0;
     $cache.remove(_cacheKey.access_key);
     $cache.remove(_cacheKey.uid);
     $ui.toast("已清除登录数据");
-};
-let loadLoginData = () => {
+}
+function loadLoginData() {
     const cacheKey = $cache.get(_cacheKey.access_key);
     const uid = $cache.get(_cacheKey.uid);
     $console.info(`cacheKey:${cacheKey}\nuid:${uid}`);
@@ -369,12 +367,12 @@ let loadLoginData = () => {
     if (uid) {
         _userData.uid = uid;
     }
-};
-let saveAccessKey = access_key => {
+}
+function saveAccessKey(access_key) {
     _userData.access_key = access_key;
     $cache.set(_cacheKey.access_key, _userData.access_key);
     $ui.toast("已保存access key");
-};
+}
 
 let loadAccessKey = () => {
     const cacheKey = $cache.get(_cacheKey.access_key);
