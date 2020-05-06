@@ -457,7 +457,8 @@ let getVideoInfo = vid => {
                                                 "下载封面",
                                                 "下载up头像",
                                                 "视频解析",
-                                                "查看弹幕"
+                                                "查看弹幕",
+                                                "BiliOB观测者"
                                             ]
                                         },
                                         {
@@ -521,6 +522,9 @@ let getVideoInfo = vid => {
                                                                 }
                                                             });
                                                         }
+                                                        break;
+                                                    case 4:
+                                                        
                                                         break;
                                                     default:
                                                         $ui.error("不支持");
