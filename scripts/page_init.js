@@ -21,7 +21,7 @@ let urlCheck = require("./api/urlCheck.js"),
     xbtscq = require("./view/xbtscq.js"),
     appleRank = require("./view/apple_rank.js");
 
-let gotoUrl = url => {
+function gotoUrl(url) {
     const newUrl = $text.URLDecode(url);
     if (newUrl.checkIfUrl()) {
         checkMod(newUrl);
@@ -31,8 +31,9 @@ let gotoUrl = url => {
             message: "不是完整链接"
         });
     }
-};
-let checkMod = url => {
+}
+
+function checkMod(url) {
     if (urlCheck.isBilibiliUrl(url)) {
         modOpen("bilibili", url);
     } else if (urlCheck.isAcfunUrl(url)) {
@@ -40,8 +41,9 @@ let checkMod = url => {
     } else {
         $ui.error("不支持该网址的分享");
     }
-};
-let modOpen = (mod, url) => {
+}
+
+function modOpen(mod, url) {
     switch (mod) {
         case "bilibili":
             bilibili.init(url);
@@ -55,8 +57,10 @@ let modOpen = (mod, url) => {
         default:
             $ui.error("不支持该功能");
     }
-};
-let contextOpen = query => {
+}
+
+function contextOpen
+function {
     switch (query.mod) {
         case "url":
             if (query.url) {
@@ -77,8 +81,9 @@ let contextOpen = query => {
                 message: "发现未支持的外部调用"
             });
     }
-};
-let scanQrcodeToGo = () => {
+}
+
+function scanQrcodeToGo() {
     $qrcode.scan({
         handler(str) {
             if (str.checkIfUrl()) {
@@ -91,7 +96,7 @@ let scanQrcodeToGo = () => {
             $ui.error("Cancelled");
         }
     });
-};
+}
 module.exports = {
     mofish: mofish.init,
     cdn: cdn.init,
