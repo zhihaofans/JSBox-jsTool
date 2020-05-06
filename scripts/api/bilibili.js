@@ -103,7 +103,7 @@ function getGiftListByExp(giftData, exp) {
     }
     return giftList;
 }
-fgunction getLiveGiftList(liveData = undefined, mode = 0) {
+function getLiveGiftList(liveData = undefined, mode = 0) {
     var sendGiftToUid, sendGiftToRoom, needExp;
     if (liveData) {
         sendGiftToUid = liveData.target_id;
