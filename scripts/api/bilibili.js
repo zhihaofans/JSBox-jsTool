@@ -103,6 +103,7 @@ function getGiftListByExp(giftData, exp) {
     }
     return giftList;
 }
+
 function getLiveGiftList(liveData = undefined, mode = 0) {
     var sendGiftToUid, sendGiftToRoom, needExp;
     if (liveData) {
@@ -1011,6 +1012,7 @@ function getLiveroomInfo(mid) {
 }
 
 function getFansMedalList() {
+    // 已拥有的粉丝勋章
     $ui.loading(true);
     if (_userData.access_key) {
         const link = _BILIURL.LIVE_FANS_MEDAL + _userData.access_key;
@@ -1079,36 +1081,24 @@ function getFansMedalList() {
                                     menu: {
                                         title: "菜单",
                                         items: [{
-                                                title: "打开直播间",
+                                                title: "详细信息",
                                                 symbol: "play.rectangle",
-                                                handler: (
-                                                    sender,
-                                                    indexPath
-                                                ) => {
+                                                handler: (sender, indexPath) => {
                                                     const liveData =
-                                                        indexPath.section ==
-                                                        0 ?
-                                                        onlineList[
-                                                            indexPath
-                                                            .row
-                                                        ] :
+                                                        indexPath.section == 0 ?
+                                                        onlineList[indexPath.row] :
                                                         offlineList[
-                                                            indexPath
-                                                            .row
+                                                            indexPath.row
                                                         ];
-                                                    $app.openURL(
-                                                        _BILIURL.LIVE_WEB_ROOM +
-                                                        liveData.room_id
-                                                    );
+                                                    $ui.alert({
+                                                        title: `[${liveData.medal_name}]${liveData.target_name}`,
+                                                        message: liveData
+                                                    });
                                                 }
-                                            },
-                                            {
+                                            }, {
                                                 title: "通过vtbs.moe获取vTuber信息",
                                                 symbol: "play.rectangle",
-                                                handler: (
-                                                    sender,
-                                                    indexPath
-                                                ) => {
+                                                handler: (sender, indexPath) => {
                                                     const liveData =
                                                         indexPath.section ==
                                                         0 ?
@@ -1128,10 +1118,7 @@ function getFansMedalList() {
                                             {
                                                 title: "赠送礼物",
                                                 symbol: "gift",
-                                                handler: (
-                                                    sender,
-                                                    indexPath
-                                                ) => {
+                                                handler: (sender, indexPath) => {
                                                     const liveData =
                                                         indexPath.section ==
                                                         0 ?
@@ -1143,11 +1130,7 @@ function getFansMedalList() {
                                                             indexPath
                                                             .row
                                                         ];
-                                                    if (
-                                                        liveData.day_limit -
-                                                        liveData.today_feed >
-                                                        0
-                                                    ) {
+                                                    if (liveData.day_limit - liveData.today_feed > 0) {
                                                         getLiveGiftList(
                                                             liveData
                                                         );
@@ -1162,10 +1145,7 @@ function getFansMedalList() {
                                             {
                                                 title: "自动赠送礼物",
                                                 symbol: "gift",
-                                                handler: (
-                                                    sender,
-                                                    indexPath
-                                                ) => {
+                                                handler: (sender, indexPath) => {
                                                     const liveData =
                                                         indexPath.section ==
                                                         0 ?
@@ -1199,21 +1179,15 @@ function getFansMedalList() {
                                 },
                                 layout: $layout.fill,
                                 events: {
-                                    didSelect: function (
-                                        sender,
-                                        indexPath,
-                                        data
-                                    ) {
+                                    didSelect: function (sender, indexPath, data) {
                                         const liveData =
                                             indexPath.section == 0 ?
                                             onlineList[indexPath.row] :
-                                            offlineList[
-                                                indexPath.row
-                                            ];
-                                        $ui.alert({
-                                            title: `[${liveData.medal_name}]${liveData.target_name}`,
-                                            message: liveData
-                                        });
+                                            offlineList[indexPath.row];
+                                        $app.openURL(
+                                            _BILIURL.LIVE_WEB_ROOM +
+                                            liveData.room_id
+                                        );
                                     }
                                 }
                             }]
