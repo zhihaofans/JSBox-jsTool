@@ -59,8 +59,7 @@ function modOpen(mod, url) {
     }
 }
 
-function contextOpen
-function {
+function contextOpen(query) {
     switch (query.mod) {
         case "url":
             if (query.url) {
