@@ -26,7 +26,8 @@ let UPDATE_CONFIG_GITHUB =
     MY_INFO: "https://app.bilibili.com/x/v2/account/mine",
     GET_SIGN_URL: "https://api.kaaass.net/biliapi/urlgene",
     BILIOB:{
-      VIDEO:"https://www.biliob.com/video/av"
+      VIDEO:"https://www.biliob.com/video/av",
+      API_VIDEO:"https://www.biliob.com/api/video/v2/av"
     }
   },
   MEOWV = {

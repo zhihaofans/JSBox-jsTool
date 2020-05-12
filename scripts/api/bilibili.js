@@ -507,7 +507,7 @@ function getVideoInfo(vid) {
                                                     }
                                                     break;
                                                 case 4:
-
+                                                    getBiliobVideo(vid);
                                                     break;
                                                 default:
                                                     $ui.error("不支持");
@@ -1680,6 +1680,25 @@ function getSignUrl(host, param, android = false) {
             android,
         header: {
             "user-agent": kaaassUA
+        }
+    });
+}
+
+function getBiliobVideo(avid) {
+    $http.get({
+        url: _BILIURL.BILIOB.API_VIDEO + avid
+    }).then(function (resp) {
+        var data = resp.data;
+        if (data) {
+            $ui.alert({
+                title: "结果",
+                message: data,
+                actions: [{
+                    title: "ok",
+                    disabled: false,
+                    handler: function () {}
+                }]
+            });
         }
     });
 }
