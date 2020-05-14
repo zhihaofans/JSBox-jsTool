@@ -719,7 +719,7 @@ function showDownList(thisFile, copyStr) {
     });
 }
 
-function getAccessKey(userName, password) {
+function getAccessKeyByLogin(userName, password) {
     $ui.loading(true);
     $http.post({
         url: _URL.BILIBILI.GET_ACCESS_KEY,
@@ -1698,7 +1698,7 @@ function getBiliobVideo(avid) {
         if (v) {
             $ui.push({
                 props: {
-                    title: 'av${v.aid}'
+                    title: `av${v.aid}`
                 },
                 views: [{
                     type: "list",
@@ -1746,6 +1746,18 @@ function getBiliobVideo(avid) {
                                                 message: textList[1]
                                             });
                                     }
+                                    break;
+                                case 1:
+                                    switch (row) {
+                                        case 0:
+                                            $ui.preview({
+                                                title: `av${v.aid}`,
+                                                url: v.pic
+                                            });
+                                            break;
+
+                                    }
+
                             }
                         }
                     }
@@ -1765,9 +1777,109 @@ function getBiliobVideo(avid) {
         }
     });
 }
+
+function openLiveDanmuku(liveroomId) {
+    $ui.preview({
+        title: "BiliChat",
+        url: _BILIURL.BILICHAT + liveroomId
+    });
+}
+
+function getOnlineLiver() {
+    if (isLogin()) {
+        $ui.loading(true);
+        $http.get({
+            url: _BILIURL.LIVE_ONLINE + _userData.access_key
+        }).then(function (resp) {
+            var data = resp.data;
+            if (data) {
+                if (data.code == 0) {
+                    const rData = data.data;
+                    if (rData.total_count > 0) {
+                        const liveRoomList = rData.rooms;
+                        $ui.loading(false);
+                        $ui.push({
+                            props: {
+                                title: rData.total_count + `人在播`
+                            },
+                            views: [{
+                                type: "list",
+                                props: {
+                                    data: liveRoomList.map(room => room.uname)
+                                },
+                                layout: $layout.fill,
+                                events: {
+                                    didSelect: function (_sender, indexPath, _data) {
+                                        const thisRoom = liveRoomList[indexPath.row];
+                                        $ui.push({
+                                            props: {
+                                                title: thisRoom.uname
+                                            },
+                                            views: [{
+                                                type: "list",
+                                                props: {
+                                                    data: [{
+                                                        title: "主播",
+                                                        rows: [
+                                                            `标题：${thisRoom.title}`
+                                                        ]
+                                                    }, {
+                                                        title: "直播间",
+                                                        rows: ["实时弹幕"]
+                                                    }]
+                                                },
+                                                layout: $layout.fill,
+                                                events: {
+                                                    didSelect: function (__sender, _indexPath, __data) {
+                                                        switch (_indexPath.section) {
+                                                            case 1:
+                                                                switch (_indexPath.row) {
+                                                                    case 0:
+                                                                        openLiveDanmuku(thisRoom.roomid);
+                                                                        break;
+                                                                }
+                                                                break;
+                                                            default:
+                                                                $ui.alert({
+                                                                    title: "",
+                                                                    message: thisRoom,
+                                                                });
+
+                                                        }
+                                                    }
+                                                }
+                                            }]
+                                        });
+                                    }
+                                }
+                            }]
+                        });
+                    } else {
+                        $ui.loading(false);
+                        $ui.alert({
+                            title: "错误",
+                            message: "没人在播",
+                        });
+                    }
+                } else {
+                    $ui.loading(false);
+                    $ui.alert({
+                        title: `错误代码:${data.code}`,
+                        message: data.message,
+                    });
+                }
+            } else {
+                $ui.loading(false);
+                $ui.error("未知错误");
+            }
+        });
+    } else {
+        $ui.error("未登录");
+    }
+}
 module.exports = {
     getVideoInfo,
-    getAccessKey,
+    getAccessKey: getAccessKeyByLogin,
     checkAccessKey,
     getUserInfo,
     saveAccessKey,
@@ -1785,5 +1897,7 @@ module.exports = {
     getCoverFromGalmoe,
     vipCheckin,
     laterToWatch,
-    getMyInfo
+    getMyInfo,
+    openLiveDanmuku,
+    getOnlineLiver
 };

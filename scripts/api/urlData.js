@@ -25,10 +25,12 @@ let UPDATE_CONFIG_GITHUB =
     B23_TV_VIDEO: "https://b23.tv/av",
     MY_INFO: "https://app.bilibili.com/x/v2/account/mine",
     GET_SIGN_URL: "https://api.kaaass.net/biliapi/urlgene",
-    BILIOB:{
-      VIDEO:"https://www.biliob.com/video/av",
-      API_VIDEO:"https://www.biliob.com/api/video/v2/av"
-    }
+    BILIOB: {
+      VIDEO: "https://www.biliob.com/video/av",
+      API_VIDEO: "https://www.biliob.com/api/video/v2/av"
+    },
+    BILICHAT: "https://bilichat.3shain.com/gkd/",
+    LIVE_ONLINE: "https://api.live.bilibili.com/xlive/app-interface/v1/relation/liveAnchor?access_key="
   },
   MEOWV = {
     WALLPAPER: "https://api.meowv.com/wallpaper",

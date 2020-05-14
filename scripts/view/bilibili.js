@@ -20,35 +20,36 @@ function init(url) {
                 type: "list",
                 props: {
                     data: [{
-                        title: "账号",
-                        rows: [
-                            "登录账号",
-                            "获取用户信息",
-                            "稍后再看",
-                            "我的个人资料"
-                        ]
-                    },
-                    {
-                        title: "视频",
-                        rows: [
-                            "获取视频信息",
-                            "AV&BV互转",
-                            "获取投稿封面"
-                        ]
-                    },
-                    {
-                        title: "直播",
-                        rows: [
-                            "获取直播间拥有礼物",
-                            "查看vTuber状态",
-                            "查看拥有的粉丝勋章",
-                            "瓜子钱包"
-                        ]
-                    },
-                    {
-                        title: "漫画",
-                        rows: ["签到"]
-                    }
+                            title: "账号",
+                            rows: [
+                                "登录账号",
+                                "获取用户信息",
+                                "稍后再看",
+                                "我的个人资料"
+                            ]
+                        },
+                        {
+                            title: "视频",
+                            rows: [
+                                "获取视频信息",
+                                "AV&BV互转",
+                                "获取投稿封面"
+                            ]
+                        },
+                        {
+                            title: "直播",
+                            rows: [
+                                "获取直播间拥有礼物",
+                                "查看vTuber状态",
+                                "粉丝勋章",
+                                "瓜子钱包",
+                                "我的关注"
+                            ]
+                        },
+                        {
+                            title: "漫画",
+                            rows: ["签到"]
+                        }
                     ]
                 },
                 layout: $layout.fill,
@@ -63,25 +64,25 @@ function init(url) {
                                                 title: "已登录",
                                                 message: "本地发现登录缓存，还要登录吗",
                                                 actions: [{
-                                                    title: "获取用户信息",
-                                                    disabled: false, // Optional
-                                                    handler: function () {
-                                                        biliApi.getMyInfo();
+                                                        title: "获取用户信息",
+                                                        disabled: false, // Optional
+                                                        handler: function () {
+                                                            biliApi.getMyInfo();
+                                                        }
+                                                    },
+                                                    {
+                                                        title: "清空登录缓存重新登录",
+                                                        disabled: false, // Optional
+                                                        handler: function () {
+                                                            biliApi.removeLoginData();
+                                                            login();
+                                                        }
+                                                    },
+                                                    {
+                                                        title: "关闭",
+                                                        disabled: false, // Optional
+                                                        handler: function () {}
                                                     }
-                                                },
-                                                {
-                                                    title: "清空登录缓存重新登录",
-                                                    disabled: false, // Optional
-                                                    handler: function () {
-                                                        biliApi.removeLoginData();
-                                                        login();
-                                                    }
-                                                },
-                                                {
-                                                    title: "关闭",
-                                                    disabled: false, // Optional
-                                                    handler: function () { }
-                                                }
                                                 ]
                                             }) :
                                             login();
@@ -312,6 +313,11 @@ function init(url) {
                                     case 3:
                                         biliApi.isLogin() ?
                                             biliApi.getWallet() :
+                                            $ui.error("未登录");
+                                        break;
+                                    case 4:
+                                        biliApi.isLogin() ?
+                                            biliApi.getOnlineLiver() :
                                             $ui.error("未登录");
                                         break;
                                     default:
