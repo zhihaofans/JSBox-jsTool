@@ -970,7 +970,7 @@ function LiveroomInfo(liveroomInfoData) {
     this.time = liveroomInfoData.time; //Int
 }
 
-function getLiveroomInfo(mid) {
+function getVtbLiveroomInfo(mid) {
     $ui.loading(true);
     $http
         .get({
@@ -1020,195 +1020,168 @@ function getFansMedalList() {
     $ui.loading(true);
     if (_userData.access_key) {
         const link = _BILIURL.LIVE_FANS_MEDAL + _userData.access_key;
-        $http
-            .get({
-                url: link
-            })
-            .then(function (resp) {
-                var data = resp.data;
-                if (data.code == 0) {
-                    $ui.toast(data.message || data.msg || "已拥有的粉丝勋章");
-                    const medalData = data.data;
-                    const medalList = medalData.list;
-                    if (medalList.length > 0) {
-                        var onlineList = [];
-                        var offlineList = [];
-                        medalList.map(m => {
-                            m.live_stream_status == 1 ?
-                                onlineList.push(m) :
-                                offlineList.push(m);
-                        });
-                        medalList.map(
-                            m =>
-                            `[${m.medal_name}]${m.target_name}` +
-                            (m.icon_code ? `[${m.icon_text}]` : "")
-                        );
-                        $ui.loading(false);
-                        $ui.push({
+        $http.get({
+            url: link
+        }).then(function (resp) {
+            var data = resp.data;
+            if (data.code == 0) {
+                $ui.toast(data.message || data.msg || "已拥有的粉丝勋章");
+                const medalData = data.data;
+                const medalList = medalData.list;
+                if (medalList.length > 0) {
+                    var onlineList = [];
+                    var offlineList = [];
+                    medalList.map(m => m.live_stream_status == 1 ? onlineList.push(m) : offlineList.push(m));
+                    medalList.map(m => `[${m.medal_name}]${m.target_name}` + (m.icon_code ? `[${m.icon_text}]` : ""));
+                    $ui.loading(false);
+                    $ui.push({
+                        props: {
+                            title: `数量${medalData.cnt}/${medalData.max}`
+                        },
+                        views: [{
+                            type: "list",
                             props: {
-                                title: `数量${medalData.cnt}/${medalData.max}`
-                            },
-                            views: [{
-                                type: "list",
-                                props: {
-                                    data: [{
-                                            title: "在播了",
-                                            rows: onlineList.map(
-                                                m =>
-                                                `[${m.medal_name}]${m.target_name}` +
-                                                (m.icon_code ?
-                                                    `[${m.icon_text}]` :
-                                                    "") +
-                                                (m.today_feed ==
-                                                    m.day_limit ?
-                                                    `[已满]` :
-                                                    `[还差${m.day_limit -
+                                data: [{
+                                        title: "在播了",
+                                        rows: onlineList.map(
+                                            m =>
+                                            `[${m.medal_name}]${m.target_name}` + (m.icon_code ? `[${m.icon_text}]` : "") +
+                                            (m.today_feed == m.day_limit ? `[已满]` : `[还差${m.day_limit -m.today_feed}]`)
+                                        )
+                                    },
+                                    {
+                                        title: "咕咕咕",
+                                        rows: offlineList.map(
+                                            m =>
+                                            `[${m.medal_name}]${m.target_name}` +
+                                            (m.icon_code ?
+                                                `[${m.icon_text}]` :
+                                                "") +
+                                            (m.today_feed ==
+                                                m.day_limit ?
+                                                `[已满]` :
+                                                `[还差${m.day_limit -
                                                                   m.today_feed}]`)
-                                            )
+                                        )
+                                    }
+                                ],
+                                menu: {
+                                    title: "菜单",
+                                    items: [{
+                                            title: "详细信息",
+                                            symbol: "play.rectangle",
+                                            handler: (sender, indexPath) => {
+                                                const liveData =
+                                                    indexPath.section == 0 ?
+                                                    onlineList[indexPath.row] :
+                                                    offlineList[
+                                                        indexPath.row
+                                                    ];
+                                                $ui.alert({
+                                                    title: `[${liveData.medal_name}]${liveData.target_name}`,
+                                                    message: liveData
+                                                });
+                                            }
+                                        }, {
+                                            title: "通过vtbs.moe获取vTuber信息",
+                                            symbol: "play.rectangle",
+                                            handler: (sender, indexPath) => {
+                                                const liveData =
+                                                    indexPath.section ==
+                                                    0 ?
+                                                    onlineList[
+                                                        indexPath
+                                                        .row
+                                                    ] :
+                                                    offlineList[
+                                                        indexPath
+                                                        .row
+                                                    ];
+                                                getVtbLiveroomInfo(
+                                                    liveData.target_id
+                                                );
+                                            }
                                         },
                                         {
-                                            title: "咕咕咕",
-                                            rows: offlineList.map(
-                                                m =>
-                                                `[${m.medal_name}]${m.target_name}` +
-                                                (m.icon_code ?
-                                                    `[${m.icon_text}]` :
-                                                    "") +
-                                                (m.today_feed ==
-                                                    m.day_limit ?
-                                                    `[已满]` :
-                                                    `[还差${m.day_limit -
-                                                                  m.today_feed}]`)
-                                            )
-                                        }
-                                    ],
-                                    menu: {
-                                        title: "菜单",
-                                        items: [{
-                                                title: "详细信息",
-                                                symbol: "play.rectangle",
-                                                handler: (sender, indexPath) => {
-                                                    const liveData =
-                                                        indexPath.section == 0 ?
-                                                        onlineList[indexPath.row] :
-                                                        offlineList[
-                                                            indexPath.row
-                                                        ];
+                                            title: "赠送礼物",
+                                            symbol: "gift",
+                                            handler: (sender, indexPath) => {
+                                                const liveData = indexPath.section == 0 ?
+                                                    onlineList[indexPath.row] :
+                                                    offlineList[indexPath.row];
+                                                if (liveData.day_limit - liveData.today_feed > 0) {
+                                                    getLiveGiftList(liveData);
+                                                } else {
                                                     $ui.alert({
-                                                        title: `[${liveData.medal_name}]${liveData.target_name}`,
-                                                        message: liveData
+                                                        title: "不用送了",
+                                                        message: "今日亲密度已满"
                                                     });
                                                 }
-                                            }, {
-                                                title: "通过vtbs.moe获取vTuber信息",
-                                                symbol: "play.rectangle",
-                                                handler: (sender, indexPath) => {
-                                                    const liveData =
-                                                        indexPath.section ==
-                                                        0 ?
-                                                        onlineList[
-                                                            indexPath
-                                                            .row
-                                                        ] :
-                                                        offlineList[
-                                                            indexPath
-                                                            .row
-                                                        ];
-                                                    getLiveroomInfo(
-                                                        liveData.target_id
+                                            }
+                                        },
+                                        {
+                                            title: "自动赠送礼物",
+                                            symbol: "gift",
+                                            handler: (sender, indexPath) => {
+                                                const liveData =
+                                                    indexPath.section ==
+                                                    0 ?
+                                                    onlineList[
+                                                        indexPath
+                                                        .row
+                                                    ] :
+                                                    offlineList[
+                                                        indexPath
+                                                        .row
+                                                    ];
+                                                if (
+                                                    liveData.day_limit -
+                                                    liveData.today_feed >
+                                                    0
+                                                ) {
+                                                    getLiveGiftList(
+                                                        liveData,
+                                                        1
                                                     );
-                                                }
-                                            },
-                                            {
-                                                title: "赠送礼物",
-                                                symbol: "gift",
-                                                handler: (sender, indexPath) => {
-                                                    const liveData =
-                                                        indexPath.section ==
-                                                        0 ?
-                                                        onlineList[
-                                                            indexPath
-                                                            .row
-                                                        ] :
-                                                        offlineList[
-                                                            indexPath
-                                                            .row
-                                                        ];
-                                                    if (liveData.day_limit - liveData.today_feed > 0) {
-                                                        getLiveGiftList(
-                                                            liveData
-                                                        );
-                                                    } else {
-                                                        $ui.alert({
-                                                            title: "不用送了",
-                                                            message: "今日亲密度已满"
-                                                        });
-                                                    }
-                                                }
-                                            },
-                                            {
-                                                title: "自动赠送礼物",
-                                                symbol: "gift",
-                                                handler: (sender, indexPath) => {
-                                                    const liveData =
-                                                        indexPath.section ==
-                                                        0 ?
-                                                        onlineList[
-                                                            indexPath
-                                                            .row
-                                                        ] :
-                                                        offlineList[
-                                                            indexPath
-                                                            .row
-                                                        ];
-                                                    if (
-                                                        liveData.day_limit -
-                                                        liveData.today_feed >
-                                                        0
-                                                    ) {
-                                                        getLiveGiftList(
-                                                            liveData,
-                                                            1
-                                                        );
-                                                    } else {
-                                                        $ui.alert({
-                                                            title: "不用送了",
-                                                            message: "今日亲密度已满"
-                                                        });
-                                                    }
+                                                } else {
+                                                    $ui.alert({
+                                                        title: "不用送了",
+                                                        message: "今日亲密度已满"
+                                                    });
                                                 }
                                             }
-                                        ]
-                                    }
-                                },
-                                layout: $layout.fill,
-                                events: {
-                                    didSelect: function (sender, indexPath, data) {
-                                        const liveData =
-                                            indexPath.section == 0 ?
-                                            onlineList[indexPath.row] :
-                                            offlineList[indexPath.row];
-                                        $app.openURL(
-                                            _BILIURL.LIVE_WEB_ROOM +
-                                            liveData.room_id
-                                        );
-                                    }
+                                        }
+                                    ]
                                 }
-                            }]
-                        });
-                    } else {
-                        $ui.loading(false);
-                        $ui.alert({
-                            title: "没有勋章",
-                            message: `粉丝勋章数量为${medalData.cnt ||
-                                medalList.length}`
-                        });
-                    }
+                            },
+                            layout: $layout.fill,
+                            events: {
+                                didSelect: function (sender, indexPath, data) {
+                                    const liveData =
+                                        indexPath.section == 0 ?
+                                        onlineList[indexPath.row] :
+                                        offlineList[indexPath.row];
+                                    $app.openURL(
+                                        _BILIURL.LIVE_WEB_ROOM +
+                                        liveData.room_id
+                                    );
+                                }
+                            }
+                        }]
+                    });
                 } else {
                     $ui.loading(false);
-                    $ui.error(data.message || data.msg || "未知错误");
+                    $ui.alert({
+                        title: "没有勋章",
+                        message: `粉丝勋章数量为${medalData.cnt ||
+                                medalList.length}`
+                    });
                 }
-            });
+            } else {
+                $ui.loading(false);
+                $ui.error(data.message || data.msg || "未知错误");
+            }
+        });
     } else {
         $ui.loading(false);
         $ui.alert({
@@ -1819,13 +1792,17 @@ function getOnlineLiver() {
                                                 type: "list",
                                                 props: {
                                                     data: [{
-                                                        title: "主播",
+                                                        title: "数据",
                                                         rows: [
-                                                            `标题：${thisRoom.title}`
+                                                            `名字：${thisRoom.uname}`,
+                                                            `标题：${thisRoom.title}`,
+                                                            `标签：${thisRoom.live_tag_name}`,
+                                                            `分区：${thisRoom.area_v2_parent_name} - ${thisRoom.area_v2_name}`,
+                                                            `人气：${thisRoom.online}`,
                                                         ]
                                                     }, {
-                                                        title: "直播间",
-                                                        rows: ["实时弹幕"]
+                                                        title: "操作",
+                                                        rows: ["观看直播", "实时弹幕", "查看封面", "个人空间", "我觉得这是vtb"]
                                                     }]
                                                 },
                                                 layout: $layout.fill,
@@ -1835,7 +1812,22 @@ function getOnlineLiver() {
                                                             case 1:
                                                                 switch (_indexPath.row) {
                                                                     case 0:
+                                                                        $app.openURL(thisRoom.link);
+                                                                        break;
+                                                                    case 1:
                                                                         openLiveDanmuku(thisRoom.roomid);
+                                                                        break;
+                                                                    case 2:
+                                                                        $ui.preview({
+                                                                            title: thisRoom.title,
+                                                                            url: thisRoom.cover
+                                                                        });;
+                                                                        break;
+                                                                    case 3:
+                                                                        $app.openURL(`https://space.bilibili.com/${thisRoom.uid}`);
+                                                                        break;
+                                                                    case 4:
+                                                                        getVtbLiveroomInfo(thisRoom.uid);
                                                                         break;
                                                                 }
                                                                 break;
@@ -1889,7 +1881,7 @@ module.exports = {
     getVideo,
     getVidFromUrl,
     getLiveGiftList,
-    getLiveroomInfo,
+    getLiveroomInfo: getVtbLiveroomInfo,
     getFansMedalList,
     isLogin,
     getWallet,
