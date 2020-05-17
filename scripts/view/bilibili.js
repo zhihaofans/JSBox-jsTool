@@ -317,7 +317,19 @@ function init(url) {
                                         break;
                                     case 4:
                                         biliApi.isLogin() ?
-                                            biliApi.getOnlineLiver() :
+                                            $ui.menu({
+                                                items: ["在播", "没播"],
+                                                handler: function (title, idx) {
+                                                    switch (idx) {
+                                                        case 0:
+                                                            biliApi.getOnlineLiver();
+                                                            break;
+                                                        case 1:
+                                                            biliApi.getOfflineLiver();
+                                                            break;
+                                                    }
+                                                }
+                                            }) :
                                             $ui.error("未登录");
                                         break;
                                     default:

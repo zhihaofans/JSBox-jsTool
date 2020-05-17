@@ -30,7 +30,8 @@ let UPDATE_CONFIG_GITHUB =
       API_VIDEO: "https://www.biliob.com/api/video/v2/av"
     },
     BILICHAT: "https://bilichat.3shain.com/gkd/",
-    LIVE_ONLINE: "https://api.live.bilibili.com/xlive/app-interface/v1/relation/liveAnchor?access_key="
+    LIVE_ONLINE: "https://api.live.bilibili.com/xlive/app-interface/v1/relation/liveAnchor?access_key=",
+    LIVE_OFFLINE: "https://api.live.bilibili.com/xlive/app-interface/v1/relation/unliveAnchor?page=1&pagesize=1000&access_key="
   },
   MEOWV = {
     WALLPAPER: "https://api.meowv.com/wallpaper",

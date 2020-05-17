@@ -2,6 +2,10 @@ let getNowUnixTime = () => {
     return new Date().getTime();
 };
 
+function getNowUnixTimeSecond() {
+    return Math.round(new Date().getTime() / 1000);
+}
+
 function iso8601ToLocaltime(ISO8601) {
     const moment = require("moment");
     var date = '2017-09-28T16:00:00Z';
@@ -10,5 +14,6 @@ function iso8601ToLocaltime(ISO8601) {
 }
 module.exports = {
     getNowUnixTime,
-    iso8601ToLocaltime
+    iso8601ToLocaltime,
+    getNowUnixTimeSecond,
 }
