@@ -974,7 +974,7 @@ function getVtbLiveroomInfo(mid) {
     $ui.loading(true);
     $http
         .get({
-            url: _URL.API_VTBS_MOE.V1_DETAIL + mid
+            url: _BILIURL.API_VTBS_MOE.V1_DETAIL + mid
         })
         .then(function (resp) {
             $ui.loading(false);
@@ -986,24 +986,81 @@ function getVtbLiveroomInfo(mid) {
             } else {
                 if (resp.data) {
                     const liveroomInfo = new LiveroomInfo(resp.data);
-                    $ui.alert({
-                        title: "获取成功",
-                        message: liveroomInfo,
-                        actions: [{
-                                title: "打开网页",
-                                disabled: false,
-                                handler: function () {
-                                    appScheme.safariPreview(
-                                        _URL.API_VTBS_MOE.WEB_DETAIL + mid
-                                    );
-                                }
+                    $ui.push({
+                        props: {
+                            title: liveroomInfo.uname
+                        },
+                        views: [{
+                            type: "list",
+                            props: {
+                                data: [{
+                                    title: "数据",
+                                    rows: [
+                                        `昵称：${liveroomInfo.uname}`,
+                                        `uid：${liveroomInfo.mid}`,
+                                        `直播间id：${liveroomInfo.roomid}`,
+                                        `唯一id：${liveroomInfo.uuid}`,
+                                        `个人签名：${liveroomInfo.sign}`,
+                                        `直播间通知：${liveroomInfo.notice}`,
+                                        `标题：${liveroomInfo.title}`,
+                                        `关注：${liveroomInfo.follower}`,
+                                        `人气：${liveroomInfo.online}`,
+                                        `投稿视频：${liveroomInfo.video}个`,
+                                        `直播：${liveroomInfo.liveStatus==1?"直播中":"未直播"}`,
+                                        `总督/提督/舰长：${liveroomInfo.guardType[0]}/${liveroomInfo.guardType[1]}/${liveroomInfo.guardType[2]}`,
+                                        `个人签名：${liveroomInfo.sign}`,
+                                        `分区排名：${liveroomInfo.areaRank}`,
+                                    ]
+                                }, {
+                                    title: "操作",
+                                    rows: [
+                                        `查看头图`,
+                                        `查看头像`
+                                    ]
+                                }, ]
                             },
-                            {
-                                title: "关闭",
-                                disabled: false,
-                                handler: function () {}
+                            layout: $layout.fill,
+                            events: {
+                                didSelect: function (_sender, indexPath, _data) {
+                                    const section = indexPath.section;
+                                    const row = indexPath.row;
+                                    switch (section) {
+                                        case 0:
+                                            $ui.alert({
+                                                title: row,
+                                                message: _data,
+                                                actions: [{
+                                                    title: "打开网页",
+                                                    disabled: false,
+                                                    handler: function () {
+                                                        appScheme.safariPreview(
+                                                            _BILIURL.API_VTBS_MOE.WEB_DETAIL + mid
+                                                        );
+                                                    }
+                                                }, {
+                                                    title: "好的",
+                                                    disabled: false,
+                                                    handler: function () {}
+                                                }]
+                                            });
+                                            break;
+                                        case 1:
+                                            switch (row) {
+                                                case 0:
+                                                    appScheme.safariPreview(
+                                                        liveroomInfo.topPhoto
+                                                    );
+                                                    break;
+                                                case 1:
+                                                    appScheme.safariPreview(
+                                                        liveroomInfo.face
+                                                    );
+                                                    break;
+                                            }
+                                    }
+                                }
                             }
-                        ]
+                        }]
                     });
                 } else {
                     $ui.alert({

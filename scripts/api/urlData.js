@@ -31,7 +31,11 @@ let UPDATE_CONFIG_GITHUB =
     },
     BILICHAT: "https://bilichat.3shain.com/gkd/",
     LIVE_ONLINE: "https://api.live.bilibili.com/xlive/app-interface/v1/relation/liveAnchor?access_key=",
-    LIVE_OFFLINE: "https://api.live.bilibili.com/xlive/app-interface/v1/relation/unliveAnchor?page=1&pagesize=1000&access_key="
+    LIVE_OFFLINE: "https://api.live.bilibili.com/xlive/app-interface/v1/relation/unliveAnchor?page=1&pagesize=1000&access_key=",
+    API_VTBS_MOE: {
+      V1_DETAIL: "https://api.vtbs.moe/v1/detail/",
+      WEB_DETAIL: "https://vtbs.moe/detail/",
+    },
   },
   MEOWV = {
     WALLPAPER: "https://api.meowv.com/wallpaper",
@@ -61,10 +65,6 @@ let UPDATE_CONFIG_GITHUB =
     VIDEO_CDN_TXCDN: "http://tx-video.acfun.cn/",
     ADD_FRIENDS: "https://wpa.qq.com/msgrd?v=3&site=acfun.cn&menu=yes&uin=",
   },
-  API_VTBS_MOE = {
-    V1_DETAIL: "https://api.vtbs.moe/v1/detail/",
-    WEB_DETAIL: "https://vtbs.moe/detail/",
-  },
   JISHUWEN = {
     MAIN: "https://www.jishuwen.com/?p=",
   },
@@ -84,7 +84,6 @@ module.exports = {
   ISOYU,
   API_66MZ8_COM,
   ACFUN,
-  API_VTBS_MOE,
   JISHUWEN,
   APPLE,
 };
