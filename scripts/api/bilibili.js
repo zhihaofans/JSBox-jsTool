@@ -980,7 +980,7 @@ function getVtbLiveroomInfo(mid) {
             $ui.loading(false);
             if (resp.error) {
                 $ui.alert({
-                    title: `${resp.error.code} error`,
+                    title: `Error ${resp.error.code}`,
                     message: resp.error.localizedDescription
                 });
             } else {
@@ -1033,9 +1033,7 @@ function getVtbLiveroomInfo(mid) {
                                                     title: "打开网页",
                                                     disabled: false,
                                                     handler: function () {
-                                                        appScheme.safariPreview(
-                                                            _BILIURL.API_VTBS_MOE.WEB_DETAIL + mid
-                                                        );
+                                                        appScheme.safariPreview(_BILIURL.API_VTBS_MOE.WEB_DETAIL + mid);
                                                     }
                                                 }, {
                                                     title: "好的",
@@ -1047,14 +1045,10 @@ function getVtbLiveroomInfo(mid) {
                                         case 1:
                                             switch (row) {
                                                 case 0:
-                                                    appScheme.safariPreview(
-                                                        liveroomInfo.topPhoto
-                                                    );
+                                                    appScheme.safariPreview(liveroomInfo.topPhoto);
                                                     break;
                                                 case 1:
-                                                    appScheme.safariPreview(
-                                                        liveroomInfo.face
-                                                    );
+                                                    appScheme.safariPreview(liveroomInfo.face);
                                                     break;
                                             }
                                     }
