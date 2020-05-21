@@ -75,6 +75,9 @@ let UPDATE_CONFIG_GITHUB =
       PAID_APP: "/rss/toppaidapplications/limit=100/genre=25129/json",
       GROSSING_APP: "/rss/topgrossingapplications/limit=100/genre=25129/json"
     }
+  },
+  TOPHUB = {
+    DASHBOARD: "https://tophub.today/dashboard"
   };
 module.exports = {
   UPDATE_CONFIG_GITHUB,
@@ -86,4 +89,5 @@ module.exports = {
   ACFUN,
   JISHUWEN,
   APPLE,
+  TOPHUB,
 };

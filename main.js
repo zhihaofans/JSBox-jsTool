@@ -8,7 +8,8 @@ let siteListL10n = [
     "技术文",
     "每日签到",
     "小编体生成器",
-    "苹果排行榜"
+    "苹果排行榜",
+    "TOPHUB"
 ];
 let moreListL10n = [
     "CDN",
@@ -121,6 +122,9 @@ let init = () => {
                                         break;
                                     case 8:
                                         page.appleRank();
+                                        break;
+                                    case 9:
+                                        page.tophub();
                                         break;
                                     default:
                                         $ui.error("错误选项");
