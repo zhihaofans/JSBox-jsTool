@@ -1094,26 +1094,11 @@ function getFansMedalList() {
                             props: {
                                 data: [{
                                         title: "在播了",
-                                        rows: onlineList.map(
-                                            m =>
-                                            `[${m.medal_name}]${m.target_name}` + (m.icon_code ? `[${m.icon_text}]` : "") +
-                                            (m.today_feed == m.day_limit ? `[已满]` : `[还差${m.day_limit -m.today_feed}]`)
-                                        )
+                                        rows: onlineList.map(m => `[${m.medal_name}]${m.target_name}` + (m.icon_code ? `[${m.icon_text}]` : "") + (m.today_feed == m.day_limit ? `[已满]` : `[还差${m.day_limit -m.today_feed}]`))
                                     },
                                     {
                                         title: "咕咕咕",
-                                        rows: offlineList.map(
-                                            m =>
-                                            `[${m.medal_name}]${m.target_name}` +
-                                            (m.icon_code ?
-                                                `[${m.icon_text}]` :
-                                                "") +
-                                            (m.today_feed ==
-                                                m.day_limit ?
-                                                `[已满]` :
-                                                `[还差${m.day_limit -
-                                                                  m.today_feed}]`)
-                                        )
+                                        rows: offlineList.map(m => `[${m.medal_name}]${m.target_name}` + (m.icon_code ? `[${m.icon_text}]` : "") + (m.today_feed == m.day_limit ? `[已满]` : `[还差${m.day_limit -m.today_feed}]`))
                                     }
                                 ],
                                 menu: {
@@ -1125,9 +1110,7 @@ function getFansMedalList() {
                                                 const liveData =
                                                     indexPath.section == 0 ?
                                                     onlineList[indexPath.row] :
-                                                    offlineList[
-                                                        indexPath.row
-                                                    ];
+                                                    offlineList[indexPath.row];
                                                 $ui.alert({
                                                     title: `[${liveData.medal_name}]${liveData.target_name}`,
                                                     message: liveData
@@ -1137,20 +1120,8 @@ function getFansMedalList() {
                                             title: "通过vtbs.moe获取vTuber信息",
                                             symbol: "play.rectangle",
                                             handler: (sender, indexPath) => {
-                                                const liveData =
-                                                    indexPath.section ==
-                                                    0 ?
-                                                    onlineList[
-                                                        indexPath
-                                                        .row
-                                                    ] :
-                                                    offlineList[
-                                                        indexPath
-                                                        .row
-                                                    ];
-                                                getVtbLiveroomInfo(
-                                                    liveData.target_id
-                                                );
+                                                const liveData = indexPath.section == 0 ? onlineList[indexPath.row] : offlineList[indexPath.row];
+                                                getVtbLiveroomInfo(liveData.target_id);
                                             }
                                         },
                                         {
@@ -1171,29 +1142,29 @@ function getFansMedalList() {
                                             }
                                         },
                                         {
+                                            title: "赠送银瓜子辣条",
+                                            symbol: "gift",
+                                            handler: (sender, indexPath) => {
+                                                const liveData = indexPath.section == 0 ?
+                                                    onlineList[indexPath.row] :
+                                                    offlineList[indexPath.row];
+                                                if (liveData.day_limit - liveData.today_feed > 0) {
+                                                    getLiveGiftList(liveData);
+                                                } else {
+                                                    $ui.alert({
+                                                        title: "不用送了",
+                                                        message: "今日亲密度已满"
+                                                    });
+                                                }
+                                            }
+                                        },
+                                        {
                                             title: "自动赠送礼物",
                                             symbol: "gift",
                                             handler: (sender, indexPath) => {
-                                                const liveData =
-                                                    indexPath.section ==
-                                                    0 ?
-                                                    onlineList[
-                                                        indexPath
-                                                        .row
-                                                    ] :
-                                                    offlineList[
-                                                        indexPath
-                                                        .row
-                                                    ];
-                                                if (
-                                                    liveData.day_limit -
-                                                    liveData.today_feed >
-                                                    0
-                                                ) {
-                                                    getLiveGiftList(
-                                                        liveData,
-                                                        1
-                                                    );
+                                                const liveData = indexPath.section == 0 ? onlineList[indexPath.row] : offlineList[indexPath.row];
+                                                if (liveData.day_limit - liveData.today_feed > 0) {
+                                                    getLiveGiftList(liveData, 1);
                                                 } else {
                                                     $ui.alert({
                                                         title: "不用送了",
@@ -1208,14 +1179,10 @@ function getFansMedalList() {
                             layout: $layout.fill,
                             events: {
                                 didSelect: function (sender, indexPath, data) {
-                                    const liveData =
-                                        indexPath.section == 0 ?
+                                    const liveData = indexPath.section == 0 ?
                                         onlineList[indexPath.row] :
                                         offlineList[indexPath.row];
-                                    $app.openURL(
-                                        _BILIURL.LIVE_WEB_ROOM +
-                                        liveData.room_id
-                                    );
+                                    $app.openURL(_BILIURL.LIVE_WEB_ROOM + liveData.room_id);
                                 }
                             }
                         }]
@@ -1242,11 +1209,13 @@ function getFansMedalList() {
     }
 }
 
-function sendLiveGift(user_id, room_id, gift_type, gift_id, gift_number) {
+function sendLiveGift(user_id, room_id, gift_type, gift_id = undefined, gift_number = 1) {
     $ui.loading(true);
-    const url = `${_BILIURL.LIVE_GIFT_SEND}?access_key=${_userData.access_key}&bag_id=${gift_id}&biz_id=${room_id}&gift_id=${gift_type}&gift_num=${gift_number}&ruid=${user_id}`;
-    $http
-        .get({
+    var url = `${_BILIURL.LIVE_GIFT_SEND}?access_key=${_userData.access_key}&biz_id=${room_id}&gift_id=${gift_type}&gift_num=${gift_number}&ruid=${user_id}`;
+    if (gift_id) {
+        url += `&bag_id=${gift_id}`;
+    }
+    $http.get({
             url: url
         })
         .then(function (resp) {
