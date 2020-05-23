@@ -78,6 +78,9 @@ let UPDATE_CONFIG_GITHUB =
   },
   TOPHUB = {
     DASHBOARD: "https://tophub.today/dashboard"
+  },
+  BILICHAT = {
+    HISTORY: "https://bilichat.3shain.com/api/history"
   };
 module.exports = {
   UPDATE_CONFIG_GITHUB,
@@ -90,4 +93,5 @@ module.exports = {
   JISHUWEN,
   APPLE,
   TOPHUB,
+  BILICHAT,
 };

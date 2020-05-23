@@ -9,7 +9,8 @@ let siteListL10n = [
     "每日签到",
     "小编体生成器",
     "苹果排行榜",
-    "TOPHUB"
+    "TOPHUB",
+    "Bilichat历史",
 ];
 let moreListL10n = [
     "CDN",

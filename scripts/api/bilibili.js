@@ -130,14 +130,14 @@ function getLiveGiftList(liveData = undefined, mode = 0) {
                     $ui.loading(false);
                     if (giftList.length) {
                         saveCache("getLiveGiftList", resp.rawData);
+                        switch (mode) {
+
+                        }
                         if (mode == 1) {
                             if (liveData) {
                                 $ui.loading(true);
                                 $ui.toast("正在计算所需的礼物");
-                                const giftExpList = getGiftListByExp(
-                                    giftList,
-                                    needExp
-                                );
+                                const giftExpList = getGiftListByExp(giftList, needExp);
                                 if (giftExpList.length > 0) {
                                     $console.info(giftExpList);
                                     $ui.loading(false);
