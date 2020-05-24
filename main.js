@@ -10,7 +10,7 @@ let siteListL10n = [
     "小编体生成器",
     "苹果排行榜",
     "TOPHUB",
-    "Bilichat历史",
+    "Bilichat历史"
 ];
 let moreListL10n = [
     "CDN",
@@ -25,25 +25,27 @@ let moreListL10n = [
 let siteList = siteListL10n.map(x => $l10n(x));
 let moreList = moreListL10n.map(x => $l10n(x));
 let getNavButton = () => {
-    return [{
-        title: $l10n("MENU"),
-        icon: "067", // Or you can use icon name
-        handler: () => {
-            $ui.menu({
-                items: ["SCAN_QRCODE", "TEST"].map(x => $l10n(x)),
-                handler: function (title, idx) {
-                    switch (idx) {
-                        case 0:
-                            page.scanQrcodeToGo();
-                            break;
-                        case 1:
-                            page.dmzj();
-                            break;
+    return [
+        {
+            title: $l10n("MENU"),
+            icon: "067", // Or you can use icon name
+            handler: () => {
+                $ui.menu({
+                    items: ["SCAN_QRCODE", "TEST"].map(x => $l10n(x)),
+                    handler: function(title, idx) {
+                        switch (idx) {
+                            case 0:
+                                page.scanQrcodeToGo();
+                                break;
+                            case 1:
+                                page.dmzj();
+                                break;
+                        }
                     }
-                }
-            });
+                });
+            }
         }
-    }];
+    ];
 };
 let checkCacheDir = () => {
     const cacheDir = ".cache/";
@@ -78,102 +80,108 @@ let init = () => {
                 modalPresentationStyle: 0,
                 navButtons: getNavButton()
             },
-            views: [{
-                type: "list",
-                props: {
-                    data: [{
-                            title: $l10n("SITE"),
-                            rows: siteList
-                        },
-                        {
-                            title: $l10n("更多"),
-                            rows: moreList
-                        }
-                    ]
-                },
-                layout: $layout.fill,
-                events: {
-                    didSelect: function (_sender, indexPath, _data) {
-                        switch (indexPath.section) {
-                            case 0:
-                                switch (indexPath.row) {
-                                    case 0:
-                                        page.mofish();
-                                        break;
-                                    case 1:
-                                        page.acfun();
-                                        break;
-                                    case 2:
-                                        page.bilibili();
-                                        break;
-                                    case 3:
-                                        page.instagram();
-                                        break;
-                                    case 4:
-                                        page.zhihuDaily();
-                                        break;
-                                    case 5:
-                                        page.jshuwen();
-                                        break;
-                                    case 6:
-                                        page.dailyCheckin();
-                                        break;
-                                    case 7:
-                                        page.xbtscq();
-                                        break;
-                                    case 8:
-                                        page.appleRank();
-                                        break;
-                                    case 9:
-                                        page.tophub();
-                                        break;
-                                    default:
-                                        $ui.error("错误选项");
-                                }
-                                break;
-                            case 1:
-                                switch (indexPath.row) {
-                                    case 0:
-                                        page.cdn();
-                                        break;
-                                    case 1:
-                                        page.kuaidi();
-                                        break;
-                                    case 2:
-                                        page.smms();
-                                        break;
-                                    case 3:
-                                        page.image();
-                                        break;
-                                    case 4:
-                                        page.musicSearch();
-                                        break;
-                                    case 5:
-                                        page.freeSms();
-                                        break;
-                                    case 6:
-                                        page.weather();
-                                        break;
-                                    case 7:
-                                        page.misc();
-                                        break;
-                                    default:
-                                        $ui.error("错误选项");
-                                }
-                                break;
-                            default:
-                                $ui.error("错误选项");
+            views: [
+                {
+                    type: "list",
+                    props: {
+                        data: [
+                            {
+                                title: $l10n("SITE"),
+                                rows: siteList
+                            },
+                            {
+                                title: $l10n("更多"),
+                                rows: moreList
+                            }
+                        ]
+                    },
+                    layout: $layout.fill,
+                    events: {
+                        didSelect: function(_sender, indexPath, _data) {
+                            switch (indexPath.section) {
+                                case 0:
+                                    switch (indexPath.row) {
+                                        case 0:
+                                            page.mofish();
+                                            break;
+                                        case 1:
+                                            page.acfun();
+                                            break;
+                                        case 2:
+                                            page.bilibili();
+                                            break;
+                                        case 3:
+                                            page.instagram();
+                                            break;
+                                        case 4:
+                                            page.zhihuDaily();
+                                            break;
+                                        case 5:
+                                            page.jshuwen();
+                                            break;
+                                        case 6:
+                                            page.dailyCheckin();
+                                            break;
+                                        case 7:
+                                            page.xbtscq();
+                                            break;
+                                        case 8:
+                                            page.appleRank();
+                                            break;
+                                        case 9:
+                                            page.tophub();
+                                            break;
+                                        case 10:
+                                            page.bilichat();
+                                            break;
+                                        default:
+                                            $ui.error("错误选项");
+                                    }
+                                    break;
+                                case 1:
+                                    switch (indexPath.row) {
+                                        case 0:
+                                            page.cdn();
+                                            break;
+                                        case 1:
+                                            page.kuaidi();
+                                            break;
+                                        case 2:
+                                            page.smms();
+                                            break;
+                                        case 3:
+                                            page.image();
+                                            break;
+                                        case 4:
+                                            page.musicSearch();
+                                            break;
+                                        case 5:
+                                            page.freeSms();
+                                            break;
+                                        case 6:
+                                            page.weather();
+                                            break;
+                                        case 7:
+                                            page.misc();
+                                            break;
+                                        default:
+                                            $ui.error("错误选项");
+                                    }
+                                    break;
+                                default:
+                                    $ui.error("错误选项");
+                            }
                         }
                     }
                 }
-            }],
+            ],
             events: {
-                appeared: function () {
+                appeared: function() {
                     $app.tips(
                         "右上角的按钮是更新按钮，摇一摇设备也可以触发检测更新"
                     );
                 },
-                shakeDetected: function () {
+                shakeDetected: function() {
                     //摇一摇
                 }
             }
