@@ -2,6 +2,7 @@ $include("./codePrototype.js");
 let sys = require("./system.js"),
     appScheme = require("./app_scheme.js"),
     _URL = require("./urlData.js"),
+    _UA = require("./user-agent.js"),
     _ACFUN = _URL.ACFUN,
     urlCheck = require("./urlCheck.js");
 let acVideoSiteList = [
@@ -17,7 +18,7 @@ let acVideoSiteList = [
     _cacheDir = ".cache/acfun/",
     acHeaders = {
         "Content-Type": "application/x-www-form-urlencoded",
-        "User-Agent": "AcFun/6.17.0 (iPhone; iOS 13.4; Scale/2.00)",
+        "User-Agent": _UA.ACFUN.APP_IOS,
         deviceType: 0,
         market: "appstore",
         appVersion: "6.17.0.349"
@@ -795,8 +796,8 @@ let initWebServer = (dir, htmlStr, port = 9999) => {
     });
     var handler = {};
     handler.response = request => {
-        var method = request.method;
-        var url = request.url;
+        //var method = request.method;
+        //var url = request.url;
         return {
             type: "data", // default, data, file, error
             props: {
