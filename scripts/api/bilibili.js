@@ -1546,7 +1546,7 @@ function vipCheckin() {
     $http.post({
         url: _URL.BILIBILI.VIP_CHECKIN,
         header: {
-            "User-Agent": "bili-universal/9290 CFNetwork/1125.2 Darwin/19.4.0"
+            "User-Agent": _UA.BILIBILI.VIP_CHECKIN
         },
         body: {
             access_key: _userData.access_key
@@ -1668,7 +1668,7 @@ function getMyInfo() {
 
 function getSignUrl(host, param, android = false) {
     return $http.get({
-        url: _BILIURL.GET_SIGN_URL +    "?host=" +     encodeURI(host) +        "&param=" +     encodeURI(param) +"&android" +
+        url: _BILIURL.GET_SIGN_URL + "?host=" + encodeURI(host) + "&param=" + encodeURI(param) + "&android" +
             android,
         header: {
             "user-agent": _UA.KAAASS
