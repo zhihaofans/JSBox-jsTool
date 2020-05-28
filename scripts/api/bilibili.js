@@ -3,7 +3,8 @@ let sys = require("./system.js"),
     cheerio = require("cheerio"),
     _URL = require("./urlData.js"),
     _BILIURL = require("./urlData.js").BILIBILI,
-    appScheme = require("./app_scheme.js");
+    appScheme = require("./app_scheme.js"),
+    _UA = require("./user-agent.js");
 let _cacheKey = {
         access_key: "bilibili_access_key",
         uid: "bilibili_uid"
@@ -14,9 +15,8 @@ let _cacheKey = {
         uid: 0
     },
     _cacheDir = ".cache/bilibili/",
-    kaaassUA = "JSBox-jsTool/0.1 (github:zhuangzhihao-io) <zhuang@zhihao.io>", // 请尊重API提供者
     headerList = {
-        "User-Agent": "bili-universal/9320 CFNetwork/1125.2 Darwin/19.5.0 os/ios model/iPhone 11 mobi_app/iphone osVer/13.4.5 network/1"
+        "User-Agent": _UA.BILIBILI.APP_IPHONE
     };
 // function
 function init() {
@@ -117,7 +117,7 @@ function getLiveGiftList(liveData = undefined, mode = 0) {
         $http.get({
             url: _URL.BILIBILI.GET_LIVE_GIFT_LIST + accessKey,
             header: {
-                "User-Agent": kaaassUA
+                "User-Agent": _UA.KAAASS
             },
             handler: function (resp) {
                 const giftResult = resp.data;
@@ -392,7 +392,7 @@ function getVideoInfo(vid) {
     $http.get({
         url: _URL.BILIBILI.GET_VIDEO_INFO + vid,
         header: {
-            "User-Agent": kaaassUA
+            "User-Agent": _UA.KAAASS
         },
         handler: function (resp) {
             const data = resp.data;
@@ -799,7 +799,7 @@ function getUserInfo() {
         $http.get({
             url: url,
             header: {
-                "User-Agent": kaaassUA
+                "User-Agent": _UA.KAAASS
             },
             handler: function (userResp) {
                 var userData = userResp.data;
@@ -1407,7 +1407,7 @@ function getWallet() {
                                                 url: _URL.BILIBILI
                                                     .SILVER_TO_COIN,
                                                 header: {
-                                                    "User-Agent": "bili-universal/9290 CFNetwork/1125.2 Darwin/19.4.0 os/ios model/iPhone 11 mobi_app/iphone osVer/13.4 network/2",
+                                                    "User-Agent": _UA.BILIBILI.APP_IPHONE,
                                                     "Content-Type": "application/x-www-form-urlencoded"
                                                 },
                                                 body: {
@@ -1564,7 +1564,7 @@ function laterToWatch() {
             .get({
                 url: _URL.BILIBILI.LATER_TO_WATCH + _userData.access_key,
                 header: {
-                    "User-Agent": "bili-universal/9290 CFNetwork/1125.2 Darwin/19.4.0 os/ios model/iPhone 11 mobi_app/iphone osVer/13.4.1 network/1"
+                    "User-Agent": _UA.BILIBILI.APP_IPHONE
                 }
             })
             .then(function (resp) {
@@ -1668,15 +1668,10 @@ function getMyInfo() {
 
 function getSignUrl(host, param, android = false) {
     return $http.get({
-        url: _BILIURL.GET_SIGN_URL +
-            "?host=" +
-            encodeURI(host) +
-            "&param=" +
-            encodeURI(param) +
-            "&android" +
+        url: _BILIURL.GET_SIGN_URL +    "?host=" +     encodeURI(host) +        "&param=" +     encodeURI(param) +"&android" +
             android,
         header: {
-            "user-agent": kaaassUA
+            "user-agent": _UA.KAAASS
         }
     });
 }
