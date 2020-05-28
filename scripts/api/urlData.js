@@ -64,6 +64,7 @@ let UPDATE_CONFIG_GITHUB =
     VIDEO_CDN_ALICDN: "http://ali-video.acfun.cn/",
     VIDEO_CDN_TXCDN: "http://tx-video.acfun.cn/",
     ADD_FRIENDS: "https://wpa.qq.com/msgrd?v=3&site=acfun.cn&menu=yes&uin=",
+    ACFUN_DETAIL_UPLOADER: "acfun://detail/uploader/",
   },
   JISHUWEN = {
     MAIN: "https://www.jishuwen.com/?p=",

@@ -10,7 +10,7 @@ let acVideoSiteList = [
         _ACFUN.ACFUN_M_V_AC
     ],
     acUploaderSiteList = [
-        _ACFUN.ACFUN_DETAIL_UPPAGE,
+        _ACFUN.ACFUN_DETAIL_UPLOADER,
         _ACFUN.ACFUN_WWW_V_AC,
         _ACFUN.ACFUN_M_V_AC
     ],
