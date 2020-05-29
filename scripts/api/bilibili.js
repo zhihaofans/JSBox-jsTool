@@ -119,19 +119,18 @@ function getLiveGiftList(liveData = undefined, mode = 0) {
             header: {
                 "User-Agent": _UA.KAAASS
             },
-            handler: function(resp) {
+            handler: function (resp) {
                 const giftResult = resp.data;
                 if (giftResult.code == 0) {
                     const giftList = giftResult.data.list;
                     const giftTitleList = giftList.map(
                         gift =>
-                            `${gift.gift_name}（${gift.corner_mark}）${gift.gift_num}个`
+                        `${gift.gift_name}（${gift.corner_mark}）${gift.gift_num}个`
                     );
                     $ui.loading(false);
                     if (giftList.length) {
                         saveCache("getLiveGiftList", resp.rawData);
-                        switch (mode) {
-                        }
+                        switch (mode) {}
                         if (mode == 1) {
                             if (liveData) {
                                 $ui.loading(true);
@@ -162,146 +161,127 @@ function getLiveGiftList(liveData = undefined, mode = 0) {
                                 props: {
                                     title: $l10n("BILIBILI")
                                 },
-                                views: [
-                                    {
-                                        type: "list",
-                                        props: {
-                                            data: giftTitleList
-                                        },
-                                        layout: $layout.fill,
-                                        events: {
-                                            didSelect: function(
-                                                _sender,
-                                                indexPath,
-                                                _data
+                                views: [{
+                                    type: "list",
+                                    props: {
+                                        data: giftTitleList
+                                    },
+                                    layout: $layout.fill,
+                                    events: {
+                                        didSelect: function (
+                                            _sender,
+                                            indexPath,
+                                            _data
+                                        ) {
+                                            const thisGift =
+                                                giftList[indexPath.row];
+                                            if (
+                                                liveData &&
+                                                sendGiftToUid &&
+                                                sendGiftToRoom
                                             ) {
-                                                const thisGift =
-                                                    giftList[indexPath.row];
                                                 if (
-                                                    liveData &&
-                                                    sendGiftToUid &&
-                                                    sendGiftToRoom
+                                                    thisGift.corner_mark ==
+                                                    "永久"
                                                 ) {
-                                                    if (
-                                                        thisGift.corner_mark ==
-                                                        "永久"
-                                                    ) {
-                                                        $ui.alert({
-                                                            title: "警告",
-                                                            message:
-                                                                "这是永久的礼物，你确定要送吗",
-                                                            actions: [
-                                                                {
-                                                                    title:
-                                                                        "取消",
-                                                                    disabled: false,
-                                                                    handler: function() {}
-                                                                },
-                                                                {
-                                                                    title:
-                                                                        "取消",
-                                                                    disabled: false,
-                                                                    handler: function() {}
-                                                                },
-                                                                {
-                                                                    title:
-                                                                        "确定",
-                                                                    disabled: false,
-                                                                    handler: function() {
-                                                                        $input.text(
-                                                                            {
-                                                                                type:
-                                                                                    $kbType.number,
-                                                                                placeholder: `输入数量，1-${thisGift.gift_num}`,
-                                                                                text:
-                                                                                    "",
-                                                                                handler: function(
+                                                    $ui.alert({
+                                                        title: "警告",
+                                                        message: "这是永久的礼物，你确定要送吗",
+                                                        actions: [{
+                                                                title: "取消",
+                                                                disabled: false,
+                                                                handler: function () {}
+                                                            },
+                                                            {
+                                                                title: "取消",
+                                                                disabled: false,
+                                                                handler: function () {}
+                                                            },
+                                                            {
+                                                                title: "确定",
+                                                                disabled: false,
+                                                                handler: function () {
+                                                                    $input.text({
+                                                                        type: $kbType.number,
+                                                                        placeholder: `输入数量，1-${thisGift.gift_num}`,
+                                                                        text: "",
+                                                                        handler: function (
+                                                                            gift_number
+                                                                        ) {
+                                                                            if (
+                                                                                gift_number >
+                                                                                0 &&
+                                                                                gift_number <=
+                                                                                thisGift.gift_num
+                                                                            ) {
+                                                                                sendLiveGift(
+                                                                                    sendGiftToUid,
+                                                                                    sendGiftToRoom,
+                                                                                    thisGift.gift_id,
+                                                                                    thisGift.bag_id,
                                                                                     gift_number
-                                                                                ) {
-                                                                                    if (
-                                                                                        gift_number >
-                                                                                            0 &&
-                                                                                        gift_number <=
-                                                                                            thisGift.gift_num
-                                                                                    ) {
-                                                                                        sendLiveGift(
-                                                                                            sendGiftToUid,
-                                                                                            sendGiftToRoom,
-                                                                                            thisGift.gift_id,
-                                                                                            thisGift.bag_id,
-                                                                                            gift_number
-                                                                                        );
-                                                                                    } else {
-                                                                                        $ui.alert(
-                                                                                            {
-                                                                                                title:
-                                                                                                    "赠送错误",
-                                                                                                message: `错误数量,请输入1-${thisGift.gift_num}`
-                                                                                            }
-                                                                                        );
-                                                                                    }
-                                                                                }
+                                                                                );
+                                                                            } else {
+                                                                                $ui.alert({
+                                                                                    title: "赠送错误",
+                                                                                    message: `错误数量,请输入1-${thisGift.gift_num}`
+                                                                                });
                                                                             }
-                                                                        );
-                                                                    }
-                                                                },
-                                                                {
-                                                                    title:
-                                                                        "取消",
-                                                                    disabled: false,
-                                                                    handler: function() {}
-                                                                },
-                                                                {
-                                                                    title:
-                                                                        "取消",
-                                                                    disabled: false,
-                                                                    handler: function() {}
-                                                                }
-                                                            ]
-                                                        });
-                                                    } else {
-                                                        $input.text({
-                                                            type:
-                                                                $kbType.number,
-                                                            placeholder: `输入数量，1-${thisGift.gift_num}`,
-                                                            text: "",
-                                                            handler: function(
-                                                                gift_number
-                                                            ) {
-                                                                if (
-                                                                    gift_number >
-                                                                        0 &&
-                                                                    gift_number <=
-                                                                        thisGift.gift_num
-                                                                ) {
-                                                                    sendLiveGift(
-                                                                        sendGiftToUid,
-                                                                        sendGiftToRoom,
-                                                                        thisGift.gift_id,
-                                                                        thisGift.bag_id,
-                                                                        gift_number
-                                                                    );
-                                                                } else {
-                                                                    $ui.alert({
-                                                                        title:
-                                                                            "赠送错误",
-                                                                        message: `错误数量,请输入1-${thisGift.gift_num}`
+                                                                        }
                                                                     });
                                                                 }
+                                                            },
+                                                            {
+                                                                title: "取消",
+                                                                disabled: false,
+                                                                handler: function () {}
+                                                            },
+                                                            {
+                                                                title: "取消",
+                                                                disabled: false,
+                                                                handler: function () {}
                                                             }
-                                                        });
-                                                    }
+                                                        ]
+                                                    });
                                                 } else {
-                                                    $ui.alert({
-                                                        title:
-                                                            thisGift.gift_name,
-                                                        message: `拥有数量:${thisGift.gift_num}个\n到期时间:${thisGift.corner_mark}`
+                                                    $input.text({
+                                                        type: $kbType.number,
+                                                        placeholder: `输入数量，1-${thisGift.gift_num}`,
+                                                        text: "",
+                                                        handler: function (
+                                                            gift_number
+                                                        ) {
+                                                            if (
+                                                                gift_number >
+                                                                0 &&
+                                                                gift_number <=
+                                                                thisGift.gift_num
+                                                            ) {
+                                                                sendLiveGift(
+                                                                    sendGiftToUid,
+                                                                    sendGiftToRoom,
+                                                                    thisGift.gift_id,
+                                                                    thisGift.bag_id,
+                                                                    gift_number
+                                                                );
+                                                            } else {
+                                                                $ui.alert({
+                                                                    title: "赠送错误",
+                                                                    message: `错误数量,请输入1-${thisGift.gift_num}`
+                                                                });
+                                                            }
+                                                        }
                                                     });
                                                 }
+                                            } else {
+                                                $ui.alert({
+                                                    title: thisGift.gift_name,
+                                                    message: `拥有数量:${thisGift.gift_num}个\n到期时间:${thisGift.corner_mark}`
+                                                });
                                             }
                                         }
                                     }
-                                ]
+                                }]
                             });
                         }
                     } else {
@@ -415,14 +395,14 @@ function getVideoInfo(vid) {
         header: {
             "User-Agent": _UA.KAAASS
         },
-        handler: function(resp) {
+        handler: function (resp) {
             const data = resp.data;
             if (resp.response.statusCode == 200) {
                 if (data.status == "OK") {
                     const _biliData = data.data;
-                    const allow_download = _biliData.allow_download
-                        ? "是"
-                        : "否";
+                    const allow_download = _biliData.allow_download ?
+                        "是" :
+                        "否";
                     var videoInfoList = [
                         "标题：" + _biliData.title,
                         "描述：" + _biliData.description,
@@ -441,118 +421,111 @@ function getVideoInfo(vid) {
                     const listView = {
                         props: {
                             title: "加载成功",
-                            navButtons: [
-                                {
-                                    title: "打开网页版",
-                                    icon: "068", // Or you can use icon name
-                                    symbol: "checkmark.seal", // SF symbols are supported
-                                    handler: () => {
-                                        $ui.preview({
-                                            title: "av" + vid,
-                                            url:
-                                                _BILIURL.BILIBILI_WWW_VIDEO +
-                                                vid
-                                        });
-                                    }
+                            navButtons: [{
+                                title: "打开网页版",
+                                icon: "068", // Or you can use icon name
+                                symbol: "checkmark.seal", // SF symbols are supported
+                                handler: () => {
+                                    $ui.preview({
+                                        title: "av" + vid,
+                                        url: _BILIURL.BILIBILI_WWW_VIDEO +
+                                            vid
+                                    });
                                 }
-                            ]
+                            }]
                         },
-                        views: [
-                            {
-                                type: "list",
-                                props: {
-                                    data: [
-                                        {
-                                            title: "功能",
-                                            rows: [
-                                                "下载封面",
-                                                "下载up头像",
-                                                "视频解析",
-                                                "查看弹幕",
-                                                "BiliOB观测者"
-                                            ]
-                                        },
-                                        {
-                                            title: "数据",
-                                            rows: videoInfoList
-                                        }
-                                    ]
-                                },
-                                layout: $layout.fill,
-                                events: {
-                                    didSelect: function(
-                                        _sender,
-                                        indexPath,
-                                        _data
-                                    ) {
-                                        switch (indexPath.section) {
-                                            case 0:
-                                                switch (indexPath.row) {
-                                                    case 0:
-                                                        $ui.preview({
-                                                            title: "av" + vid,
-                                                            url: _biliData.pic
-                                                        });
-                                                        break;
-                                                    case 1:
-                                                        $ui.preview({
-                                                            title:
-                                                                _biliData.author,
-                                                            url: _biliData.face
-                                                        });
-                                                        break;
-                                                    case 2:
-                                                        getVideo(
-                                                            vid,
-                                                            _biliData
+                        views: [{
+                            type: "list",
+                            props: {
+                                data: [{
+                                        title: "功能",
+                                        rows: [
+                                            "下载封面",
+                                            "下载up头像",
+                                            "视频解析",
+                                            "查看弹幕",
+                                            "BiliOB观测者"
+                                        ]
+                                    },
+                                    {
+                                        title: "数据",
+                                        rows: videoInfoList
+                                    }
+                                ]
+                            },
+                            layout: $layout.fill,
+                            events: {
+                                didSelect: function (
+                                    _sender,
+                                    indexPath,
+                                    _data
+                                ) {
+                                    switch (indexPath.section) {
+                                        case 0:
+                                            switch (indexPath.row) {
+                                                case 0:
+                                                    $ui.preview({
+                                                        title: "av" + vid,
+                                                        url: _biliData.pic
+                                                    });
+                                                    break;
+                                                case 1:
+                                                    $ui.preview({
+                                                        title: _biliData.author,
+                                                        url: _biliData.face
+                                                    });
+                                                    break;
+                                                case 2:
+                                                    getVideo(
+                                                        vid,
+                                                        _biliData
+                                                    );
+                                                    break;
+                                                case 3:
+                                                    const partList =
+                                                        _biliData.list;
+                                                    if (
+                                                        partList.length == 1
+                                                    ) {
+                                                        getVideoDanmuku(
+                                                            partList[0].cid
                                                         );
-                                                        break;
-                                                    case 3:
-                                                        const partList =
-                                                            _biliData.list;
-                                                        if (
-                                                            partList.length == 1
-                                                        ) {
-                                                            getVideoDanmuku(
-                                                                partList[0].cid
-                                                            );
-                                                        } else {
-                                                            $ui.menu({
-                                                                items: partList.map(
-                                                                    p => p.part
-                                                                ),
-                                                                handler: function(
-                                                                    title,
-                                                                    idx
-                                                                ) {
-                                                                    getVideoDanmuku(
-                                                                        partList[
-                                                                            idx
-                                                                        ].cid
-                                                                    );
-                                                                }
-                                                            });
-                                                        }
-                                                        break;
-                                                    case 4:
-                                                        getBiliobVideo(vid);
-                                                        break;
-                                                    default:
-                                                        $ui.error("不支持");
-                                                }
-                                                break;
-                                            case 1:
-                                                const _list = _data.split("：");
-                                                $ui.alert({
-                                                    title: _list[0],
-                                                    message: _list[1]
-                                                });
-                                                break;
-                                        }
+                                                    } else {
+                                                        $ui.menu({
+                                                            items: partList.map(
+                                                                p => p.part
+                                                            ),
+                                                            handler: function (
+                                                                title,
+                                                                idx
+                                                            ) {
+                                                                getVideoDanmuku(
+                                                                    partList[
+                                                                        idx
+                                                                    ].cid
+                                                                );
+                                                            }
+                                                        });
+                                                    }
+                                                    break;
+                                                case 4:
+                                                    getBiliobVideo(vid);
+                                                    break;
+                                                default:
+                                                    $ui.error("不支持");
+                                            }
+                                            break;
+                                        case 1:
+                                            const _list = _data.split("：");
+                                            $ui.alert({
+                                                title: _list[0],
+                                                message: _list[1]
+                                            });
+                                            break;
                                     }
                                 }
                             }
-                        ]
+                        }]
                     };
                     $ui.loading(false);
                     switch ($app.env) {
@@ -585,10 +558,11 @@ function getVideo(vid, _biliData) {
     const partTitleList = partList.map(x => x.part);
     $ui.menu({
         items: partTitleList,
-        handler: function(title, idx) {
-            checkAccessKey()
-                ? getVideoData(vid, idx + 1, 116, _userData.access_key) //1080p以上需要带header
-                : getVideoData(vid, idx + 1, 80, "");
+        handler: function (title, idx) {
+            checkAccessKey() ?
+                getVideoData(vid, idx + 1, 116, _userData.access_key) //1080p以上需要带header
+                :
+                getVideoData(vid, idx + 1, 80, "");
         }
     });
 }
@@ -597,14 +571,14 @@ function getVideoData(vid, page, quality, access_key) {
     $ui.loading(true);
     $http.get({
         url: `${_URL.BILIBILI.GET_VIDEO_DATA}&id=${vid}&page=${page}&quality${quality}&access_key=${access_key}`,
-        handler: function(videoResp) {
+        handler: function (videoResp) {
             var videoData = videoResp.data;
             if (videoData.status == "OK") {
                 if (videoData.url.length > 0) {
                     const copyStr = JSON.stringify(videoData.headers);
                     $http.get({
                         url: videoData.url,
-                        handler: function(biliResp) {
+                        handler: function (biliResp) {
                             var biliData = biliResp.data;
                             if (biliData.code == 0) {
                                 const downloadList = biliData.data.durl;
@@ -620,29 +594,27 @@ function getVideoData(vid, page, quality, access_key) {
                                         props: {
                                             title: "可下载文件列表"
                                         },
-                                        views: [
-                                            {
-                                                type: "list",
-                                                props: {
-                                                    data: dList
-                                                },
-                                                layout: $layout.fill,
-                                                events: {
-                                                    didSelect: function(
-                                                        _sender,
-                                                        indexPath,
-                                                        data
-                                                    ) {
-                                                        showDownList(
-                                                            downloadList[
-                                                                indexPath.row
-                                                            ],
-                                                            copyStr
-                                                        );
-                                                    }
+                                        views: [{
+                                            type: "list",
+                                            props: {
+                                                data: dList
+                                            },
+                                            layout: $layout.fill,
+                                            events: {
+                                                didSelect: function (
+                                                    _sender,
+                                                    indexPath,
+                                                    data
+                                                ) {
+                                                    showDownList(
+                                                        downloadList[
+                                                            indexPath.row
+                                                        ],
+                                                        copyStr
+                                                    );
                                                 }
                                             }
-                                        ]
+                                        }]
                                     });
                                 } else {
                                     showDownList(downloadList[0], copyStr);
@@ -678,75 +650,73 @@ function showDownList(thisFile, copyStr) {
         props: {
             title: "可下载文件列表"
         },
-        views: [
-            {
-                type: "list",
-                props: {
-                    data: urlList
-                },
-                layout: $layout.fill,
-                events: {
-                    didSelect: function(_sender, idxp, _data) {
-                        if (copyStr.length > 0) {
-                            $ui.toast("请复制headers");
-                            $input.text({
-                                placeholder: "",
-                                text: copyStr,
-                                handler: function(text) {
-                                    copyStr.copy();
-                                    $ui.menu({
-                                        items: [
-                                            "分享",
-                                            "使用外部播放器打开",
-                                            "使用Alook浏览器打开"
-                                        ],
-                                        handler: function(title, idx) {
-                                            switch (idx) {
-                                                case 0:
-                                                    $share.sheet([_data]);
-                                                    break;
-                                                case 1:
-                                                    $ui.menu({
-                                                        items: [
-                                                            "AVPlayer",
-                                                            "nplayer"
-                                                        ],
-                                                        handler: function(
-                                                            titlePlayer,
-                                                            idxPlayer
-                                                        ) {
-                                                            switch (idxPlayer) {
-                                                                case 0:
-                                                                    appScheme.avplayerVideo(
-                                                                        _data
-                                                                    );
-                                                                    break;
-                                                                case 1:
-                                                                    appScheme.nplayerVideo(
-                                                                        _data
-                                                                    );
-                                                                    break;
-                                                            }
+        views: [{
+            type: "list",
+            props: {
+                data: urlList
+            },
+            layout: $layout.fill,
+            events: {
+                didSelect: function (_sender, idxp, _data) {
+                    if (copyStr.length > 0) {
+                        $ui.toast("请复制headers");
+                        $input.text({
+                            placeholder: "",
+                            text: copyStr,
+                            handler: function (text) {
+                                copyStr.copy();
+                                $ui.menu({
+                                    items: [
+                                        "分享",
+                                        "使用外部播放器打开",
+                                        "使用Alook浏览器打开"
+                                    ],
+                                    handler: function (title, idx) {
+                                        switch (idx) {
+                                            case 0:
+                                                $share.sheet([_data]);
+                                                break;
+                                            case 1:
+                                                $ui.menu({
+                                                    items: [
+                                                        "AVPlayer",
+                                                        "nplayer"
+                                                    ],
+                                                    handler: function (
+                                                        titlePlayer,
+                                                        idxPlayer
+                                                    ) {
+                                                        switch (idxPlayer) {
+                                                            case 0:
+                                                                appScheme.avplayerVideo(
+                                                                    _data
+                                                                );
+                                                                break;
+                                                            case 1:
+                                                                appScheme.nplayerVideo(
+                                                                    _data
+                                                                );
+                                                                break;
                                                         }
-                                                    });
-                                                    break;
-                                                case 2:
-                                                    appScheme.alookBrowserOpen(
-                                                        _data
-                                                    );
-                                                    break;
-                                            }
+                                                    }
+                                                });
+                                                break;
+                                            case 2:
+                                                appScheme.alookBrowserOpen(
+                                                    _data
+                                                );
+                                                break;
                                         }
-                                    });
-                                }
-                            });
-                        } else {
-                            $share.sheet([_data]);
-                        }
+                                    }
+                                });
+                            }
+                        });
+                    } else {
+                        $share.sheet([_data]);
                     }
                 }
             }
-        ]
+        }]
     });
 }
 
@@ -761,7 +731,7 @@ function getAccessKeyByLogin(userName, password) {
             user: userName,
             passwd: password
         },
-        handler: function(kaaassResult) {
+        handler: function (kaaassResult) {
             var kaaassData = kaaassResult.data;
             if (kaaassData.status == "OK") {
                 var success = saveCache("getAccessKey", kaaassResult.rawData);
@@ -793,7 +763,7 @@ function loginBilibili(loginUrl, bodyStr, headers) {
         url: loginUrl,
         header: headers,
         body: bodyStr,
-        handler: function(loginResp) {
+        handler: function (loginResp) {
             var loginData = loginResp.data;
             $console.info(loginData);
             if (loginData.code == 0) {
@@ -808,7 +778,7 @@ function loginBilibili(loginUrl, bodyStr, headers) {
                 $input.text({
                     placeholder: "",
                     text: _userData.access_key,
-                    handler: function(text) {
+                    handler: function (text) {
                         text.copy();
                         $ui.toast("已复制！");
                     }
@@ -832,7 +802,7 @@ function getUserInfo() {
             header: {
                 "User-Agent": _UA.KAAASS
             },
-            handler: function(userResp) {
+            handler: function (userResp) {
                 var userData = userResp.data;
                 if (userData.status == "OK") {
                     saveCache("getUserInfo", userResp.rawData);
@@ -875,95 +845,86 @@ function getUserInfo() {
                     const view = {
                         props: {
                             title: "加载成功",
-                            navButtons: [
-                                {
-                                    title: "打开网页版",
-                                    icon: "068", // Or you can use icon name
-                                    symbol: "checkmark.seal", // SF symbols are supported
-                                    handler: () => {
-                                        $ui.preview({
-                                            title: user.userName,
-                                            url:
-                                                _BILIURL.BILIBILI_SPACE +
-                                                user.uid
-                                        });
-                                    }
+                            navButtons: [{
+                                title: "打开网页版",
+                                icon: "068", // Or you can use icon name
+                                symbol: "checkmark.seal", // SF symbols are supported
+                                handler: () => {
+                                    $ui.preview({
+                                        title: user.userName,
+                                        url: _BILIURL.BILIBILI_SPACE +
+                                            user.uid
+                                    });
                                 }
-                            ]
+                            }]
                         },
-                        views: [
-                            {
-                                type: "list",
-                                props: {
-                                    data: [
-                                        {
-                                            title: "功能",
-                                            rows: ["编辑access key"]
-                                        },
-                                        {
-                                            title: "数据",
-                                            rows: userDataList
-                                        }
-                                    ]
-                                },
-                                layout: $layout.fill,
-                                events: {
-                                    didSelect: function(
-                                        _sender,
-                                        indexPath,
-                                        _data
-                                    ) {
-                                        switch (indexPath.section) {
-                                            case 0:
-                                                switch (indexPath.row) {
-                                                    case 0:
-                                                        $input.text({
-                                                            placeholder:
-                                                                "access key",
-                                                            text:
-                                                                _userData.access_key,
-                                                            handler: function(
+                        views: [{
+                            type: "list",
+                            props: {
+                                data: [{
+                                        title: "功能",
+                                        rows: ["编辑access key"]
+                                    },
+                                    {
+                                        title: "数据",
+                                        rows: userDataList
+                                    }
+                                ]
+                            },
+                            layout: $layout.fill,
+                            events: {
+                                didSelect: function (
+                                    _sender,
+                                    indexPath,
+                                    _data
+                                ) {
+                                    switch (indexPath.section) {
+                                        case 0:
+                                            switch (indexPath.row) {
+                                                case 0:
+                                                    $input.text({
+                                                        placeholder: "access key",
+                                                        text: _userData.access_key,
+                                                        handler: function (
+                                                            inputKey
+                                                        ) {
+                                                            saveAccessKey(
                                                                 inputKey
-                                                            ) {
-                                                                saveAccessKey(
-                                                                    inputKey
-                                                                );
-                                                            }
-                                                        });
-                                                        break;
-                                                    default:
-                                                        $ui.error("不支持");
-                                                }
-                                                break;
-                                            case 1:
-                                                const _g = _data.split("：");
-                                                $ui.alert({
-                                                    title: _g[0],
-                                                    message: _g[1],
-                                                    actions: [
-                                                        {
-                                                            title: "复制",
-                                                            disabled: false, // Optional
-                                                            handler: function() {
-                                                                _g[1].copy();
-                                                                $ui.toast(
-                                                                    "已复制"
-                                                                );
-                                                            }
-                                                        },
-                                                        {
-                                                            title: "关闭",
-                                                            disabled: false, // Optional
-                                                            handler: function() {}
+                                                            );
                                                         }
-                                                    ]
-                                                });
-                                                break;
-                                        }
+                                                    });
+                                                    break;
+                                                default:
+                                                    $ui.error("不支持");
+                                            }
+                                            break;
+                                        case 1:
+                                            const _g = _data.split("：");
+                                            $ui.alert({
+                                                title: _g[0],
+                                                message: _g[1],
+                                                actions: [{
+                                                        title: "复制",
+                                                        disabled: false, // Optional
+                                                        handler: function () {
+                                                            _g[1].copy();
+                                                            $ui.toast(
+                                                                "已复制"
+                                                            );
+                                                        }
+                                                    },
+                                                    {
+                                                        title: "关闭",
+                                                        disabled: false, // Optional
+                                                        handler: function () {}
+                                                    }
+                                                ]
+                                            });
+                                            break;
                                     }
                                 }
                             }
-                        ]
+                        }]
                     };
                     $ui.push(view);
                 } else {
@@ -1016,7 +977,7 @@ function getVtbLiveroomInfo(mid) {
         .get({
             url: _BILIURL.API_VTBS_MOE.V1_DETAIL + mid
         })
-        .then(function(resp) {
+        .then(function (resp) {
             $ui.loading(false);
             if (resp.error) {
                 $ui.alert({
@@ -1030,93 +991,89 @@ function getVtbLiveroomInfo(mid) {
                         props: {
                             title: liveroomInfo.uname
                         },
-                        views: [
-                            {
-                                type: "list",
-                                props: {
-                                    data: [
-                                        {
-                                            title: "数据",
-                                            rows: [
-                                                `昵称：${liveroomInfo.uname}`,
-                                                `uid：${liveroomInfo.mid}`,
-                                                `直播间id：${liveroomInfo.roomid}`,
-                                                `唯一id：${liveroomInfo.uuid}`,
-                                                `个人签名：${liveroomInfo.sign}`,
-                                                `直播间通知：${liveroomInfo.notice}`,
-                                                `标题：${liveroomInfo.title}`,
-                                                `关注：${liveroomInfo.follower}`,
-                                                `人气：${liveroomInfo.online}`,
-                                                `投稿视频：${liveroomInfo.video}个`,
-                                                `直播：${
+                        views: [{
+                            type: "list",
+                            props: {
+                                data: [{
+                                        title: "数据",
+                                        rows: [
+                                            `昵称：${liveroomInfo.uname}`,
+                                            `uid：${liveroomInfo.mid}`,
+                                            `直播间id：${liveroomInfo.roomid}`,
+                                            `唯一id：${liveroomInfo.uuid}`,
+                                            `个人签名：${liveroomInfo.sign}`,
+                                            `直播间通知：${liveroomInfo.notice}`,
+                                            `标题：${liveroomInfo.title}`,
+                                            `关注：${liveroomInfo.follower}`,
+                                            `人气：${liveroomInfo.online}`,
+                                            `投稿视频：${liveroomInfo.video}个`,
+                                            `直播：${
                                                     liveroomInfo.liveStatus == 1
                                                         ? "直播中"
                                                         : "未直播"
                                                 }`,
-                                                `总督/提督/舰长：${liveroomInfo.guardType[0]}/${liveroomInfo.guardType[1]}/${liveroomInfo.guardType[2]}`,
-                                                `个人签名：${liveroomInfo.sign}`,
-                                                `分区排名：${liveroomInfo.areaRank}`
-                                            ]
-                                        },
-                                        {
-                                            title: "操作",
-                                            rows: [`查看头图`, `查看头像`]
-                                        }
-                                    ]
-                                },
-                                layout: $layout.fill,
-                                events: {
-                                    didSelect: function(
-                                        _sender,
-                                        indexPath,
-                                        _data
-                                    ) {
-                                        const section = indexPath.section;
-                                        const row = indexPath.row;
-                                        switch (section) {
-                                            case 0:
-                                                $ui.alert({
-                                                    title: row,
-                                                    message: _data,
-                                                    actions: [
-                                                        {
-                                                            title: "打开网页",
-                                                            disabled: false,
-                                                            handler: function() {
-                                                                appScheme.safariPreview(
-                                                                    _BILIURL
-                                                                        .API_VTBS_MOE
-                                                                        .WEB_DETAIL +
-                                                                        mid
-                                                                );
-                                                            }
-                                                        },
-                                                        {
-                                                            title: "好的",
-                                                            disabled: false,
-                                                            handler: function() {}
+                                            `总督/提督/舰长：${liveroomInfo.guardType[0]}/${liveroomInfo.guardType[1]}/${liveroomInfo.guardType[2]}`,
+                                            `个人签名：${liveroomInfo.sign}`,
+                                            `分区排名：${liveroomInfo.areaRank}`
+                                        ]
+                                    },
+                                    {
+                                        title: "操作",
+                                        rows: [`查看头图`, `查看头像`]
+                                    }
+                                ]
+                            },
+                            layout: $layout.fill,
+                            events: {
+                                didSelect: function (
+                                    _sender,
+                                    indexPath,
+                                    _data
+                                ) {
+                                    const section = indexPath.section;
+                                    const row = indexPath.row;
+                                    switch (section) {
+                                        case 0:
+                                            $ui.alert({
+                                                title: row,
+                                                message: _data,
+                                                actions: [{
+                                                        title: "打开网页",
+                                                        disabled: false,
+                                                        handler: function () {
+                                                            appScheme.safariPreview(
+                                                                _BILIURL
+                                                                .API_VTBS_MOE
+                                                                .WEB_DETAIL +
+                                                                mid
+                                                            );
                                                         }
-                                                    ]
-                                                });
-                                                break;
-                                            case 1:
-                                                switch (row) {
-                                                    case 0:
-                                                        appScheme.safariPreview(
-                                                            liveroomInfo.topPhoto
-                                                        );
-                                                        break;
-                                                    case 1:
-                                                        appScheme.safariPreview(
-                                                            liveroomInfo.face
-                                                        );
-                                                        break;
-                                                }
-                                        }
+                                                    },
+                                                    {
+                                                        title: "好的",
+                                                        disabled: false,
+                                                        handler: function () {}
+                                                    }
+                                                ]
+                                            });
+                                            break;
+                                        case 1:
+                                            switch (row) {
+                                                case 0:
+                                                    appScheme.safariPreview(
+                                                        liveroomInfo.topPhoto
+                                                    );
+                                                    break;
+                                                case 1:
+                                                    appScheme.safariPreview(
+                                                        liveroomInfo.face
+                                                    );
+                                                    break;
+                                            }
                                     }
                                 }
                             }
-                        ]
+                        }]
                     });
                 } else {
                     $ui.alert({
@@ -1137,7 +1094,7 @@ function getFansMedalList() {
             .get({
                 url: link
             })
-            .then(function(resp) {
+            .then(function (resp) {
                 var data = resp.data;
                 if (data.code == 0) {
                     $ui.toast(data.message || data.msg || "已拥有的粉丝勋章");
@@ -1147,240 +1104,214 @@ function getFansMedalList() {
                         var onlineList = [];
                         var offlineList = [];
                         medalList.map(m =>
-                            m.live_stream_status == 1
-                                ? onlineList.push(m)
-                                : offlineList.push(m)
+                            m.live_stream_status == 1 ?
+                            onlineList.push(m) :
+                            offlineList.push(m)
                         );
                         medalList.map(
                             m =>
-                                `[${m.medal_name}]${m.target_name}` +
-                                (m.icon_code ? `[${m.icon_text}]` : "")
+                            `[${m.medal_name}]${m.target_name}` +
+                            (m.icon_code ? `[${m.icon_text}]` : "")
                         );
                         $ui.loading(false);
                         $ui.push({
                             props: {
                                 title: `数量${medalData.cnt}/${medalData.max}`
                             },
-                            views: [
-                                {
-                                    type: "list",
-                                    props: {
-                                        data: [
-                                            {
-                                                title: "在播了",
-                                                rows: onlineList.map(
-                                                    m =>
-                                                        `[${m.medal_name}]${m.target_name}` +
-                                                        (m.icon_code
-                                                            ? `[${m.icon_text}]`
-                                                            : "") +
-                                                        (m.today_feed ==
-                                                        m.day_limit
-                                                            ? `[已满]`
-                                                            : `[还差${m.day_limit -
+                            views: [{
+                                type: "list",
+                                props: {
+                                    data: [{
+                                            title: "在播了",
+                                            rows: onlineList.map(
+                                                m =>
+                                                `[${m.medal_name}]${m.target_name}` +
+                                                (m.icon_code ?
+                                                    `[${m.icon_text}]` :
+                                                    "") +
+                                                (m.today_feed ==
+                                                    m.day_limit ?
+                                                    `[已满]` :
+                                                    `[还差${m.day_limit -
                                                                   m.today_feed}]`)
-                                                )
+                                            )
+                                        },
+                                        {
+                                            title: "咕咕咕",
+                                            rows: offlineList.map(
+                                                m =>
+                                                `[${m.medal_name}]${m.target_name}` +
+                                                (m.icon_code ?
+                                                    `[${m.icon_text}]` :
+                                                    "") +
+                                                (m.today_feed ==
+                                                    m.day_limit ?
+                                                    `[已满]` :
+                                                    `[还差${m.day_limit -
+                                                                  m.today_feed}]`)
+                                            )
+                                        }
+                                    ],
+                                    menu: {
+                                        title: "菜单",
+                                        items: [{
+                                                title: "详细信息",
+                                                symbol: "play.rectangle",
+                                                handler: (
+                                                    sender,
+                                                    indexPath
+                                                ) => {
+                                                    const liveData =
+                                                        indexPath.section ==
+                                                        0 ?
+                                                        onlineList[
+                                                            indexPath
+                                                            .row
+                                                        ] :
+                                                        offlineList[
+                                                            indexPath
+                                                            .row
+                                                        ];
+                                                    $ui.alert({
+                                                        title: `[${liveData.medal_name}]${liveData.target_name}`,
+                                                        message: liveData
+                                                    });
+                                                }
                                             },
                                             {
-                                                title: "咕咕咕",
-                                                rows: offlineList.map(
-                                                    m =>
-                                                        `[${m.medal_name}]${m.target_name}` +
-                                                        (m.icon_code
-                                                            ? `[${m.icon_text}]`
-                                                            : "") +
-                                                        (m.today_feed ==
-                                                        m.day_limit
-                                                            ? `[已满]`
-                                                            : `[还差${m.day_limit -
-                                                                  m.today_feed}]`)
-                                                )
-                                            }
-                                        ],
-                                        menu: {
-                                            title: "菜单",
-                                            items: [
-                                                {
-                                                    title: "详细信息",
-                                                    symbol: "play.rectangle",
-                                                    handler: (
-                                                        sender,
-                                                        indexPath
-                                                    ) => {
-                                                        const liveData =
-                                                            indexPath.section ==
-                                                            0
-                                                                ? onlineList[
-                                                                      indexPath
-                                                                          .row
-                                                                  ]
-                                                                : offlineList[
-                                                                      indexPath
-                                                                          .row
-                                                                  ];
+                                                title: "通过vtbs.moe获取vTuber信息",
+                                                symbol: "play.rectangle",
+                                                handler: (
+                                                    sender,
+                                                    indexPath
+                                                ) => {
+                                                    const liveData =
+                                                        indexPath.section ==
+                                                        0 ?
+                                                        onlineList[
+                                                            indexPath
+                                                            .row
+                                                        ] :
+                                                        offlineList[
+                                                            indexPath
+                                                            .row
+                                                        ];
+                                                    getVtbLiveroomInfo(
+                                                        liveData.target_id
+                                                    );
+                                                }
+                                            },
+                                            {
+                                                title: "赠送礼物",
+                                                symbol: "gift",
+                                                handler: (
+                                                    sender,
+                                                    indexPath
+                                                ) => {
+                                                    const liveData =
+                                                        indexPath.section == 0 ? onlineList[indexPath.row] : offlineList[indexPath.row];
+                                                    if (liveData.day_limit - liveData.today_feed > 0) {
+                                                        getLiveGiftList(liveData);
+                                                    } else {
                                                         $ui.alert({
-                                                            title: `[${liveData.medal_name}]${liveData.target_name}`,
-                                                            message: liveData
+                                                            title: "不用送了",
+                                                            message: "今日亲密度已满"
                                                         });
                                                     }
-                                                },
-                                                {
-                                                    title:
-                                                        "通过vtbs.moe获取vTuber信息",
-                                                    symbol: "play.rectangle",
-                                                    handler: (
-                                                        sender,
-                                                        indexPath
-                                                    ) => {
-                                                        const liveData =
-                                                            indexPath.section ==
-                                                            0
-                                                                ? onlineList[
-                                                                      indexPath
-                                                                          .row
-                                                                  ]
-                                                                : offlineList[
-                                                                      indexPath
-                                                                          .row
-                                                                  ];
-                                                        getVtbLiveroomInfo(
-                                                            liveData.target_id
+                                                }
+                                            },
+                                            {
+                                                title: "赠送银瓜子辣条",
+                                                symbol: "gift",
+                                                handler: (
+                                                    sender,
+                                                    indexPath
+                                                ) => {
+                                                    const liveData =
+                                                        indexPath.section ==
+                                                        0 ?
+                                                        onlineList[
+                                                            indexPath
+                                                            .row
+                                                        ] :
+                                                        offlineList[
+                                                            indexPath
+                                                            .row
+                                                        ];
+                                                    if (
+                                                        liveData.day_limit -
+                                                        liveData.today_feed >
+                                                        0
+                                                    ) {
+                                                        getLiveGiftList(
+                                                            liveData
                                                         );
-                                                    }
-                                                },
-                                                {
-                                                    title: "赠送礼物",
-                                                    symbol: "gift",
-                                                    handler: (
-                                                        sender,
-                                                        indexPath
-                                                    ) => {
-                                                        const liveData =
-                                                            indexPath.section ==
-                                                            0
-                                                                ? onlineList[
-                                                                      indexPath
-                                                                          .row
-                                                                  ]
-                                                                : offlineList[
-                                                                      indexPath
-                                                                          .row
-                                                                  ];
-                                                        if (
-                                                            liveData.day_limit -
-                                                                liveData.today_feed >
-                                                            0
-                                                        ) {
-                                                            getLiveGiftList(
-                                                                liveData
-                                                            );
-                                                        } else {
-                                                            $ui.alert({
-                                                                title:
-                                                                    "不用送了",
-                                                                message:
-                                                                    "今日亲密度已满"
-                                                            });
-                                                        }
-                                                    }
-                                                },
-                                                {
-                                                    title: "赠送银瓜子辣条",
-                                                    symbol: "gift",
-                                                    handler: (
-                                                        sender,
-                                                        indexPath
-                                                    ) => {
-                                                        const liveData =
-                                                            indexPath.section ==
-                                                            0
-                                                                ? onlineList[
-                                                                      indexPath
-                                                                          .row
-                                                                  ]
-                                                                : offlineList[
-                                                                      indexPath
-                                                                          .row
-                                                                  ];
-                                                        if (
-                                                            liveData.day_limit -
-                                                                liveData.today_feed >
-                                                            0
-                                                        ) {
-                                                            getLiveGiftList(
-                                                                liveData
-                                                            );
-                                                        } else {
-                                                            $ui.alert({
-                                                                title:
-                                                                    "不用送了",
-                                                                message:
-                                                                    "今日亲密度已满"
-                                                            });
-                                                        }
-                                                    }
-                                                },
-                                                {
-                                                    title: "自动赠送礼物",
-                                                    symbol: "gift",
-                                                    handler: (
-                                                        sender,
-                                                        indexPath
-                                                    ) => {
-                                                        const liveData =
-                                                            indexPath.section ==
-                                                            0
-                                                                ? onlineList[
-                                                                      indexPath
-                                                                          .row
-                                                                  ]
-                                                                : offlineList[
-                                                                      indexPath
-                                                                          .row
-                                                                  ];
-                                                        if (
-                                                            liveData.day_limit -
-                                                                liveData.today_feed >
-                                                            0
-                                                        ) {
-                                                            getLiveGiftList(
-                                                                liveData,
-                                                                1
-                                                            );
-                                                        } else {
-                                                            $ui.alert({
-                                                                title:
-                                                                    "不用送了",
-                                                                message:
-                                                                    "今日亲密度已满"
-                                                            });
-                                                        }
+                                                    } else {
+                                                        $ui.alert({
+                                                            title: "不用送了",
+                                                            message: "今日亲密度已满"
+                                                        });
                                                     }
                                                 }
-                                            ]
-                                        }
-                                    },
-                                    layout: $layout.fill,
-                                    events: {
-                                        didSelect: function(
-                                            sender,
-                                            indexPath,
-                                            data
-                                        ) {
-                                            const liveData =
-                                                indexPath.section == 0
-                                                    ? onlineList[indexPath.row]
-                                                    : offlineList[
-                                                          indexPath.row
-                                                      ];
-                                            $app.openURL(
-                                                _BILIURL.LIVE_WEB_ROOM +
-                                                    liveData.room_id
-                                            );
-                                        }
+                                            },
+                                            {
+                                                title: "自动赠送礼物",
+                                                symbol: "gift",
+                                                handler: (
+                                                    sender,
+                                                    indexPath
+                                                ) => {
+                                                    const liveData =
+                                                        indexPath.section ==
+                                                        0 ?
+                                                        onlineList[
+                                                            indexPath
+                                                            .row
+                                                        ] :
+                                                        offlineList[
+                                                            indexPath
+                                                            .row
+                                                        ];
+                                                    if (
+                                                        liveData.day_limit -
+                                                        liveData.today_feed >
+                                                        0
+                                                    ) {
+                                                        getLiveGiftList(
+                                                            liveData,
+                                                            1
+                                                        );
+                                                    } else {
+                                                        $ui.alert({
+                                                            title: "不用送了",
+                                                            message: "今日亲密度已满"
+                                                        });
+                                                    }
+                                                }
+                                            }
+                                        ]
+                                    }
+                                },
+                                layout: $layout.fill,
+                                events: {
+                                    didSelect: function (
+                                        sender,
+                                        indexPath,
+                                        data
+                                    ) {
+                                        const liveData =
+                                            indexPath.section == 0 ?
+                                            onlineList[indexPath.row] :
+                                            offlineList[
+                                                indexPath.row
+                                            ];
+                                        $app.openURL(
+                                            _BILIURL.LIVE_WEB_ROOM +
+                                            liveData.room_id
+                                        );
                                     }
                                 }
-                            ]
+                            }]
                         });
                     } else {
                         $ui.loading(false);
@@ -1420,7 +1351,7 @@ function sendLiveGift(
         .get({
             url: url
         })
-        .then(function(resp) {
+        .then(function (resp) {
             var data = resp.data;
             if (data.code == 0) {
                 const resultData = data.data;
@@ -1451,7 +1382,7 @@ let sendLiveGiftList = (liveData, giftList, index = 0) => {
             .get({
                 url: url
             })
-            .then(function(resp) {
+            .then(function (resp) {
                 var data = resp.data;
                 if (data.code == 0) {
                     const resultData = data.data;
@@ -1490,7 +1421,7 @@ function getVideoDanmuku(mid) {
         .get({
             url: danmukuUrl
         })
-        .then(function(resp) {
+        .then(function (resp) {
             $ui.loading(false);
             const danmuXmlList = [];
             const $ = cheerio.load(resp.data, {
@@ -1499,7 +1430,7 @@ function getVideoDanmuku(mid) {
             });
             $console.info(resp.data);
             $console.info($.xml());
-            $("i > d").each(function(i, elem) {
+            $("i > d").each(function (i, elem) {
                 danmuXmlList.push($(elem));
             });
             const danmuStrList = danmuXmlList.map(d => d.text());
@@ -1513,59 +1444,55 @@ function getVideoDanmuku(mid) {
                 props: {
                     title: "弹幕列表"
                 },
-                views: [
-                    {
-                        type: "list",
-                        props: {
-                            data: [`显示全部(${danmuStrList.length}个)`, "搜索"]
-                        },
-                        layout: $layout.fill,
-                        events: {
-                            didSelect: function(sender, indexPath, data) {
-                                const section = indexPath.section;
-                                const row = indexPath.row;
-                                switch (row) {
-                                    case 0:
-                                        $ui.push({
+                views: [{
+                    type: "list",
+                    props: {
+                        data: [`显示全部(${danmuStrList.length}个)`, "搜索"]
+                    },
+                    layout: $layout.fill,
+                    events: {
+                        didSelect: function (sender, indexPath, data) {
+                            const section = indexPath.section;
+                            const row = indexPath.row;
+                            switch (row) {
+                                case 0:
+                                    $ui.push({
+                                        props: {
+                                            title: `${danmuStrList.length}个弹幕`
+                                        },
+                                        views: [{
+                                            type: "list",
                                             props: {
-                                                title: `${danmuStrList.length}个弹幕`
+                                                data: danmuStrList
                                             },
-                                            views: [
-                                                {
-                                                    type: "list",
-                                                    props: {
-                                                        data: danmuStrList
-                                                    },
-                                                    layout: $layout.fill,
-                                                    events: {
-                                                        didSelect: function(
-                                                            _sender,
-                                                            _indexPath,
-                                                            _data
-                                                        ) {
-                                                            const _section =
-                                                                _indexPath.section;
-                                                            const _row =
-                                                                _indexPath.row;
-                                                            $ui.alert({
-                                                                title: _data,
-                                                                message: danmuXmlList[
-                                                                    _row
-                                                                ].attr("p")
-                                                            });
-                                                        }
-                                                    }
+                                            layout: $layout.fill,
+                                            events: {
+                                                didSelect: function (
+                                                    _sender,
+                                                    _indexPath,
+                                                    _data
+                                                ) {
+                                                    const _section =
+                                                        _indexPath.section;
+                                                    const _row =
+                                                        _indexPath.row;
+                                                    $ui.alert({
+                                                        title: _data,
+                                                        message: danmuXmlList[
+                                                            _row
+                                                        ].attr("p")
+                                                    });
                                                 }
-                                            ]
-                                        });
-                                        break;
-                                    default:
-                                        $ui.error("不支持");
-                                }
+                                            }
+                                        }]
+                                    });
+                                    break;
+                                default:
+                                    $ui.error("不支持");
                             }
                         }
                     }
-                ]
+                }]
             });
         });
 }
@@ -1578,7 +1505,7 @@ function getWallet() {
             .get({
                 url: _URL.BILIBILI.GET_WALLET + _userData.access_key
             })
-            .then(function(resp) {
+            .then(function (resp) {
                 var data = resp.data;
                 $console.info(data);
                 if (data) {
@@ -1587,8 +1514,7 @@ function getWallet() {
                         $ui.loading(false);
                         $ui.alert({
                             title: "钱包余额",
-                            message:
-                                `金瓜子：${walletData.gold}\n` +
+                            message: `金瓜子：${walletData.gold}\n` +
                                 `银瓜子：${walletData.silver}\n` +
                                 `硬币：${walletData.coin}\n` +
                                 `vip(老爷?)：${
@@ -1599,33 +1525,28 @@ function getWallet() {
                                 `银瓜子换硬币：${
                                     walletData.status == 1 ? "允许" : "不允许"
                                 }`,
-                            actions: [
-                                {
+                            actions: [{
                                     title: "换硬币",
                                     disabled: !(
                                         walletData.silver_2_coin_left > 0 &&
                                         walletData.status > 0
                                     ),
-                                    handler: function() {
+                                    handler: function () {
                                         if (
                                             walletData.silver_2_coin_left > 0 &&
                                             walletData.status > 0
                                         ) {
                                             $http.post({
-                                                url:
-                                                    _URL.BILIBILI
-                                                        .SILVER_TO_COIN,
+                                                url: _URL.BILIBILI
+                                                    .SILVER_TO_COIN,
                                                 header: {
-                                                    "User-Agent":
-                                                        _UA.BILIBILI.APP_IPHONE,
-                                                    "Content-Type":
-                                                        "application/x-www-form-urlencoded"
+                                                    "User-Agent": _UA.BILIBILI.APP_IPHONE,
+                                                    "Content-Type": "application/x-www-form-urlencoded"
                                                 },
                                                 body: {
-                                                    access_key:
-                                                        _userData.access_key
+                                                    access_key: _userData.access_key
                                                 },
-                                                handler: function(resp) {
+                                                handler: function (resp) {
                                                     var data = resp.data;
                                                     $console.info(data);
                                                     if (data) {
@@ -1633,20 +1554,17 @@ function getWallet() {
                                                             let silver2coinData =
                                                                 data.data;
                                                             $ui.alert({
-                                                                title:
-                                                                    data.message ||
+                                                                title: data.message ||
                                                                     data.msg ||
                                                                     "兑换成功",
-                                                                message:
-                                                                    `金瓜子：${silver2coinData.gold}\n` +
+                                                                message: `金瓜子：${silver2coinData.gold}\n` +
                                                                     `银瓜子：${silver2coinData.silver}\n` +
                                                                     `硬币：${silver2coinData.coin}\n`
                                                             });
                                                         } else {
                                                             $ui.alert({
                                                                 title: `错误${data.code}`,
-                                                                message:
-                                                                    data.message ||
+                                                                message: data.message ||
                                                                     data.msg ||
                                                                     "未知错误"
                                                             });
@@ -1667,7 +1585,7 @@ function getWallet() {
                                 {
                                     title: "OK",
                                     disabled: false,
-                                    handler: function() {}
+                                    handler: function () {}
                                 }
                             ]
                         });
@@ -1716,7 +1634,7 @@ function mangaClockin() {
                 uid: _userData.uid,
                 access_key: _userData.access_key
             },
-            handler: function(postResp) {
+            handler: function (postResp) {
                 var clockinData = postResp.data;
                 $console.info(clockinData);
                 $ui.loading(false);
@@ -1782,7 +1700,7 @@ function laterToWatch() {
                     "User-Agent": _UA.BILIBILI.APP_IPHONE
                 }
             })
-            .then(function(resp) {
+            .then(function (resp) {
                 var data = resp.data;
                 $console.info(data);
                 if (data.data) {
@@ -1792,29 +1710,27 @@ function laterToWatch() {
                             props: {
                                 title: `稍后再看-${data.data.count}`
                             },
-                            views: [
-                                {
-                                    type: "list",
-                                    props: {
-                                        data: laterList.map(v =>
-                                            v.title
-                                                .replace(/\【/g, "[")
-                                                .replace(/\】/g, "]")
-                                        )
-                                    },
-                                    layout: $layout.fill,
-                                    events: {
-                                        didSelect: function(
-                                            _sender,
-                                            indexPath,
-                                            _data
-                                        ) {
-                                            const row = indexPath.row;
-                                            getVideoInfo(laterList[row].aid);
-                                        }
+                            views: [{
+                                type: "list",
+                                props: {
+                                    data: laterList.map(v =>
+                                        v.title
+                                        .replace(/\【/g, "[")
+                                        .replace(/\】/g, "]")
+                                    )
+                                },
+                                layout: $layout.fill,
+                                events: {
+                                    didSelect: function (
+                                        _sender,
+                                        indexPath,
+                                        _data
+                                    ) {
+                                        const row = indexPath.row;
+                                        getVideoInfo(laterList[row].aid);
                                     }
                                 }
-                            ]
+                            }]
                         });
                     } else {
                         $ui.error("稍后再看列表是空白的，请添加");
@@ -1852,26 +1768,22 @@ function getMyInfo() {
                                 $ui.alert({
                                     title: "结果",
                                     message: myInfoData,
-                                    actions: [
-                                        {
-                                            title: "ok",
-                                            disabled: false, // Optional
-                                            handler: function() {}
-                                        }
-                                    ]
+                                    actions: [{
+                                        title: "ok",
+                                        disabled: false, // Optional
+                                        handler: function () {}
+                                    }]
                                 });
                             } else {
                                 $ui.loading(false);
                                 $ui.alert({
                                     title: "Error ${resultBili.code}",
                                     message: resultBili.message || "未知错误",
-                                    actions: [
-                                        {
-                                            title: "OK",
-                                            disabled: false, // Optional
-                                            handler: function() {}
-                                        }
-                                    ]
+                                    actions: [{
+                                        title: "OK",
+                                        disabled: false, // Optional
+                                        handler: function () {}
+                                    }]
                                 });
                             }
                         }
@@ -1889,8 +1801,7 @@ function getMyInfo() {
 
 function getSignUrl(host, param, android = false) {
     return $http.get({
-        url:
-            _BILIURL.GET_SIGN_URL +
+        url: _BILIURL.GET_SIGN_URL +
             "?host=" +
             encodeURI(host) +
             "&param=" +
@@ -1909,7 +1820,7 @@ function getBiliobVideo(avid) {
         .get({
             url: _BILIURL.BILIOB.API_VIDEO + avid
         })
-        .then(function(resp) {
+        .then(function (resp) {
             var v = resp.data;
             $ui.loading(false);
             if (v) {
@@ -1917,71 +1828,68 @@ function getBiliobVideo(avid) {
                     props: {
                         title: `av${v.aid}`
                     },
-                    views: [
-                        {
-                            type: "list",
-                            props: {
-                                data: [
-                                    {
-                                        title: "",
-                                        rows: [
-                                            `标题：${v.title}`,
-                                            `BV：${v.bvid}`,
-                                            `作者：${v.authorName}`,
-                                            `分类：${v.channel} > ${v.subChannel}`,
-                                            `时间：${v.cDatetime}`,
-                                            `观看：${v.cView}`,
-                                            `收藏：${v.cFavorite}`,
-                                            `弹幕：${v.cDanmaku}`,
-                                            `硬币：${v.cCoin}`,
-                                            `分享：${v.cShare}`,
-                                            `点赞：${v.cLike}`
-                                        ]
-                                    },
-                                    {
-                                        title: "",
-                                        rows: ["查看封面"]
-                                    }
-                                ]
-                            },
-                            layout: $layout.fill,
-                            events: {
-                                didSelect: function(_sender, indexPath, _data) {
-                                    const section = indexPath.section;
-                                    const row = indexPath.row;
-                                    switch (section) {
-                                        case 0:
-                                            switch (row) {
-                                                case 2:
-                                                    $ui.alert({
-                                                        title: v.authorName,
-                                                        message: v.author
-                                                    });
-                                                    break;
-                                                default:
-                                                    const textList = _data.split(
-                                                        "："
-                                                    );
-                                                    $ui.alert({
-                                                        title: textList[0],
-                                                        message: textList[1]
-                                                    });
-                                            }
-                                            break;
-                                        case 1:
-                                            switch (row) {
-                                                case 0:
-                                                    $ui.preview({
-                                                        title: `av${v.aid}`,
-                                                        url: v.pic
-                                                    });
-                                                    break;
-                                            }
-                                    }
+                    views: [{
+                        type: "list",
+                        props: {
+                            data: [{
+                                    title: "",
+                                    rows: [
+                                        `标题：${v.title}`,
+                                        `BV：${v.bvid}`,
+                                        `作者：${v.authorName}`,
+                                        `分类：${v.channel} > ${v.subChannel}`,
+                                        `时间：${v.cDatetime}`,
+                                        `观看：${v.cView}`,
+                                        `收藏：${v.cFavorite}`,
+                                        `弹幕：${v.cDanmaku}`,
+                                        `硬币：${v.cCoin}`,
+                                        `分享：${v.cShare}`,
+                                        `点赞：${v.cLike}`
+                                    ]
+                                },
+                                {
+                                    title: "",
+                                    rows: ["查看封面"]
+                                }
+                            ]
+                        },
+                        layout: $layout.fill,
+                        events: {
+                            didSelect: function (_sender, indexPath, _data) {
+                                const section = indexPath.section;
+                                const row = indexPath.row;
+                                switch (section) {
+                                    case 0:
+                                        switch (row) {
+                                            case 2:
+                                                $ui.alert({
+                                                    title: v.authorName,
+                                                    message: v.author
+                                                });
+                                                break;
+                                            default:
+                                                const textList = _data.split(
+                                                    "："
+                                                );
+                                                $ui.alert({
+                                                    title: textList[0],
+                                                    message: textList[1]
+                                                });
+                                        }
+                                        break;
+                                    case 1:
+                                        switch (row) {
+                                            case 0:
+                                                $ui.preview({
+                                                    title: `av${v.aid}`,
+                                                    url: v.pic
+                                                });
+                                                break;
+                                        }
                                 }
                             }
                         }
-                    ]
+                    }]
                 });
                 /* $ui.alert({
                 title: "结果",
@@ -2012,7 +1920,7 @@ function getOnlineLiver() {
             .get({
                 url: _BILIURL.LIVE_ONLINE + _userData.access_key
             })
-            .then(function(resp) {
+            .then(function (resp) {
                 var data = resp.data;
                 if (data) {
                     if (data.code == 0) {
@@ -2024,122 +1932,107 @@ function getOnlineLiver() {
                                 props: {
                                     title: rData.total_count + `人在播`
                                 },
-                                views: [
-                                    {
-                                        type: "list",
-                                        props: {
-                                            data: liveRoomList.map(
-                                                room => room.uname
-                                            )
-                                        },
-                                        layout: $layout.fill,
-                                        events: {
-                                            didSelect: function(
-                                                _sender,
-                                                indexPath,
-                                                _data
-                                            ) {
-                                                const thisRoom =
-                                                    liveRoomList[indexPath.row];
-                                                $ui.push({
+                                views: [{
+                                    type: "list",
+                                    props: {
+                                        data: liveRoomList.map(
+                                            room => room.uname
+                                        )
+                                    },
+                                    layout: $layout.fill,
+                                    events: {
+                                        didSelect: function (
+                                            _sender,
+                                            indexPath,
+                                            _data
+                                        ) {
+                                            const thisRoom =
+                                                liveRoomList[indexPath.row];
+                                            $ui.push({
+                                                props: {
+                                                    title: thisRoom.uname
+                                                },
+                                                views: [{
+                                                    type: "list",
                                                     props: {
-                                                        title: thisRoom.uname
-                                                    },
-                                                    views: [
-                                                        {
-                                                            type: "list",
-                                                            props: {
-                                                                data: [
-                                                                    {
-                                                                        title:
-                                                                            "数据",
-                                                                        rows: [
-                                                                            `名字：${thisRoom.uname}`,
-                                                                            `标题：${thisRoom.title}`,
-                                                                            `直播时长：${sys.getNowUnixTimeSecond() -
+                                                        data: [{
+                                                                title: "数据",
+                                                                rows: [
+                                                                    `名字：${thisRoom.uname}`,
+                                                                    `标题：${thisRoom.title}`,
+                                                                    `直播时长：${sys.getNowUnixTimeSecond() -
                                                                                 thisRoom.live_time}秒`,
-                                                                            `分区：${thisRoom.area_v2_parent_name} - ${thisRoom.area_v2_name}`,
-                                                                            `人气：${thisRoom.online}`
-                                                                        ]
-                                                                    },
-                                                                    {
-                                                                        title:
-                                                                            "操作",
-                                                                        rows: [
-                                                                            "观看直播",
-                                                                            "实时弹幕",
-                                                                            "查看封面",
-                                                                            "个人空间",
-                                                                            "我觉得这是vtb"
-                                                                        ]
-                                                                    }
+                                                                    `分区：${thisRoom.area_v2_parent_name} - ${thisRoom.area_v2_name}`,
+                                                                    `人气：${thisRoom.online}`
                                                                 ]
                                                             },
-                                                            layout:
-                                                                $layout.fill,
-                                                            events: {
-                                                                didSelect: function(
-                                                                    __sender,
-                                                                    _indexPath,
-                                                                    __data
-                                                                ) {
+                                                            {
+                                                                title: "操作",
+                                                                rows: [
+                                                                    "观看直播",
+                                                                    "实时弹幕",
+                                                                    "查看封面",
+                                                                    "个人空间",
+                                                                    "我觉得这是vtb"
+                                                                ]
+                                                            }
+                                                        ]
+                                                    },
+                                                    layout: $layout.fill,
+                                                    events: {
+                                                        didSelect: function (
+                                                            __sender,
+                                                            _indexPath,
+                                                            __data
+                                                        ) {
+                                                            switch (
+                                                                _indexPath.section
+                                                            ) {
+                                                                case 1:
                                                                     switch (
-                                                                        _indexPath.section
+                                                                        _indexPath.row
                                                                     ) {
-                                                                        case 1:
-                                                                            switch (
-                                                                                _indexPath.row
-                                                                            ) {
-                                                                                case 0:
-                                                                                    $app.openURL(
-                                                                                        thisRoom.link
-                                                                                    );
-                                                                                    break;
-                                                                                case 1:
-                                                                                    openLiveDanmuku(
-                                                                                        thisRoom.roomid
-                                                                                    );
-                                                                                    break;
-                                                                                case 2:
-                                                                                    $ui.preview(
-                                                                                        {
-                                                                                            title:
-                                                                                                thisRoom.title,
-                                                                                            url:
-                                                                                                thisRoom.cover
-                                                                                        }
-                                                                                    );
-                                                                                    break;
-                                                                                case 3:
-                                                                                    $app.openURL(
-                                                                                        `https://space.bilibili.com/${thisRoom.uid}`
-                                                                                    );
-                                                                                    break;
-                                                                                case 4:
-                                                                                    getVtbLiveroomInfo(
-                                                                                        thisRoom.uid
-                                                                                    );
-                                                                                    break;
-                                                                            }
-                                                                            break;
-                                                                        default:
-                                                                            $ui.alert(
-                                                                                {
-                                                                                    title:
-                                                                                        "",
-                                                                                    message: thisRoom
-                                                                                }
+                                                                        case 0:
+                                                                            $app.openURL(
+                                                                                thisRoom.link
                                                                             );
+                                                                            break;
+                                                                        case 1:
+                                                                            openLiveDanmuku(
+                                                                                thisRoom.roomid
+                                                                            );
+                                                                            break;
+                                                                        case 2:
+                                                                            $ui.preview({
+                                                                                title: thisRoom.title,
+                                                                                url: thisRoom.cover
+                                                                            });
+                                                                            break;
+                                                                        case 3:
+                                                                            $app.openURL(
+                                                                                `https://space.bilibili.com/${thisRoom.uid}`
+                                                                            );
+                                                                            break;
+                                                                        case 4:
+                                                                            getVtbLiveroomInfo(
+                                                                                thisRoom.uid
+                                                                            );
+                                                                            break;
                                                                     }
-                                                                }
+                                                                    break;
+                                                                default:
+                                                                    $ui.alert({
+                                                                        title: "",
+                                                                        message: thisRoom
+                                                                    });
                                                             }
                                                         }
-                                                    ]
-                                                });
-                                            }
+                                                    }
+                                                }]
+                                            });
                                         }
                                     }
-                                ]
+                                }]
                             });
                         } else {
                             $ui.loading(false);
@@ -2172,7 +2065,7 @@ function getOfflineLiver() {
             .get({
                 url: _BILIURL.LIVE_OFFLINE + _userData.access_key
             })
-            .then(function(resp) {
+            .then(function (resp) {
                 var data = resp.data;
                 if (data) {
                     if (data.code == 0) {
@@ -2184,119 +2077,104 @@ function getOfflineLiver() {
                                 props: {
                                     title: rData.total_count + `人在咕咕咕`
                                 },
-                                views: [
-                                    {
-                                        type: "list",
-                                        props: {
-                                            data: liveRoomList.map(
-                                                room => room.uname
-                                            )
-                                        },
-                                        layout: $layout.fill,
-                                        events: {
-                                            didSelect: function(
-                                                _sender,
-                                                indexPath,
-                                                _data
-                                            ) {
-                                                const thisRoom =
-                                                    liveRoomList[indexPath.row];
-                                                $ui.push({
+                                views: [{
+                                    type: "list",
+                                    props: {
+                                        data: liveRoomList.map(
+                                            room => room.uname
+                                        )
+                                    },
+                                    layout: $layout.fill,
+                                    events: {
+                                        didSelect: function (
+                                            _sender,
+                                            indexPath,
+                                            _data
+                                        ) {
+                                            const thisRoom =
+                                                liveRoomList[indexPath.row];
+                                            $ui.push({
+                                                props: {
+                                                    title: thisRoom.uname
+                                                },
+                                                views: [{
+                                                    type: "list",
                                                     props: {
-                                                        title: thisRoom.uname
-                                                    },
-                                                    views: [
-                                                        {
-                                                            type: "list",
-                                                            props: {
-                                                                data: [
-                                                                    {
-                                                                        title:
-                                                                            "数据",
-                                                                        rows: [
-                                                                            `名字：${thisRoom.uname}`,
-                                                                            `分区：${thisRoom.area_v2_parent_name} - ${thisRoom.area_v2_name}`,
-                                                                            `上次直播：${thisRoom.live_desc}`
-                                                                        ]
-                                                                    },
-                                                                    {
-                                                                        title:
-                                                                            "操作",
-                                                                        rows: [
-                                                                            "进入直播间",
-                                                                            "实时弹幕",
-                                                                            "查看封面",
-                                                                            "个人空间",
-                                                                            "我觉得这是vtb"
-                                                                        ]
-                                                                    }
+                                                        data: [{
+                                                                title: "数据",
+                                                                rows: [
+                                                                    `名字：${thisRoom.uname}`,
+                                                                    `分区：${thisRoom.area_v2_parent_name} - ${thisRoom.area_v2_name}`,
+                                                                    `上次直播：${thisRoom.live_desc}`
                                                                 ]
                                                             },
-                                                            layout:
-                                                                $layout.fill,
-                                                            events: {
-                                                                didSelect: function(
-                                                                    __sender,
-                                                                    _indexPath,
-                                                                    __data
-                                                                ) {
+                                                            {
+                                                                title: "操作",
+                                                                rows: [
+                                                                    "进入直播间",
+                                                                    "实时弹幕",
+                                                                    "查看封面",
+                                                                    "个人空间",
+                                                                    "我觉得这是vtb"
+                                                                ]
+                                                            }
+                                                        ]
+                                                    },
+                                                    layout: $layout.fill,
+                                                    events: {
+                                                        didSelect: function (
+                                                            __sender,
+                                                            _indexPath,
+                                                            __data
+                                                        ) {
+                                                            switch (
+                                                                _indexPath.section
+                                                            ) {
+                                                                case 1:
                                                                     switch (
-                                                                        _indexPath.section
+                                                                        _indexPath.row
                                                                     ) {
-                                                                        case 1:
-                                                                            switch (
-                                                                                _indexPath.row
-                                                                            ) {
-                                                                                case 0:
-                                                                                    $app.openURL(
-                                                                                        thisRoom.link
-                                                                                    );
-                                                                                    break;
-                                                                                case 1:
-                                                                                    openLiveDanmuku(
-                                                                                        thisRoom.roomid
-                                                                                    );
-                                                                                    break;
-                                                                                case 2:
-                                                                                    $ui.preview(
-                                                                                        {
-                                                                                            title:
-                                                                                                thisRoom.title,
-                                                                                            url:
-                                                                                                thisRoom.cover
-                                                                                        }
-                                                                                    );
-                                                                                    break;
-                                                                                case 3:
-                                                                                    $app.openURL(
-                                                                                        `https://space.bilibili.com/${thisRoom.uid}`
-                                                                                    );
-                                                                                    break;
-                                                                                case 4:
-                                                                                    getVtbLiveroomInfo(
-                                                                                        thisRoom.uid
-                                                                                    );
-                                                                                    break;
-                                                                            }
-                                                                            break;
-                                                                        default:
-                                                                            $ui.alert(
-                                                                                {
-                                                                                    title:
-                                                                                        "",
-                                                                                    message: thisRoom
-                                                                                }
+                                                                        case 0:
+                                                                            $app.openURL(
+                                                                                thisRoom.link
                                                                             );
+                                                                            break;
+                                                                        case 1:
+                                                                            openLiveDanmuku(
+                                                                                thisRoom.roomid
+                                                                            );
+                                                                            break;
+                                                                        case 2:
+                                                                            $ui.preview({
+                                                                                title: thisRoom.title,
+                                                                                url: thisRoom.cover
+                                                                            });
+                                                                            break;
+                                                                        case 3:
+                                                                            $app.openURL(
+                                                                                `https://space.bilibili.com/${thisRoom.uid}`
+                                                                            );
+                                                                            break;
+                                                                        case 4:
+                                                                            getVtbLiveroomInfo(
+                                                                                thisRoom.uid
+                                                                            );
+                                                                            break;
                                                                     }
-                                                                }
+                                                                    break;
+                                                                default:
+                                                                    $ui.alert({
+                                                                        title: "",
+                                                                        message: thisRoom
+                                                                    });
                                                             }
                                                         }
-                                                    ]
-                                                });
-                                            }
+                                                    }
+                                                }]
+                                            });
                                         }
                                     }
-                                ]
+                                }]
                             });
                         } else {
                             $ui.loading(false);

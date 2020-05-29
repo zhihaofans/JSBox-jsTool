@@ -4,6 +4,25 @@ let sys = require("../system.js"),
     _BILIURL = require("../urlData.js").BILIBILI,
     appScheme = require("../app_scheme.js"),
     _UA = require("../user-agent.js");
-function getLoginData(){
-  
+
+var access_key = "",
+    loginData = {},
+    uid = 0
+
+
+function getLoginData() {
+
 }
+
+function checkAccessKey() {
+    return getAccessKey() ? true : false;
+}
+
+function getAccessKey() {
+    return access_key;
+}
+
+module.exports = {
+    checkAccessKey,
+    getAccessKey,
+};
