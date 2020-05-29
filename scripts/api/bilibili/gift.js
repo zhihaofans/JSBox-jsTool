@@ -108,8 +108,6 @@ function getLiveGiftList(liveData = undefined, mode = 0) {
                     $ui.loading(false);
                     if (giftList.length) {
                         saveCache("getLiveGiftList", resp.rawData);
-                        switch (mode) {
-                        }
                         if (mode == 1) {
                             if (liveData) {
                                 $ui.loading(true);
