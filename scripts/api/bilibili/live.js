@@ -2,7 +2,7 @@ let _BILIURL = require("../urlData.js").BILIBILI,
     _USER = require("./user.js"),
     _GIFT = require("./gift.js"),
     _UA = require("../user-agent.js");
-
+// 粉丝勋章
 function getFansMedalList() {
     const ak = _USER.getAccessKey();
     // 已拥有的粉丝勋章
@@ -269,12 +269,33 @@ function getFansMedalList() {
     }
 }
 
+function wearFanMedal(media_id) {
+    $http.post({
+        url: `${ _BILIURL.LIVE_FANS_MEDAL_WEAR}?access_key=${_USER.getAccessKey()}&medal_id=${media_id}`,
+        header: {
+            "User-Agent": _UA.BILIBILI.APP_IPHONE
+        },
+        body: {},
+        handler: resp => {
+            var data = resp.data;
+            $console.info(data);
+            $ui.alert({
+                title: "",
+                message: data,
+                actions: [{
+                    title: "OK",
+                    disabled: false, // Optional
+                    handler: function () {}
+                }]
+            });
+        }
+    });
+}
+// 钱包
 function getWallet() {
-    loadLoginData();
-    if (isLogin()) {
+    if (_USER.isLogin()) {
         $ui.loading(true);
-        $http
-            .get({
+        $http.get({
                 url: _BILIURL.GET_WALLET + _USER.getAccessKey()
             })
             .then(function (resp) {
@@ -369,30 +390,292 @@ function getWallet() {
         $ui.error("未登录");
     }
 }
-
-function wearFanMedal(media_id) {
-    $http.post({
-        url: `${ _BILIURL.LIVE_FANS_MEDAL_WEAR}?access_key=${_USER.getAccessKey()}&medal_id=${media_id}`,
-        header: {
-            "User-Agent": _UA.BILIBILI.APP_IPHONE
-        },
-        body: {},
-        handler: resp => {
-            var data = resp.data;
-            $console.info(data);
-            $ui.alert({
-                title: "",
-                message: data,
-                actions: [{
-                    title: "OK",
-                    disabled: false, // Optional
-                    handler: function () {}
-                }]
+// 关注列表
+function getOnlineLiver() {
+    if (_USER.isLogin()) {
+        $ui.loading(true);
+        $http.get({
+                url: _BILIURL.LIVE_ONLINE + _USER.getAccessKey()
+            })
+            .then(function (resp) {
+                var data = resp.data;
+                if (data) {
+                    if (data.code == 0) {
+                        const rData = data.data;
+                        if (rData.total_count > 0) {
+                            const liveRoomList = rData.rooms;
+                            $ui.loading(false);
+                            $ui.push({
+                                props: {
+                                    title: rData.total_count + `人在播`
+                                },
+                                views: [{
+                                    type: "list",
+                                    props: {
+                                        data: liveRoomList.map(
+                                            room => room.uname
+                                        )
+                                    },
+                                    layout: $layout.fill,
+                                    events: {
+                                        didSelect: function (
+                                            _sender,
+                                            indexPath,
+                                            _data
+                                        ) {
+                                            const thisRoom =
+                                                liveRoomList[indexPath.row];
+                                            $ui.push({
+                                                props: {
+                                                    title: thisRoom.uname
+                                                },
+                                                views: [{
+                                                    type: "list",
+                                                    props: {
+                                                        data: [{
+                                                                title: "数据",
+                                                                rows: [
+                                                                    `名字：${thisRoom.uname}`,
+                                                                    `标题：${thisRoom.title}`,
+                                                                    `直播时长：${sys.getNowUnixTimeSecond() -
+                                                                                thisRoom.live_time}秒`,
+                                                                    `分区：${thisRoom.area_v2_parent_name} - ${thisRoom.area_v2_name}`,
+                                                                    `人气：${thisRoom.online}`
+                                                                ]
+                                                            },
+                                                            {
+                                                                title: "操作",
+                                                                rows: [
+                                                                    "观看直播",
+                                                                    "实时弹幕",
+                                                                    "查看封面",
+                                                                    "个人空间",
+                                                                    "我觉得这是vtb"
+                                                                ]
+                                                            }
+                                                        ]
+                                                    },
+                                                    layout: $layout.fill,
+                                                    events: {
+                                                        didSelect: function (
+                                                            __sender,
+                                                            _indexPath,
+                                                            __data
+                                                        ) {
+                                                            switch (
+                                                                _indexPath.section
+                                                            ) {
+                                                                case 1:
+                                                                    switch (
+                                                                        _indexPath.row
+                                                                    ) {
+                                                                        case 0:
+                                                                            $app.openURL(
+                                                                                thisRoom.link
+                                                                            );
+                                                                            break;
+                                                                        case 1:
+                                                                            openLiveDanmuku(
+                                                                                thisRoom.roomid
+                                                                            );
+                                                                            break;
+                                                                        case 2:
+                                                                            $ui.preview({
+                                                                                title: thisRoom.title,
+                                                                                url: thisRoom.cover
+                                                                            });
+                                                                            break;
+                                                                        case 3:
+                                                                            $app.openURL(
+                                                                                `https://space.bilibili.com/${thisRoom.uid}`
+                                                                            );
+                                                                            break;
+                                                                        case 4:
+                                                                            getVtbLiveroomInfo(
+                                                                                thisRoom.uid
+                                                                            );
+                                                                            break;
+                                                                    }
+                                                                    break;
+                                                                default:
+                                                                    $ui.alert({
+                                                                        title: "",
+                                                                        message: thisRoom
+                                                                    });
+                                                            }
+                                                        }
+                                                    }
+                                                }]
+                                            });
+                                        }
+                                    }
+                                }]
+                            });
+                        } else {
+                            $ui.loading(false);
+                            $ui.alert({
+                                title: "错误",
+                                message: "没人在播"
+                            });
+                        }
+                    } else {
+                        $ui.loading(false);
+                        $ui.alert({
+                            title: `错误代码:${data.code}`,
+                            message: data.message
+                        });
+                    }
+                } else {
+                    $ui.loading(false);
+                    $ui.error("未知错误");
+                }
             });
-        }
-    });
+    } else {
+        $ui.error("未登录");
+    }
 }
 
+function getOfflineLiver() {
+    if (_USER.isLogin()) {
+        $ui.loading(true);
+        $http
+            .get({
+                url: _BILIURL.LIVE_OFFLINE + _USER.getAccessKey()
+            })
+            .then(function (resp) {
+                var data = resp.data;
+                if (data) {
+                    if (data.code == 0) {
+                        const rData = data.data;
+                        if (rData.total_count > 0) {
+                            const liveRoomList = rData.rooms;
+                            $ui.loading(false);
+                            $ui.push({
+                                props: {
+                                    title: rData.total_count + `人在咕咕咕`
+                                },
+                                views: [{
+                                    type: "list",
+                                    props: {
+                                        data: liveRoomList.map(
+                                            room => room.uname
+                                        )
+                                    },
+                                    layout: $layout.fill,
+                                    events: {
+                                        didSelect: function (
+                                            _sender,
+                                            indexPath,
+                                            _data
+                                        ) {
+                                            const thisRoom =
+                                                liveRoomList[indexPath.row];
+                                            $ui.push({
+                                                props: {
+                                                    title: thisRoom.uname
+                                                },
+                                                views: [{
+                                                    type: "list",
+                                                    props: {
+                                                        data: [{
+                                                                title: "数据",
+                                                                rows: [
+                                                                    `名字：${thisRoom.uname}`,
+                                                                    `分区：${thisRoom.area_v2_parent_name} - ${thisRoom.area_v2_name}`,
+                                                                    `上次直播：${thisRoom.live_desc}`
+                                                                ]
+                                                            },
+                                                            {
+                                                                title: "操作",
+                                                                rows: [
+                                                                    "进入直播间",
+                                                                    "实时弹幕",
+                                                                    "查看封面",
+                                                                    "个人空间",
+                                                                    "我觉得这是vtb"
+                                                                ]
+                                                            }
+                                                        ]
+                                                    },
+                                                    layout: $layout.fill,
+                                                    events: {
+                                                        didSelect: function (
+                                                            __sender,
+                                                            _indexPath,
+                                                            __data
+                                                        ) {
+                                                            switch (
+                                                                _indexPath.section
+                                                            ) {
+                                                                case 1:
+                                                                    switch (
+                                                                        _indexPath.row
+                                                                    ) {
+                                                                        case 0:
+                                                                            $app.openURL(
+                                                                                thisRoom.link
+                                                                            );
+                                                                            break;
+                                                                        case 1:
+                                                                            openLiveDanmuku(
+                                                                                thisRoom.roomid
+                                                                            );
+                                                                            break;
+                                                                        case 2:
+                                                                            $ui.preview({
+                                                                                title: thisRoom.title,
+                                                                                url: thisRoom.cover
+                                                                            });
+                                                                            break;
+                                                                        case 3:
+                                                                            $app.openURL(
+                                                                                `https://space.bilibili.com/${thisRoom.uid}`
+                                                                            );
+                                                                            break;
+                                                                        case 4:
+                                                                            getVtbLiveroomInfo(
+                                                                                thisRoom.uid
+                                                                            );
+                                                                            break;
+                                                                    }
+                                                                    break;
+                                                                default:
+                                                                    $ui.alert({
+                                                                        title: "",
+                                                                        message: thisRoom
+                                                                    });
+                                                            }
+                                                        }
+                                                    }
+                                                }]
+                                            });
+                                        }
+                                    }
+                                }]
+                            });
+                        } else {
+                            $ui.loading(false);
+                            $ui.alert({
+                                title: "错误",
+                                message: "没人在播"
+                            });
+                        }
+                    } else {
+                        $ui.loading(false);
+                        $ui.alert({
+                            title: `错误代码:${data.code}`,
+                            message: data.message
+                        });
+                    }
+                } else {
+                    $ui.loading(false);
+                    $ui.error("未知错误");
+                }
+            });
+    } else {
+        $ui.error("未登录");
+    }
+}
 module.exports = {
     getFansMedalList,
     getWallet,

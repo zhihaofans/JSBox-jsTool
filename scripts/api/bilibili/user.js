@@ -37,10 +37,16 @@ function checkAccessKey() {
 }
 
 function getAccessKey() {
+    if(!_ACCESS_KEY){
+        loadLoginCache()
+    }
     return _ACCESS_KEY;
 }
 //uid
 function getUid() {
+    if(!_UID){
+        loadLoginCache()
+    }
     return _UID;
 }
 // Login
@@ -123,5 +129,6 @@ module.exports = {
     checkAccessKey,
     getAccessKey,
     getUid,
+    isLogin,
     loginPasswordByKaaass
 };
