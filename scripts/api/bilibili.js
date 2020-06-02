@@ -363,12 +363,6 @@ function saveAccessKey(access_key) {
     $ui.toast("已保存access key");
 }
 
-function loadAccessKey() {
-    const cacheKey = $cache.get(_cacheKey.access_key);
-    if (cacheKey) {
-        _userData.access_key = cacheKey;
-    }
-}
 
 function isLogin() {
     return checkAccessKey();
