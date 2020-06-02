@@ -9,7 +9,7 @@ var access_key = "",
     loginData = {},
     uid = 0;
 
-function getLoginData() {}
+function loadLoginDataCache() {}
 // Access key
 function checkAccessKey() {
     return getAccessKey() ? true : false;

@@ -32,6 +32,7 @@ let UPDATE_CONFIG_GITHUB =
     BILICHAT: "https://bilichat.3shain.com/gkd/",
     LIVE_ONLINE: "https://api.live.bilibili.com/xlive/app-interface/v1/relation/liveAnchor?access_key=",
     LIVE_OFFLINE: "https://api.live.bilibili.com/xlive/app-interface/v1/relation/unliveAnchor?page=1&pagesize=1000&access_key=",
+    LIVE_FANS_MEDAL_WEAR: "https://api.live.bilibili.com/fans_medal/v1/fans_medal/wear_medal",
     API_VTBS_MOE: {
       V1_DETAIL: "https://api.vtbs.moe/v1/detail/",
       WEB_DETAIL: "https://vtbs.moe/detail/",
