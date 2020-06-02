@@ -9,7 +9,17 @@ var access_key = "",
     loginData = {},
     uid = 0;
 
-function loadLoginDataCache() {}
+function loadLoginDataCache() {
+    const cacheKey = $cache.get(_cacheKey.access_key);
+    const uid = $cache.get(_cacheKey.uid);
+    $console.info(`cacheKey:${cacheKey}\nuid:${uid}`);
+    if (cacheKey) {
+        _userData.access_key = cacheKey;
+    }
+    if (uid) {
+        _userData.uid = uid;
+    }
+}
 // Access key
 function checkAccessKey() {
     return getAccessKey() ? true : false;
