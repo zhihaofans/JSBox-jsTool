@@ -7,13 +7,10 @@ let sys = require("../system.js"),
 
 var access_key = "",
     loginData = {},
-    uid = 0
+    uid = 0;
 
-
-function getLoginData() {
-
-}
-
+function getLoginData() {}
+// Access key
 function checkAccessKey() {
     return getAccessKey() ? true : false;
 }
@@ -21,8 +18,12 @@ function checkAccessKey() {
 function getAccessKey() {
     return access_key;
 }
-
+//uid
+function getUid() {
+    return uid;
+}
 module.exports = {
     checkAccessKey,
     getAccessKey,
+    getUid,
 };

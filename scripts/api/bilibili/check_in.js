@@ -3,17 +3,17 @@ let sys = require("../system.js"),
     _URL = require("../urlData.js"),
     _BILIURL = require("../urlData.js").BILIBILI,
     appScheme = require("../app_scheme.js"),
-    _user = require("./user.js")
+    _USER = require("./user.js"),
     _UA = require("../user-agent.js");
 
 function mangaClockin() {
-    const accessKey=_user.getAccessKey()
+    const accessKey=_USER.getAccessKey()
     if (accessKey == 0) {
         $ui.alert({
             title: "签到失败",
             message: "access_key为空，请登录"
         });
-    } else if (_userData.uid == 0) {
+    } else if (_USER.getUid() == 0) {
         $ui.alert({
             title: "签到失败",
             message: "用户id为空，请获取我的个人资料"
@@ -28,8 +28,8 @@ function mangaClockin() {
             },
             body: {
                 platform: "ios",
-                uid: _userData.uid,
-                access_key: _userData.access_key
+                uid: _USER.getUid(),
+                access_key: _USER.getAccessKey()
             },
             handler: function (postResp) {
                 var clockinData = postResp.data;
@@ -69,7 +69,7 @@ function vipCheckin() {
             "User-Agent": _UA.BILIBILI.VIP_CHECKIN
         },
         body: {
-            access_key: _user.getAccessKey()
+            access_key: _USER.getAccessKey()
         },
         handler: resp => {
             var data = resp.data;
