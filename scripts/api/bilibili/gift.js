@@ -38,7 +38,13 @@ function getGiftListByExp(giftData, exp) {
                             }
                             // giftNum = thisGift.gift_num > Math.floor(needExp / 10) ? Math.floor(needExp / 10) : Math.floor(thisGift.gift_num / 10);
                             if (giftNum > 0) {
-                                giftList.push(new GiftData(thisGift.gift_id, thisGift.bag_id, giftNum));
+                                giftList.push(
+                                    new GiftData(
+                                        thisGift.gift_id,
+                                        thisGift.bag_id,
+                                        giftNum
+                                    )
+                                );
                                 needExp = needExp - giftNum * 10;
                             } else {
                                 $console.error("跳过0个的礼物");
@@ -53,7 +59,13 @@ function getGiftListByExp(giftData, exp) {
                         }
                         // giftNum = thisGift.gift_num > needExp ? needExp : thisGift.gift_num;
                         if (giftNum > 0) {
-                            giftList.push(new GiftData(thisGift.gift_id, thisGift.bag_id, giftNum));
+                            giftList.push(
+                                new GiftData(
+                                    thisGift.gift_id,
+                                    thisGift.bag_id,
+                                    giftNum
+                                )
+                            );
                             needExp = needExp - giftNum;
                         } else {
                             $console.error("跳过0个的礼物");
@@ -87,12 +99,13 @@ function getLiveGiftList(liveData = undefined, mode = 0) {
             header: {
                 "User-Agent": _UA.KAAASS
             },
-            handler: function (resp) {
+            handler: function(resp) {
                 const giftResult = resp.data;
                 if (giftResult.code == 0) {
                     const giftList = giftResult.data.list;
                     const giftTitleList = giftList.map(
-                        gift => `${gift.gift_name}（${gift.corner_mark}）${gift.gift_num}个`
+                        gift =>
+                            `${gift.gift_name}（${gift.corner_mark}）${gift.gift_num}个`
                     );
                     $ui.loading(false);
                     if (giftList.length) {
@@ -103,99 +116,165 @@ function getLiveGiftList(liveData = undefined, mode = 0) {
                                     props: {
                                         title: $l10n("BILIBILI")
                                     },
-                                    views: [{
-                                        type: "list",
-                                        props: {
-                                            data: giftTitleList
-                                        },
-                                        layout: $layout.fill,
-                                        events: {
-                                            didSelect: function (_sender, indexPath, _data) {
-                                                const thisGift = giftList[indexPath.row];
-                                                if (liveData && sendGiftToUid && sendGiftToRoom) {
-                                                    if (thisGift.corner_mark == "永久") {
-                                                        $ui.alert({
-                                                            title: "警告",
-                                                            message: "这是永久的礼物，你确定要送吗",
-                                                            actions: [{
-                                                                    title: "取消",
-                                                                    disabled: false,
-                                                                    handler: function () {}
-                                                                },
-                                                                {
-                                                                    title: "取消",
-                                                                    disabled: false,
-                                                                    handler: function () {}
-                                                                },
-                                                                {
-                                                                    title: "确定",
-                                                                    disabled: false,
-                                                                    handler: function () {
-                                                                        $input.text({
-                                                                            type: $kbType.number,
-                                                                            placeholder: `输入数量，1-${thisGift.gift_num}`,
-                                                                            text: "",
-                                                                            handler: function (gift_number) {
-                                                                                if (gift_number > 0 && gift_number <= thisGift.gift_num) {
-                                                                                    sendLiveGift(sendGiftToUid, sendGiftToRoom, thisGift.gift_id, thisGift.bag_id, gift_number);
-                                                                                } else {
-                                                                                    $ui.alert({
-                                                                                        title: "赠送错误",
-                                                                                        message: `错误数量,请输入1-${thisGift.gift_num}`
-                                                                                    });
+                                    views: [
+                                        {
+                                            type: "list",
+                                            props: {
+                                                data: giftTitleList
+                                            },
+                                            layout: $layout.fill,
+                                            events: {
+                                                didSelect: function(
+                                                    _sender,
+                                                    indexPath,
+                                                    _data
+                                                ) {
+                                                    const thisGift =
+                                                        giftList[indexPath.row];
+                                                    if (
+                                                        liveData &&
+                                                        sendGiftToUid &&
+                                                        sendGiftToRoom
+                                                    ) {
+                                                        if (
+                                                            thisGift.corner_mark ==
+                                                            "永久"
+                                                        ) {
+                                                            $ui.alert({
+                                                                title: "警告",
+                                                                message:
+                                                                    "这是永久的礼物，你确定要送吗",
+                                                                actions: [
+                                                                    {
+                                                                        title:
+                                                                            "取消",
+                                                                        disabled: false,
+                                                                        handler: function() {}
+                                                                    },
+                                                                    {
+                                                                        title:
+                                                                            "取消",
+                                                                        disabled: false,
+                                                                        handler: function() {}
+                                                                    },
+                                                                    {
+                                                                        title:
+                                                                            "确定",
+                                                                        disabled: false,
+                                                                        handler: function() {
+                                                                            $input.text(
+                                                                                {
+                                                                                    type:
+                                                                                        $kbType.number,
+                                                                                    placeholder: `输入数量，1-${thisGift.gift_num}`,
+                                                                                    text:
+                                                                                        "",
+                                                                                    handler: function(
+                                                                                        gift_number
+                                                                                    ) {
+                                                                                        if (
+                                                                                            gift_number >
+                                                                                                0 &&
+                                                                                            gift_number <=
+                                                                                                thisGift.gift_num
+                                                                                        ) {
+                                                                                            sendLiveGift(
+                                                                                                sendGiftToUid,
+                                                                                                sendGiftToRoom,
+                                                                                                thisGift.gift_id,
+                                                                                                thisGift.bag_id,
+                                                                                                gift_number
+                                                                                            );
+                                                                                        } else {
+                                                                                            $ui.alert(
+                                                                                                {
+                                                                                                    title:
+                                                                                                        "赠送错误",
+                                                                                                    message: `错误数量,请输入1-${thisGift.gift_num}`
+                                                                                                }
+                                                                                            );
+                                                                                        }
+                                                                                    }
                                                                                 }
-                                                                            }
-                                                                        });
+                                                                            );
+                                                                        }
+                                                                    },
+                                                                    {
+                                                                        title:
+                                                                            "取消",
+                                                                        disabled: false,
+                                                                        handler: function() {}
+                                                                    },
+                                                                    {
+                                                                        title:
+                                                                            "取消",
+                                                                        disabled: false,
+                                                                        handler: function() {}
                                                                     }
-                                                                },
-                                                                {
-                                                                    title: "取消",
-                                                                    disabled: false,
-                                                                    handler: function () {}
-                                                                },
-                                                                {
-                                                                    title: "取消",
-                                                                    disabled: false,
-                                                                    handler: function () {}
+                                                                ]
+                                                            });
+                                                        } else {
+                                                            $input.text({
+                                                                type:
+                                                                    $kbType.number,
+                                                                placeholder: `输入数量，1-${thisGift.gift_num}`,
+                                                                text: "",
+                                                                handler: function(
+                                                                    gift_number
+                                                                ) {
+                                                                    if (
+                                                                        gift_number >
+                                                                            0 &&
+                                                                        gift_number <=
+                                                                            thisGift.gift_num
+                                                                    ) {
+                                                                        sendLiveGift(
+                                                                            sendGiftToUid,
+                                                                            sendGiftToRoom,
+                                                                            thisGift.gift_id,
+                                                                            thisGift.bag_id,
+                                                                            gift_number
+                                                                        );
+                                                                    } else {
+                                                                        $ui.alert(
+                                                                            {
+                                                                                title:
+                                                                                    "赠送错误",
+                                                                                message: `错误数量,请输入1-${thisGift.gift_num}`
+                                                                            }
+                                                                        );
+                                                                    }
                                                                 }
-                                                            ]
-                                                        });
+                                                            });
+                                                        }
                                                     } else {
-                                                        $input.text({
-                                                            type: $kbType.number,
-                                                            placeholder: `输入数量，1-${thisGift.gift_num}`,
-                                                            text: "",
-                                                            handler: function (gift_number) {
-                                                                if (gift_number > 0 && gift_number <= thisGift.gift_num) {
-                                                                    sendLiveGift(sendGiftToUid, sendGiftToRoom, thisGift.gift_id, thisGift.bag_id, gift_number);
-                                                                } else {
-                                                                    $ui.alert({
-                                                                        title: "赠送错误",
-                                                                        message: `错误数量,请输入1-${thisGift.gift_num}`
-                                                                    });
-                                                                }
-                                                            }
+                                                        $ui.alert({
+                                                            title:
+                                                                thisGift.gift_name,
+                                                            message: `拥有数量:${thisGift.gift_num}个\n到期时间:${thisGift.corner_mark}`
                                                         });
                                                     }
-                                                } else {
-                                                    $ui.alert({
-                                                        title: thisGift.gift_name,
-                                                        message: `拥有数量:${thisGift.gift_num}个\n到期时间:${thisGift.corner_mark}`
-                                                    });
                                                 }
                                             }
                                         }
-                                    }]
+                                    ]
                                 });
                             case 1:
                                 if (liveData) {
                                     $ui.loading(true);
                                     $ui.toast("正在计算所需的礼物");
-                                    const giftExpList = getGiftListByExp(giftList, needExp);
+                                    const giftExpList = getGiftListByExp(
+                                        giftList,
+                                        needExp
+                                    );
                                     if (giftExpList.length > 0) {
                                         $console.info(giftExpList);
                                         $ui.loading(false);
-                                        sendLiveGiftList(liveData, giftExpList, 0);
+                                        sendLiveGiftList(
+                                            liveData,
+                                            giftExpList,
+                                            0
+                                        );
                                     } else {
                                         $ui.loading(false);
                                         $ui.alert({
@@ -229,31 +308,39 @@ function getLiveGiftList(liveData = undefined, mode = 0) {
     }
 }
 
-function sendLiveGift(user_id, room_id, gift_type, gift_id = undefined, gift_number = 1) {
+function sendLiveGift(
+    user_id,
+    room_id,
+    gift_type,
+    gift_id = undefined,
+    gift_number = 1
+) {
     $ui.loading(true);
     var url = `${_BILIURL.LIVE_GIFT_SEND}?access_key=${_userData.access_key}&biz_id=${room_id}&gift_id=${gift_type}&gift_num=${gift_number}&ruid=${user_id}`;
     if (gift_id) {
         url += `&bag_id=${gift_id}`;
     }
-    $http.get({
-        url: url
-    }).then(function (resp) {
-        var data = resp.data;
-        if (data.code == 0) {
-            const resultData = data.data;
-            $ui.loading(false);
-            $ui.alert({
-                title: resultData.send_tips,
-                message: `${resultData.uname} ${resultData.gift_action}${resultData.gift_num}个${resultData.gift_name}`
-            });
-        } else {
-            $ui.loading(false);
-            $ui.alert({
-                title: `Error ${data.code}`,
-                message: data.message || data.msg || "未知错误"
-            });
-        }
-    });
+    $http
+        .get({
+            url: url
+        })
+        .then(function(resp) {
+            var data = resp.data;
+            if (data.code == 0) {
+                const resultData = data.data;
+                $ui.loading(false);
+                $ui.alert({
+                    title: resultData.send_tips,
+                    message: `${resultData.uname} ${resultData.gift_action}${resultData.gift_num}个${resultData.gift_name}`
+                });
+            } else {
+                $ui.loading(false);
+                $ui.alert({
+                    title: `Error ${data.code}`,
+                    message: data.message || data.msg || "未知错误"
+                });
+            }
+        });
 }
 
 function sendLiveGiftList(liveData, giftList, index = 0) {
@@ -265,30 +352,34 @@ function sendLiveGiftList(liveData, giftList, index = 0) {
             $console.info(`共有${giftList.length}组礼物`);
         }
         $console.info(`正在赠送第${index + 1}组礼物`);
-        $http.get({
-            url: url
-        }).then(function (resp) {
-            var data = resp.data;
-            if (data.code == 0) {
-                const resultData = data.data;
-                $console.info(`第${index + 1}组礼物：${resultData.send_tips}`);
-                if (index == giftList.length - 1) {
+        $http
+            .get({
+                url: url
+            })
+            .then(function(resp) {
+                var data = resp.data;
+                if (data.code == 0) {
+                    const resultData = data.data;
+                    $console.info(
+                        `第${index + 1}组礼物：${resultData.send_tips}`
+                    );
+                    if (index == giftList.length - 1) {
+                        $ui.loading(false);
+                        $ui.alert({
+                            title: "赠送完毕",
+                            message: `尝试赠送了${giftList.length}组礼物给[${liveData.target_name}]，请查收`
+                        });
+                    } else {
+                        sendLiveGiftList(liveData, giftList, index + 1);
+                    }
+                } else {
                     $ui.loading(false);
                     $ui.alert({
-                        title: "赠送完毕",
-                        message: `尝试赠送了${giftList.length}组礼物给[${liveData.target_name}]，请查收`
+                        title: `Error ${data.code}`,
+                        message: data.message || data.msg || "未知错误"
                     });
-                } else {
-                    sendLiveGiftList(liveData, giftList, index + 1);
                 }
-            } else {
-                $ui.loading(false);
-                $ui.alert({
-                    title: `Error ${data.code}`,
-                    message: data.message || data.msg || "未知错误"
-                });
-            }
-        });
+            });
     } else {
         $ui.alert({
             title: "赠送错误",
@@ -296,3 +387,6 @@ function sendLiveGiftList(liveData, giftList, index = 0) {
         });
     }
 }
+module.exports = {
+    getLiveGiftList
+};
