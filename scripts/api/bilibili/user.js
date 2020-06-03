@@ -9,6 +9,17 @@ var _ACCESS_KEY = "",
     _LOGIN_DATA = {},
     _UID = 0;
 
+// Login cache
+function UserLoginData(_uid, _accessKey) {
+    this.uid = _uid;
+    this.accessKey = _accessKey;
+}
+
+function getLoginCache() {
+    loadLoginCache();
+    return UserLoginData(_ACCESS_KEY, _UID);
+}
+
 function loadLoginCache() {
     const cacheKey = _CACHE.getAccessKey();
     const uid = _CACHE.getUid();
@@ -22,10 +33,8 @@ function loadLoginCache() {
 }
 
 function saveLoginCache(access_key, uid) {
-    _ACCESS_KEY = access_key;
-    _UID = uid;
-    _CACHE.saveAccesskey(access_key)
-    _CACHE.saveUid(uid);
+    setAccessKey(access_key);
+    setUid(uid);
 }
 
 function isLogin() {
@@ -37,17 +46,27 @@ function checkAccessKey() {
 }
 
 function getAccessKey() {
-    if(!_ACCESS_KEY){
+    if (!_ACCESS_KEY) {
         loadLoginCache()
     }
     return _ACCESS_KEY;
 }
+
+function setAccessKey(access_key) {
+    _ACCESS_KEY = access_key;
+    _CACHE.saveAccesskey(access_key)
+}
 //uid
 function getUid() {
-    if(!_UID){
+    if (!_UID) {
         loadLoginCache()
     }
     return _UID;
+}
+
+function setUid(uid) {
+    _UID = uid;
+    _CACHE.saveUid(uid)
 }
 // Login
 function loginPasswordByKaaass(userName, password) {
@@ -126,9 +145,14 @@ function loginBilibiliBySignUrl(loginUrl, bodyStr, headers) {
     });
 }
 module.exports = {
+    getLoginCache,
+    loadLoginCache,
+    saveLoginCache,
     checkAccessKey,
     getAccessKey,
+    setAccessKey,
     getUid,
+    setUid,
     isLogin,
     loginPasswordByKaaass
 };

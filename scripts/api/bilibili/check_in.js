@@ -7,7 +7,7 @@ let sys = require("../system.js"),
     _UA = require("../user-agent.js");
 
 function mangaClockin() {
-    const accessKey=_USER.getAccessKey()
+    const accessKey = _USER.getAccessKey()
     if (accessKey == 0) {
         $ui.alert({
             title: "签到失败",
@@ -36,10 +36,6 @@ function mangaClockin() {
                 $console.info(clockinData);
                 $ui.loading(false);
                 if (clockinData) {
-                    /* $ui.alert({
-              title: "签到结果",
-              message: clockinData,
-          }); */
                     if (clockinData.code == 0) {
                         $ui.alert({
                             title: "签到结果",

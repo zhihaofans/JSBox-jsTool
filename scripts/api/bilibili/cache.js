@@ -1,11 +1,5 @@
 let sys = require("../system.js"),
-    cheerio = require("cheerio"),
-    _BILIURL = require("../urlData.js").BILIBILI,
-    appScheme = require("../app_scheme.js"),
-    _UA = require("../user-agent.js"),
-    _user = require("./user.js");
-
-let cacheKey = {
+    cacheKey = {
         ACCESS_KEY: "bilibili_access_key",
         UID: "bilibili_uid"
     },
