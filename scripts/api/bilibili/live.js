@@ -467,7 +467,7 @@ function getOnlineLiver() {
                                                                             });
                                                                             break;
                                                                         case 3:
-                                                                            $app.openURL(`https://space.bilibili.com/${thisRoom.uid}`);
+                                                                            $app.openURL(_BILIURL.BILIBILI_SPACE + thisRoom.uid);
                                                                             break;
                                                                         case 4:
                                                                             getVtbLiveroomInfo(thisRoom.uid);
@@ -584,7 +584,7 @@ function getOfflineLiver() {
                                                                         });
                                                                         break;
                                                                     case 3:
-                                                                        $app.openURL(`https://space.bilibili.com/${thisRoom.uid}`);
+                                                                        $app.openURL(_BILIURL.BILIBILI_SPACE + thisRoom.uid);
                                                                         break;
                                                                     case 4:
                                                                         getVtbLiveroomInfo(thisRoom.uid);

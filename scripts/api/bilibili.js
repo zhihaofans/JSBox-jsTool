@@ -1495,109 +1495,91 @@ function getWallet() {
     loadLoginData();
     if (isLogin()) {
         $ui.loading(true);
-        $http
-            .get({
-                url: _URL.BILIBILI.GET_WALLET + _userData.access_key
-            })
-            .then(function (resp) {
-                var data = resp.data;
-                $console.info(data);
-                if (data) {
-                    if (data.code == 0) {
-                        let walletData = data.data;
-                        $ui.loading(false);
-                        $ui.alert({
-                            title: "钱包余额",
-                            message: `金瓜子：${walletData.gold}\n` +
-                                `银瓜子：${walletData.silver}\n` +
-                                `硬币：${walletData.coin}\n` +
-                                `vip(老爷?)：${
-                                    walletData.vip == 1 ? "已开通" : "未开通"
-                                }\n` +
-                                `硬币换银瓜子额度：${walletData.coin_2_silver_left}\n` +
-                                `银瓜子换硬币额度：${walletData.silver_2_coin_left}\n` +
-                                `银瓜子换硬币：${
-                                    walletData.status == 1 ? "允许" : "不允许"
-                                }`,
-                            actions: [{
-                                    title: "换硬币",
-                                    disabled: !(
-                                        walletData.silver_2_coin_left > 0 &&
-                                        walletData.status > 0
-                                    ),
-                                    handler: function () {
-                                        if (
-                                            walletData.silver_2_coin_left > 0 &&
-                                            walletData.status > 0
-                                        ) {
-                                            $http.post({
-                                                url: _URL.BILIBILI
-                                                    .SILVER_TO_COIN,
-                                                header: {
-                                                    "User-Agent": _UA.BILIBILI.APP_IPHONE,
-                                                    "Content-Type": "application/x-www-form-urlencoded"
-                                                },
-                                                body: {
-                                                    access_key: _userData.access_key
-                                                },
-                                                handler: function (resp) {
-                                                    var data = resp.data;
-                                                    $console.info(data);
-                                                    if (data) {
-                                                        if (data.code == 0) {
-                                                            let silver2coinData =
-                                                                data.data;
-                                                            $ui.alert({
-                                                                title: data.message ||
-                                                                    data.msg ||
-                                                                    "兑换成功",
-                                                                message: `金瓜子：${silver2coinData.gold}\n` +
-                                                                    `银瓜子：${silver2coinData.silver}\n` +
-                                                                    `硬币：${silver2coinData.coin}\n`
-                                                            });
-                                                        } else {
-                                                            $ui.alert({
-                                                                title: `错误${data.code}`,
-                                                                message: data.message ||
-                                                                    data.msg ||
-                                                                    "未知错误"
-                                                            });
-                                                        }
+        $http.get({
+            url: _URL.BILIBILI.GET_WALLET + _userData.access_key
+        }).then(function (resp) {
+            var data = resp.data;
+            $console.info(data);
+            if (data) {
+                if (data.code == 0) {
+                    let walletData = data.data;
+                    $ui.loading(false);
+                    $ui.alert({
+                        title: "钱包余额",
+                        message: `金瓜子：${walletData.gold}\n` +
+                            `银瓜子：${walletData.silver}\n` +
+                            `硬币：${walletData.coin}\n` +
+                            `vip(老爷?)：${walletData.vip == 1 ? "已开通" : "未开通"}\n` +
+                            `硬币换银瓜子额度：${walletData.coin_2_silver_left}\n` +
+                            `银瓜子换硬币额度：${walletData.silver_2_coin_left}\n` +
+                            `银瓜子换硬币：${walletData.status == 1 ? "允许" : "不允许"}`,
+                        actions: [{
+                                title: "换硬币",
+                                disabled: !(walletData.silver_2_coin_left > 0 && walletData.status > 0),
+                                handler: function () {
+                                    if (walletData.silver_2_coin_left > 0 && walletData.status > 0) {
+                                        $http.post({
+                                            url: _URL.BILIBILI.SILVER_TO_COIN,
+                                            header: {
+                                                "User-Agent": _UA.BILIBILI.APP_IPHONE,
+                                                "Content-Type": "application/x-www-form-urlencoded"
+                                            },
+                                            body: {
+                                                access_key: _userData.access_key
+                                            },
+                                            handler: function (resp) {
+                                                var data = resp.data;
+                                                $console.info(data);
+                                                if (data) {
+                                                    if (data.code == 0) {
+                                                        let silver2coinData =
+                                                            data.data;
+                                                        $ui.alert({
+                                                            title: data.message || data.msg || "兑换成功",
+                                                            message: `金瓜子：${silver2coinData.gold}\n` +
+                                                                `银瓜子：${silver2coinData.silver}\n硬币：${silver2coinData.coin}\n`
+                                                        });
                                                     } else {
                                                         $ui.alert({
-                                                            title: "错误",
-                                                            message: "空白数据"
+                                                            title: `错误${data.code}`,
+                                                            message: data.message || data.msg || "未知错误"
                                                         });
                                                     }
+                                                } else {
+                                                    $ui.alert({
+                                                        title: "错误",
+                                                        message: "空白数据"
+                                                    });
                                                 }
-                                            });
-                                        } else {
-                                            $ui.error("错误，额度已空");
-                                        }
+                                            }
+                                        });
+                                    } else {
+                                        $ui.error("错误，额度已空");
                                     }
-                                },
-                                {
-                                    title: "OK",
-                                    disabled: false,
-                                    handler: function () {}
                                 }
-                            ]
-                        });
-                    } else {
-                        $ui.loading(false);
-                        $ui.alert({
-                            title: `错误${data.code}`,
-                            message: data.message || data.msg || "未知错误"
-                        });
-                    }
+                            },
+                            {
+                                title: "OK",
+                                disabled: false,
+                                handler: function () {}
+                            }
+                        ]
+                    });
                 } else {
                     $ui.loading(false);
                     $ui.alert({
-                        title: "错误",
-                        message: "空白数据"
+                        title: `错误${data.code}`,
+                        message: data.message || data.msg || "未知错误"
                     });
                 }
-            });
+            } else {
+                $ui.loading(false);
+                $ui.alert({
+                    title: "错误",
+                    message: "空白数据"
+                });
+            }
+        });
     } else {
         $ui.error("未登录");
     }
