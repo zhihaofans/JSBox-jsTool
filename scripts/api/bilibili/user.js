@@ -1,7 +1,5 @@
 let sys = require("../system.js"),
-    cheerio = require("cheerio"),
     _BILIURL = require("../urlData.js").BILIBILI,
-    appScheme = require("../app_scheme.js"),
     _UA = require("../user-agent.js"),
     _CACHE = require("./cache.js");
 
@@ -56,7 +54,7 @@ function setAccessKey(access_key) {
     _ACCESS_KEY = access_key;
     _CACHE.saveAccesskey(access_key)
 }
-//uid
+// Uid
 function getUid() {
     if (!_UID) {
         loadLoginCache()
