@@ -4,6 +4,96 @@ let sys = require("../system.js"),
     _USER = require("./user.js"),
     _CACHE = require("./cache.js");
 
+function getBiliobVideo(avid) {
+    $ui.loading(true);
+    $http
+        .get({
+            url: _BILIURL.BILIOB.API_VIDEO + avid
+        })
+        .then(function (resp) {
+            var v = resp.data;
+            $ui.loading(false);
+            if (v) {
+                $ui.push({
+                    props: {
+                        title: `av${v.aid}`
+                    },
+                    views: [{
+                        type: "list",
+                        props: {
+                            data: [{
+                                    title: "",
+                                    rows: [
+                                        `标题：${v.title}`,
+                                        `BV：${v.bvid}`,
+                                        `作者：${v.authorName}`,
+                                        `分类：${v.channel} > ${v.subChannel}`,
+                                        `时间：${v.cDatetime}`,
+                                        `观看：${v.cView}`,
+                                        `收藏：${v.cFavorite}`,
+                                        `弹幕：${v.cDanmaku}`,
+                                        `硬币：${v.cCoin}`,
+                                        `分享：${v.cShare}`,
+                                        `点赞：${v.cLike}`
+                                    ]
+                                },
+                                {
+                                    title: "",
+                                    rows: ["查看封面"]
+                                }
+                            ]
+                        },
+                        layout: $layout.fill,
+                        events: {
+                            didSelect: function (_sender, indexPath, _data) {
+                                const section = indexPath.section;
+                                const row = indexPath.row;
+                                switch (section) {
+                                    case 0:
+                                        switch (row) {
+                                            case 2:
+                                                $ui.alert({
+                                                    title: v.authorName,
+                                                    message: v.author
+                                                });
+                                                break;
+                                            default:
+                                                const textList = _data.split("：");
+                                                $ui.alert({
+                                                    title: textList[0],
+                                                    message: textList[1]
+                                                });
+                                        }
+                                        break;
+                                    case 1:
+                                        switch (row) {
+                                            case 0:
+                                                $ui.preview({
+                                                    title: `av${v.aid}`,
+                                                    url: v.pic
+                                                });
+                                                break;
+                                        }
+                                }
+                            }
+                        }
+                    }]
+                });
+                /* $ui.alert({
+                    title: "结果",
+                    message: data,
+                    actions: [{
+                        title: "ok",
+                        disabled: false,
+                        handler: function () {}
+                    }]
+                }); */
+            } else {
+                $ui.error("错误");
+            }
+        });
+}
+
 function getVideoInfo(vid) {
     $ui.loading(true);
     $http.get({
@@ -94,7 +184,7 @@ function getVideoInfo(vid) {
                                                     } else {
                                                         $ui.menu({
                                                             items: partList.map(p => p.part),
-                                                            handler: function (title, idx) {
+                                                            handler: function (_, idx) {
                                                                 getVideoDanmuku(partList[idx].cid);
                                                             }
                                                         });
