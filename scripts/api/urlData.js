@@ -73,6 +73,13 @@ let ACFUN = {
     JISHUWEN = {
         MAIN: "https://www.jishuwen.com/?p="
     },
+    KAAASS = {
+        GET_VIDEO_INFO: "https://api.kaaass.net/biliapi/video/info?jsonerr=true&id=",
+        GET_ACCESS_KEY: "https://api.kaaass.net/biliapi/user/login?jsonerr=true&direct=true",
+        GET_USER_INFO: "https://api.kaaass.net/biliapi/user/info?jsonerr=true",
+        GET_VIDEO_DATA: "https://api.kaaass.net/biliapi/video/resolve?jsonerr=true&direct=true",
+        GET_SIGN_URL: "https://api.kaaass.net/biliapi/urlgene"
+    },
     MEOWV = {
         WALLPAPER: "https://api.meowv.com/wallpaper",
         SOUL: "https://api.meowv.com/soul",
