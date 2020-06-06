@@ -103,10 +103,6 @@ function getLiveGiftList(liveData = undefined, mode = 0) {
                 const giftResult = resp.data;
                 if (giftResult.code == 0) {
                     const giftList = giftResult.data.list;
-                    const giftTitleList = giftList.map(
-                        gift =>
-                        `${gift.gift_name}（${gift.corner_mark}）${gift.gift_num}个`
-                    );
                     $ui.loading(false);
                     if (giftList.length) {
                         saveCache("getLiveGiftList", resp.rawData);
@@ -119,7 +115,7 @@ function getLiveGiftList(liveData = undefined, mode = 0) {
                                     views: [{
                                         type: "list",
                                         props: {
-                                            data: giftTitleList
+                                            data: giftList.map(gift => `${gift.gift_name}（${gift.corner_mark}）${gift.gift_num}个`)
                                         },
                                         layout: $layout.fill,
                                         events: {

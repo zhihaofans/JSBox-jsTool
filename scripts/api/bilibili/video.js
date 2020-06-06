@@ -1,4 +1,5 @@
-let sys = require("../system.js"),
+let cheerio = require("cheerio"),
+    sys = require("../system.js"),
     _BILIURL = require("../urlData.js").BILIBILI,
     _UA = require("../user-agent.js"),
     _USER = require("./user.js"),
@@ -92,6 +93,68 @@ function getBiliobVideo(avid) {
                 $ui.error("错误");
             }
         });
+}
+// 获取弹幕列表
+function getVideoDanmuku(mid) {
+    $ui.loading(true);
+    $http.get({
+        url: `${_BILIURL.DANMUKU_LIST}${mid}.xml`
+    }).then(function (resp) {
+        $ui.loading(false);
+        const danmuXmlList = [];
+        const $ = cheerio.load(resp.data, {
+            normalizeWhitespace: true,
+            xmlMode: true
+        });
+        $console.info(resp.data);
+        $console.info($.xml());
+        $("i > d").each(function (i, elem) {
+            danmuXmlList.push($(elem));
+        });
+        const danmuStrList = danmuXmlList.map(d => d.text());
+        $ui.push({
+            props: {
+                title: "弹幕列表"
+            },
+            views: [{
+                type: "list",
+                props: {
+                    data: [`显示全部(${danmuStrList.length}个)`, "搜索"]
+                },
+                layout: $layout.fill,
+                events: {
+                    didSelect: function (sender, indexPath, data) {
+                        switch (indexPath.row) {
+                            case 0:
+                                $ui.push({
+                                    props: {
+                                        title: `${danmuStrList.length}个弹幕`
+                                    },
+                                    views: [{
+                                        type: "list",
+                                        props: {
+                                            data: danmuStrList
+                                        },
+                                        layout: $layout.fill,
+                                        events: {
+                                            didSelect: function (_sender, _indexPath, _data) {
+                                                $ui.alert({
+                                                    title: _data,
+                                                    message: danmuXmlList[_indexPath.section].attr("p")
+                                                });
+                                            }
+                                        }
+                                    }]
+                                });
+                                break;
+                            default:
+                                $ui.error("不支持");
+                        }
+                    }
+                }
+            }]
+        });
+    });
 }
 
 function getVideoInfo(vid) {
@@ -279,6 +342,7 @@ function laterToWatch() {
 }
 
 module.exports = {
+    getVideoDanmuku,
     getVideoInfo,
     laterToWatch
 };

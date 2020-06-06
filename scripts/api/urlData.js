@@ -89,7 +89,11 @@ let ACFUN = {
         DASHBOARD: "https://tophub.today/dashboard"
     },
     UPDATE_CONFIG_GITHUB = "https://github.com/zhuangzhihao-io/JSBox-jsTool/raw/master/config.json",
-    UPDATE_CONFIG_JSDELIVR = "https://cdn.jsdelivr.net/gh/zhuangzhihao-io/JSBox-jsTool@master/config.json";
+    UPDATE_CONFIG_JSDELIVR = "https://cdn.jsdelivr.net/gh/zhuangzhihao-io/JSBox-jsTool@master/config.json",
+    VTBS_MOE = {
+        V1_DETAIL: "https://api.vtbs.moe/v1/detail/",
+        WEB_DETAIL: "https://vtbs.moe/detail/"
+    };
 module.exports = {
     ACFUN,
     API_66MZ8_COM,
@@ -98,8 +102,10 @@ module.exports = {
     BILICHAT,
     ISOYU,
     JISHUWEN,
+    KAAASS,
     MEOWV,
     TOPHUB,
     UPDATE_CONFIG_GITHUB,
     UPDATE_CONFIG_JSDELIVR,
+    VTBS_MOE
 };
