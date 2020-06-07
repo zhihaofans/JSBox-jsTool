@@ -1,5 +1,7 @@
+$include("./codePrototype.js");
 let cheerio = require("cheerio"),
     sys = require("../system.js"),
+    appScheme = require("../app_scheme.js"),
     _URL = require("../urlData.js"),
     _UA = require("../user-agent.js"),
     _USER = require("./user.js");
@@ -120,7 +122,7 @@ function getVideoData(vid, page, quality, access_key) {
                                         $ui.error("空白可下载文件");
                                         break;
                                     case 1:
-                                        showDownList(downloadList[0], copyStr);
+                                        showVideoDownList(downloadList[0], copyStr);
                                         break;
                                     default:
                                         var dList = [];
@@ -140,7 +142,7 @@ function getVideoData(vid, page, quality, access_key) {
                                                 layout: $layout.fill,
                                                 events: {
                                                     didSelect: function (_sender, indexPath, data) {
-                                                        showDownList(downloadList[indexPath.row], copyStr);
+                                                        showVideoDownList(downloadList[indexPath.row], copyStr);
                                                     }
                                                 }
                                             }]
@@ -415,7 +417,74 @@ function laterToWatch() {
         $ui.error("请登录");
     }
 }
-
+// 显示可下载视频文件列表s
+function showVideoDownList(thisFile, copyStr) {
+    var urlList = [thisFile.url];
+    urlList = urlList.concat(thisFile.backup_url);
+    $ui.push({
+        props: {
+            title: "可下载文件列表"
+        },
+        views: [{
+            type: "list",
+            props: {
+                data: urlList
+            },
+            layout: $layout.fill,
+            events: {
+                didSelect: function (_sender, idxp, _data) {
+                    if (copyStr) {
+                        $ui.toast("请复制headers");
+                        $input.text({
+                            placeholder: "",
+                            text: copyStr,
+                            handler: function (text) {
+                                copyStr.copy();
+                                $ui.menu({
+                                    items: [
+                                        "分享",
+                                        "使用外部播放器打开",
+                                        "使用Alook浏览器打开"
+                                    ],
+                                    handler: function (title, idx) {
+                                        switch (idx) {
+                                            case 0:
+                                                $share.sheet([_data]);
+                                                break;
+                                            case 1:
+                                                $ui.menu({
+                                                    items: [
+                                                        "AVPlayer",
+                                                        "nplayer"
+                                                    ],
+                                                    handler: function (titlePlayer, idxPlayer) {
+                                                        switch (idxPlayer) {
+                                                            case 0:
+                                                                appScheme.avplayerVideo(_data);
+                                                                break;
+                                                            case 1:
+                                                                appScheme.nplayerVideo(_data);
+                                                                break;
+                                                        }
+                                                    }
+                                                });
+                                                break;
+                                            case 2:
+                                                appScheme.alookBrowserOpen(_data);
+                                                break;
+                                        }
+                                    }
+                                });
+                            }
+                        });
+                    } else {
+                        $share.sheet([_data]);
+                    }
+                }
+            }
+        }]
+    });
+}
 module.exports = {
     getVideoDanmuku,
     getVideoInfo,
