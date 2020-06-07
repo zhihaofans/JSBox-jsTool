@@ -1,105 +1,179 @@
 let cheerio = require("cheerio"),
     sys = require("../system.js"),
     _URL = require("../urlData.js"),
-    _BILIURL = require("../urlData.js").BILIBILI,
     _UA = require("../user-agent.js"),
-    _USER = require("./user.js"),
-    _CACHE = require("./cache.js");
+    _USER = require("./user.js");
 
 function getBiliobVideo(avid) {
     $ui.loading(true);
-    $http
-        .get({
-            url: _URL.BILIOB.API_VIDEO + avid
-        })
-        .then(function (resp) {
-            var v = resp.data;
-            $ui.loading(false);
-            if (v) {
-                $ui.push({
+    $http.get({
+        url: _URL.BILIOB.API_VIDEO + avid
+    }).then(function (resp) {
+        var v = resp.data;
+        $ui.loading(false);
+        if (v) {
+            $ui.push({
+                props: {
+                    title: `av${v.aid}`
+                },
+                views: [{
+                    type: "list",
                     props: {
-                        title: `av${v.aid}`
+                        data: [{
+                                title: "",
+                                rows: [
+                                    `标题：${v.title}`,
+                                    `BV：${v.bvid}`,
+                                    `作者：${v.authorName}`,
+                                    `分类：${v.channel} > ${v.subChannel}`,
+                                    `时间：${v.cDatetime}`,
+                                    `观看：${v.cView}`,
+                                    `收藏：${v.cFavorite}`,
+                                    `弹幕：${v.cDanmaku}`,
+                                    `硬币：${v.cCoin}`,
+                                    `分享：${v.cShare}`,
+                                    `点赞：${v.cLike}`
+                                ]
+                            },
+                            {
+                                title: "",
+                                rows: ["查看封面"]
+                            }
+                        ]
                     },
-                    views: [{
-                        type: "list",
-                        props: {
-                            data: [{
-                                    title: "",
-                                    rows: [
-                                        `标题：${v.title}`,
-                                        `BV：${v.bvid}`,
-                                        `作者：${v.authorName}`,
-                                        `分类：${v.channel} > ${v.subChannel}`,
-                                        `时间：${v.cDatetime}`,
-                                        `观看：${v.cView}`,
-                                        `收藏：${v.cFavorite}`,
-                                        `弹幕：${v.cDanmaku}`,
-                                        `硬币：${v.cCoin}`,
-                                        `分享：${v.cShare}`,
-                                        `点赞：${v.cLike}`
-                                    ]
-                                },
-                                {
-                                    title: "",
-                                    rows: ["查看封面"]
-                                }
-                            ]
-                        },
-                        layout: $layout.fill,
-                        events: {
-                            didSelect: function (_sender, indexPath, _data) {
-                                const section = indexPath.section;
-                                const row = indexPath.row;
-                                switch (section) {
-                                    case 0:
-                                        switch (row) {
-                                            case 2:
-                                                $ui.alert({
-                                                    title: v.authorName,
-                                                    message: v.author
-                                                });
-                                                break;
-                                            default:
-                                                const textList = _data.split("：");
-                                                $ui.alert({
-                                                    title: textList[0],
-                                                    message: textList[1]
-                                                });
-                                        }
-                                        break;
-                                    case 1:
-                                        switch (row) {
-                                            case 0:
-                                                $ui.preview({
-                                                    title: `av${v.aid}`,
-                                                    url: v.pic
-                                                });
-                                                break;
-                                        }
-                                }
+                    layout: $layout.fill,
+                    events: {
+                        didSelect: function (_sender, indexPath, _data) {
+                            const section = indexPath.section;
+                            const row = indexPath.row;
+                            switch (section) {
+                                case 0:
+                                    switch (row) {
+                                        case 2:
+                                            $ui.alert({
+                                                title: v.authorName,
+                                                message: v.author
+                                            });
+                                            break;
+                                        default:
+                                            const textList = _data.split("：");
+                                            $ui.alert({
+                                                title: textList[0],
+                                                message: textList[1]
+                                            });
+                                    }
+                                    break;
+                                case 1:
+                                    switch (row) {
+                                        case 0:
+                                            $ui.preview({
+                                                title: `av${v.aid}`,
+                                                url: v.pic
+                                            });
+                                            break;
+                                    }
                             }
                         }
-                    }]
-                });
-                /* $ui.alert({
-                    title: "结果",
-                    message: data,
-                    actions: [{
-                        title: "ok",
-                        disabled: false,
-                        handler: function () {}
-                    }]
-                }); */
+                    }
+                }]
+            });
+        } else {
+            $ui.error("错误");
+        }
+    });
+}
+// 下载视频
+function getVideo(vid, _biliData) {
+    const partList = _biliData.list;
+    const partTitleList = partList.map(x => x.part);
+    $ui.menu({
+        items: partTitleList,
+        handler: function (title, idx) {
+            //1080p以上需要带header
+            if (checkAccessKey()) {
+                getVideoData(vid, idx + 1, 116, _userData.access_key);
             } else {
-                $ui.error("错误");
+                getVideoData(vid, idx + 1, 80, "");
             }
-        });
+        }
+    });
+}
+
+function getVideoData(vid, page, quality, access_key) {
+    $ui.loading(true);
+    $http.get({
+        url: `${_URL.BILIBILI.GET_VIDEO_DATA}&id=${vid}&page=${page}&quality${quality}&access_key=${access_key}`,
+        handler: function (videoResp) {
+            var videoData = videoResp.data;
+            if (videoData.status == "OK") {
+                if (videoData.url.length > 0) {
+                    const copyStr = JSON.stringify(videoData.headers);
+                    $http.get({
+                        url: videoData.url,
+                        handler: function (biliResp) {
+                            var biliData = biliResp.data;
+                            if (biliData.code == 0) {
+                                const downloadList = biliData.data.durl;
+                                switch (downloadList.length) {
+                                    case 0:
+                                        $ui.loading(false);
+                                        $ui.error("空白可下载文件");
+                                        break;
+                                    case 1:
+                                        showDownList(downloadList[0], copyStr);
+                                        break;
+                                    default:
+                                        var dList = [];
+                                        for (i in downloadList) {
+                                            dList.push(`第${(i + 1).toString()}个文件`);
+                                        }
+                                        $ui.loading(false);
+                                        $ui.push({
+                                            props: {
+                                                title: "可下载文件列表"
+                                            },
+                                            views: [{
+                                                type: "list",
+                                                props: {
+                                                    data: dList
+                                                },
+                                                layout: $layout.fill,
+                                                events: {
+                                                    didSelect: function (_sender, indexPath, data) {
+                                                        showDownList(downloadList[indexPath.row], copyStr);
+                                                    }
+                                                }
+                                            }]
+                                        });
+                                }
+                            } else {
+                                $ui.loading(false);
+                                $ui.alert({
+                                    title: `Error ${biliData.code}`,
+                                    message: biliData.message
+                                });
+                            }
+                        }
+                    });
+                } else {
+                    $ui.loading(false);
+                    $ui.error("url.length==0");
+                }
+            } else {
+                $ui.loading(false);
+                $ui.alert({
+                    title: `Error Code ${videoResp.code}`,
+                    message: videoResp.message
+                });
+            }
+        }
+    });
 }
 // 获取弹幕列表
 function getVideoDanmuku(mid) {
     $ui.loading(true);
     $http.get({
-        url: `${_BILIURL.DANMUKU_LIST}${mid}.xml`
+        url: `${_URL.BILIBILI.DANMUKU_LIST}${mid}.xml`
     }).then(function (resp) {
         $ui.loading(false);
         const danmuXmlList = [];
@@ -157,11 +231,11 @@ function getVideoDanmuku(mid) {
         });
     });
 }
-
+// 获取视频信息
 function getVideoInfo(vid) {
     $ui.loading(true);
     $http.get({
-        url: _BILIURL.GET_VIDEO_INFO + vid,
+        url: _URL.KAAASS.GET_VIDEO_INFO + vid,
         header: {
             "User-Agent": _UA.KAAASS
         },
@@ -196,7 +270,7 @@ function getVideoInfo(vid) {
                                 handler: () => {
                                     $ui.preview({
                                         title: "av" + vid,
-                                        url: _BILIURL.BILIBILI_WWW_VIDEO + vid
+                                        url: _URL.BILIBILI.BILIBILI_WWW_VIDEO + vid
                                     });
                                 }
                             }]
@@ -228,7 +302,7 @@ function getVideoInfo(vid) {
                                             switch (indexPath.row) {
                                                 case 0:
                                                     $ui.preview({
-                                                        title: "av" + vid,
+                                                        title: `av${vid}`,
                                                         url: _biliData.pic
                                                     });
                                                     break;
@@ -298,12 +372,12 @@ function getVideoInfo(vid) {
         }
     });
 }
-
+// 稍后再看
 function laterToWatch() {
     const accessKey = _USER.getAccessKey();
     if (accessKey) {
         $http.get({
-            url: _BILIURL.LATER_TO_WATCH + accessKey,
+            url: _URL.BILIBILI.LATER_TO_WATCH + accessKey,
             header: {
                 "User-Agent": _UA.BILIBILI.APP_IPHONE
             }
