@@ -969,7 +969,7 @@ function getVtbLiveroomInfo(mid) {
     $ui.loading(true);
     $http
         .get({
-            url: _BILIURL.API_VTBS_MOE.V1_DETAIL + mid
+            url: _URL.VTBS_MOE.V1_DETAIL + mid
         })
         .then(function (resp) {
             $ui.loading(false);
@@ -1036,10 +1036,7 @@ function getVtbLiveroomInfo(mid) {
                                                         disabled: false,
                                                         handler: function () {
                                                             appScheme.safariPreview(
-                                                                _BILIURL
-                                                                .API_VTBS_MOE
-                                                                .WEB_DETAIL +
-                                                                mid
+                                                                _URL.VTBS_MOE.WEB_DETAIL + mid
                                                             );
                                                         }
                                                     },
