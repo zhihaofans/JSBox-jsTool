@@ -85,6 +85,9 @@ let ACFUN = {
         SOUL: "https://api.meowv.com/soul",
         CAT: "https://api.meowv.com/common/cat"
     },
+    TENCENT = {
+        ADD_FRIENDS: "https://wpa.qq.com/msgrd?v=3&site=acfun.cn&menu=yes&uin="
+    },
     TOPHUB = {
         DASHBOARD: "https://tophub.today/dashboard"
     },
@@ -104,6 +107,7 @@ module.exports = {
     JISHUWEN,
     KAAASS,
     MEOWV,
+    TENCENT,
     TOPHUB,
     UPDATE_CONFIG_GITHUB,
     UPDATE_CONFIG_JSDELIVR,
