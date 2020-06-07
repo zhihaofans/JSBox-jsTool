@@ -1,5 +1,6 @@
 let cheerio = require("cheerio"),
     sys = require("../system.js"),
+    _URL = require("../urlData.js"),
     _BILIURL = require("../urlData.js").BILIBILI,
     _UA = require("../user-agent.js"),
     _USER = require("./user.js"),
@@ -9,7 +10,7 @@ function getBiliobVideo(avid) {
     $ui.loading(true);
     $http
         .get({
-            url: _BILIURL.BILIOB.API_VIDEO + avid
+            url: _URL.BILIOB.API_VIDEO + avid
         })
         .then(function (resp) {
             var v = resp.data;

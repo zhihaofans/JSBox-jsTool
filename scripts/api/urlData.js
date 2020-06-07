@@ -67,6 +67,10 @@ let ACFUN = {
         HISTORY: "https://bilichat.3shain.com/api/history",
         DANMUKU: "https://bilichat.3shain.com/gkd/"
     },
+    BILIOB = {
+        VIDEO: "https://www.biliob.com/video/av",
+        API_VIDEO: "https://www.biliob.com/api/video/v2/av"
+    },
     ISOYU = {
         BING: "https://api.isoyu.com/bing_images.php"
     },
@@ -103,6 +107,7 @@ module.exports = {
     APPLE,
     BILIBILI,
     BILICHAT,
+    BILIOB,
     ISOYU,
     JISHUWEN,
     KAAASS,
