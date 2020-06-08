@@ -1,4 +1,5 @@
-let _URL = require("../urlData.js"),
+let sys = require("./system.js"),
+    _URL = require("../urlData.js"),
     _BILIURL = require("../urlData.js").BILIBILI,
     _USER = require("./user.js"),
     _GIFT = require("./gift.js"),
@@ -629,6 +630,7 @@ function getOfflineLiver() {
         $ui.error("未登录");
     }
 }
+
 // vtb.moe
 function getVtbLiveroomInfo(mid) {
     $ui.loading(true);
@@ -726,10 +728,18 @@ function getVtbLiveroomInfo(mid) {
         }
     });
 }
-
+// Bilichat
+function openLiveDanmuku(liveroomId) {
+    $ui.preview({
+        title: "BiliChat",
+        url: _BILIURL.BILICHAT + liveroomId
+    });
+}
 module.exports = {
     getFansMedalList,
     getWallet,
+    getOfflineLiver,
+    getOnlineLiver,
     getVtbLiveroomInfo,
     wearFanMedal
 };

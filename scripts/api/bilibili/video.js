@@ -417,7 +417,7 @@ function laterToWatch() {
         $ui.error("请登录");
     }
 }
-// 显示可下载视频文件列表s
+// 显示可下载视频文件列表
 function showVideoDownList(thisFile, copyStr) {
     var urlList = [thisFile.url];
     urlList = urlList.concat(thisFile.backup_url);
@@ -485,8 +485,30 @@ function showVideoDownList(thisFile, copyStr) {
         }]
     });
 }
+// 通过链接获取av号
+function getVidFromUrl(url) {
+    const siteList = [
+        "https://",
+        "http://",
+        "b23.tv/",
+        "www.bilibili.com/video/",
+        "www.bilibili.com/",
+        "av"
+    ];
+    var newUrl = url;
+    siteList.map(x => {
+        if (newUrl.startsWith(x)) {
+            newUrl = newUrl.remove(x);
+        }
+    });
+    if (newUrl.indexOf("?")) {
+        newUrl = newUrl.split("?")[0].remove("/");
+    }
+    return newUrl;
+}
 module.exports = {
     getVideoDanmuku,
     getVideoInfo,
+    getVidFromUrl,
     laterToWatch
 };
