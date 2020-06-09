@@ -355,7 +355,7 @@ function init(url) {
             }],
             events: {
                 appeared: function () {
-                    if (biliApi.init()) {
+                    if (_bili.user.isLogin()) {
                         $ui.toast("已登录");
                     }
                 }

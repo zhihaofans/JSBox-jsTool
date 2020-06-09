@@ -8,7 +8,7 @@ var _ACCESS_KEY = "",
     _LOGIN_DATA = {},
     _UID = 0;
 
-// Login cache
+// Login
 function UserLoginData(_uid, _accessKey) {
     this.uid = _uid;
     this.accessKey = _accessKey;
@@ -17,6 +17,11 @@ function UserLoginData(_uid, _accessKey) {
 function getLoginCache() {
     loadLoginCache();
     return UserLoginData(_ACCESS_KEY, _UID);
+}
+
+
+function isLogin() {
+    return getAccessKey() ? true : false;
 }
 
 function loadLoginCache() {
@@ -31,47 +36,6 @@ function loadLoginCache() {
     }
 }
 
-function saveLoginCache(access_key, uid) {
-    setAccessKey(access_key);
-    setUid(uid);
-}
-
-function removeLoginCache() {
-    _CACHE.removeLoginCache();
-}
-
-function isLogin() {
-    return getAccessKey() ? true : false;
-}
-// Access key
-function checkAccessKey() {
-    return getAccessKey() ? true : false;
-}
-
-function getAccessKey() {
-    if (!_ACCESS_KEY) {
-        loadLoginCache()
-    }
-    return _ACCESS_KEY;
-}
-
-function setAccessKey(access_key) {
-    _ACCESS_KEY = access_key;
-    _CACHE.saveAccesskey(access_key)
-}
-// Uid
-function getUid() {
-    if (!_UID) {
-        loadLoginCache()
-    }
-    return _UID;
-}
-
-function setUid(uid) {
-    _UID = uid;
-    _CACHE.saveUid(uid)
-}
-// Login
 function login() {
     $ui.menu({
         items: ["输入Access key(推荐)", "账号密码(明文)"],
@@ -196,6 +160,43 @@ function loginBilibiliBySignUrl(loginUrl, bodyStr, headers) {
             }
         }
     });
+}
+
+function removeLoginCache() {
+    _CACHE.removeLoginCache();
+}
+
+function saveLoginCache(access_key, uid) {
+    setAccessKey(access_key);
+    setUid(uid);
+}
+// Access key
+function checkAccessKey() {
+    return getAccessKey() ? true : false;
+}
+
+function getAccessKey() {
+    if (!_ACCESS_KEY) {
+        loadLoginCache()
+    }
+    return _ACCESS_KEY;
+}
+
+function setAccessKey(access_key) {
+    _ACCESS_KEY = access_key;
+    _CACHE.saveAccesskey(access_key)
+}
+// Uid
+function getUid() {
+    if (!_UID) {
+        loadLoginCache()
+    }
+    return _UID;
+}
+
+function setUid(uid) {
+    _UID = uid;
+    _CACHE.saveUid(uid)
 }
 // User info
 function getMyInfo() {
