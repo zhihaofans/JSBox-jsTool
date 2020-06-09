@@ -3,7 +3,9 @@ let sys = require("../system.js"),
     _BILIURL = require("../urlData.js").BILIBILI,
     appScheme = require("../app_scheme.js"),
     _UA = require("../user-agent.js"),
-    _user = require("./user.js");
+    _USER = require("./user.js"),
+    _CACHE = require("./cache.js"),
+    _GIFT = require("./gift.js");
 
 function GiftData(_giftId, _bagId, _number) {
     this.giftId = _giftId;
@@ -92,7 +94,7 @@ function getLiveGiftList(liveData = undefined, mode = 0) {
         needExp = liveData.day_limit - liveData.today_feed;
     }
     $ui.loading(true);
-    const accessKey = _user.checkAccessKey() ? _user.getAccessKey() : undefined;
+    const accessKey = _USER.checkAccessKey() ? _USER.getAccessKey() : undefined;
     if (accessKey) {
         $http.get({
             url: _BILIURL.GET_LIVE_GIFT_LIST + accessKey,
@@ -105,7 +107,7 @@ function getLiveGiftList(liveData = undefined, mode = 0) {
                     const giftList = giftResult.data.list;
                     $ui.loading(false);
                     if (giftList.length) {
-                        saveCache("getLiveGiftList", resp.rawData);
+                        _CACHE.saveCache("getLiveGiftList", resp.rawData);
                         switch (mode) {
                             case 0:
                                 $ui.push({
@@ -285,7 +287,7 @@ function getLiveGiftList(liveData = undefined, mode = 0) {
 
 function sendLiveGift(user_id, room_id, gift_type, gift_id = undefined, gift_number = 1) {
     $ui.loading(true);
-    var url = `${_BILIURL.LIVE_GIFT_SEND}?access_key=${_userData.access_key}&biz_id=${room_id}&gift_id=${gift_type}&gift_num=${gift_number}&ruid=${user_id}`;
+    var url = `${_BILIURL.LIVE_GIFT_SEND}?access_key=${_USER.getAccessKey()}&biz_id=${room_id}&gift_id=${gift_type}&gift_num=${gift_number}&ruid=${user_id}`;
     if (gift_id) {
         url += `&bag_id=${gift_id}`;
     }
@@ -316,7 +318,7 @@ function sendLiveGiftList(liveData, giftList, index = 0) {
     $ui.loading(true);
     if (giftList.length > 0) {
         const thisGift = giftList[index];
-        const url = `${_BILIURL.LIVE_GIFT_SEND}?access_key=${_userData.access_key}&ruid=${liveData.target_id}&biz_id=${liveData.room_id}&bag_id=${thisGift.bagId}&gift_id=${thisGift.giftId}&gift_num=${thisGift.number}`;
+        const url = `${_BILIURL.LIVE_GIFT_SEND}?access_key=${_USER.getAccessKey()}&ruid=${liveData.target_id}&biz_id=${liveData.room_id}&bag_id=${thisGift.bagId}&gift_id=${thisGift.giftId}&gift_num=${thisGift.number}`;
         if (index == 0) {
             $console.info(`共有${giftList.length}组礼物`);
         }

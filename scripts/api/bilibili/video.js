@@ -92,8 +92,8 @@ function getVideo(vid, _biliData) {
         items: partTitleList,
         handler: function (title, idx) {
             //1080p以上需要带header
-            if (checkAccessKey()) {
-                getVideoData(vid, idx + 1, 116, _userData.access_key);
+            if (_USER.isLogin()) {
+                getVideoData(vid, idx + 1, 116, _USER.getAccessKey());
             } else {
                 getVideoData(vid, idx + 1, 80, "");
             }

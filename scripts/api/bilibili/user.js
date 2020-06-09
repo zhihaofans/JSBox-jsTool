@@ -25,14 +25,14 @@ function isLogin() {
 }
 
 function loadLoginCache() {
-    const cacheKey = _CACHE.getAccessKey();
-    const uid = _CACHE.getUid();
+    const cacheKey = _CACHE.loadAccesskey();
+    const uid = _CACHE.loadUid();
     $console.info(`cacheKey:${cacheKey}\nuid:${uid}`);
     if (cacheKey) {
         _ACCESS_KEY = cacheKey;
     }
     if (uid) {
-        _userData.uid = uid;
+        _UID = uid;
     }
 }
 
@@ -137,7 +137,7 @@ function loginBilibiliBySignUrl(loginUrl, bodyStr, headers) {
             var loginData = loginResp.data;
             $console.info(loginData);
             if (loginData.code == 0) {
-                var success = saveCache("bilibiliPassport", loginResp.rawData);
+                var success = _CACHE.saveCache("bilibiliPassport", loginResp.rawData);
                 $console.info(`cache:${success}`);
                 saveLoginCache(
                     loginData.data.token_info.access_token,
@@ -202,7 +202,7 @@ function setUid(uid) {
 function getMyInfo() {
     if (isLogin()) {
         $ui.loading(true);
-        _LIB.getSignUrl(_BILIURL.MY_INFO, "access_key=" + _userData.access_key).then(respKaaass => {
+        _LIB.getSignUrl(_BILIURL.MY_INFO, "access_key=" + _user.getAccessKey()).then(respKaaass => {
             const dataKaaass = respKaaass.data;
             $console.info(dataKaaass);
             if (dataKaaass) {
@@ -213,7 +213,7 @@ function getMyInfo() {
                         var resultBili = respBili.data;
                         if (resultBili.code == 0) {
                             const myInfoData = resultBili.data;
-                            saveLoginCache(_userData.access_key, myInfoData.mid);
+                            saveLoginCache(_user.getAccessKey(), myInfoData.mid);
                             $ui.loading(false);
                             $ui.success("已更新登录数据");
                             $ui.alert({
