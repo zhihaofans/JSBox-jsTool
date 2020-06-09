@@ -1,7 +1,8 @@
 let sys = require("../system.js"),
     _BILIURL = require("../urlData.js").BILIBILI,
     _UA = require("../user-agent.js"),
-    _CACHE = require("./cache.js");
+    _CACHE = require("./cache.js"),
+    _LIB = require("./lib.js");
 
 var _ACCESS_KEY = "",
     _LOGIN_DATA = {},
@@ -144,9 +145,9 @@ function loginBilibiliBySignUrl(loginUrl, bodyStr, headers) {
 }
 // User info
 function getMyInfo() {
-    if (checkAccessKey()) {
+    if (isLogin()) {
         $ui.loading(true);
-        getSignUrl(_BILIURL.MY_INFO, "access_key=" + _userData.access_key).then(
+        _LIB.getSignUrl(_BILIURL.MY_INFO, "access_key=" + _userData.access_key).then(
             respKaaass => {
                 const dataKaaass = respKaaass.data;
                 $console.info(dataKaaass);
@@ -158,10 +159,7 @@ function getMyInfo() {
                             var resultBili = respBili.data;
                             if (resultBili.code == 0) {
                                 const myInfoData = resultBili.data;
-                                saveLoginData(
-                                    _userData.access_key,
-                                    myInfoData.mid
-                                );
+                                saveLoginCache(_userData.access_key, myInfoData.mid);
                                 $ui.loading(false);
                                 $ui.success("已更新登录数据");
                                 $ui.alert({
