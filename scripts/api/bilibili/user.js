@@ -142,12 +142,68 @@ function loginBilibiliBySignUrl(loginUrl, bodyStr, headers) {
         }
     });
 }
+// User info
+function getMyInfo() {
+    if (checkAccessKey()) {
+        $ui.loading(true);
+        getSignUrl(_BILIURL.MY_INFO, "access_key=" + _userData.access_key).then(
+            respKaaass => {
+                const dataKaaass = respKaaass.data;
+                $console.info(dataKaaass);
+                if (dataKaaass) {
+                    $http.get({
+                        url: dataKaaass.url,
+                        header: headerList,
+                        handler: respBili => {
+                            var resultBili = respBili.data;
+                            if (resultBili.code == 0) {
+                                const myInfoData = resultBili.data;
+                                saveLoginData(
+                                    _userData.access_key,
+                                    myInfoData.mid
+                                );
+                                $ui.loading(false);
+                                $ui.success("已更新登录数据");
+                                $ui.alert({
+                                    title: "结果",
+                                    message: myInfoData,
+                                    actions: [{
+                                        title: "ok",
+                                        disabled: false, // Optional
+                                        handler: function () {}
+                                    }]
+                                });
+                            } else {
+                                $ui.loading(false);
+                                $ui.alert({
+                                    title: "Error ${resultBili.code}",
+                                    message: resultBili.message || "未知错误",
+                                    actions: [{
+                                        title: "OK",
+                                        disabled: false, // Optional
+                                        handler: function () {}
+                                    }]
+                                });
+                            }
+                        }
+                    });
+                } else {
+                    $ui.loading(false);
+                    $ui.error("获取签名url失败");
+                }
+            }
+        );
+    } else {
+        $ui.error("请登录");
+    }
+}
 module.exports = {
     getLoginCache,
     loadLoginCache,
     saveLoginCache,
     checkAccessKey,
     getAccessKey,
+    getMyInfo,
     setAccessKey,
     getUid,
     setUid,

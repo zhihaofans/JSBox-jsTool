@@ -1,5 +1,5 @@
 let biliApi = require("../api/bilibili.js"),
-    biliAvbv = require("../api/bilibili-avbv.js"),
+    _bili = require("../api/bilibili/api.js"),
     urlCheck = require("../api/urlCheck.js"),
     _BILIURL = require("../api/urlData.js").BILIBILI;
 let debugVid = "90035938";
@@ -7,7 +7,7 @@ let debugVid = "90035938";
 function init(url) {
     if (url) {
         if (urlCheck.isBilibiliVideoUrl(url)) {
-            biliApi.getVideoInfo(biliApi.getVidFromUrl(url));
+            _bili.video.getVideoInfo(_bili.video.getVidFromUrl(url));
         } else {
             $ui.error("不支持该链接");
         }
@@ -59,7 +59,7 @@ function init(url) {
                             case 0:
                                 switch (indexPath.row) {
                                     case 0:
-                                        biliApi.checkAccessKey() ?
+                                        _bili.user.isLogin() ?
                                             $ui.alert({
                                                 title: "已登录",
                                                 message: "本地发现登录缓存，还要登录吗",
