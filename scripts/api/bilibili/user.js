@@ -36,6 +36,10 @@ function saveLoginCache(access_key, uid) {
     setUid(uid);
 }
 
+function removeLoginCache() {
+    _CACHE.removeLoginCache();
+}
+
 function isLogin() {
     return getAccessKey() ? true : false;
 }
@@ -68,6 +72,56 @@ function setUid(uid) {
     _CACHE.saveUid(uid)
 }
 // Login
+function login() {
+    $ui.menu({
+        items: ["输入Access key(推荐)", "账号密码(明文)"],
+        handler: function (_title, idx) {
+            switch (idx) {
+                case 0:
+                    $input.text({
+                        autoFontSize: true,
+                        placeholder: "输入账号",
+                        handler: function (inputKey) {
+                            if (inputKey.length > 0) {
+                                setAccessKey(inputKey);
+                                $ui.alert({
+                                    title: "保存成功",
+                                    message: "由于需要用户uid，所以建议获取用户信息",
+                                });
+                            } else {
+                                $ui.error("空白key");
+                            }
+                        }
+                    });
+                    break;
+                case 1:
+                    $input.text({
+                        autoFontSize: true,
+                        placeholder: "输入账号",
+                        handler: function (user) {
+                            if (user.length > 0) {
+                                $input.text({
+                                    autoFontSize: true,
+                                    placeholder: "输入密码",
+                                    handler: function (pwd) {
+                                        if (pwd.length > 0) {
+                                            loginPasswordByKaaass(user, pwd);
+                                        } else {
+                                            $ui.error("空白密码");
+                                        }
+                                    }
+                                });
+                            } else {
+                                $ui.error("空白账号");
+                            }
+                        }
+                    });
+                    break;
+            }
+        }
+    });
+}
+
 function loginPasswordByKaaass(userName, password) {
     // 获取加密链接登录
     $ui.loading(true);
@@ -147,64 +201,64 @@ function loginBilibiliBySignUrl(loginUrl, bodyStr, headers) {
 function getMyInfo() {
     if (isLogin()) {
         $ui.loading(true);
-        _LIB.getSignUrl(_BILIURL.MY_INFO, "access_key=" + _userData.access_key).then(
-            respKaaass => {
-                const dataKaaass = respKaaass.data;
-                $console.info(dataKaaass);
-                if (dataKaaass) {
-                    $http.get({
-                        url: dataKaaass.url,
-                        header: headerList,
-                        handler: respBili => {
-                            var resultBili = respBili.data;
-                            if (resultBili.code == 0) {
-                                const myInfoData = resultBili.data;
-                                saveLoginCache(_userData.access_key, myInfoData.mid);
-                                $ui.loading(false);
-                                $ui.success("已更新登录数据");
-                                $ui.alert({
-                                    title: "结果",
-                                    message: myInfoData,
-                                    actions: [{
-                                        title: "ok",
-                                        disabled: false, // Optional
-                                        handler: function () {}
-                                    }]
-                                });
-                            } else {
-                                $ui.loading(false);
-                                $ui.alert({
-                                    title: "Error ${resultBili.code}",
-                                    message: resultBili.message || "未知错误",
-                                    actions: [{
-                                        title: "OK",
-                                        disabled: false, // Optional
-                                        handler: function () {}
-                                    }]
-                                });
-                            }
+        _LIB.getSignUrl(_BILIURL.MY_INFO, "access_key=" + _userData.access_key).then(respKaaass => {
+            const dataKaaass = respKaaass.data;
+            $console.info(dataKaaass);
+            if (dataKaaass) {
+                $http.get({
+                    url: dataKaaass.url,
+                    header: headerList,
+                    handler: respBili => {
+                        var resultBili = respBili.data;
+                        if (resultBili.code == 0) {
+                            const myInfoData = resultBili.data;
+                            saveLoginCache(_userData.access_key, myInfoData.mid);
+                            $ui.loading(false);
+                            $ui.success("已更新登录数据");
+                            $ui.alert({
+                                title: "结果",
+                                message: myInfoData,
+                                actions: [{
+                                    title: "ok",
+                                    disabled: false, // Optional
+                                    handler: function () {}
+                                }]
+                            });
+                        } else {
+                            $ui.loading(false);
+                            $ui.alert({
+                                title: "Error ${resultBili.code}",
+                                message: resultBili.message || "未知错误",
+                                actions: [{
+                                    title: "OK",
+                                    disabled: false, // Optional
+                                    handler: function () {}
+                                }]
+                            });
                         }
-                    });
-                } else {
-                    $ui.loading(false);
-                    $ui.error("获取签名url失败");
-                }
+                    }
+                });
+            } else {
+                $ui.loading(false);
+                $ui.error("获取签名url失败");
             }
-        );
+        });
     } else {
         $ui.error("请登录");
     }
 }
 module.exports = {
-    getLoginCache,
-    loadLoginCache,
-    saveLoginCache,
     checkAccessKey,
+    getLoginCache,
     getAccessKey,
     getMyInfo,
-    setAccessKey,
     getUid,
+    login,
+    loadLoginCache,
+    loginPasswordByKaaass,
+    removeLoginCache,
+    setAccessKey,
+    saveLoginCache,
     setUid,
-    isLogin,
-    loginPasswordByKaaass
+    isLogin
 };

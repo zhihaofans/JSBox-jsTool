@@ -63,6 +63,9 @@ let ACFUN = {
         VIDEO: "https://www.biliob.com/video/av",
         API_VIDEO: "https://www.biliob.com/api/video/v2/av"
     },
+    GALMOE = {
+        COVER_GALMOE: "https://www.galmoe.com/t.php?aid="
+    },
     ISOYU = {
         BING: "https://api.isoyu.com/bing_images.php"
     },
@@ -100,6 +103,7 @@ module.exports = {
     BILIBILI,
     BILICHAT,
     BILIOB,
+    GALMOE,
     ISOYU,
     JISHUWEN,
     KAAASS,

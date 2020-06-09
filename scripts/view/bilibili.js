@@ -67,15 +67,15 @@ function init(url) {
                                                         title: "获取用户信息",
                                                         disabled: false, // Optional
                                                         handler: function () {
-                                                            biliApi.getMyInfo();
+                                                            _bili.user.getMyInfo();
                                                         }
                                                     },
                                                     {
                                                         title: "清空登录缓存重新登录",
                                                         disabled: false, // Optional
                                                         handler: function () {
-                                                            biliApi.removeLoginData();
-                                                            login();
+                                                            _bili.user.removeLoginCache();
+                                                            _bili.user.login();
                                                         }
                                                     },
                                                     {
@@ -85,17 +85,17 @@ function init(url) {
                                                     }
                                                 ]
                                             }) :
-                                            login();
+                                            _bili.user.login();
                                         break;
                                     case 1:
                                         $ui.error("该功能暂停使用");
-                                        // biliApi.checkAccessKey()? biliApi.getUserInfo(): $ui.error("未登录");
+                                        // _bili.user.isLogin()? _bili.user.getUserInfo(): $ui.error("未登录");
                                         break;
                                     case 2:
-                                        biliApi.laterToWatch();
+                                        _bili.video.laterToWatch();
                                         break;
                                     case 3:
-                                        biliApi.getMyInfo();
+                                        _bili.user.getMyInfo();
                                         break;
                                     default:
                                         $ui.error("未知错误");
@@ -117,9 +117,9 @@ function init(url) {
                                                             placeholder: "输入视频网址",
                                                             handler: function (url) {
                                                                 if (url.length > 0) {
-                                                                    const vid = biliApi.getVidFromUrl(url);
+                                                                    const vid = _bili.video.getVidFromUrl(url);
                                                                     if (vid.length > 0) {
-                                                                        biliApi.getVideoInfo(vid);
+                                                                        _bili.video.getVideoInfo(vid);
                                                                     } else if (vid == url) {
                                                                         $ui.error("解析网址失败");
                                                                     } else {
@@ -139,7 +139,7 @@ function init(url) {
                                                             placeholder: "输入视频id(不包含av)",
                                                             handler: function (vid) {
                                                                 if (vid.length > 0) {
-                                                                    biliApi.getVideoInfo(vid);
+                                                                    _bili.video.getVideoInfo(vid);
                                                                 } else {
                                                                     $ui.error("空白id");
                                                                 }
@@ -163,7 +163,7 @@ function init(url) {
                                                             text: "170001",
                                                             handler: function (AV) {
                                                                 if (AV) {
-                                                                    const bv = biliAvbv.getBv(AV);
+                                                                    const bv = _bili.avbv.getBv(AV);
                                                                     if (bv) {
                                                                         $input.text({
                                                                             placeholder: "点击复制，修改文本并不会改变复制的内容",
@@ -198,7 +198,7 @@ function init(url) {
                                                             text: "BV17x411w7KC",
                                                             handler: function (BV) {
                                                                 if (BV) {
-                                                                    const av = biliAvbv.getAv(BV);
+                                                                    const av = _bili.avbv.getAv(BV);
                                                                     if (av) {
                                                                         $input.text({
                                                                             placeholder: "点击复制，修改文本并不会改变复制的内容",
@@ -239,7 +239,7 @@ function init(url) {
                                                 if (vid.length > 0) {
                                                     if (vid.startsWith("av") || vid.startsWith("bv")) {
                                                         $ui.loading(true);
-                                                        biliApi.getCoverFromGalmoe(vid)
+                                                        _bili.video.getCoverFromGalmoe(vid)
                                                             .then(function (resp) {
                                                                 var data = resp.data;
                                                                 $ui.loading(false);
@@ -284,8 +284,8 @@ function init(url) {
                             case 2:
                                 switch (indexPath.row) {
                                     case 0:
-                                        biliApi.checkAccessKey() ?
-                                            biliApi.getLiveGiftList() :
+                                        _bili.user.isLogin() ?
+                                            _bili.gift.getLiveGiftList() :
                                             $ui.error("未登录");
                                         break;
                                     case 1:
@@ -295,7 +295,7 @@ function init(url) {
                                             text: "",
                                             handler: function (mid) {
                                                 if (mid) {
-                                                    biliApi.getLiveroomInfo(mid);
+                                                    _bili.live.getVtbLiveroomInfo(mid);
                                                 } else {
                                                     $ui.alert({
                                                         title: "错误",
@@ -306,13 +306,13 @@ function init(url) {
                                         });
                                         break;
                                     case 2:
-                                        biliApi.checkAccessKey() ?
-                                            biliApi.getFansMedalList() :
+                                        _bili.user.isLogin() ?
+                                            _bili.live.getFansMedalList() :
                                             $ui.error("未登录");
                                         break;
                                     case 3:
-                                        biliApi.isLogin() ?
-                                            biliApi.getWallet() :
+                                        _bili.user.isLogin() ?
+                                            _bili.live.getWallet() :
                                             $ui.error("未登录");
                                         break;
                                     case 4:
@@ -322,10 +322,10 @@ function init(url) {
                                                 handler: function (title, idx) {
                                                     switch (idx) {
                                                         case 0:
-                                                            biliApi.getOnlineLiver();
+                                                            _bili.live.getOnlineLiver();
                                                             break;
                                                         case 1:
-                                                            biliApi.getOfflineLiver();
+                                                            _bili.live.getOfflineLiver();
                                                             break;
                                                     }
                                                 }
@@ -339,8 +339,8 @@ function init(url) {
                             case 3:
                                 switch (indexPath.row) {
                                     case 0:
-                                        biliApi.isLogin() ?
-                                            biliApi.mangaClockin() :
+                                        _bili.user.isLogin() ?
+                                            _bili.checkIn.mangaClockin() :
                                             $ui.error("未登录");
                                         break;
                                     default:

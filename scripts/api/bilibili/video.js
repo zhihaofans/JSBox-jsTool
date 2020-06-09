@@ -506,7 +506,18 @@ function getVidFromUrl(url) {
     }
     return newUrl;
 }
+// 获取视频封面
+function getCoverFromGalmoe(vid) {
+    return $http.get({
+        url: _URL.GALMOE.COVER_GALMOE + vid
+    });
+    /* .then(function (resp) {
+          var data = resp.data;
+
+      }); */
+}
 module.exports = {
+    getCoverFromGalmoe,
     getVideoDanmuku,
     getVideoInfo,
     getVidFromUrl,
