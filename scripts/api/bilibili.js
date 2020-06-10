@@ -25,7 +25,7 @@ let _cacheKey = {
 function init() {
     //初始化，加载缓存
     loadLoginData();
-    return checkAccessKey();
+    return isLogin();
 }
 
 function GiftData(_giftId, _bagId, _number) {
@@ -115,7 +115,7 @@ function getLiveGiftList(liveData = undefined, mode = 0) {
         needExp = liveData.day_limit - liveData.today_feed;
     }
     $ui.loading(true);
-    const accessKey = checkAccessKey() ? _userData.access_key : undefined;
+    const accessKey = isLogin() ? _userData.access_key : undefined;
     if (accessKey) {
         $http.get({
             url: _URL.BILIBILI.GET_LIVE_GIFT_LIST + accessKey,
@@ -347,21 +347,7 @@ function saveAccessKey(access_key) {
 
 
 function isLogin() {
-    return checkAccessKey();
-}
-
-function checkAccessKey() {
-    if (_userData.access_key) {
-        return true;
-    } else {
-        /* 
-            const accessKeyFromCache = loadAccessKey();
-            if (accessKeyFromCache) {
-                _userData.access_key = accessKeyFromCache;
-                return true;
-            } */
-        return false;
-    }
+    return _userData.access_key ? true : false;
 }
 
 function getAccessKeyByLogin(userName, password) {
@@ -438,7 +424,7 @@ function loginBilibili(loginUrl, bodyStr, headers) {
 
 function getUserInfo() {
     // furtherInfo: 是否获取详细用户信息
-    if (checkAccessKey()) {
+    if (isLogin()) {
         const url = `${_URL.BILIBILI.GET_USER_INFO}&access_key=${_userData.access_key}&furtherInfo=true`;
         $ui.loading(true);
         $http.get({
@@ -1010,7 +996,8 @@ function sendLiveGift(
             }
         });
 }
-let sendLiveGiftList = (liveData, giftList, index = 0) => {
+
+function sendLiveGiftList(liveData, giftList, index = 0) {
     $ui.loading(true);
     if (giftList.length > 0) {
         const thisGift = giftList[index],
@@ -1053,7 +1040,7 @@ let sendLiveGiftList = (liveData, giftList, index = 0) => {
             message: "空白礼物列表"
         });
     }
-};
+}
 
 function getWallet() {
     loadLoginData();
@@ -1082,41 +1069,7 @@ function getWallet() {
                                 disabled: !(walletData.silver_2_coin_left > 0 && walletData.status > 0),
                                 handler: function () {
                                     if (walletData.silver_2_coin_left > 0 && walletData.status > 0) {
-                                        $http.post({
-                                            url: _URL.BILIBILI.SILVER_TO_COIN,
-                                            header: {
-                                                "User-Agent": _UA.BILIBILI.APP_IPHONE,
-                                                "Content-Type": "application/x-www-form-urlencoded"
-                                            },
-                                            body: {
-                                                access_key: _userData.access_key
-                                            },
-                                            handler: function (resp) {
-                                                var data = resp.data;
-                                                $console.info(data);
-                                                if (data) {
-                                                    if (data.code == 0) {
-                                                        let silver2coinData =
-                                                            data.data;
-                                                        $ui.alert({
-                                                            title: data.message || data.msg || "兑换成功",
-                                                            message: `金瓜子：${silver2coinData.gold}\n` +
-                                                                `银瓜子：${silver2coinData.silver}\n硬币：${silver2coinData.coin}\n`
-                                                        });
-                                                    } else {
-                                                        $ui.alert({
-                                                            title: `错误${data.code}`,
-                                                            message: data.message || data.msg || "未知错误"
-                                                        });
-                                                    }
-                                                } else {
-                                                    $ui.alert({
-                                                        title: "错误",
-                                                        message: "空白数据"
-                                                    });
-                                                }
-                                            }
-                                        });
+                                        _CHECKIN.silverToCoin();
                                     } else {
                                         $ui.error("错误，额度已空");
                                     }
@@ -1149,65 +1102,8 @@ function getWallet() {
     }
 }
 
-function mangaClockin() {
-    loadLoginData();
-    if (_userData.access_key == 0) {
-        $ui.alert({
-            title: "签到失败",
-            message: "access_key为空，请登录"
-        });
-    } else if (_userData.uid == 0) {
-        $ui.alert({
-            title: "签到失败",
-            message: "用户id为空，请获取我的个人资料"
-        });
-    } else {
-        $ui.loading(true);
-        $http.post({
-            url: _URL.BILIBILI.MANGA_CLOCK_IN,
-            header: {
-                "Content-Type": "application/x-www-form-urlencoded",
-                "User-Agent": _UA.BILIBILI.COMIC
-            },
-            body: {
-                platform: "ios",
-                uid: _userData.uid,
-                access_key: _userData.access_key
-            },
-            handler: function (postResp) {
-                var clockinData = postResp.data;
-                $console.info(clockinData);
-                $ui.loading(false);
-                if (clockinData) {
-                    /* $ui.alert({
-              title: "签到结果",
-              message: clockinData,
-          }); */
-                    if (clockinData.code == 0) {
-                        $ui.alert({
-                            title: "签到结果",
-                            message: "签到成功"
-                        });
-                    } else {
-                        $ui.alert({
-                            title: `错误：${clockinData.code}`,
-                            message: clockinData.msg
-                        });
-                    }
-                } else {
-                    $ui.alert({
-                        title: "签到失败",
-                        message: "服务器返回空白结果"
-                    });
-                }
-            }
-        });
-    }
-}
-
-
 function getMyInfo() {
-    if (checkAccessKey()) {
+    if (isLogin()) {
         $ui.loading(true);
         getSignUrl(_URL.BILIBILI.MY_INFO, "access_key=" + _userData.access_key).then(
             respKaaass => {
@@ -1565,7 +1461,7 @@ function getOfflineLiver() {
     }
 }
 module.exports = {
-    checkAccessKey,
+    checkAccessKey: isLogin,
     getAccessKey: getAccessKeyByLogin,
     getCoverFromGalmoe: _VIDEO.getCoverFromGalmoe,
     getFansMedalList,
@@ -1583,7 +1479,7 @@ module.exports = {
     init,
     isLogin,
     laterToWatch: _VIDEO.laterToWatch,
-    mangaClockin,
+    mangaClockin: _CHECKIN.mangaClockin,
     openLiveDanmuku,
     removeLoginData,
     saveAccessKey,
