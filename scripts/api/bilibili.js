@@ -5,7 +5,8 @@ let sys = require("./system.js"),
     appScheme = require("./app_scheme.js"),
     _UA = require("./user-agent.js");
 // 新版模块
-let _VIDEO = require("./bilibili/video.js");
+let _VIDEO = require("./bilibili/video.js"),
+    _CHECKIN = require("./bilibili/check_in.js");
 
 let _cacheKey = {
         access_key: "bilibili_access_key",
@@ -2178,5 +2179,5 @@ module.exports = {
     openLiveDanmuku,
     removeLoginData,
     saveAccessKey,
-    vipCheckin,
+    vipCheckin: _CHECKIN.vipCheckin,
 };

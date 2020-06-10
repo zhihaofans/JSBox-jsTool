@@ -4,8 +4,7 @@ let sys = require("../system.js"),
     appScheme = require("../app_scheme.js"),
     _UA = require("../user-agent.js"),
     _USER = require("./user.js"),
-    _CACHE = require("./cache.js"),
-    _GIFT = require("./gift.js");
+    _CACHE = require("./cache.js");
 
 function GiftData(_giftId, _bagId, _number) {
     this.giftId = _giftId;
