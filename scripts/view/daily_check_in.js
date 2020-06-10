@@ -23,7 +23,7 @@ let initView = () => {
                             _BILI.mangaClockin();
                             break;
                         case 2:
-                            _BILI.getWallet();
+                            _BILI.silverToCoin();
                             break;
                         default:
                             $ui.error("暂不支持该功能");
