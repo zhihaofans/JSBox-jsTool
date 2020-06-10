@@ -2,9 +2,11 @@ $include("./codePrototype.js");
 let sys = require("./system.js"),
     cheerio = require("cheerio"),
     _URL = require("./urlData.js"),
-    _BILIURL = require("./urlData.js").BILIBILI,
     appScheme = require("./app_scheme.js"),
     _UA = require("./user-agent.js");
+// 新版模块
+let _VIDEO = require("./bilibili/video.js");
+
 let _cacheKey = {
         access_key: "bilibili_access_key",
         uid: "bilibili_uid"
@@ -422,8 +424,7 @@ function getVideoInfo(vid) {
                                 handler: () => {
                                     $ui.preview({
                                         title: "av" + vid,
-                                        url: _BILIURL.BILIBILI_WWW_VIDEO +
-                                            vid
+                                        url: _URL.BILIBILI.BILIBILI_WWW_VIDEO + vid
                                     });
                                 }
                             }]
@@ -846,7 +847,7 @@ function getUserInfo() {
                                 handler: () => {
                                     $ui.preview({
                                         title: user.userName,
-                                        url: _BILIURL.BILIBILI_SPACE +
+                                        url: _URL.BILIBILI.BILIBILI_SPACE +
                                             user.uid
                                     });
                                 }
@@ -1080,7 +1081,7 @@ function getFansMedalList() {
     // 已拥有的粉丝勋章
     $ui.loading(true);
     if (_userData.access_key) {
-        const link = _BILIURL.LIVE_FANS_MEDAL + _userData.access_key;
+        const link = _URL.BILIBILI.LIVE_FANS_MEDAL + _userData.access_key;
         $http
             .get({
                 url: link
@@ -1297,7 +1298,7 @@ function getFansMedalList() {
                                                 indexPath.row
                                             ];
                                         $app.openURL(
-                                            _BILIURL.LIVE_WEB_ROOM +
+                                            _URL.BILIBILI.LIVE_WEB_ROOM +
                                             liveData.room_id
                                         );
                                     }
@@ -1334,7 +1335,7 @@ function sendLiveGift(
     gift_number = 1
 ) {
     $ui.loading(true);
-    var url = `${_BILIURL.LIVE_GIFT_SEND}?access_key=${_userData.access_key}&biz_id=${room_id}&gift_id=${gift_type}&gift_num=${gift_number}&ruid=${user_id}`;
+    var url = `${_URL.BILIBILI.LIVE_GIFT_SEND}?access_key=${_userData.access_key}&biz_id=${room_id}&gift_id=${gift_type}&gift_num=${gift_number}&ruid=${user_id}`;
     if (gift_id) {
         url += `&bag_id=${gift_id}`;
     }
@@ -1364,7 +1365,7 @@ let sendLiveGiftList = (liveData, giftList, index = 0) => {
     $ui.loading(true);
     if (giftList.length > 0) {
         const thisGift = giftList[index],
-            url = `${_BILIURL.LIVE_GIFT_SEND}?access_key=${_userData.access_key}&ruid=${liveData.target_id}&biz_id=${liveData.room_id}&bag_id=${thisGift.bagId}&gift_id=${thisGift.giftId}&gift_num=${thisGift.number}`;
+            url = `${_URL.BILIBILI.LIVE_GIFT_SEND}?access_key=${_userData.access_key}&ruid=${liveData.target_id}&biz_id=${liveData.room_id}&bag_id=${thisGift.bagId}&gift_id=${thisGift.giftId}&gift_num=${thisGift.number}`;
         if (index == 0) {
             $console.info(`共有${giftList.length}组礼物`);
         }
@@ -1407,7 +1408,7 @@ let sendLiveGiftList = (liveData, giftList, index = 0) => {
 
 function getVideoDanmuku(mid) {
     $ui.loading(true);
-    const danmukuUrl = `${_BILIURL.DANMUKU_LIST}${mid}.xml`;
+    const danmukuUrl = `${_URL.BILIBILI.DANMUKU_LIST}${mid}.xml`;
     $http
         .get({
             url: danmukuUrl
@@ -1640,7 +1641,7 @@ function mangaClockin() {
 
 function getCoverFromGalmoe(vid) {
     return $http.get({
-        url: _BILIURL.COVER_GALMOE + vid
+        url: _URL.BILIBILI.COVER_GALMOE + vid
     });
     /* .then(function (resp) {
           var data = resp.data;
@@ -1720,7 +1721,7 @@ function laterToWatch() {
 function getMyInfo() {
     if (checkAccessKey()) {
         $ui.loading(true);
-        getSignUrl(_BILIURL.MY_INFO, "access_key=" + _userData.access_key).then(
+        getSignUrl(_URL.BILIBILI.MY_INFO, "access_key=" + _userData.access_key).then(
             respKaaass => {
                 const dataKaaass = respKaaass.data;
                 $console.info(dataKaaass);
@@ -1774,7 +1775,7 @@ function getMyInfo() {
 
 function getSignUrl(host, param, android = false) {
     return $http.get({
-        url: _BILIURL.GET_SIGN_URL +
+        url: _URL.BILIBILI.GET_SIGN_URL +
             "?host=" +
             encodeURI(host) +
             "&param=" +
@@ -1869,7 +1870,7 @@ function getBiliobVideo(avid) {
 function openLiveDanmuku(liveroomId) {
     $ui.preview({
         title: "BiliChat",
-        url: _BILIURL.BILICHAT + liveroomId
+        url: _URL.BILIBILI.BILICHAT + liveroomId
     });
 }
 
@@ -1878,7 +1879,7 @@ function getOnlineLiver() {
         $ui.loading(true);
         $http
             .get({
-                url: _BILIURL.LIVE_ONLINE + _userData.access_key
+                url: _URL.BILIBILI.LIVE_ONLINE + _userData.access_key
             })
             .then(function (resp) {
                 var data = resp.data;
@@ -2018,7 +2019,7 @@ function getOfflineLiver() {
         $ui.loading(true);
         $http
             .get({
-                url: _BILIURL.LIVE_OFFLINE + _userData.access_key
+                url: _URL.BILIBILI.LIVE_OFFLINE + _userData.access_key
             })
             .then(function (resp) {
                 var data = resp.data;
@@ -2155,27 +2156,27 @@ function getOfflineLiver() {
     }
 }
 module.exports = {
-    getVideoInfo,
-    getAccessKey: getAccessKeyByLogin,
     checkAccessKey,
-    getUserInfo,
-    saveAccessKey,
-    init,
-    removeLoginData,
-    getVideoData,
-    getVideo,
-    getVidFromUrl,
+    getAccessKey: getAccessKeyByLogin,
+    getCoverFromGalmoe,
+    getFansMedalList,
     getLiveGiftList,
     getLiveroomInfo: getVtbLiveroomInfo,
-    getFansMedalList,
-    isLogin,
-    getWallet,
-    mangaClockin,
-    getCoverFromGalmoe,
-    vipCheckin,
-    laterToWatch,
     getMyInfo,
-    openLiveDanmuku,
+    getOfflineLiver,
     getOnlineLiver,
-    getOfflineLiver
+    getUserInfo,
+    getVideo: _VIDEO.getVideo,
+    getVideoData:_VIDEO.getVideoData,
+    getVideoInfo: _VIDEO.getVideoInfo,
+    getVidFromUrl,
+    getWallet,
+    init,
+    isLogin,
+    laterToWatch: _VIDEO.laterToWatch,
+    mangaClockin,
+    openLiveDanmuku,
+    removeLoginData,
+    saveAccessKey,
+    vipCheckin,
 };

@@ -1,5 +1,5 @@
 let biliApi = require("../api/bilibili.js"),
-    biliAvbv = require("../api/bilibili-avbv.js"),
+    _AVBV = require("../api/bilibili/av-bv.js"),
     urlCheck = require("../api/urlCheck.js"),
     _BILIURL = require("../api/urlData.js").BILIBILI;
 let debugVid = "90035938";
@@ -112,8 +112,7 @@ function init(url) {
                                                         $input.text({
                                                             type: $kbType.url,
                                                             autoFontSize: true,
-                                                            text: _BILIURL.B23_TV_VIDEO +
-                                                                debugVid,
+                                                            text: _BILIURL.B23_TV_VIDEO + debugVid,
                                                             placeholder: "输入视频网址",
                                                             handler: function (url) {
                                                                 if (url.length > 0) {
@@ -163,7 +162,7 @@ function init(url) {
                                                             text: "170001",
                                                             handler: function (AV) {
                                                                 if (AV) {
-                                                                    const bv = biliAvbv.getBv(AV);
+                                                                    const bv = _AVBV.getBv(AV);
                                                                     if (bv) {
                                                                         $input.text({
                                                                             placeholder: "点击复制，修改文本并不会改变复制的内容",
@@ -198,7 +197,7 @@ function init(url) {
                                                             text: "BV17x411w7KC",
                                                             handler: function (BV) {
                                                                 if (BV) {
-                                                                    const av = biliAvbv.getAv(BV);
+                                                                    const av = _AVBV.getAv(BV);
                                                                     if (av) {
                                                                         $input.text({
                                                                             placeholder: "点击复制，修改文本并不会改变复制的内容",

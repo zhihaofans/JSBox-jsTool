@@ -518,7 +518,9 @@ function getCoverFromGalmoe(vid) {
 }
 module.exports = {
     getCoverFromGalmoe,
+    getVideo,
     getVideoDanmuku,
+    getVideoData,
     getVideoInfo,
     getVidFromUrl,
     laterToWatch
