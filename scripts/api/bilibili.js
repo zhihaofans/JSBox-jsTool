@@ -5,8 +5,9 @@ let sys = require("./system.js"),
     appScheme = require("./app_scheme.js"),
     _UA = require("./user-agent.js");
 // 新版模块
-let _VIDEO = require("./bilibili/video.js"),
-    _CHECKIN = require("./bilibili/check_in.js");
+let _CHECKIN = require("./bilibili/check_in.js"),
+    _LIVE = require("./bilibili/live.js"),
+    _VIDEO = require("./bilibili/video.js");
 
 let _cacheKey = {
         access_key: "bilibili_access_key",
@@ -1464,12 +1465,12 @@ module.exports = {
     checkAccessKey: isLogin,
     getAccessKey: getAccessKeyByLogin,
     getCoverFromGalmoe: _VIDEO.getCoverFromGalmoe,
-    getFansMedalList,
+    getFansMedalList: _LIVE.getFansMedalList,
     getLiveGiftList,
-    getLiveroomInfo: getVtbLiveroomInfo,
+    getLiveroomInfo: _LIVE.getLiveroomInfo,
     getMyInfo,
-    getOfflineLiver,
-    getOnlineLiver,
+    getOfflineLiver: _LIVE.getOfflineLiver,
+    getOnlineLiver: _LIVE.getOnlineLiver,
     getUserInfo,
     getVideo: _VIDEO.getVideo,
     getVideoData: _VIDEO.getVideoData,
@@ -1480,7 +1481,7 @@ module.exports = {
     isLogin,
     laterToWatch: _VIDEO.laterToWatch,
     mangaClockin: _CHECKIN.mangaClockin,
-    openLiveDanmuku,
+    openLiveDanmuku: _LIVE.openLiveDanmuku,
     removeLoginData,
     saveAccessKey,
     vipCheckin: _CHECKIN.vipCheckin,

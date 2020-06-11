@@ -1,5 +1,4 @@
-let acfun = require("../api/acfun.js"),
-    bilibili = require("../api/bilibili.js"),
+let _ACFUN = require("../api/acfun.js"),
     _BILI = require("../api/bilibili/check_in.js");
 let initView = () => {
     $ui.push({
@@ -17,7 +16,7 @@ let initView = () => {
                     let row = indexPath.row;
                     switch (row) {
                         case 0:
-                            acfun.signIn();
+                            _ACFUN.signIn();
                             break;
                         case 1:
                             _BILI.mangaClockin();
