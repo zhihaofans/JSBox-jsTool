@@ -4,6 +4,35 @@ let sys = require("./system.js"),
     _USER = require("./user.js"),
     _GIFT = require("./gift.js"),
     _UA = require("../user-agent.js");
+
+function LiveroomInfo(liveroomInfoData) {
+    // https://api.vtbs.moe/v1/detail/:mid
+    this.mid = liveroomInfoData.mid; //Int
+    this.uuid = liveroomInfoData.uuid; //String
+    this.uname = liveroomInfoData.uname; //String
+    this.video = liveroomInfoData.video;
+    this.roomid = liveroomInfoData.roomid;
+    this.sign = liveroomInfoData.sign; //String
+    this.notice = liveroomInfoData.notice; //String
+    this.face = liveroomInfoData.face; //String
+    this.rise = liveroomInfoData.rise; //Int
+    this.topPhoto = liveroomInfoData.topPhoto; //String
+    this.archiveView = liveroomInfoData.archiveView; //Int
+    this.follower = liveroomInfoData.follower; //Int
+    this.liveStatus = liveroomInfoData.liveStatus; //Int
+    this.recordNum = liveroomInfoData.recordNum; //Int
+    this.guardNum = liveroomInfoData.guardNum; //Int
+    this.lastLive = {
+        online: liveroomInfoData.lastLive.online, //Int
+        time: liveroomInfoData.lastLive.time //Int
+    };
+    this.guardChange = liveroomInfoData.guardChange; //Int
+    this.guardType = liveroomInfoData.guardType; //Array[Int]
+    this.areaRank = liveroomInfoData.areaRank; //Int
+    this.online = liveroomInfoData.online; //Int
+    this.title = liveroomInfoData.title; //String
+    this.time = liveroomInfoData.time; //Int
+}
 // 粉丝勋章
 function getFansMedalList() {
     const ak = _USER.getAccessKey();
