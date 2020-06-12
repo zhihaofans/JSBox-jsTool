@@ -3,6 +3,7 @@ let sys = require("./system.js"),
     _BILIURL = require("../urlData.js").BILIBILI,
     _USER = require("./user.js"),
     _GIFT = require("./gift.js"),
+    appScheme = require("../app_scheme.js"),
     _UA = require("../user-agent.js");
 
 function LiveroomInfo(liveroomInfoData) {
@@ -53,16 +54,8 @@ function getFansMedalList() {
                     if (medalList.length > 0) {
                         var onlineList = [];
                         var offlineList = [];
-                        medalList.map(m =>
-                            m.live_stream_status == 1 ?
-                            onlineList.push(m) :
-                            offlineList.push(m)
-                        );
-                        medalList.map(
-                            m =>
-                            `[${m.medal_name}]${m.target_name}` +
-                            (m.icon_code ? `[${m.icon_text}]` : "")
-                        );
+                        medalList.map(m => m.live_stream_status == 1 ? onlineList.push(m) : offlineList.push(m));
+                        medalList.map(m => `[${m.medal_name}]${m.target_name}` + (m.icon_code ? `[${m.icon_text}]` : ""));
                         $ui.loading(false);
                         $ui.push({
                             props: {
@@ -74,32 +67,12 @@ function getFansMedalList() {
                                     data: [{
                                             title: "在播了",
                                             rows: onlineList.map(
-                                                m =>
-                                                `[${m.medal_name}]${m.target_name}` +
-                                                (m.icon_code ?
-                                                    `[${m.icon_text}]` :
-                                                    "") +
-                                                (m.today_feed ==
-                                                    m.day_limit ?
-                                                    `[已满]` :
-                                                    `[还差${m.day_limit -
-                                                                  m.today_feed}]`)
+                                                m => `[${m.medal_name} ${m.level}]${m.target_name}` + (m.icon_code ? `[${m.icon_text}]` : "") + (m.today_feed == m.day_limit ? `[已满]` : `[+${m.day_limit -m.today_feed}]`)
                                             )
                                         },
                                         {
                                             title: "咕咕咕",
-                                            rows: offlineList.map(
-                                                m =>
-                                                `[${m.medal_name}]${m.target_name}` +
-                                                (m.icon_code ?
-                                                    `[${m.icon_text}]` :
-                                                    "") +
-                                                (m.today_feed ==
-                                                    m.day_limit ?
-                                                    `[已满]` :
-                                                    `[还差${m.day_limit -
-                                                                  m.today_feed}]`)
-                                            )
+                                            rows: offlineList.map(m => `[${m.medal_name} ${m.level}]${m.target_name}` + (m.icon_code ? `[${m.icon_text}]` : "") + (m.today_feed == m.day_limit ? `[已满]` : `[+${m.day_limit -m.today_feed}]`))
                                         }
                                     ],
                                     menu: {
@@ -107,21 +80,8 @@ function getFansMedalList() {
                                         items: [{
                                                 title: "详细信息",
                                                 symbol: "play.rectangle",
-                                                handler: (
-                                                    sender,
-                                                    indexPath
-                                                ) => {
-                                                    const liveData =
-                                                        indexPath.section ==
-                                                        0 ?
-                                                        onlineList[
-                                                            indexPath
-                                                            .row
-                                                        ] :
-                                                        offlineList[
-                                                            indexPath
-                                                            .row
-                                                        ];
+                                                handler: (sender, indexPath) => {
+                                                    const liveData = indexPath.section == 0 ? onlineList[indexPath.row] : offlineList[indexPath.row];
                                                     $ui.alert({
                                                         title: `[${liveData.medal_name}]${liveData.target_name}`,
                                                         message: liveData
@@ -131,52 +91,18 @@ function getFansMedalList() {
                                             {
                                                 title: "通过vtbs.moe获取vTuber信息",
                                                 symbol: "play.rectangle",
-                                                handler: (
-                                                    sender,
-                                                    indexPath
-                                                ) => {
-                                                    const liveData =
-                                                        indexPath.section ==
-                                                        0 ?
-                                                        onlineList[
-                                                            indexPath
-                                                            .row
-                                                        ] :
-                                                        offlineList[
-                                                            indexPath
-                                                            .row
-                                                        ];
-                                                    getVtbLiveroomInfo(
-                                                        liveData.target_id
-                                                    );
+                                                handler: (sender, indexPath) => {
+                                                    const liveData = indexPath.section == 0 ? onlineList[indexPath.row] : offlineList[indexPath.row];
+                                                    getVtbLiveroomInfo(liveData.target_id);
                                                 }
                                             },
                                             {
                                                 title: "赠送礼物",
                                                 symbol: "gift",
-                                                handler: (
-                                                    sender,
-                                                    indexPath
-                                                ) => {
-                                                    const liveData =
-                                                        indexPath.section ==
-                                                        0 ?
-                                                        onlineList[
-                                                            indexPath
-                                                            .row
-                                                        ] :
-                                                        offlineList[
-                                                            indexPath
-                                                            .row
-                                                        ];
-                                                    if (
-                                                        liveData.day_limit -
-                                                        liveData.today_feed >
-                                                        0
-                                                    ) {
-                                                        _GIFT.getLiveGiftList(
-                                                            liveData
-                                                        );
+                                                handler: (sender, indexPath) => {
+                                                    const liveData = indexPath.section == 0 ? onlineList[indexPath.row] : offlineList[indexPath.row];
+                                                    if (liveData.day_limit - liveData.today_feed > 0) {
+                                                        _GIFT.getLiveGiftList(liveData);
                                                     } else {
                                                         $ui.alert({
                                                             title: "不用送了",
@@ -188,29 +114,10 @@ function getFansMedalList() {
                                             {
                                                 title: "赠送银瓜子辣条",
                                                 symbol: "gift",
-                                                handler: (
-                                                    sender,
-                                                    indexPath
-                                                ) => {
-                                                    const liveData =
-                                                        indexPath.section ==
-                                                        0 ?
-                                                        onlineList[
-                                                            indexPath
-                                                            .row
-                                                        ] :
-                                                        offlineList[
-                                                            indexPath
-                                                            .row
-                                                        ];
-                                                    if (
-                                                        liveData.day_limit -
-                                                        liveData.today_feed >
-                                                        0
-                                                    ) {
-                                                        _GIFT.getLiveGiftList(
-                                                            liveData
-                                                        );
+                                                handler: (sender, indexPath) => {
+                                                    const liveData = indexPath.section == 0 ? onlineList[indexPath.row] : offlineList[indexPath.row];
+                                                    if (liveData.day_limit - liveData.today_feed > 0) {
+                                                        _GIFT.getLiveGiftList(liveData);
                                                     } else {
                                                         $ui.alert({
                                                             title: "不用送了",
@@ -222,30 +129,10 @@ function getFansMedalList() {
                                             {
                                                 title: "自动赠送礼物",
                                                 symbol: "gift",
-                                                handler: (
-                                                    sender,
-                                                    indexPath
-                                                ) => {
-                                                    const liveData =
-                                                        indexPath.section ==
-                                                        0 ?
-                                                        onlineList[
-                                                            indexPath
-                                                            .row
-                                                        ] :
-                                                        offlineList[
-                                                            indexPath
-                                                            .row
-                                                        ];
-                                                    if (
-                                                        liveData.day_limit -
-                                                        liveData.today_feed >
-                                                        0
-                                                    ) {
-                                                        _GIFT.getLiveGiftList(
-                                                            liveData,
-                                                            1
-                                                        );
+                                                handler: (sender, indexPath) => {
+                                                    const liveData = indexPath.section == 0 ? onlineList[indexPath.row] : offlineList[indexPath.row];
+                                                    if (liveData.day_limit - liveData.today_feed > 0) {
+                                                        _GIFT.getLiveGiftList(liveData, 1);
                                                     } else {
                                                         $ui.alert({
                                                             title: "不用送了",
@@ -259,21 +146,9 @@ function getFansMedalList() {
                                 },
                                 layout: $layout.fill,
                                 events: {
-                                    didSelect: function (
-                                        sender,
-                                        indexPath,
-                                        data
-                                    ) {
-                                        const liveData =
-                                            indexPath.section == 0 ?
-                                            onlineList[indexPath.row] :
-                                            offlineList[
-                                                indexPath.row
-                                            ];
-                                        $app.openURL(
-                                            _BILIURL.LIVE_WEB_ROOM +
-                                            liveData.room_id
-                                        );
+                                    didSelect: function (sender, indexPath, data) {
+                                        const liveData = indexPath.section == 0 ? onlineList[indexPath.row] : offlineList[indexPath.row];
+                                        $app.openURL(_BILIURL.LIVE_WEB_ROOM + liveData.room_id);
                                     }
                                 }
                             }]
