@@ -201,19 +201,22 @@ function setUid(uid) {
 // User info
 function getMyInfo() {
     if (isLogin()) {
+        const _AK = getAccessKey();
         $ui.loading(true);
-        _LIB.getSignUrl(_BILIURL.MY_INFO, "access_key=" + _user.getAccessKey()).then(respKaaass => {
+        _LIB.getSignUrl(_BILIURL.MY_INFO, "access_key=" + _AK).then(respKaaass => {
             const dataKaaass = respKaaass.data;
             $console.info(dataKaaass);
             if (dataKaaass) {
                 $http.get({
                     url: dataKaaass.url,
-                    header: headerList,
+                    header: {
+                        "User-Agent": _UA.BILIBILI.APP_IPHONE
+                    },
                     handler: respBili => {
                         var resultBili = respBili.data;
                         if (resultBili.code == 0) {
                             const myInfoData = resultBili.data;
-                            saveLoginCache(_user.getAccessKey(), myInfoData.mid);
+                            saveLoginCache(_AK, myInfoData.mid);
                             $ui.loading(false);
                             $ui.success("已更新登录数据");
                             $ui.alert({
