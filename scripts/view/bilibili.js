@@ -1,5 +1,4 @@
-let biliApi = require("../api/bilibili.js"),
-    _AVBV = require("../api/bilibili/av-bv.js"),
+let _BILIAPI = require("../api/bilibili.js"),
     urlCheck = require("../api/urlCheck.js"),
     _BILIURL = require("../api/urlData.js").BILIBILI;
 let debugVid = "90035938";
@@ -7,7 +6,7 @@ let debugVid = "90035938";
 function init(url) {
     if (url) {
         if (urlCheck.isBilibiliVideoUrl(url)) {
-            biliApi.getVideoInfo(biliApi.getVidFromUrl(url));
+            _BILIAPI.getVideoInfo(_BILIAPI.getVidFromUrl(url));
         } else {
             $ui.error("不支持该链接");
         }
@@ -59,7 +58,7 @@ function init(url) {
                             case 0:
                                 switch (indexPath.row) {
                                     case 0:
-                                        biliApi.isLogin() ?
+                                        _BILIAPI.isLogin() ?
                                             $ui.alert({
                                                 title: "已登录",
                                                 message: "本地发现登录缓存，还要登录吗",
@@ -67,14 +66,14 @@ function init(url) {
                                                         title: "获取用户信息",
                                                         disabled: false, // Optional
                                                         handler: function () {
-                                                            biliApi.getMyInfo();
+                                                            _BILIAPI.getMyInfo();
                                                         }
                                                     },
                                                     {
                                                         title: "清空登录缓存重新登录",
                                                         disabled: false, // Optional
                                                         handler: function () {
-                                                            biliApi.removeLoginData();
+                                                            _BILIAPI.removeLoginData();
                                                             login();
                                                         }
                                                     },
@@ -92,10 +91,10 @@ function init(url) {
                                         // biliApi.isLogin()? biliApi.getUserInfo(): $ui.error("未登录");
                                         break;
                                     case 2:
-                                        biliApi.laterToWatch();
+                                        _BILIAPI.laterToWatch();
                                         break;
                                     case 3:
-                                        biliApi.getMyInfo();
+                                        _BILIAPI.getMyInfo();
                                         break;
                                     default:
                                         $ui.error("未知错误");
@@ -116,9 +115,9 @@ function init(url) {
                                                             placeholder: "输入视频网址",
                                                             handler: function (url) {
                                                                 if (url.length > 0) {
-                                                                    const vid = biliApi.getVidFromUrl(url);
+                                                                    const vid = _BILIAPI.getVidFromUrl(url);
                                                                     if (vid.length > 0) {
-                                                                        biliApi.getVideoInfo(vid);
+                                                                        _BILIAPI.getVideoInfo(vid);
                                                                     } else if (vid == url) {
                                                                         $ui.error("解析网址失败");
                                                                     } else {
@@ -138,7 +137,7 @@ function init(url) {
                                                             placeholder: "输入视频id(不包含av)",
                                                             handler: function (vid) {
                                                                 if (vid.length > 0) {
-                                                                    biliApi.getVideoInfo(vid);
+                                                                    _BILIAPI.getVideoInfo(vid);
                                                                 } else {
                                                                     $ui.error("空白id");
                                                                 }
@@ -162,7 +161,7 @@ function init(url) {
                                                             text: "170001",
                                                             handler: function (AV) {
                                                                 if (AV) {
-                                                                    const bv = _AVBV.getBv(AV);
+                                                                    const bv = _BILIAPI.getBv(AV);
                                                                     if (bv) {
                                                                         $input.text({
                                                                             placeholder: "点击复制，修改文本并不会改变复制的内容",
@@ -197,7 +196,7 @@ function init(url) {
                                                             text: "BV17x411w7KC",
                                                             handler: function (BV) {
                                                                 if (BV) {
-                                                                    const av = _AVBV.getAv(BV);
+                                                                    const av = _BILIAPI.getAv(BV);
                                                                     if (av) {
                                                                         $input.text({
                                                                             placeholder: "点击复制，修改文本并不会改变复制的内容",
@@ -238,7 +237,7 @@ function init(url) {
                                                 if (vid.length > 0) {
                                                     if (vid.startsWith("av") || vid.startsWith("bv")) {
                                                         $ui.loading(true);
-                                                        biliApi.getCoverFromGalmoe(vid)
+                                                        _BILIAPI.getCoverFromGalmoe(vid)
                                                             .then(function (resp) {
                                                                 var data = resp.data;
                                                                 $ui.loading(false);
@@ -283,8 +282,8 @@ function init(url) {
                             case 2:
                                 switch (indexPath.row) {
                                     case 0:
-                                        biliApi.isLogin() ?
-                                            biliApi.getLiveGiftList() :
+                                        _BILIAPI.isLogin() ?
+                                            _BILIAPI.getLiveGiftList() :
                                             $ui.error("未登录");
                                         break;
                                     case 1:
@@ -294,7 +293,7 @@ function init(url) {
                                             text: "",
                                             handler: function (mid) {
                                                 if (mid) {
-                                                    biliApi.getLiveroomInfo(mid);
+                                                    _BILIAPI.getLiveroomInfo(mid);
                                                 } else {
                                                     $ui.alert({
                                                         title: "错误",
@@ -305,26 +304,26 @@ function init(url) {
                                         });
                                         break;
                                     case 2:
-                                        biliApi.isLogin() ?
-                                            biliApi.getFansMedalList() :
+                                        _BILIAPI.isLogin() ?
+                                            _BILIAPI.getFansMedalList() :
                                             $ui.error("未登录");
                                         break;
                                     case 3:
-                                        biliApi.isLogin() ?
-                                            biliApi.getWallet() :
+                                        _BILIAPI.isLogin() ?
+                                            _BILIAPI.getWallet() :
                                             $ui.error("未登录");
                                         break;
                                     case 4:
-                                        biliApi.isLogin() ?
+                                        _BILIAPI.isLogin() ?
                                             $ui.menu({
                                                 items: ["在播", "没播"],
                                                 handler: function (title, idx) {
                                                     switch (idx) {
                                                         case 0:
-                                                            biliApi.getOnlineLiver();
+                                                            _BILIAPI.getOnlineLiver();
                                                             break;
                                                         case 1:
-                                                            biliApi.getOfflineLiver();
+                                                            _BILIAPI.getOfflineLiver();
                                                             break;
                                                     }
                                                 }
@@ -338,8 +337,8 @@ function init(url) {
                             case 3:
                                 switch (indexPath.row) {
                                     case 0:
-                                        biliApi.isLogin() ?
-                                            biliApi.mangaClockin() :
+                                        _BILIAPI.isLogin() ?
+                                            _BILIAPI.mangaClockin() :
                                             $ui.error("未登录");
                                         break;
                                     default:
@@ -354,7 +353,7 @@ function init(url) {
             }],
             events: {
                 appeared: function () {
-                    if (biliApi.init()) {
+                    if (_BILIAPI.init()) {
                         $ui.toast("已登录");
                     }
                 }
@@ -374,7 +373,7 @@ function login() {
                         placeholder: "输入账号",
                         handler: function (inputKey) {
                             if (inputKey.length > 0) {
-                                biliApi.saveAccessKey(inputKey);
+                                _BILIAPI.saveAccessKey(inputKey);
                             } else {
                                 $ui.error("空白key");
                             }
@@ -392,7 +391,7 @@ function login() {
                                     placeholder: "输入密码",
                                     handler: function (pwd) {
                                         if (pwd.length > 0) {
-                                            biliApi.getAccessKey(user, pwd);
+                                            _BILIAPI.getAccessKey(user, pwd);
                                         } else {
                                             $ui.error("空白密码");
                                         }
