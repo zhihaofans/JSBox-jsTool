@@ -199,6 +199,23 @@ function setUid(uid) {
     _CACHE.saveUid(uid)
 }
 // User info
+function UserInfo(_userInfo, _userFurther) {
+    this.uid = _userInfo.mid;
+    this.userName = _userInfo.uname;
+    this.loginId = _userInfo.userid;
+    this.registerTime = _userInfo.create_at;
+    this.loginExpireTime = _userInfo.expires;
+    this.accessKey = _userInfo.access_key;
+    this.uploadVideo = _userFurther.archive;
+    this.liveStream = _userFurther.live;
+    this.playGame = _userFurther.play_game;
+    this.anime = _userFurther.season;
+    this.giveCoin = _userFurther.coin_archive;
+    this.likeVideo = _userFurther.like_archive;
+    this.favourite = _userFurther.favourite2;
+    this.subscribeComic = _userFurther.sub_comic
+}
+
 function getMyInfo() {
     if (isLogin()) {
         const _AK = getAccessKey();
@@ -251,11 +268,133 @@ function getMyInfo() {
         $ui.error("请登录");
     }
 }
+
+function getUserInfo() {
+    // furtherInfo: 是否获取详细用户信息
+    if (isLogin()) {
+        $ui.loading(true);
+        $http.get({
+            url: `${_BILIURL.GET_USER_INFO}&access_key=${getAccessKey()}&furtherInfo=true`,
+            header: {
+                "User-Agent": _UA.KAAASS
+            },
+            handler: function (userResp) {
+                var userData = userResp.data;
+                if (userData.status == "OK") {
+                    _CACHE.saveCache("getUserInfo", userResp.rawData);
+                    // 用户数据
+                    const user = UserInfo(userData.info, userData.further);
+                    saveLoginCache(user.accessKey, user.uid);
+                    const userDataList = [
+                        `用户昵称：${user.userName}`,
+                        `用户uid：${user.uid}`,
+                        `登录用id：${user.loginId}`,
+                        `注册时间戳：${user.registerTime}`,
+                        `此次登录到期时间戳：${user.loginExpireTime}`,
+                        `登录用access key：${user.accessKey}`,
+                        `投稿视频：${user.uploadVideo.count} 个`,
+                        `点赞视频：${user.likeVideo.count} 个`,
+                        `投硬币：${user.giveCoin.count} 个`,
+                        `玩过游戏：${user.playGame.count} 个`,
+                        `追番：${user.anime.count} 部`,
+                        `收藏夹：${user.favourite.count} 个`,
+                        `追更漫画：${user.subscribeComic.count} 部`
+                    ];
+                    $ui.loading(false);
+                    const view = {
+                        props: {
+                            title: "加载成功",
+                            navButtons: [{
+                                title: "打开网页版",
+                                icon: "068", // Or you can use icon name
+                                symbol: "checkmark.seal", // SF symbols are supported
+                                handler: () => {
+                                    $ui.preview({
+                                        title: user.userName,
+                                        url: _URL.BILIBILI.BILIBILI_SPACE + user.uid
+                                    });
+                                }
+                            }]
+                        },
+                        views: [{
+                            type: "list",
+                            props: {
+                                data: [{
+                                        title: "功能",
+                                        rows: ["编辑access key"]
+                                    },
+                                    {
+                                        title: "数据",
+                                        rows: userDataList
+                                    }
+                                ]
+                            },
+                            layout: $layout.fill,
+                            events: {
+                                didSelect: function (_sender, indexPath, _data) {
+                                    switch (indexPath.section) {
+                                        case 0:
+                                            switch (indexPath.row) {
+                                                case 0:
+                                                    $input.text({
+                                                        placeholder: "access key",
+                                                        text: _userData.access_key,
+                                                        handler: function (inputKey) {
+                                                            setAccessKey(inputKey);
+                                                        }
+                                                    });
+                                                    break;
+                                                default:
+                                                    $ui.error("不支持");
+                                            }
+                                            break;
+                                        case 1:
+                                            const _g = _data.split("：");
+                                            $ui.alert({
+                                                title: _g[0],
+                                                message: _g[1],
+                                                actions: [{
+                                                        title: "复制",
+                                                        disabled: false, // Optional
+                                                        handler: function () {
+                                                            _g[1].copy();
+                                                            $ui.toast("已复制");
+                                                        }
+                                                    },
+                                                    {
+                                                        title: "关闭",
+                                                        disabled: false, // Optional
+                                                        handler: function () {}
+                                                    }
+                                                ]
+                                            });
+                                            break;
+                                    }
+                                }
+                            }
+                        }]
+                    };
+                    $ui.push(view);
+                } else {
+                    $ui.loading(false);
+                    $ui.alert({
+                        title: userData.code,
+                        message: userData.info
+                    });
+                }
+            }
+        });
+    } else {
+        $ui.loading(false);
+        $ui.error("未登录！");
+    }
+}
 module.exports = {
     checkAccessKey,
     getLoginCache,
     getAccessKey,
     getMyInfo,
+    getUserInfo,
     getUid,
     login,
     loadLoginCache,
