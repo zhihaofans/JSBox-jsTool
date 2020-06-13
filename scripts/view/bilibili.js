@@ -59,7 +59,7 @@ function init(url) {
                             case 0:
                                 switch (indexPath.row) {
                                     case 0:
-                                        biliApi.checkAccessKey() ?
+                                        biliApi.isLogin() ?
                                             $ui.alert({
                                                 title: "已登录",
                                                 message: "本地发现登录缓存，还要登录吗",
@@ -89,7 +89,7 @@ function init(url) {
                                         break;
                                     case 1:
                                         $ui.error("该功能暂停使用");
-                                        // biliApi.checkAccessKey()? biliApi.getUserInfo(): $ui.error("未登录");
+                                        // biliApi.isLogin()? biliApi.getUserInfo(): $ui.error("未登录");
                                         break;
                                     case 2:
                                         biliApi.laterToWatch();
@@ -283,7 +283,7 @@ function init(url) {
                             case 2:
                                 switch (indexPath.row) {
                                     case 0:
-                                        biliApi.checkAccessKey() ?
+                                        biliApi.isLogin() ?
                                             biliApi.getLiveGiftList() :
                                             $ui.error("未登录");
                                         break;
@@ -305,7 +305,7 @@ function init(url) {
                                         });
                                         break;
                                     case 2:
-                                        biliApi.checkAccessKey() ?
+                                        biliApi.isLogin() ?
                                             biliApi.getFansMedalList() :
                                             $ui.error("未登录");
                                         break;

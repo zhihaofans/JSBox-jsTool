@@ -8,6 +8,7 @@ let sys = require("./system.js"),
 let _CHECKIN = require("./bilibili/check_in.js"),
     _LIVE = require("./bilibili/live.js"),
     _USER = require("./bilibili/user.js"),
+    _GIFT = require("./bilibili/gift.js"),
     _VIDEO = require("./bilibili/video.js");
 
 let _cacheKey = {
@@ -776,11 +777,11 @@ function getSignUrl(host, param, android = false) {
 }
 
 module.exports = {
-    checkAccessKey: isLogin,
+    checkAccessKey: _USER.isLogin,
     getAccessKey: getAccessKeyByLogin,
     getCoverFromGalmoe: _VIDEO.getCoverFromGalmoe,
     getFansMedalList: _LIVE.getFansMedalList,
-    getLiveGiftList,
+    getLiveGiftList: _GIFT.getLiveGiftList,
     getLiveroomInfo: _LIVE.getLiveroomInfo,
     getMyInfo: _USER.getMyInfo,
     getOfflineLiver: _LIVE.getOfflineLiver,
@@ -790,7 +791,7 @@ module.exports = {
     getVideoData: _VIDEO.getVideoData,
     getVideoInfo: _VIDEO.getVideoInfo,
     getVidFromUrl: _VIDEO.getVidFromUrl,
-    getWallet,
+    getWallet: _LIVE.getWallet,
     init,
     isLogin: _USER.isLogin,
     laterToWatch: _VIDEO.laterToWatch,
