@@ -10,10 +10,12 @@ let _CHECKIN = require("./bilibili/check_in.js"),
     _GIFT = require("./bilibili/gift.js"),
     _AVBV = require("../api/bilibili/av-bv.js"),
     _VIDEO = require("./bilibili/video.js");
-
-let DEBUG_VID = "90035938",
-    DEBUG_VIDEO_LINK = _BILIURL.B23_TV_VIDEO + DEBUG_VID,
-    _cacheKey = {
+let DEBUG_DEFAULT = {
+    BVID"BV17x411w7KC",
+    VID: "90035938",
+    VIDEO_LINK: _URL.BILIBILI.B23_TV_VIDEO + "90035938"
+};
+let _cacheKey = {
         access_key: "bilibili_access_key",
         uid: "bilibili_uid"
     },
@@ -218,8 +220,7 @@ function getUserInfo() {
 module.exports = {
     checkAccessKey: _USER.isLogin,
     checkBiliUrl: urlCheck.isBilibiliVideoUrl,
-    DEBUG_VID,
-    DEBUG_VIDEO_LINK,
+    DEBUG_DEFAULT,
     getAccessKey: _USER.getAccessKey,
     getAv: _AVBV.getAv,
     getAvOnline: _AVBV.getAvOnline,

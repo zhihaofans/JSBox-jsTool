@@ -3,7 +3,17 @@ let _BILIAPI = require("../api/bilibili.js");
 function init(url) {
     if (url) {
         if (_BILIAPI.checkBiliUrl(url)) {
-            _BILIAPI.getVideoInfo(_BILIAPI.getVidFromUrl(url));
+            $ui.menu({
+                items: ["new", "old"],
+                handler: function (title, idx) {
+                    if (idx == 0) {
+                        _BILIAPI.getVideoInfo(url);
+                    } else {
+                        _BILIAPI.getVideoInfo(_BILIAPI.getVidFromUrl(url));
+                    }
+
+                }
+            });
         } else {
             $ui.error("不支持该链接");
         }
@@ -108,7 +118,7 @@ function init(url) {
                                                         $input.text({
                                                             type: $kbType.url,
                                                             autoFontSize: true,
-                                                            text: _BILIAPI.DEBUG_VIDEO_LINK,
+                                                            text: _BILIAPI.DEBUG_DEFAULT.VIDEO_LINK,
                                                             placeholder: "输入视频网址",
                                                             handler: function (url) {
                                                                 if (url.length > 0) {
@@ -130,7 +140,7 @@ function init(url) {
                                                         $input.text({
                                                             type: $kbType.number,
                                                             autoFontSize: true,
-                                                            text: _BILIAPI.DEBUG_VID,
+                                                            text: _BILIAPI.DEBUG_DEFAULT.VID,
                                                             placeholder: "输入视频id(不包含av)",
                                                             handler: function (vid) {
                                                                 if (vid.length > 0) {
@@ -154,8 +164,8 @@ function init(url) {
                                                 switch (menuIdx) {
                                                     case 0:
                                                         $input.text({
-                                                            placeholder: "输入AV,不包含开头的av",
-                                                            text: "170001",
+                                                            placeholder: "输入AV号,不包含开头的av",
+                                                            text: _BILIAPI.DEBUG_DEFAULT.VID,
                                                             handler: function (AV) {
                                                                 if (AV) {
                                                                     const bv = _BILIAPI.getBv(AV);
@@ -190,7 +200,7 @@ function init(url) {
                                                     case 1:
                                                         $input.text({
                                                             placeholder: "输入BV",
-                                                            text: "BV17x411w7KC",
+                                                            text: _BILIAPI.DEBUG_DEFAULT.BVID,
                                                             handler: function (BV) {
                                                                 if (BV) {
                                                                     const av = _BILIAPI.getAv(BV);
@@ -229,7 +239,7 @@ function init(url) {
                                     case 2:
                                         $input.text({
                                             placeholder: "av/bv",
-                                            text: "av795121244",
+                                            text: "av" + _BILIAPI.DEBUG_DEFAULT.VID,
                                             handler: function (vid) {
                                                 if (vid.length > 0) {
                                                     if (vid.startsWith("av") || vid.startsWith("bv")) {

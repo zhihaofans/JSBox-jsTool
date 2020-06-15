@@ -1,6 +1,5 @@
 $include("./codePrototype.js");
 let cheerio = require("cheerio"),
-    sys = require("../system.js"),
     appScheme = require("../app_scheme.js"),
     _URL = require("../urlData.js"),
     _UA = require("../user-agent.js"),
@@ -234,7 +233,8 @@ function getVideoDanmuku(mid) {
     });
 }
 // 获取视频信息
-function getVideoInfo(vid) {
+function getVideoInfo(input) {
+    const vid = input.startsWith("http") ? getVidFromUrl(input): input;
     $ui.loading(true);
     $http.get({
         url: _URL.KAAASS.GET_VIDEO_INFO + vid,
