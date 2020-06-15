@@ -1,11 +1,8 @@
-let _BILIAPI = require("../api/bilibili.js"),
-    urlCheck = require("../api/urlCheck.js"),
-    _BILIURL = require("../api/urlData.js").BILIBILI;
-let debugVid = "90035938";
+let _BILIAPI = require("../api/bilibili.js");
 
 function init(url) {
     if (url) {
-        if (urlCheck.isBilibiliVideoUrl(url)) {
+        if (_BILIAPI.checkBiliUrl(url)) {
             _BILIAPI.getVideoInfo(_BILIAPI.getVidFromUrl(url));
         } else {
             $ui.error("不支持该链接");
@@ -111,7 +108,7 @@ function init(url) {
                                                         $input.text({
                                                             type: $kbType.url,
                                                             autoFontSize: true,
-                                                            text: _BILIURL.B23_TV_VIDEO + debugVid,
+                                                            text: _BILIAPI.DEBUG_VIDEO_LINK,
                                                             placeholder: "输入视频网址",
                                                             handler: function (url) {
                                                                 if (url.length > 0) {
@@ -133,7 +130,7 @@ function init(url) {
                                                         $input.text({
                                                             type: $kbType.number,
                                                             autoFontSize: true,
-                                                            text: debugVid,
+                                                            text: _BILIAPI.DEBUG_VID,
                                                             placeholder: "输入视频id(不包含av)",
                                                             handler: function (vid) {
                                                                 if (vid.length > 0) {

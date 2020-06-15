@@ -1,9 +1,8 @@
 $include("./codePrototype.js");
 let sys = require("./system.js"),
-    cheerio = require("cheerio"),
     _URL = require("./urlData.js"),
-    appScheme = require("./app_scheme.js"),
-    _UA = require("./user-agent.js");
+    _UA = require("./user-agent.js"),
+    urlCheck = require("../api/urlCheck.js");
 // 新版模块
 let _CHECKIN = require("./bilibili/check_in.js"),
     _LIVE = require("./bilibili/live.js"),
@@ -12,7 +11,9 @@ let _CHECKIN = require("./bilibili/check_in.js"),
     _AVBV = require("../api/bilibili/av-bv.js"),
     _VIDEO = require("./bilibili/video.js");
 
-let _cacheKey = {
+let DEBUG_VID = "90035938",
+    DEBUG_VIDEO_LINK = _BILIURL.B23_TV_VIDEO + DEBUG_VID,
+    _cacheKey = {
         access_key: "bilibili_access_key",
         uid: "bilibili_uid"
     },
@@ -214,10 +215,11 @@ function getUserInfo() {
     }
 }
 
-
-
 module.exports = {
     checkAccessKey: _USER.isLogin,
+    checkBiliUrl: urlCheck.isBilibiliVideoUrl,
+    DEBUG_VID,
+    DEBUG_VIDEO_LINK,
     getAccessKey: _USER.getAccessKey,
     getAv: _AVBV.getAv,
     getAvOnline: _AVBV.getAvOnline,
