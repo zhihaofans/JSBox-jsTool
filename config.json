@@ -10,7 +10,7 @@
     "author": "zhuangzhihao",
     "website": "https://github.com/zhuangzhihao-io/JSBox-jsTool",
     "name": "JSBox-jsTool",
-    "url": "https://cdn.jsdelivr.net/gh/zhuangzhihao-io/JSBox-jsTool/.output/JSBox-jsTool.box",
+    "url": "https://cdn.jsdelivr.net/gh/zhuangzhihao-io/JSBox-jsTool@master/download/JSBox-jsTool.box",
     "version": "0.0.1"
   },
   "settings": {
@@ -20,6 +20,6 @@
     "autoKeyboardEnabled": false,
     "keyboardToolbarEnabled": false,
     "idleTimerDisabled": false,
-    "theme": "auto"
+    "theme": "light"
   }
 }
