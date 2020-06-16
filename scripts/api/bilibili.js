@@ -11,7 +11,7 @@ let _CHECKIN = require("./bilibili/check_in.js"),
     _AVBV = require("../api/bilibili/av-bv.js"),
     _VIDEO = require("./bilibili/video.js");
 let DEBUG_DEFAULT = {
-    BVID"BV17x411w7KC",
+    BVID:"BV17x411w7KC",
     VID: "90035938",
     VIDEO_LINK: _URL.BILIBILI.B23_TV_VIDEO + "90035938"
 };
