@@ -7,7 +7,6 @@ let siteListL10n = [
     "ZHIHU_DAILY",
     "技术文",
     "每日签到",
-    "小编体生成器",
     "苹果排行榜",
     "TOPHUB",
     "Bilichat历史"
@@ -123,15 +122,12 @@ let init = () => {
                                             page.dailyCheckin();
                                             break;
                                         case 7:
-                                            page.xbtscq();
-                                            break;
-                                        case 8:
                                             page.appleRank();
                                             break;
-                                        case 9:
+                                        case 8:
                                             page.tophub();
                                             break;
-                                        case 10:
+                                        case 9:
                                             page.bilichat();
                                             break;
                                         default:
