@@ -360,7 +360,7 @@ function init(url) {
             }],
             events: {
                 appeared: function () {
-                    if (_BILIAPI.init()) {
+                    if (_BILIAPI.isLogin()) {
                         $ui.toast("已登录");
                     }
                 }

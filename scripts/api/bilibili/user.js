@@ -301,7 +301,7 @@ function getUserInfo() {
                         `追更漫画：${user.subscribeComic.count} 部`
                     ];
                     $ui.loading(false);
-                    const view = {
+                    $ui.push({
                         props: {
                             title: "加载成功",
                             navButtons: [{
@@ -373,8 +373,7 @@ function getUserInfo() {
                                 }
                             }
                         }]
-                    };
-                    $ui.push(view);
+                    });
                 } else {
                     $ui.loading(false);
                     $ui.alert({
