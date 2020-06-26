@@ -41,131 +41,139 @@ function getFansMedalList() {
     $ui.loading(true);
     if (ak) {
         const link = _BILIURL.LIVE_FANS_MEDAL + ak;
-        $http
-            .get({
-                url: link
-            })
-            .then(function (resp) {
-                var data = resp.data;
-                if (data.code == 0) {
-                    $ui.toast(data.message || data.msg || "已拥有的粉丝勋章");
-                    const medalData = data.data;
-                    const medalList = medalData.list;
-                    if (medalList.length > 0) {
-                        var onlineList = [];
-                        var offlineList = [];
-                        medalList.map(m => m.live_stream_status == 1 ? onlineList.push(m) : offlineList.push(m));
-                        medalList.map(m => `[${m.medal_name}]${m.target_name}` + (m.icon_code ? `[${m.icon_text}]` : ""));
-                        $ui.loading(false);
-                        $ui.push({
+        $http.get({
+            url: link
+        }).then(function (resp) {
+            var data = resp.data;
+            if (data.code == 0) {
+                $ui.toast(data.message || data.msg || "已拥有的粉丝勋章");
+                const medalData = data.data;
+                const medalList = medalData.list;
+                if (medalList.length > 0) {
+                    var onlineList = [];
+                    var offlineList = [];
+                    medalList.map(m => m.live_stream_status == 1 ? onlineList.push(m) : offlineList.push(m));
+                    medalList.map(m => `[${m.medal_name}]${m.target_name}` + (m.icon_code ? `[${m.icon_text}]` : ""));
+                    $ui.loading(false);
+                    $ui.push({
+                        props: {
+                            title: `数量${medalData.cnt}/${medalData.max}`
+                        },
+                        views: [{
+                            type: "list",
                             props: {
-                                title: `数量${medalData.cnt}/${medalData.max}`
-                            },
-                            views: [{
-                                type: "list",
-                                props: {
-                                    data: [{
-                                            title: "在播了",
-                                            rows: onlineList.map(
-                                                m => `[${m.medal_name} ${m.level}]${m.target_name}` + (m.icon_code ? `[${m.icon_text}]` : "") + (m.today_feed == m.day_limit ? `[已满]` : `[+${m.day_limit -m.today_feed}]`)
-                                            )
+                                data: [{
+                                        title: "在播了",
+                                        rows: onlineList.map(
+                                            m => `[${m.medal_name} ${m.level}]${m.target_name}` + (m.icon_code ? `[${m.icon_text}]` : "") + (m.today_feed == m.day_limit ? `[已满]` : `[+${m.day_limit -m.today_feed}]`)
+                                        )
+                                    },
+                                    {
+                                        title: "咕咕咕",
+                                        rows: offlineList.map(m => `[${m.medal_name} ${m.level}]${m.target_name}` + (m.icon_code ? `[${m.icon_text}]` : "") + (m.today_feed == m.day_limit ? `[已满]` : `[+${m.day_limit -m.today_feed}]`))
+                                    }
+                                ],
+                                menu: {
+                                    title: "菜单",
+                                    items: [{
+                                            title: "详细信息",
+                                            symbol: "play.rectangle",
+                                            handler: (sender, indexPath) => {
+                                                const liveData = indexPath.section == 0 ? onlineList[indexPath.row] : offlineList[indexPath.row];
+                                                $ui.alert({
+                                                    title: `[${liveData.medal_name}]${liveData.target_name}`,
+                                                    message: liveData
+                                                });
+                                            }
                                         },
                                         {
-                                            title: "咕咕咕",
-                                            rows: offlineList.map(m => `[${m.medal_name} ${m.level}]${m.target_name}` + (m.icon_code ? `[${m.icon_text}]` : "") + (m.today_feed == m.day_limit ? `[已满]` : `[+${m.day_limit -m.today_feed}]`))
-                                        }
-                                    ],
-                                    menu: {
-                                        title: "菜单",
-                                        items: [{
-                                                title: "详细信息",
-                                                symbol: "play.rectangle",
-                                                handler: (sender, indexPath) => {
-                                                    const liveData = indexPath.section == 0 ? onlineList[indexPath.row] : offlineList[indexPath.row];
+                                            title: "通过vtbs.moe获取vTuber信息",
+                                            symbol: "play.rectangle",
+                                            handler: (sender, indexPath) => {
+                                                const liveData = indexPath.section == 0 ? onlineList[indexPath.row] : offlineList[indexPath.row];
+                                                getVtbLiveroomInfo(liveData.target_id);
+                                            }
+                                        },
+                                        {
+                                            title: "查看舰长列表",
+                                            symbol: "play.rectangle",
+                                            handler: (sender, indexPath) => {
+                                                const liveData = indexPath.section == 0 ? onlineList[indexPath.row] : offlineList[indexPath.row];
+                                                const uid = liveData.target_id;
+                                                const roomId = liveData.room_id;
+                                                getLiveroomGuardList(roomId, uid);
+                                            }
+                                        },
+                                        {
+                                            title: "赠送礼物",
+                                            symbol: "gift",
+                                            handler: (sender, indexPath) => {
+                                                const liveData = indexPath.section == 0 ? onlineList[indexPath.row] : offlineList[indexPath.row];
+                                                if (liveData.day_limit - liveData.today_feed > 0) {
+                                                    _GIFT.getLiveGiftList(liveData);
+                                                } else {
                                                     $ui.alert({
-                                                        title: `[${liveData.medal_name}]${liveData.target_name}`,
-                                                        message: liveData
+                                                        title: "不用送了",
+                                                        message: "今日亲密度已满"
                                                     });
                                                 }
-                                            },
-                                            {
-                                                title: "通过vtbs.moe获取vTuber信息",
-                                                symbol: "play.rectangle",
-                                                handler: (sender, indexPath) => {
-                                                    const liveData = indexPath.section == 0 ? onlineList[indexPath.row] : offlineList[indexPath.row];
-                                                    getVtbLiveroomInfo(liveData.target_id);
-                                                }
-                                            },
-                                            {
-                                                title: "赠送礼物",
-                                                symbol: "gift",
-                                                handler: (sender, indexPath) => {
-                                                    const liveData = indexPath.section == 0 ? onlineList[indexPath.row] : offlineList[indexPath.row];
-                                                    if (liveData.day_limit - liveData.today_feed > 0) {
-                                                        _GIFT.getLiveGiftList(liveData);
-                                                    } else {
-                                                        $ui.alert({
-                                                            title: "不用送了",
-                                                            message: "今日亲密度已满"
-                                                        });
-                                                    }
-                                                }
-                                            },
-                                            {
-                                                title: "赠送银瓜子辣条",
-                                                symbol: "gift",
-                                                handler: (sender, indexPath) => {
-                                                    const liveData = indexPath.section == 0 ? onlineList[indexPath.row] : offlineList[indexPath.row];
-                                                    if (liveData.day_limit - liveData.today_feed > 0) {
-                                                        _GIFT.getLiveGiftList(liveData);
-                                                    } else {
-                                                        $ui.alert({
-                                                            title: "不用送了",
-                                                            message: "今日亲密度已满"
-                                                        });
-                                                    }
-                                                }
-                                            },
-                                            {
-                                                title: "自动赠送礼物",
-                                                symbol: "gift",
-                                                handler: (sender, indexPath) => {
-                                                    const liveData = indexPath.section == 0 ? onlineList[indexPath.row] : offlineList[indexPath.row];
-                                                    if (liveData.day_limit - liveData.today_feed > 0) {
-                                                        _GIFT.getLiveGiftList(liveData, 1);
-                                                    } else {
-                                                        $ui.alert({
-                                                            title: "不用送了",
-                                                            message: "今日亲密度已满"
-                                                        });
-                                                    }
+                                            }
+                                        },
+                                        {
+                                            title: "赠送银瓜子辣条",
+                                            symbol: "gift",
+                                            handler: (sender, indexPath) => {
+                                                const liveData = indexPath.section == 0 ? onlineList[indexPath.row] : offlineList[indexPath.row];
+                                                if (liveData.day_limit - liveData.today_feed > 0) {
+                                                    _GIFT.getLiveGiftList(liveData);
+                                                } else {
+                                                    $ui.alert({
+                                                        title: "不用送了",
+                                                        message: "今日亲密度已满"
+                                                    });
                                                 }
                                             }
-                                        ]
-                                    }
-                                },
-                                layout: $layout.fill,
-                                events: {
-                                    didSelect: function (sender, indexPath, data) {
-                                        const liveData = indexPath.section == 0 ? onlineList[indexPath.row] : offlineList[indexPath.row];
-                                        $app.openURL(_BILIURL.LIVE_WEB_ROOM + liveData.room_id);
-                                    }
+                                        },
+                                        {
+                                            title: "自动赠送礼物",
+                                            symbol: "gift",
+                                            handler: (sender, indexPath) => {
+                                                const liveData = indexPath.section == 0 ? onlineList[indexPath.row] : offlineList[indexPath.row];
+                                                if (liveData.day_limit - liveData.today_feed > 0) {
+                                                    _GIFT.getLiveGiftList(liveData, 1);
+                                                } else {
+                                                    $ui.alert({
+                                                        title: "不用送了",
+                                                        message: "今日亲密度已满"
+                                                    });
+                                                }
+                                            }
+                                        }
+                                    ]
                                 }
-                            }]
-                        });
-                    } else {
-                        $ui.loading(false);
-                        $ui.alert({
-                            title: "没有勋章",
-                            message: `粉丝勋章数量为${medalData.cnt ||
-                                medalList.length}`
-                        });
-                    }
+                            },
+                            layout: $layout.fill,
+                            events: {
+                                didSelect: function (sender, indexPath, data) {
+                                    const liveData = indexPath.section == 0 ? onlineList[indexPath.row] : offlineList[indexPath.row];
+                                    $app.openURL(_BILIURL.LIVE_WEB_ROOM + liveData.room_id);
+                                }
+                            }
+                        }]
+                    });
                 } else {
                     $ui.loading(false);
-                    $ui.error(data.message || data.msg || "未知错误");
+                    $ui.alert({
+                        title: "没有勋章",
+                        message: `粉丝勋章数量为${medalData.cnt ||
+                                medalList.length}`
+                    });
                 }
-            });
+            } else {
+                $ui.loading(false);
+                $ui.error(data.message || data.msg || "未知错误");
+            }
+        });
     } else {
         $ui.loading(false);
         $ui.alert({
@@ -577,7 +585,7 @@ function getVtbLiveroomInfo(mid) {
                                 },
                                 {
                                     title: "操作",
-                                    rows: [`查看头图`, `查看头像`]
+                                    rows: [`查看头图`, `查看头像`, "查看舰长"]
                                 }
                             ]
                         },
@@ -616,6 +624,9 @@ function getVtbLiveroomInfo(mid) {
                                             case 1:
                                                 appScheme.safariPreview(liveroomInfo.face);
                                                 break;
+                                            case 2:
+                                                getLiveroomGuardList(liveroomInfo.roomid, liveroomInfo.mid, 1, liveroomInfo.guardNum + 1);
+                                                break;
                                         }
                                 }
                             }
@@ -638,8 +649,117 @@ function openLiveDanmuku(liveroomId) {
         url: _BILIURL.BILICHAT + liveroomId
     });
 }
+
+// 直播间舰长
+function getLiveroomGuardList(roomid, uid, pageNo = 1, pageSize = 20) {
+    $ui.loading(true);
+    $http.get({
+        url: `${_URL.BILIBILI.LIVE_GUARD}?roomid=${roomid}&ruid=${uid}&page=${pageNo}&page_size=${pageSize}`,
+        header: {
+            "User-agent": _UA.BILIBILI
+        }
+    }).then(function (resp) {
+        var data = resp.data;
+        if (data.code == 0) {
+            const guardInfo = data.data.info;
+            const guardList = data.data.list;
+            if (guardInfo.num > 0 && guardList.length > 0) {
+                const aliveGuardList = [];
+                const otherGuardList = [];
+                guardList.map(guard => {
+                    if (guard.is_alive) {
+                        aliveGuardList.push(guard);
+                    } else {
+                        otherGuardList.push(guard);
+                    }
+                })
+                $ui.loading(false);
+                $ui.push({
+                    props: {
+                        title: "舰长列表"
+                    },
+                    views: [{
+                        type: "list",
+                        props: {
+                            data: [{
+                                title: "在看的",
+                                rows: aliveGuardList.map(guard => {
+                                    var text = guard.username;
+                                    switch (guard.guard_level) {
+                                        case 1:
+                                            text = `[总督]${text}`;
+                                            break;
+                                        case 2:
+                                            text = `[提督]${text}`;
+                                            break;
+                                        case 3:
+                                            text = `[舰长]${text}`;
+                                            break;
+                                        default:
+                                            text = `[未知]${text}`;
+                                    }
+                                    return text;
+                                })
+                            }, {
+                                title: "没看的",
+                                rows: otherGuardList.map(guard => {
+                                    var text = guard.username;
+                                    switch (guard.guard_level) {
+                                        case 1:
+                                            text = `[总督]${text}`;
+                                            break;
+                                        case 2:
+                                            text = `[提督]${text}`;
+                                            break;
+                                        case 3:
+                                            text = `[舰长]${text}`;
+                                            break;
+                                        default:
+                                            text = `[未知]${text}`;
+                                    }
+                                    return text;
+                                })
+                            }]
+                        },
+                        layout: $layout.fill,
+                        events: {
+                            didSelect: function (_sender, indexPath, _data) {
+                                const section = indexPath.section;
+                                const row = indexPath.row;
+                                switch (section) {
+                                    case 0:
+                                        $ui.alert({
+                                            title: "",
+                                            message: aliveGuardList[row],
+                                        });
+                                        break;
+                                    case 1:
+                                        $ui.alert({
+                                            title: "",
+                                            message: otherGuardList[row],
+                                        });
+                                        break;
+                                }
+                            }
+                        }
+                    }]
+                });
+            } else {
+                $ui.loading(false);
+                $ui.error(data.message);
+            }
+        } else {
+            $ui.loading(false);
+            $ui.alert({
+                title: `错误代码：${data.code}`,
+                message: data.message,
+            });
+        }
+    });
+}
 module.exports = {
     getFansMedalList,
+    getLiveroomGuardList,
     getWallet,
     getOfflineLiver,
     getOnlineLiver,
