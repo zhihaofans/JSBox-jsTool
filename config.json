@@ -20,6 +20,6 @@
     "autoKeyboardEnabled": false,
     "keyboardToolbarEnabled": false,
     "idleTimerDisabled": false,
-    "theme": "light"
+    "theme": "auto"
   }
 }
