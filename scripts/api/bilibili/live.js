@@ -662,7 +662,7 @@ function getLiveroomGuardList(roomid, uid, pageNo = 1, pageSize = 20) {
         var data = resp.data;
         if (data.code == 0) {
             const guardInfo = data.data.info;
-            const guardList = data.data.list;
+            const guardList = data.data.top3.concat(data.data.list); 
             if (guardInfo.num > 0 && guardList.length > 0) {
                 const aliveGuardList = [];
                 const otherGuardList = [];
