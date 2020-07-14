@@ -18,7 +18,6 @@ let moreListL10n = [
     "IMAGE",
     "MUSIC_SEARCH",
     "免费短信接收",
-    "天气查询",
     "杂项"
 ];
 let getNavButton = () => {
@@ -151,9 +150,6 @@ function init() {
                                         page.freeSms();
                                         break;
                                     case 6:
-                                        page.weather();
-                                        break;
-                                    case 7:
                                         page.misc();
                                         break;
                                     default:
