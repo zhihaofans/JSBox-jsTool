@@ -55,7 +55,8 @@ let ACFUN = {
         LIVE_OFFLINE: "https://api.live.bilibili.com/xlive/app-interface/v1/relation/unliveAnchor?page=1&pagesize=1000&access_key=",
         LIVE_FANS_MEDAL_WEAR: "https://api.live.bilibili.com/fans_medal/v1/fans_medal/wear_medal",
         UNION_FANS_APPLY_LIST: "https://api.live.bilibili.com/activity/v1/UnionFans/getApplyList?page=",
-        LIVE_GUARD: "https://api.live.bilibili.com/xlive/app-room/v1/guardTab/topList"
+        LIVE_GUARD: "https://api.live.bilibili.com/xlive/app-room/v1/guardTab/topList",
+        LIVE_FANS_MEDAL_INFO: "https://api.live.bilibili.com/xlive/app-room/v1/fansMedal/fans_medal_info?access_key="
     },
     BILICHAT = {
         HISTORY: "https://bilichat.3shain.com/api/history",
