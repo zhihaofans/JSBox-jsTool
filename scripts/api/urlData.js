@@ -75,6 +75,9 @@ let ACFUN = {
     JISHUWEN = {
         MAIN: "https://www.jishuwen.com/?p="
     },
+    JSBOX = {
+      APP_CONFIG: "https://cdn.jsdelivr.net/gh/zhuangzhihao-io/JSBox-jsTool@master/config.json"
+    },
     KAAASS = {
         GET_VIDEO_INFO: "https://api.kaaass.net/biliapi/video/info?jsonerr=true&id=",
         GET_ACCESS_KEY: "https://api.kaaass.net/biliapi/user/login?jsonerr=true&direct=true",
@@ -109,6 +112,7 @@ module.exports = {
     GALMOE,
     ISOYU,
     JISHUWEN,
+    JSBOX,
     KAAASS,
     MEOWV,
     TENCENT,
