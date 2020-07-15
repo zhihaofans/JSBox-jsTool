@@ -17,7 +17,6 @@ let moreListL10n = [
     "SM_MS",
     "IMAGE",
     "MUSIC_SEARCH",
-    "免费短信接收",
     "杂项"
 ];
 let getNavButton = () => {
@@ -147,9 +146,6 @@ function init() {
                                         page.musicSearch();
                                         break;
                                     case 5:
-                                        page.freeSms();
-                                        break;
-                                    case 6:
                                         page.misc();
                                         break;
                                     default:
