@@ -65,7 +65,7 @@ function initView() {
                 props: {
                     data: [
                         {
-                            title: "iOS(CN)",
+                            title: "iOS",
                             rows: ["免费APP", "收费APP", "畅销APP"]
                         }
                     ]
