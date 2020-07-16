@@ -66,7 +66,7 @@ let checkUpdateV2 = (appId) => {
                 disabled: false, // Optional
                 handler: function () {
                     $http.get({
-                        url: urlData.UPDATE_CONFIG_JSDELIVR,
+                        url: urlData.JSBOX.APP_CONFIG,
                         handler: function (_resp) {
                             const updateData = _resp.data;
                             $console.info("更新：获取服务器数据成功");

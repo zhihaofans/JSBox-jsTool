@@ -34,7 +34,8 @@ let ACFUN = {
         MAIN: "https://www.jishuwen.com/?p="
     },
     JSBOX = {
-      APP_CONFIG: "https://cdn.jsdelivr.net/gh/zhuangzhihao-io/JSBox-jsTool@master/config.json"
+      APP_CONFIG: "https://cdn.jsdelivr.net/gh/zhuangzhihao-io/JSBox-jsTool@master/config.json",
+      APP_CONFIG_GITHUB: "https://github.com/zhuangzhihao-io/JSBox-jsTool/raw/master/config.json"
     },
     MEOWV = {
         WALLPAPER: "https://api.meowv.com/wallpaper",
@@ -46,9 +47,7 @@ let ACFUN = {
     },
     TOPHUB = {
         DASHBOARD: "https://tophub.today/dashboard"
-    },
-    UPDATE_CONFIG_GITHUB = "https://github.com/zhuangzhihao-io/JSBox-jsTool/raw/master/config.json",
-    UPDATE_CONFIG_JSDELIVR = "https://cdn.jsdelivr.net/gh/zhuangzhihao-io/JSBox-jsTool@master/config.json";
+    };
 module.exports = {
     ACFUN,
     API_66MZ8_COM,
@@ -58,7 +57,5 @@ module.exports = {
     JSBOX,
     MEOWV,
     TENCENT,
-    TOPHUB,
-    UPDATE_CONFIG_GITHUB,
-    UPDATE_CONFIG_JSDELIVR
+    TOPHUB
 };
