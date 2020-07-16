@@ -31,9 +31,6 @@ let getNavButton = () => {
                         case 0:
                             page.scanQrcodeToGo();
                             break;
-                        case 1:
-                            page.dmzj();
-                            break;
                     }
                 }
             });
