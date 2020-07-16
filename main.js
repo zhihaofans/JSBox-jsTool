@@ -13,7 +13,6 @@ let siteListL10n = [
 ];
 let moreListL10n = [
     "CDN",
-    "KUAIDI",
     "SM_MS",
     "IMAGE",
     "MUSIC_SEARCH",
@@ -131,18 +130,15 @@ function init() {
                                         page.cdn();
                                         break;
                                     case 1:
-                                        page.kuaidi();
-                                        break;
-                                    case 2:
                                         page.smms();
                                         break;
-                                    case 3:
+                                    case 2:
                                         page.image();
                                         break;
-                                    case 4:
+                                    case 3:
                                         page.musicSearch();
                                         break;
-                                    case 5:
+                                    case 4:
                                         page.misc();
                                         break;
                                     default:
