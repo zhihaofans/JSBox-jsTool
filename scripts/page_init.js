@@ -4,7 +4,6 @@ $include("./api/codePrototype.js");
 let urlCheck = require("./api/urlCheck.js"),
     mofish = require("./view/mofish.js"),
     cdn = require("./view/cdn.js"),
-    smmsv2 = require("./view/sm_ms_v2.js"),
     image = require("./view/image.js"),
     bilibili = require("./view/bilibili.js"),
     zhihuDaily = require("./view/zhihu_daily.js"),
@@ -95,7 +94,6 @@ function scanQrcodeToGo() {
 module.exports = {
     mofish: mofish.init,
     cdn: cdn.init,
-    smms: smmsv2.init,
     image: image.init,
     bilibili: bilibili.init,
     zhihuDaily: zhihuDaily.init,

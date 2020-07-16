@@ -13,7 +13,6 @@ let siteListL10n = [
 ];
 let moreListL10n = [
     "CDN",
-    "SM_MS",
     "IMAGE",
     "杂项"
 ];
@@ -129,12 +128,9 @@ function init() {
                                         page.cdn();
                                         break;
                                     case 1:
-                                        page.smms();
-                                        break;
-                                    case 2:
                                         page.image();
                                         break;
-                                    case 3:
+                                    case 2:
                                         page.misc();
                                         break;
                                     default:
