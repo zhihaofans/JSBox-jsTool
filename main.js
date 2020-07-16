@@ -15,7 +15,6 @@ let moreListL10n = [
     "CDN",
     "SM_MS",
     "IMAGE",
-    "MUSIC_SEARCH",
     "杂项"
 ];
 let getNavButton = () => {
@@ -136,9 +135,6 @@ function init() {
                                         page.image();
                                         break;
                                     case 3:
-                                        page.musicSearch();
-                                        break;
-                                    case 4:
                                         page.misc();
                                         break;
                                     default:
