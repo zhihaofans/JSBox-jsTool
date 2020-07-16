@@ -1,6 +1,5 @@
 let sys = require("./system.js"),
-    _URL = require("../urlData.js"),
-    _BILIURL = require("../urlData.js").BILIBILI,
+    _URL = require("./api_url.js"),
     _USER = require("./user.js"),
     _GIFT = require("./gift.js"),
     appScheme = require("../app_scheme.js"),
@@ -40,7 +39,7 @@ function getFansMedalList() {
     // 已拥有的粉丝勋章
     $ui.loading(true);
     if (ak) {
-        const link = _BILIURL.LIVE_FANS_MEDAL + ak;
+        const link = _URL.BILIBILI.LIVE_FANS_MEDAL + ak;
         $http.get({
             url: link
         }).then(function (resp) {
@@ -156,7 +155,7 @@ function getFansMedalList() {
                             events: {
                                 didSelect: function (sender, indexPath, data) {
                                     const liveData = indexPath.section == 0 ? onlineList[indexPath.row] : offlineList[indexPath.row];
-                                    $app.openURL(_BILIURL.LIVE_WEB_ROOM + liveData.room_id);
+                                    $app.openURL(_URL.BILIBILI.LIVE_WEB_ROOM + liveData.room_id);
                                 }
                             }
                         }]
@@ -185,7 +184,7 @@ function getFansMedalList() {
 
 function wearFanMedal(media_id) {
     $http.post({
-        url: `${ _BILIURL.LIVE_FANS_MEDAL_WEAR}?access_key=${_USER.getAccessKey()}&medal_id=${media_id}`,
+        url: `${ _URL.BILIBILI.LIVE_FANS_MEDAL_WEAR}?access_key=${_USER.getAccessKey()}&medal_id=${media_id}`,
         header: {
             "User-Agent": _UA.BILIBILI.APP_IPHONE
         },
@@ -210,7 +209,7 @@ function getWallet() {
     if (_USER.isLogin()) {
         $ui.loading(true);
         $http.get({
-                url: _BILIURL.GET_WALLET + _USER.getAccessKey()
+                url: _URL.BILIBILI.GET_WALLET + _USER.getAccessKey()
             })
             .then(function (resp) {
                 var data = resp.data;
@@ -239,7 +238,7 @@ function getWallet() {
                                     handler: function () {
                                         if (canCoin) {
                                             $http.post({
-                                                url: _BILIURL.SILVER_TO_COIN,
+                                                url: _URL.BILIBILI.SILVER_TO_COIN,
                                                 header: {
                                                     "User-Agent": _UA.BILIBILI.APP_IPHONE,
                                                     "Content-Type": "application/x-www-form-urlencoded"
@@ -309,7 +308,7 @@ function getOnlineLiver() {
     if (_USER.isLogin()) {
         $ui.loading(true);
         $http.get({
-            url: _BILIURL.LIVE_ONLINE + _USER.getAccessKey()
+            url: _URL.BILIBILI.LIVE_ONLINE + _USER.getAccessKey()
         }).then(function (resp) {
             var data = resp.data;
             if (data) {
@@ -380,7 +379,7 @@ function getOnlineLiver() {
                                                                         });
                                                                         break;
                                                                     case 3:
-                                                                        $app.openURL(_BILIURL.BILIBILI_SPACE + thisRoom.uid);
+                                                                        $app.openURL(_URL.BILIBILI.BILIBILI_SPACE + thisRoom.uid);
                                                                         break;
                                                                     case 4:
                                                                         getVtbLiveroomInfo(thisRoom.uid);
@@ -429,7 +428,7 @@ function getOfflineLiver() {
     if (_USER.isLogin()) {
         $ui.loading(true);
         $http.get({
-            url: _BILIURL.LIVE_OFFLINE + _USER.getAccessKey()
+            url: _URL.BILIBILI.LIVE_OFFLINE + _USER.getAccessKey()
         }).then(function (resp) {
             var data = resp.data;
             if (data) {
@@ -497,7 +496,7 @@ function getOfflineLiver() {
                                                                         });
                                                                         break;
                                                                     case 3:
-                                                                        $app.openURL(_BILIURL.BILIBILI_SPACE + thisRoom.uid);
+                                                                        $app.openURL(_URL.BILIBILI.BILIBILI_SPACE + thisRoom.uid);
                                                                         break;
                                                                     case 4:
                                                                         getVtbLiveroomInfo(thisRoom.uid);
@@ -646,7 +645,7 @@ function getVtbLiveroomInfo(mid) {
 function openLiveDanmuku(liveroomId) {
     $ui.preview({
         title: "BiliChat",
-        url: _BILIURL.BILICHAT + liveroomId
+        url: _URL.BILIBILI.BILICHAT + liveroomId
     });
 }
 

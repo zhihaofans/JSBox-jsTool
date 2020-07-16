@@ -1,5 +1,5 @@
 let sys = require("../system.js"),
-    _BILIURL = require("../urlData.js").BILIBILI,
+    _BILIURL = require("./api_url.js").BILIBILI,
     _UA = require("../user-agent.js"),
     _CACHE = require("./cache.js"),
     _LIB = require("./lib.js");

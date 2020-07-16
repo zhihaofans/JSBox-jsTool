@@ -1,6 +1,6 @@
 let sys = require("../system.js"),
     cheerio = require("cheerio"),
-    _BILIURL = require("../urlData.js").BILIBILI,
+    _BILIURL = require("./api_url.js").BILIBILI,
     _USER = require("./user.js"),
     _UA = require("../user-agent.js");
 

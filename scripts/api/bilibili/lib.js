@@ -1,4 +1,4 @@
-let _URL = require("../urlData.js"),
+let _URL = require("./api_url.js"),
     _UA = require("../user-agent.js");
 
 function getSignUrl(host, param, android = false) {

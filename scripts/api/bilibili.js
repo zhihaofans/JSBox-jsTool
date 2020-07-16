@@ -1,6 +1,6 @@
-let _BILIURL = require("./urlData.js").BILIBILI,
+let _BILIURL = require("./bilibili/api_url.js").BILIBILI,
     _urlCheck = require("./urlCheck.js"),
-    _AVBV = require("./bilibili/av-bv.js"),
+    _AVBV = require("./bilibili/av_bv.js"),
     _CHECKIN = require("./bilibili/check_in.js"),
     _GIFT = require("./bilibili/gift.js"),
     _LIVE = require("./bilibili/live.js"),

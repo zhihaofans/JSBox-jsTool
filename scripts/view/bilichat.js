@@ -1,4 +1,4 @@
-let _URL = require("../api/urlData.js");
+let _URL = require("../api/bilibili/api_url.js");
 
 function showHistory() {
     $ui.loading(true);
