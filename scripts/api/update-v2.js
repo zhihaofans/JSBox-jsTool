@@ -1,13 +1,33 @@
 let URL = require("./urlData.js");
 
+function UpdateData(name, version, icon, hasUpdate = false, updateUrl = null) {
+    this.name = name;
+    this.version = version;
+    this.icon = icon;
+    this.hasUpdate = hasUpdate;
+    this.updateUrl = updateUrl;
+}
+
 function checkUpdate(CDN = true) {
     const remoteFile = CDN ? getRemoteConfigFromCDN() : getRemoteConfigFromGithub();
     if (remoteFile) {
         const newVersion = remoteFile.info.version;
+        const newBox = remoteFile.info.url;
+        const newName = remoteFile.info.name;
+        const appIcon = CDN ? URL.JSBOX.APP_ICON : URL.JSBOX.APP_ICON_GITHUB;
+        const localConfig = getLocalConfig();
+        if (newVersion && newName && localConfig) {
+            if (compareVersion(localConfig.info.version, newVersion) || compareVersion1(localConfig.info.version, newVersion)) {
+                return UpdateData(newName, newVersion, appIcon, true, newBox);
+            } else {
+                return UpdateData(newName, newVersion, appIcon, false);
+            }
+        }
     } else {
         return null;
     }
 }
+
 
 function getRemoteConfigFromCDN() {
     var resp = await http.get({
@@ -42,6 +62,22 @@ function compareVersion1(v1 = '', v2 = '') {
     return v1 !== v2 && _r === 0 ? compareVersion1(_v1.splice(1).join('.'), _v2.splice(1).join('.')) : _r;
 
 }
+
+function installApp(updateUrl, updateName = "", updateIcon = "") {
+    const url = `jsbox://import?url=${$text.URLEncode(updateUrl)}`;
+    if (updateName) {
+        url += `&name=${$text.URLEncode(updateName)}`;
+    }
+    if (updateIcon) {
+        url += `&icon=${$text.URLEncode(updateIcon)}`;
+    }
+    $app.openURL(url);
+}
+
+function getLocalConfig() {
+    return JSON.parse($file.read("/config.json"));
+};
 module.exports = {
-    checkUpdate
+    checkUpdate,
+    installApp
 };

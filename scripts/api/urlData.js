@@ -34,8 +34,10 @@ let ACFUN = {
         MAIN: "https://www.jishuwen.com/?p="
     },
     JSBOX = {
-      APP_CONFIG: "https://cdn.jsdelivr.net/gh/zhuangzhihao-io/JSBox-jsTool@master/config.json",
-      APP_CONFIG_GITHUB: "https://github.com/zhuangzhihao-io/JSBox-jsTool/raw/master/config.json"
+        APP_CONFIG: "https://cdn.jsdelivr.net/gh/zhuangzhihao-io/JSBox-jsTool@master/config.json",
+        APP_CONFIG_GITHUB: "https://cdn.jsdelivr.net/gh/zhuangzhihao-io/JSBox-jsTool@master/config.json",
+        APP_ICON: "https://cdn.jsdelivr.net/gh/zhuangzhihao-io/JSBox-jsTool@master/assets/icon.png",
+        APP_ICON_GITHUB: "https://cdn.jsdelivr.net/gh/zhuangzhihao-io/JSBox-jsTool@master/assets/icon.png"
     },
     MEOWV = {
         WALLPAPER: "https://api.meowv.com/wallpaper",
