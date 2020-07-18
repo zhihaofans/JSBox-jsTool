@@ -248,7 +248,7 @@ function getMyInfo() {
                         } else {
                             $ui.loading(false);
                             $ui.alert({
-                                title: "Error ${resultBili.code}",
+                                title: `Error ${resultBili.code}`,
                                 message: resultBili.message || "未知错误",
                                 actions: [{
                                     title: "OK",
