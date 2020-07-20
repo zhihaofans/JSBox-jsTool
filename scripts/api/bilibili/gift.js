@@ -232,6 +232,7 @@ function getLiveGiftList(liveData = undefined, mode = 0) {
                                         }
                                     }]
                                 });
+                                break;
                             case 1:
                                 if (liveData) {
                                     $ui.loading(true);
