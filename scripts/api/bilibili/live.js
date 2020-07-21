@@ -64,12 +64,12 @@ function getFansMedalList() {
                                 data: [{
                                         title: "在播了",
                                         rows: onlineList.map(
-                                            m => `[${m.medal_name} ${m.level}]${m.target_name}` + (m.icon_code ? `[${m.icon_text}]` : "") + (m.today_feed == m.day_limit ? `[已满]` : `[+${m.day_limit -m.today_feed}]`)
+                                            m => `[${m.medal_name} ${m.level}]${m.target_name}` + (m.icon_code ? `[${m.icon_text}]` : "") + (m.today_feed >= m.day_limit ? `[已满]` : `[+${m.day_limit -m.today_feed}]`)
                                         )
                                     },
                                     {
                                         title: "咕咕咕",
-                                        rows: offlineList.map(m => `[${m.medal_name} ${m.level}]${m.target_name}` + (m.icon_code ? `[${m.icon_text}]` : "") + (m.today_feed == m.day_limit ? `[已满]` : `[+${m.day_limit -m.today_feed}]`))
+                                        rows: offlineList.map(m => `[${m.medal_name} ${m.level}]${m.target_name}` + (m.icon_code ? `[${m.icon_text}]` : "") + (m.today_feed >= m.day_limit ? `[已满]` : `[+${m.day_limit -m.today_feed}]`))
                                     }
                                 ],
                                 menu: {
@@ -133,7 +133,7 @@ function getFansMedalList() {
                                             title: "赠送银瓜子辣条",
                                             symbol: "gift",
                                             handler: (sender, indexPath) => {
-                                                const liveData = indexPath.section == 0 ? onlineList[indexPath.row] : offlineList[indexPath.row];
+                                               /*  const liveData = indexPath.section == 0 ? onlineList[indexPath.row] : offlineList[indexPath.row];
                                                 if (liveData.day_limit - liveData.today_feed > 0) {
                                                     _GIFT.getLiveGiftList(liveData);
                                                 } else {
@@ -141,7 +141,11 @@ function getFansMedalList() {
                                                         title: "不用送了",
                                                         message: "今日亲密度已满"
                                                     });
-                                                }
+                                                } */
+                                                $ui.alert({
+                                                    title: "错误",
+                                                    message: "未支持",
+                                                });
                                             }
                                         },
                                         {
