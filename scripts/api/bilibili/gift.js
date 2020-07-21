@@ -36,14 +36,24 @@ function getGiftListByExp(giftData, exp) {
                             }
                             // giftNum = thisGift.gift_num > Math.floor(needExp / 10) ? Math.floor(needExp / 10) : Math.floor(thisGift.gift_num / 10);
                             if (giftNum > 0) {
-                                giftList.push(
-                                    new GiftData(
-                                        thisGift.gift_id,
-                                        thisGift.bag_id,
-                                        giftNum
-                                    )
-                                );
+                                giftList.push(new GiftData(thisGift.gift_id, thisGift.bag_id, giftNum));
                                 needExp = needExp - giftNum * 10;
+                            } else {
+                                $console.error("跳过0个的礼物");
+                            }
+                        }
+                        break;
+                    case 30607:
+                        if (needExp >= 50) {
+                            if (thisGift.gift_num * 50 > needExp) {
+                                giftNum = Math.floor(needExp / 50);
+                            } else {
+                                giftNum = Math.floor(thisGift.gift_num / 50);
+                            }
+                            // giftNum = thisGift.gift_num > Math.floor(needExp / 50) ? Math.floor(needExp / 50) : Math.floor(thisGift.gift_num / 50);
+                            if (giftNum > 0) {
+                                giftList.push(new GiftData(thisGift.gift_id, thisGift.bag_id, giftNum));
+                                needExp = needExp - giftNum * 50;
                             } else {
                                 $console.error("跳过0个的礼物");
                             }
@@ -117,22 +127,10 @@ function getLiveGiftList(liveData = undefined, mode = 0) {
                                         },
                                         layout: $layout.fill,
                                         events: {
-                                            didSelect: function (
-                                                _sender,
-                                                indexPath,
-                                                _data
-                                            ) {
-                                                const thisGift =
-                                                    giftList[indexPath.row];
-                                                if (
-                                                    liveData &&
-                                                    sendGiftToUid &&
-                                                    sendGiftToRoom
-                                                ) {
-                                                    if (
-                                                        thisGift.corner_mark ==
-                                                        "永久"
-                                                    ) {
+                                            didSelect: function (_sender, indexPath, _data) {
+                                                const thisGift = giftList[indexPath.row];
+                                                if (liveData && sendGiftToUid && sendGiftToRoom) {
+                                                    if (thisGift.corner_mark == "永久") {
                                                         $ui.alert({
                                                             title: "警告",
                                                             message: "这是永久的礼物，你确定要送吗",
@@ -197,22 +195,9 @@ function getLiveGiftList(liveData = undefined, mode = 0) {
                                                             type: $kbType.number,
                                                             placeholder: `输入数量，1-${thisGift.gift_num}`,
                                                             text: "",
-                                                            handler: function (
-                                                                gift_number
-                                                            ) {
-                                                                if (
-                                                                    gift_number >
-                                                                    0 &&
-                                                                    gift_number <=
-                                                                    thisGift.gift_num
-                                                                ) {
-                                                                    sendLiveGift(
-                                                                        sendGiftToUid,
-                                                                        sendGiftToRoom,
-                                                                        thisGift.gift_id,
-                                                                        thisGift.bag_id,
-                                                                        gift_number
-                                                                    );
+                                                            handler: function (gift_number) {
+                                                                if (gift_number > 0 && gift_number <= thisGift.gift_num) {
+                                                                    sendLiveGift(sendGiftToUid, sendGiftToRoom, thisGift.gift_id, thisGift.bag_id, gift_number);
                                                                 } else {
                                                                     $ui.alert({
                                                                         title: "赠送错误",
@@ -225,7 +210,7 @@ function getLiveGiftList(liveData = undefined, mode = 0) {
                                                 } else {
                                                     $ui.alert({
                                                         title: thisGift.gift_name,
-                                                        message: `拥有数量:${thisGift.gift_num}个\n到期时间:${thisGift.corner_mark}`
+                                                        message: `礼物id:${thisGift.gift_id}\n唯一id:${thisGift.bag_id}\n拥有数量:${thisGift.gift_num}个\n到期时间:${thisGift.corner_mark}`
                                                     });
                                                 }
                                             }
