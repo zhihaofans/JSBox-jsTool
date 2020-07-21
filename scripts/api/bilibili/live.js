@@ -112,8 +112,19 @@ function getFansMedalList() {
                                                     _GIFT.getLiveGiftList(liveData);
                                                 } else {
                                                     $ui.alert({
-                                                        title: "不用送了",
-                                                        message: "今日亲密度已满"
+                                                        title: "今日亲密度已满，不用送了",
+                                                        message: "确定要送吗？",
+                                                        actions: [{
+                                                            title: "不了",
+                                                            disabled: false,
+                                                            handler: function () {}
+                                                        }, {
+                                                            title: "继续",
+                                                            disabled: false,
+                                                            handler: function () {
+                                                                _GIFT.getLiveGiftList(liveData);
+                                                            }
+                                                        }]
                                                     });
                                                 }
                                             }
