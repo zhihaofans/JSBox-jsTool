@@ -9,6 +9,10 @@ function GiftData(_giftId, _bagId, _number) {
     this.number = _number;
 }
 
+function getGiftListByGiftId(giftData, giftId) {
+
+}
+
 function getGiftListByExp(giftData, exp) {
     if (exp == 0) {
         return [];
@@ -229,11 +233,7 @@ function getLiveGiftList(liveData = undefined, mode = 0) {
                                     if (giftExpList.length > 0) {
                                         $console.info(giftExpList);
                                         $ui.loading(false);
-                                        sendLiveGiftList(
-                                            liveData,
-                                            giftExpList,
-                                            0
-                                        );
+                                        sendLiveGiftList(liveData, giftExpList, 0);
                                     } else {
                                         $ui.loading(false);
                                         $ui.alert({
@@ -273,27 +273,25 @@ function sendLiveGift(user_id, room_id, gift_type, gift_id = undefined, gift_num
     if (gift_id) {
         url += `&bag_id=${gift_id}`;
     }
-    $http
-        .get({
-            url: url
-        })
-        .then(function (resp) {
-            var data = resp.data;
-            if (data.code == 0) {
-                const resultData = data.data;
-                $ui.loading(false);
-                $ui.alert({
-                    title: resultData.send_tips,
-                    message: `${resultData.uname} ${resultData.gift_action}${resultData.gift_num}个${resultData.gift_name}`
-                });
-            } else {
-                $ui.loading(false);
-                $ui.alert({
-                    title: `Error ${data.code}`,
-                    message: data.message || data.msg || "未知错误"
-                });
-            }
-        });
+    $http.get({
+        url: url
+    }).then(function (resp) {
+        var data = resp.data;
+        if (data.code == 0) {
+            const resultData = data.data;
+            $ui.loading(false);
+            $ui.alert({
+                title: resultData.send_tips,
+                message: `${resultData.uname} ${resultData.gift_action}${resultData.gift_num}个${resultData.gift_name}`
+            });
+        } else {
+            $ui.loading(false);
+            $ui.alert({
+                title: `Error ${data.code}`,
+                message: data.message || data.msg || "未知错误"
+            });
+        }
+    });
 }
 
 function sendLiveGiftList(liveData, giftList, index = 0) {
@@ -305,34 +303,30 @@ function sendLiveGiftList(liveData, giftList, index = 0) {
             $console.info(`共有${giftList.length}组礼物`);
         }
         $console.info(`正在赠送第${index + 1}组礼物`);
-        $http
-            .get({
-                url: url
-            })
-            .then(function (resp) {
-                var data = resp.data;
-                if (data.code == 0) {
-                    const resultData = data.data;
-                    $console.info(
-                        `第${index + 1}组礼物：${resultData.send_tips}`
-                    );
-                    if (index == giftList.length - 1) {
-                        $ui.loading(false);
-                        $ui.alert({
-                            title: "赠送完毕",
-                            message: `尝试赠送了${giftList.length}组礼物给[${liveData.target_name}]，请查收`
-                        });
-                    } else {
-                        sendLiveGiftList(liveData, giftList, index + 1);
-                    }
-                } else {
+        $http.get({
+            url: url
+        }).then(function (resp) {
+            var data = resp.data;
+            if (data.code == 0) {
+                const resultData = data.data;
+                $console.info(`第${index + 1}组礼物(${thisGift.gift_name}${thisGift.number}个)：${resultData.send_tips}`);
+                if (index == giftList.length - 1) {
                     $ui.loading(false);
                     $ui.alert({
-                        title: `Error ${data.code}`,
-                        message: data.message || data.msg || "未知错误"
+                        title: "赠送完毕",
+                        message: `尝试赠送了${giftList.length}组礼物给[${liveData.target_name}]，请查收`
                     });
+                } else {
+                    sendLiveGiftList(liveData, giftList, index + 1);
                 }
-            });
+            } else {
+                $ui.loading(false);
+                $ui.alert({
+                    title: `Error ${data.code}`,
+                    message: data.message || data.msg || "未知错误"
+                });
+            }
+        });
     } else {
         $ui.alert({
             title: "赠送错误",
