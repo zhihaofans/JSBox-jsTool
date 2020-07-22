@@ -3,10 +3,11 @@ let _BILIURL = require("./api_url.js").BILIBILI,
     _USER = require("./user.js"),
     _CACHE = require("./cache.js");
 
-function GiftData(_giftId, _bagId, _number) {
+function GiftData(_giftId, _bagId, _number, _giftName) {
     this.giftId = _giftId;
     this.bagId = _bagId;
     this.number = _number;
+    this.gift_name = _giftName;
 }
 
 function getGiftListByGiftId(giftData, giftId) {
@@ -40,7 +41,7 @@ function getGiftListByExp(giftData, exp) {
                             }
                             // giftNum = thisGift.gift_num > Math.floor(needExp / 10) ? Math.floor(needExp / 10) : Math.floor(thisGift.gift_num / 10);
                             if (giftNum > 0) {
-                                giftList.push(new GiftData(thisGift.gift_id, thisGift.bag_id, giftNum));
+                                giftList.push(new GiftData(thisGift.gift_id, thisGift.bag_id, giftNum, thisGift.gift_name));
                                 needExp = needExp - giftNum * 10;
                             } else {
                                 $console.error("跳过0个的礼物");
@@ -56,7 +57,7 @@ function getGiftListByExp(giftData, exp) {
                             }
                             // giftNum = thisGift.gift_num > Math.floor(needExp / 50) ? Math.floor(needExp / 50) : Math.floor(thisGift.gift_num / 50);
                             if (giftNum > 0) {
-                                giftList.push(new GiftData(thisGift.gift_id, thisGift.bag_id, giftNum));
+                                giftList.push(new GiftData(thisGift.gift_id, thisGift.bag_id, giftNum, thisGift.gift_name));
                                 needExp = needExp - giftNum * 50;
                             } else {
                                 $console.error("跳过0个的礼物");
@@ -72,11 +73,7 @@ function getGiftListByExp(giftData, exp) {
                         // giftNum = thisGift.gift_num > needExp ? needExp : thisGift.gift_num;
                         if (giftNum > 0) {
                             giftList.push(
-                                new GiftData(
-                                    thisGift.gift_id,
-                                    thisGift.bag_id,
-                                    giftNum
-                                )
+                                new GiftData(thisGift.gift_id, thisGift.bag_id, giftNum, thisGift.gift_name)
                             );
                             needExp = needExp - giftNum;
                         } else {
@@ -226,10 +223,7 @@ function getLiveGiftList(liveData = undefined, mode = 0) {
                                 if (liveData) {
                                     $ui.loading(true);
                                     $ui.toast("正在计算所需的礼物");
-                                    const giftExpList = getGiftListByExp(
-                                        giftList,
-                                        needExp
-                                    );
+                                    const giftExpList = getGiftListByExp(giftList, needExp);
                                     if (giftExpList.length > 0) {
                                         $console.info(giftExpList);
                                         $ui.loading(false);
