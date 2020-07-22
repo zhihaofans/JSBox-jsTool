@@ -308,8 +308,9 @@ function sendLiveGiftList(liveData, giftList, index = 0) {
                     $ui.loading(false);
                     var giftNameList = {};
                     for (_g in liveData) {
-                        const thisGiftName = _g.gift_name;
-                        const thisGiftNumber = _g.number;
+                        const thisGift = liveData[_g];
+                        const thisGiftName = thisGift.gift_name;
+                        const thisGiftNumber = thisGift.number;
                         if (giftNameList[thisGiftName]) {
                             giftNameList[thisGiftName] = giftNameList[thisGiftName] + thisGiftNumber;
                         } else {
