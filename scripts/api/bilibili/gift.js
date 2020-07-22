@@ -306,6 +306,23 @@ function sendLiveGiftList(liveData, giftList, index = 0) {
                 $console.info(`第${index + 1}组礼物(${thisGift.gift_name}${thisGift.number}个)：${resultData.send_tips}`);
                 if (index == giftList.length - 1) {
                     $ui.loading(false);
+                    var giftNameList = {};
+                    for (_g in liveData) {
+                        const thisGiftName = _g.gift_name;
+                        const thisGiftNumber = _g.number;
+                        if (giftNameList[thisGiftName]) {
+                            giftNameList[thisGiftName] = giftNameList[thisGiftName] + thisGiftNumber;
+                        } else {
+                            giftNameList[thisGiftName] = thisGiftNumber;
+                        }
+                    }
+                    var giftNameListStr = "共送了这些礼物：";
+                    Object.keys(giftNameList).map(g => {
+                        giftNameListStr += `\n${g}:${giftNameList[g]}个`;
+                    })
+
+                    $console.info(giftNameList);
+                    $console.info(giftNameListStr);
                     $ui.alert({
                         title: "赠送完毕",
                         message: `尝试赠送了${giftList.length}组礼物给[${liveData.target_name}]，请查收`
