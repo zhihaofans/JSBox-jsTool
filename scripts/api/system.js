@@ -1,6 +1,6 @@
-let getNowUnixTime = () => {
+function getNowUnixTime() {
     return new Date().getTime();
-};
+}
 
 function getNowUnixTimeSecond() {
     return Math.round(new Date().getTime() / 1000);
