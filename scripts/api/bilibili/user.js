@@ -2,7 +2,8 @@ let sys = require("../system.js"),
     _BILIURL = require("./api_url.js").BILIBILI,
     _UA = require("../user-agent.js"),
     _CACHE = require("./cache.js"),
-    _LIB = require("./lib.js");
+    _LIB = require("./lib.js"),
+    _ACCOUNTS = require("./accounts.js");
 
 var _ACCESS_KEY = "",
     _LOGIN_DATA = {},
@@ -169,6 +170,7 @@ function removeLoginCache() {
 function saveLoginCache(access_key, uid) {
     setAccessKey(access_key);
     setUid(uid);
+    _ACCOUNTS.setAccessKey(uid, access_key);
 }
 // Access key
 function checkAccessKey() {
