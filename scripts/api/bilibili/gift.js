@@ -48,7 +48,7 @@ function getGiftListByExp(giftData, exp) {
                             }
                         }
                         break;
-                    case 30607:
+                    /* case 30607:
                         if (needExp >= 50) {
                             if (thisGift.gift_num * 50 > needExp) {
                                 giftNum = Math.floor(needExp / 50);
@@ -63,7 +63,7 @@ function getGiftListByExp(giftData, exp) {
                                 $console.error("跳过0个的礼物");
                             }
                         }
-                        break;
+                        break; */
                     case 1:
                         if (thisGift.gift_num > needExp) {
                             giftNum = needExp;
