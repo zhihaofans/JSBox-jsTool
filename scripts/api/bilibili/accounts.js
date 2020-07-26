@@ -42,6 +42,11 @@ function getAccessKeyList() {
     return accessKeyList ? JSON.parse(accessKeyList) : null;
 }
 
+function getUidList() {
+    const list = getAccessKeyList();
+    return list ? Object.keys(list) : [];
+}
+
 function removeAccessKey(uid) {
     var accessKeyList = getAccessKeyList();
     if (accessKeyList) {
@@ -108,8 +113,9 @@ module.exports = {
     backupAccessKeyList,
     getAccessKey,
     getAccessKeyList,
-    setAccessKey,
-    setAccessKeyList,
+    getUidList,
     removeAccessKey,
-    removeAccessKeyList
+    removeAccessKeyList,
+    setAccessKey,
+    setAccessKeyList
 };

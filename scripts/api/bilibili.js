@@ -5,7 +5,8 @@ let _BILIURL = require("./bilibili/api_url.js").BILIBILI,
     _GIFT = require("./bilibili/gift.js"),
     _LIVE = require("./bilibili/live.js"),
     _USER = require("./bilibili/user.js"),
-    _VIDEO = require("./bilibili/video.js");
+    _VIDEO = require("./bilibili/video.js"),
+    _ACCOUNTS = require("./bilibili/accounts.js");
 
 let DEBUG_DEFAULT = {
     BVID: "BV17x411w7KC",
@@ -18,6 +19,8 @@ module.exports = {
     checkBiliUrl: _urlCheck.isBilibiliVideoUrl,
     DEBUG_DEFAULT,
     getAccessKey: _USER.getAccessKey,
+    getAccessKeyByUid: _ACCOUNTS.getAccessKey,
+    getAccessKeyList: _ACCOUNTS.getAccessKeyList,
     getAv: _AVBV.getAv,
     getAvOnline: _AVBV.getAvOnline,
     getBv: _AVBV.getBv,
@@ -29,6 +32,7 @@ module.exports = {
     getMyInfo: _USER.getMyInfo,
     getOfflineLiver: _LIVE.getOfflineLiver,
     getOnlineLiver: _LIVE.getOnlineLiver,
+    getUidList: _ACCOUNTS.getUidList,
     getUserInfo: _USER.getUserInfo,
     getVideo: _VIDEO.getVideo,
     getVideoData: _VIDEO.getVideoData,

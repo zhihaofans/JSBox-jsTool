@@ -371,7 +371,7 @@ function init(url) {
 
 function login() {
     $ui.menu({
-        items: ["输入Access key(推荐)", "账号密码(明文)"],
+        items: ["输入Access key(推荐)", "账号密码(明文)", "使用已保存的Access key"],
         handler: function (_title, idx) {
             switch (idx) {
                 case 0:
@@ -410,6 +410,31 @@ function login() {
                         }
                     });
                     break;
+                case 2:
+                    const uidList = _BILIAPI.getUidList();
+                    if (uidList.length > 0) {
+                        $console.info(uidList)
+                        var result = await $ui.menu({
+                            items: uidList
+                        })
+                        $input.text({
+                            placeholder: "",
+                            text: _BILIAPI.getAccessKeyByUid(result.title),
+                            handler: function (inputKey) {
+                                $console.info(`${result.title}:${inputKey}`);
+                                if (inputKey.length > 0) {
+                                    _BILIAPI.saveAccessKey(inputKey);
+                                } else {
+                                    $ui.error("空白key");
+                                }
+                            }
+                        });
+                    } else {
+                        $ui.error("未保存任何access_key");
+                    }
+                    break;
+                default:
+                    $ui.error("错误选项");
             }
         }
     });
