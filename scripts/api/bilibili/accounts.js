@@ -21,16 +21,11 @@ function getAccessKey(uid) {
 function setAccessKey(uid, access_key) {
     if (uid && access_key) {
         var accessKeyList = getAccessKeyList();
-        if (accessKeyList) {
-            $console.info(accessKeyList);
-            accessKeyList[uid] = access_key;
-            $console.info(accessKeyList);
-            setAccessKeyList(accessKeyList);
-        } else {
-            setAccessKeyList({
-                uid: access_key
-            });
-        }
+        accessKeyList = accessKeyList ? accessKeyList : {};
+        $console.info(accessKeyList);
+        accessKeyList[uid] = access_key;
+        $console.info(accessKeyList);
+        setAccessKeyList(accessKeyList);
     } else {
         $console.error(`uid && access_key:null`);
     }
@@ -47,7 +42,7 @@ function getAccessKeyList() {
     return accessKeyList ? JSON.parse(accessKeyList) : null;
 }
 
-function remoteAccessKey(uid) {
+function removeAccessKey(uid) {
     var accessKeyList = getAccessKeyList();
     if (accessKeyList) {
         if (uid in accessKeyList) {
@@ -64,13 +59,12 @@ function remoteAccessKey(uid) {
 
 }
 
-function remoteAccessKeyList() {
+function removeAccessKeyList() {
     $cache.remove(access_key_list_cacheId);
 }
 
 function backupAccessKeyList(cloud = false) {
     const accessKeyList = getAccessKeyList();
-
     if (accessKeyList) {
         $console.info(accessKeyList);
         const accessKeyJson = JSON.stringify(accessKeyList);
@@ -116,6 +110,6 @@ module.exports = {
     getAccessKeyList,
     setAccessKey,
     setAccessKeyList,
-    remoteAccessKey,
-    remoteAccessKeyList
+    removeAccessKey,
+    removeAccessKeyList
 };
