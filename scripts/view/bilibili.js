@@ -411,27 +411,28 @@ function login() {
                     });
                     break;
                 case 2:
-                    const uidList = _BILIAPI.getUidList();
-                    if (uidList.length > 0) {
-                        $console.info(uidList)
-                        var result = await $ui.menu({
-                            items: uidList
-                        })
-                        $input.text({
-                            placeholder: "",
-                            text: _BILIAPI.getAccessKeyByUid(result.title),
-                            handler: function (inputKey) {
-                                $console.info(`${result.title}:${inputKey}`);
-                                if (inputKey.length > 0) {
-                                    _BILIAPI.saveAccessKey(inputKey);
-                                } else {
-                                    $ui.error("空白key");
-                                }
-                            }
-                        });
-                    } else {
-                        $ui.error("未保存任何access_key");
-                    }
+             $ui.error("待开发");
+//                    const uidList = _BILIAPI.getUidList();
+//                    if (uidList.length > 0) {
+//                        $console.info(uidList)
+//                        var result = await $ui.menu({
+//                            items: uidList
+//                        })
+//                        $input.text({
+//                            placeholder: "",
+//                            text: _BILIAPI.getAccessKeyByUid(result.title),
+//                            handler: function (inputKey) {
+//                                $console.info(`${result.title}:${inputKey}`);
+//                                if (inputKey.length > 0) {
+//                                    _BILIAPI.saveAccessKey(inputKey);
+//                                } else {
+//                                    $ui.error("空白key");
+//                                }
+//                            }
+//                        });
+//                    } else {
+//                        $ui.error("未保存任何access_key");
+//                    }
                     break;
                 default:
                     $ui.error("错误选项");
