@@ -28,6 +28,11 @@ let getNavButton = () => {
                         case 0:
                             page.scanQrcodeToGo();
                             break;
+                            case 1:
+                            var icu = require("./scripts/api/bilibili/matsuri.icu");
+                            icu.init();
+                            
+                            break;
                     }
                 }
             });
