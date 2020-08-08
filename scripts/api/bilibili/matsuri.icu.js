@@ -50,6 +50,18 @@ function showViewerList(viewerData) {
                     didSelect: function(_sender, indexPath, _data) {
                         const section = indexPath.section;
                         const row = indexPath.row;
+                        const thisLive=viewerData[section];
+                        $ui.alert({
+                            title: "",
+                            message: thisLive,
+                            actions: [
+                                {
+                                    title: "OK",
+                                    disabled: false, // Optional
+                                    handler: function() {}
+                                }
+                            ]
+                        });
                     }
                 }
             }
@@ -57,17 +69,16 @@ function showViewerList(viewerData) {
     });
 }
 function init() {
-    
     $input.text({
-      placeholder: "",
-      text: "",
-      handler: input => {
-        if(input){
-          getViewer(input);
-        }else{
-          $ui.error("请输入uid");
+        placeholder: "",
+        text: "",
+        handler: input => {
+            if (input) {
+                getViewer(input);
+            } else {
+                $ui.error("请输入uid");
+            }
         }
-      }
     });
 }
 module.exports = {
