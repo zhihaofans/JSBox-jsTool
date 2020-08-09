@@ -51,17 +51,17 @@ function showViewerList(viewerData) {
                         const section = indexPath.section;
                         const row = indexPath.row;
                         const thisLive = viewerData[section];
-                        $ui.alert({
-                            title: "",
-                            message: thisLive,
-                            actions: [
-                                {
-                                    title: "OK",
-                                    disabled: false, // Optional
-                                    handler: function() {}
-                                }
-                            ]
-                        });
+                        //                        $ui.alert({
+                        //                            title: "",
+                        //                            message: thisLive,
+                        //                            actions: [
+                        //                                {
+                        //                                    title: "OK",
+                        //                                    disabled: false, // Optional
+                        //                                    handler: function() {}
+                        //                                }
+                        //                            ]
+                        //                        });
                         showViewerDanmu(thisLive);
                     }
                 }
@@ -74,18 +74,13 @@ function showViewerDanmu(liveData) {
     const danmuList = liveData.full_comments;
     $ui.push({
         props: {
-            title: clipData
+            title: clipData.title
         },
         views: [
             {
                 type: "list",
                 props: {
-                    data: [
-                        {
-                            title: "Section 0",
-                            rows: ["0-0", "0-1", "0-2"]
-                        }
-                    ]
+                    data: danmuList.map(danmu => danmu.text)
                 },
                 layout: $layout.fill,
                 events: {
