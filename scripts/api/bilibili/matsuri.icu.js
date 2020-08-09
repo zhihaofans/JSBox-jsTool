@@ -50,7 +50,7 @@ function showViewerList(viewerData) {
                     didSelect: function(_sender, indexPath, _data) {
                         const section = indexPath.section;
                         const row = indexPath.row;
-                        const thisLive=viewerData[section];
+                        const thisLive = viewerData[section];
                         $ui.alert({
                             title: "",
                             message: thisLive,
@@ -62,6 +62,36 @@ function showViewerList(viewerData) {
                                 }
                             ]
                         });
+                        showViewerDanmu(thisLive);
+                    }
+                }
+            }
+        ]
+    });
+}
+function showViewerDanmu(liveData) {
+    const clipData = liveData.clip_info;
+    const danmuList = liveData.full_comments;
+    $ui.push({
+        props: {
+            title: clipData
+        },
+        views: [
+            {
+                type: "list",
+                props: {
+                    data: [
+                        {
+                            title: "Section 0",
+                            rows: ["0-0", "0-1", "0-2"]
+                        }
+                    ]
+                },
+                layout: $layout.fill,
+                events: {
+                    didSelect: function(_sender, indexPath, _data) {
+                        const section = indexPath.section;
+                        const row = indexPath.row;
                     }
                 }
             }
