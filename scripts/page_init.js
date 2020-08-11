@@ -14,7 +14,8 @@ let urlCheck = require("./api/urlCheck.js"),
     jshuwen = require("./view/jshuwen.js"),
     appleRank = require("./view/apple_rank.js"),
     tophub = require("./view/tophub.js"),
-    bilichat = require("./view/bilichat.js");
+    bilichat = require("./view/bilichat.js"),
+    test = require("./view/test");
 
 function gotoUrl(url) {
     const newUrl = $text.URLDecode(url);
@@ -105,6 +106,7 @@ module.exports = {
     appleRank: appleRank.initView,
     tophub: tophub.init,
     bilichat: bilichat.showHistory,
+    test:test.init,
     contextOpen,
     gotoUrl,
     scanQrcodeToGo
