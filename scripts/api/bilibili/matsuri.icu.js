@@ -107,5 +107,6 @@ function init() {
     });
 }
 module.exports = {
+    getViewer,
     init
 };
