@@ -20,7 +20,7 @@ function mangaClockin() {
                 uid: uid,
                 access_key: accessKey
             },
-            handler: function (postResp) {
+            handler: function(postResp) {
                 var clockinData = postResp.data;
                 $console.info(clockinData);
                 $ui.loading(false);
@@ -53,6 +53,7 @@ function mangaClockin() {
 }
 
 function silverToCoin() {
+    $ui.loading(true);
     $http.post({
         url: _BILIURL.SILVER_TO_COIN,
         header: {
@@ -62,8 +63,9 @@ function silverToCoin() {
         body: {
             access_key: _USER.getAccessKey()
         },
-        handler: function (resp) {
+        handler: function(resp) {
             var data = resp.data;
+            $ui.loading(false);
             $console.info(data);
             if (data) {
                 if (data.code == 0) {
