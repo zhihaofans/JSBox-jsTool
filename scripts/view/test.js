@@ -1,4 +1,4 @@
-const matsuri_icu = require("../api/matsuri.icu");
+const matsuri_icu = require("../api/bilibili/matsuri.icu");
 function init() {
     $ui.push({
         props: {
