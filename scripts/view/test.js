@@ -1,4 +1,6 @@
-const matsuri_icu = require("../api/bilibili/matsuri.icu");
+const matsuri_icu = require("../api/bilibili/matsuri.icu"),
+    download = require("../api/download"),
+    auth = require("../api/auth");
 function init() {
     $ui.push({
         props: {
@@ -11,7 +13,11 @@ function init() {
                     data: [
                         {
                             title: "Section 0",
-                            rows: ["matsuri.icu"]
+                            rows: [
+                                "matsuri.icu",
+                                "instagram",
+                                "Custom cache value"
+                            ]
                         }
                     ]
                 },
@@ -24,7 +30,47 @@ function init() {
                             case 0:
                                 switch (row) {
                                     case 0:
-                                    matsuri_icu.init();
+                                        matsuri_icu.init();
+                                        break;
+                                    case 1:
+                                        $input.text({
+                                            type: $kbType.text,
+                                            placeholder: "",
+                                            text: "",
+                                            handler: text => {
+                                                if (text) {
+                                                    download.instagram(text);
+                                                } else {
+                                                    $ui.error("空白链接");
+                                                }
+                                            }
+                                        });
+
+                                        break;
+                                    case 2:
+                                        $input.text({
+                                            type: $kbType.text,
+                                            placeholder: "",
+                                            text: "",
+                                            handler: inputId => {
+                                                if (inputId) {
+                                                    $input.text({
+                                                        type: $kbType.text,
+                                                        placeholder: "",
+                                                        text:
+                                                            $cache.get(
+                                                                inputId
+                                                            ) || "",
+                                                        handler: inputValue => {
+                                                            auth.customCache(
+                                                                inputId,
+                                                                inputValue
+                                                            );
+                                                        }
+                                                    });
+                                                }
+                                            }
+                                        });
                                         break;
                                 }
                                 break;
