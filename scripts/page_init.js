@@ -1,20 +1,20 @@
-$include("./api/codePrototype.js");
+$include("./api/codePrototype"); 
 
 // 模块
-let urlCheck = require("./api/urlCheck.js"),
-    mofish = require("./view/mofish.js"),
-    cdn = require("./view/cdn.js"),
-    image = require("./view/image.js"),
-    bilibili = require("./view/bilibili.js"),
-    zhihuDaily = require("./view/zhihu_daily.js"),
-    acfun = require("./view/acfun.js"),
-    instagram = require("./view/instagram.js"),
-    misc = require("./view/misc.js"),
-    dailyCheckin = require("./view/daily_check_in.js"),
-    jshuwen = require("./view/jshuwen.js"),
-    appleRank = require("./view/apple_rank.js"),
-    tophub = require("./view/tophub.js"),
-    bilichat = require("./view/bilichat.js"),
+let urlCheck = require("./api/urlCheck"),
+    mofish = require("./view/mofish"),
+    cdn = require("./view/cdn"),
+    image = require("./view/image"),
+    bilibili = require("./view/bilibili"),
+    zhihuDaily = require("./view/zhihu_daily"),
+    acfun = require("./view/acfun"),
+    instagram = require("./view/instagram"),
+    misc = require("./view/misc"),
+    dailyCheckin = require("./view/daily_check_in"),
+    jshuwen = require("./view/jshuwen"),
+    appleRank = require("./view/apple_rank"),
+    tophub = require("./view/tophub"),
+    bilichat = require("./view/bilichat"),
     test = require("./view/test");
 
 function gotoUrl(url) {
