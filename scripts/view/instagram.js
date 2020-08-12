@@ -332,6 +332,7 @@ let instagramOfficial = link => {
             handler: function(resp) {
                 var data = resp.data;
                 if (data) {
+              
                     const gsm = data.graphql.shortcode_media;
                     if (gsm.is_ad) {
                         $ui.alert({

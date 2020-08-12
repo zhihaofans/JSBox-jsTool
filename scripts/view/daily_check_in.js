@@ -1,6 +1,6 @@
 let _ACFUN = require("../api/acfun.js"),
     _BILI = require("../api/bilibili/check_in.js");
-let initView = () => {
+function initView () {
     $ui.push({
         props: {
             title: "每日签到"
@@ -13,7 +13,7 @@ let initView = () => {
             layout: $layout.fill,
             events: {
                 didSelect: function (sender, indexPath, data) {
-                    let row = indexPath.row;
+                    const row = indexPath.row;
                     switch (row) {
                         case 0:
                             _ACFUN.signIn();
@@ -31,7 +31,7 @@ let initView = () => {
             }
         }]
     });
-};
+}
 module.exports = {
     initView
 };
