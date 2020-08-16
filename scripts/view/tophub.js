@@ -32,7 +32,7 @@ function getWeb(authkey) {
                 );
                 resultList[i] = media_item;
             });
-            $console.error(`resultList.length:${resultList.length}`);
+            $console.info(`resultList.length:${resultList.length}`);
             if (resultList.length > 0) {
                 $ui.loading(false);
                 $ui.push({
