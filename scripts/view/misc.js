@@ -5,7 +5,8 @@ let mainList = [
     "meowv/cat",
     "meowv/soul",
     "isoyu/bing",
-    "66mz8/phoneWallpaper"
+    "66mz8/phoneWallpaper",
+    "neeemooo"
 ];
 
 let initListView = () => {
@@ -39,6 +40,9 @@ let initListView = () => {
                                 break;
                             case "66mz8/phoneWallpaper":
                                 api66mz8_PhoneWallpaper();
+                                break;
+                            case "neeemooo":
+                                neeemooo();
                                 break;
                             default:
                                 $ui.toast("暂不支持该功能，请等待更新");
@@ -238,7 +242,11 @@ function neeemooo() {
     ];
     const url =
         "https://neeemooo.com/hanon/" + images[Math.floor(Math.random() * 18)];
-        
+    $console.info(url);
+    $ui.preview({
+        title: "neeemooo",
+        url: url
+    });
 }
 module.exports = {
     initListView
