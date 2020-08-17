@@ -240,11 +240,13 @@ function neeemooo() {
         "震撼鸟神.png",
         "鸟神的赐福.png"
     ];
-    const url =
-        "https://neeemooo.com/hanon/" + images[Math.floor(Math.random() * 18)];
+
+    const fileName = images[Math.floor(Math.random() * 18)];
+    const url = "https://neeemooo.com/hanon/" + encodeURI(fileName);
     $console.info(url);
+    //QU.quicklookImageUrl(url);
     $ui.preview({
-        title: "neeemooo",
+        title: fileName,
         url: url
     });
 }
