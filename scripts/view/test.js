@@ -1,6 +1,7 @@
 const matsuri_icu = require("../api/bilibili/matsuri.icu"),
     download = require("../api/download"),
-    auth = require("../api/auth");
+    auth = require("../api/auth"),
+    mod = require("../mod_index");
 function init() {
     $ui.push({
         props: {
@@ -16,7 +17,8 @@ function init() {
                             rows: [
                                 "matsuri.icu",
                                 "instagram",
-                                "Custom cache value"
+                                "Custom cache value",
+                                "mod"
                             ]
                         }
                     ]
@@ -71,6 +73,9 @@ function init() {
                                                 }
                                             }
                                         });
+                                        break;
+                                        case 3:
+                                        mod.showModList();
                                         break;
                                 }
                                 break;
