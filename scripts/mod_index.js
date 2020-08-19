@@ -4,7 +4,36 @@ function loadMod(modName) {
 }
 
 function initMod(modName) {
-    require(`${modDir}${modName}`).init();
+    const fileName = `${modDir}${modName}`;
+    if ($file.exists(fileName)) {
+        if ($file.isDirectory(fileName)) {
+            $ui.error("这是目录");
+        } else {
+            const modData = require(fileName);
+            if (modData) {
+                try {
+                    modData.init();
+                    $console.info("Mod加载完毕");
+                } catch (error) {
+                    $ui.alert({
+                        title: `${modName}加载失败`,
+                        message: error.message,
+                        actions: [
+                            {
+                                title: "OK",
+                                disabled: false, // Optional
+                                handler: function() {}
+                            }
+                        ]
+                    });
+                }
+            } else {
+                $ui.error("请确认是否为mod文件");
+            }
+        }
+    } else {
+        $ui.error("不存在该文件");
+    }
 }
 function getModList() {
     return $file.list(modDir);
