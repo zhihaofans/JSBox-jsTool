@@ -1,6 +1,4 @@
-let sys = require("../system.js"),
-    cheerio = require("cheerio"),
-    _BILIURL = require("./api_url.js").BILIBILI,
+let _BILIURL = require("./api_url.js").BILIBILI,
     _USER = require("./user.js"),
     _UA = require("../user-agent.js");
 
@@ -105,8 +103,58 @@ function vipCheckin() {
         }
     });
 }
+function liveCheckIn() {
+    $ui.loading(true);
+    $http.get({
+        url: _BILIURL.LIVE_CHECK_IN + _USER.getAccessKey(),
+        handler: resp => {
+            var data = resp.data;
+            $ui.loading(false);
+            if (data) {
+                if (data.code == 0) {
+                    $ui.alert({
+                        title: "签到成功",
+                        message: data.message || "签到成功",
+                        actions: [
+                            {
+                                title: "OK",
+                                disabled: false, // Optional
+                                handler: function() {}
+                            }
+                        ]
+                    });
+                } else {
+                    $ui.alert({
+                        title: "签到失败",
+                        message: data.message || "未返回错误信息",
+                        actions: [
+                            {
+                                title: "OK",
+                                disabled: false, // Optional
+                                handler: function() {}
+                            }
+                        ]
+                    });
+                }
+            } else {
+                $ui.alert({
+                    title: "签到失败",
+                    message: "返回空白数据",
+                    actions: [
+                        {
+                            title: "OK",
+                            disabled: false, // Optional
+                            handler: function() {}
+                        }
+                    ]
+                });
+            }
+        }
+    });
+}
 module.exports = {
     mangaClockin,
     silverToCoin,
-    vipCheckin
+    vipCheckin,
+    liveCheckIn
 };
