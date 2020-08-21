@@ -36,7 +36,16 @@ function initMod(modName) {
     }
 }
 function getModList() {
-    return $file.list(modDir);
+    var modList = [];
+    const fileList = $file.list(modDir);
+    fileList.map(f => {
+        if (!$file.isDirectory(f)) {
+            if (f.endsWith(".js")) {
+                modList.push(f);
+            }
+        }
+    });
+    return modList;
 }
 function showModList() {
     const modList = getModList();
