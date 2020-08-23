@@ -1,4 +1,5 @@
-var API_URL = require("./api_url");
+var API_URL = require("./api_url"),
+    app = require("./app");
 async function init(serverDomain) {
     $console.info(`serverDomain:${serverDomain}`);
     $ui.loading(true);
@@ -46,17 +47,24 @@ function showTimeLine(timeLine) {
 
                         const thisItem = timeLine[row];
                         $console.info(thisItem);
-$ui.alert({
-    title: "",
-    message: thisItem,
-    actions: [
-        {
-            title: "OK",
-            disabled: false, // Optional
-            handler: function() {}
-        }
-    ]
-});                        
+                        $ui.alert({
+                            title: thisItem.userid,
+                            message: thisItem.content,
+                            actions: [
+                                {
+                                    title: "打开",
+                                    disabled: false, // Optional
+                                    handler: function() {
+                                        app.openAppPost(thisItem.id);
+                                    }
+                                },
+                                {
+                                    title: "OK",
+                                    disabled: false, // Optional
+                                    handler: function() {}
+                                }
+                            ]
+                        });
                     }
                 }
             }
