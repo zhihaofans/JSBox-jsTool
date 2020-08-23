@@ -10,8 +10,12 @@ async function init() {
 async function getHost() {
     try {
         const backupUrl = await _API.getBackupUrl();
-        serverDomain = backupUrl;
-        $console.info(`获取主机成功: ${serverDomain}`);
+        if (backupUrl) {
+            serverDomain = backupUrl[0];
+            $console.info(`获取主机成功: ${serverDomain}`);
+        } else {
+            $console.error(`获取主机失败，使用自带主机名:${serverDomain}`);
+        }
     } catch (_error) {
         $console.error(`获取主机失败，使用自带主机名:${serverDomain}`);
     }
