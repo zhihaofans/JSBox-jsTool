@@ -1,4 +1,5 @@
-const timeLine = require("./time_line");
+const timeLine = require("./time_line"),
+    _FORUM = require("./forum");
 function showMainPage(serverDomain) {
     $ui.push({
         props: {
@@ -28,7 +29,10 @@ function showMainPage(serverDomain) {
                             case 0:
                                 switch (row) {
                                     case 0:
-                                    timeLine.init(serverDomain);
+                                        timeLine.init(serverDomain);
+                                        break;
+                                    case 1:
+                                        _FORUM.getForum(121);
                                         break;
                                     default:
                                         $ui.error("错误选项");
@@ -46,4 +50,3 @@ function showMainPage(serverDomain) {
 module.exports = {
     showMainPage
 };
-

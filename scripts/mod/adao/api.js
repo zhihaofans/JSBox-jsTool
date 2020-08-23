@@ -9,7 +9,13 @@ async function getBackupUrl() {
         return result.data;
     }
 }
-
+async function httpGet(url, headers = undefined) {
+    return await $http.get({
+        url: API_URL.DEFAULT_HOST + url,
+        header: headers
+    });
+}
 module.exports = {
-    getBackupUrl
+    getBackupUrl,
+    httpGet
 };
