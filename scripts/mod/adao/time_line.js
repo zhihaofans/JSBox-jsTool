@@ -24,7 +24,7 @@ async function init(serverDomain) {
     }
 }
 async function getTimeLine(hosts) {
-    const result = await $http.get({ url: hosts + API_URL.GET_TIMELINE });
+    const result = await $http.get({ url: hosts + API_URL.EXT.GET_TIMELINE });
     $console.info(result);
     return result.data;
 }
