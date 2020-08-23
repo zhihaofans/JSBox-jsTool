@@ -55,7 +55,7 @@ function showTimeLine(timeLine) {
                                     title: "打开",
                                     disabled: false, // Optional
                                     handler: function() {
-                                        app.openAppPost(thisItem.id);
+                                        app.openAppThread(thisItem.id);
                                     }
                                 },
                                 {

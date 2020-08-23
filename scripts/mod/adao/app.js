@@ -1,6 +1,6 @@
-function openAppPost(t){
+function openAppThread(t){
   $app.openURL(`adnmb://t/${t}`)
 }
 module.exports = {
-    openAppPost
+    openAppThread
 };
