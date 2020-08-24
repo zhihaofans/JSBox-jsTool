@@ -10,10 +10,11 @@ async function getBackupUrl() {
     }
 }
 async function httpGet(url, headers = undefined) {
-    return await $http.get({
+    const result = $http.get({
         url: API_URL.DEFAULT_HOST + url,
         header: headers
     });
+    return result;
 }
 module.exports = {
     getBackupUrl,

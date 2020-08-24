@@ -1,5 +1,5 @@
 var API_URL = require("./api_url"),
-    app = require("./app");
+    _forum = require("./forum");
 async function init(serverDomain) {
     $console.info(`serverDomain:${serverDomain}`);
     $ui.loading(true);
@@ -8,7 +8,7 @@ async function init(serverDomain) {
     if (timeLine) {
         $console.info(`获取时间线成功:`);
         $console.info(timeLine);
-        showTimeLine(timeLine);
+        _forum.showForum(timeLine);
     } else {
         $ui.alert({
             title: "错误",
@@ -27,49 +27,6 @@ async function getTimeLine(hosts) {
     const result = await $http.get({ url: hosts + API_URL.EXT.GET_TIMELINE });
     $console.info(result);
     return result.data;
-}
-function showTimeLine(timeLine) {
-    $ui.push({
-        props: {
-            title: "时间线"
-        },
-        views: [
-            {
-                type: "list",
-                props: {
-                    data: timeLine.map(t => t.content)
-                },
-                layout: $layout.fill,
-                events: {
-                    didSelect: function(_sender, indexPath, _data) {
-                        const section = indexPath.section;
-                        const row = indexPath.row;
-
-                        const thisItem = timeLine[row];
-                        $console.info(thisItem);
-                        $ui.alert({
-                            title: thisItem.userid,
-                            message: thisItem.content,
-                            actions: [
-                                {
-                                    title: "打开",
-                                    disabled: false, // Optional
-                                    handler: function() {
-                                        app.openAppThread(thisItem.id);
-                                    }
-                                },
-                                {
-                                    title: "OK",
-                                    disabled: false, // Optional
-                                    handler: function() {}
-                                }
-                            ]
-                        });
-                    }
-                }
-            }
-        ]
-    });
 }
 module.exports = {
     init
