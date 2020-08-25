@@ -5,9 +5,7 @@ let siteListL10n = [
     "BILIBILI",
     "INSTAGRAM",
     "ZHIHU_DAILY",
-    "技术文",
     "每日签到",
-    "苹果排行榜",
     "TOPHUB",
     "Bilichat历史"
 ];
@@ -108,18 +106,13 @@ function init() {
                                             page.zhihuDaily();
                                             break;
                                         case 5:
-                                            page.jshuwen();
-                                            break;
-                                        case 6:
                                             page.dailyCheckin();
                                             break;
-                                        case 7:
-                                            page.appleRank();
-                                            break;
-                                        case 8:
+
+                                        case 6:
                                             page.tophub();
                                             break;
-                                        case 9:
+                                        case 7:
                                             page.bilichat();
                                             break;
                                         default:
