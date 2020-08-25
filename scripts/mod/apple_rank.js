@@ -1,4 +1,4 @@
-let appleRank = require("../api/apple_rank.js");
+let appleRank = require("./apple/apple_rank");
 let regionList = appleRank.getRegionCode();
 
 function rankResultItem(_title, _url, _icon = undefined) {
@@ -54,7 +54,7 @@ function showResultList(mode) {
     
 }
 
-function initView() {
+function init() {
     $ui.push({
         props: {
             title: "App store排行榜"
@@ -100,5 +100,5 @@ function initView() {
 }
 
 module.exports = {
-    initView
+    init
 };

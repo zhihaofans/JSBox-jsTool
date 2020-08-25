@@ -19,14 +19,6 @@ let ACFUN = {
     API_66MZ8_COM = {
         PHONE_WALLPAPER: "https://api.66mz8.com/api/rand.img.php?type=%E5%A3%81%E7%BA%B8"
     },
-    APPLE = {
-        IOS_APP_STORE_RANK: {
-            HOST: "https://itunes.apple.com/",
-            FREE_APP: "/rss/topfreeapplications/limit=100/genre=25129/json",
-            PAID_APP: "/rss/toppaidapplications/limit=100/genre=25129/json",
-            GROSSING_APP: "/rss/topgrossingapplications/limit=100/genre=25129/json"
-        }
-    },
     ISOYU = {
         BING: "https://api.isoyu.com/bing_images.php"
     },
@@ -53,7 +45,6 @@ let ACFUN = {
 module.exports = {
     ACFUN,
     API_66MZ8_COM,
-    APPLE,
     ISOYU,
     JISHUWEN,
     JSBOX,

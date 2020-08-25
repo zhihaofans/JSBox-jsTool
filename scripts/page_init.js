@@ -1,4 +1,4 @@
-$include("./api/codePrototype"); 
+$include("./api/codePrototype");
 
 // 模块
 let urlCheck = require("./api/urlCheck"),
@@ -12,7 +12,6 @@ let urlCheck = require("./api/urlCheck"),
     misc = require("./view/misc"),
     dailyCheckin = require("./view/daily_check_in"),
     jshuwen = require("./view/jshuwen"),
-    appleRank = require("./view/apple_rank"),
     tophub = require("./view/tophub"),
     bilichat = require("./view/bilichat"),
     test = require("./view/test");
@@ -103,10 +102,9 @@ module.exports = {
     misc: misc.initListView,
     jshuwen: jshuwen.getList,
     dailyCheckin: dailyCheckin.initView,
-    appleRank: appleRank.initView,
     tophub: tophub.init,
     bilichat: bilichat.showHistory,
-    test:test.init,
+    test: test.init,
     contextOpen,
     gotoUrl,
     scanQrcodeToGo
