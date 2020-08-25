@@ -4,7 +4,6 @@ $include("./api/codePrototype");
 let urlCheck = require("./api/urlCheck"),
     mofish = require("./view/mofish"),
     cdn = require("./view/cdn"),
-    image = require("./view/image"),
     bilibili = require("./view/bilibili"),
     zhihuDaily = require("./view/zhihu_daily"),
     acfun = require("./view/acfun"),
@@ -94,7 +93,6 @@ function scanQrcodeToGo() {
 module.exports = {
     mofish: mofish.init,
     cdn: cdn.init,
-    image: image.init,
     bilibili: bilibili.init,
     zhihuDaily: zhihuDaily.init,
     acfun: acfun.init,

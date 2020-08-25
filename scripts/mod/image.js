@@ -1,4 +1,4 @@
-let app = require("../api/app.js");
+let app = require("/scripts/api/app.js");
 let todayImageIoliu = () => {
     const screenInfo = $device.info.screen;
     const url = `https://bing.ioliu.cn/v1?w=${screenInfo.width}&h=${screenInfo.height}`;
