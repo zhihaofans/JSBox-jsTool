@@ -1,4 +1,5 @@
 let modDir = "/scripts/mod/";
+
 function loadModJson() {
     const modJson = $file.read(`${modDir}mod.json`).string;
     if (modJson) {
@@ -14,6 +15,7 @@ function loadModJson() {
         return undefined;
     }
 }
+
 function loadMod(modName) {
     return require(`${modDir}${modName}`);
 }
@@ -50,6 +52,7 @@ function initMod(modName) {
         $ui.error("不存在该文件");
     }
 }
+
 function getModList() {
     var modList = [];
     const fileList = $file.list(modDir);
@@ -62,19 +65,22 @@ function getModList() {
     });
     return modList;
 }
+
 function showModList() {
     const modList = getModList();
     const modJson = loadModJson();
     const modJsonObj = {};
-    $console.info(modJson);
+    const pinModList = [];
+    const otherModList = [];
     if (modJson) {
-        modJson.map(m => {
-            modJsonObj[m.file] = m;
-        });
+        modJson.map(mod => (modJsonObj[mod.file] = mod));
     }
     $console.info(modJsonObj);
     if (modList) {
         if (modList.length > 0) {
+            modList.map(mod => {
+                modJsonObj[mod] ? pinModList.push(mod) : otherModList.push(mod);
+            });
             $ui.push({
                 props: {
                     title: "Mod列表"
@@ -83,15 +89,18 @@ function showModList() {
                     {
                         type: "list",
                         props: {
-                            data: modList.map(mod => {
-                                if (modJson) {
-                                    return modJsonObj[mod]
-                                        ? modJsonObj[mod].name
-                                        : mod;
-                                } else {
-                                    return mod;
+                            data: [
+                                {
+                                    title: "常用Mod",
+                                    rows: pinModList.map(
+                                        mod => modJsonObj[mod].name
+                                    )
+                                },
+                                {
+                                    title: "其他Mod",
+                                    rows: otherModList
                                 }
-                            })
+                            ]
                         },
                         layout: $layout.fill,
                         events: {
@@ -99,7 +108,11 @@ function showModList() {
                                 const section = indexPath.section;
                                 const row = indexPath.row;
                                 $console.info(_data);
-                                initMod(modList[row]);
+                                initMod(
+                                    section == 0
+                                        ? pinModList[row]
+                                        : otherModList[row]
+                                );
                             }
                         }
                     }
