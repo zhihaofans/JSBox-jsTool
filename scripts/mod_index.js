@@ -28,7 +28,7 @@ function initMod(modName) {
             if (modData) {
                 try {
                     modData.init();
-                    $console.info("Mod加载完毕");
+                    $console.info(`Mod加载完毕:${modName}`);
                 } catch (error) {
                     $ui.alert({
                         title: `${modName}加载失败`,
@@ -85,7 +85,9 @@ function showModList() {
                         props: {
                             data: modList.map(mod => {
                                 if (modJson) {
-                                    return mod;
+                                    return modJsonObj[mod]
+                                        ? modJsonObj[mod].name
+                                        : mod;
                                 } else {
                                     return mod;
                                 }
