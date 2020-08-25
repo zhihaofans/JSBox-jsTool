@@ -2,8 +2,9 @@
     {
         file: "demo.js",
         name: "Demo",
-        url:"",
-        version:1,
-        pref:[]
+        url: "",
+        version: 1,
+        dec: "",
+        pref: []
     }
-];
+]

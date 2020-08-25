@@ -1,4 +1,19 @@
 let modDir = "/scripts/mod/";
+function loadModJson() {
+    const modJson = $file.read(`${modDir}mod.json`).string;
+    if (modJson) {
+        $console.info(modJson);
+        try {
+            return JSON.parse(modJson);
+        } catch (error) {
+            $console.error("loadModJson:failed");
+            $console.error(error);
+            return undefined;
+        }
+    } else {
+        return undefined;
+    }
+}
 function loadMod(modName) {
     return require(`${modDir}${modName}`);
 }
@@ -49,6 +64,15 @@ function getModList() {
 }
 function showModList() {
     const modList = getModList();
+    const modJson = loadModJson();
+    const modJsonObj = {};
+    $console.info(modJson);
+    if (modJson) {
+        modJson.map(m => {
+            modJsonObj[m.file] = m;
+        });
+    }
+    $console.info(modJsonObj);
     if (modList) {
         if (modList.length > 0) {
             $ui.push({
@@ -59,7 +83,13 @@ function showModList() {
                     {
                         type: "list",
                         props: {
-                            data: modList
+                            data: modList.map(mod => {
+                                if (modJson) {
+                                    return mod;
+                                } else {
+                                    return mod;
+                                }
+                            })
                         },
                         layout: $layout.fill,
                         events: {
