@@ -1,10 +1,12 @@
 [
     {
-        file: "demo.js",
-        name: "Demo",
-        url: "",
-        version: 1,
-        dec: "",
-        pref: []
+        "file": "demo.js",
+        "name": "Demo",
+        "url": "",
+        "version": 1,
+        "dec": "",
+        "pref": {
+          
+        }
     }
 ]
