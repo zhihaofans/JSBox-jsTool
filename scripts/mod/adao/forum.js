@@ -1,6 +1,11 @@
 const _URL = require("./api_url"),
     _API = require("./api"),
     app = require("./app");
+async function getTimeLine(hosts) {
+    const result = await $http.get({ url: hosts + _URL.EXT.GET_TIMELINE });
+    $console.info(result);
+    return result.data;
+}
 async function getForum(forumId) {
     $ui.loading(true);
     const httpGet = await _API.httpGet(
@@ -21,7 +26,7 @@ async function getForum(forumId) {
                 actions: [
                     {
                         title: "OK",
-                        disabled: false, // Optional
+                        disabled: false,
                         handler: function() {}
                     }
                 ]
@@ -54,14 +59,14 @@ function showForum(forumData) {
                             actions: [
                                 {
                                     title: "打开",
-                                    disabled: false, // Optional
+                                    disabled: false,
                                     handler: function() {
                                         app.openAppThread(thisItem.id);
                                     }
                                 },
                                 {
                                     title: "OK",
-                                    disabled: false, // Optional
+                                    disabled: false,
                                     handler: function() {}
                                 }
                             ]
@@ -74,5 +79,6 @@ function showForum(forumData) {
 }
 module.exports = {
     getForum,
-    showForum
+    showForum,
+    getTimeLine
 };

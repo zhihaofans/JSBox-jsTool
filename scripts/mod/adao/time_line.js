@@ -16,7 +16,7 @@ async function init(serverDomain) {
             actions: [
                 {
                     title: "OK",
-                    disabled: false, // Optional
+                    disabled: false,
                     handler: function() {}
                 }
             ]
