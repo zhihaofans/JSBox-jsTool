@@ -4,7 +4,6 @@ let siteListL10n = [
     "ACFUN",
     "BILIBILI",
     "INSTAGRAM",
-    "ZHIHU_DAILY",
     "每日签到",
     "TOPHUB",
     "Bilichat历史"
@@ -103,16 +102,13 @@ function init() {
                                             page.instagram();
                                             break;
                                         case 4:
-                                            page.zhihuDaily();
-                                            break;
-                                        case 5:
                                             page.dailyCheckin();
                                             break;
 
-                                        case 6:
+                                        case 5:
                                             page.tophub();
                                             break;
-                                        case 7:
+                                        case 6:
                                             page.bilichat();
                                             break;
                                         default:
