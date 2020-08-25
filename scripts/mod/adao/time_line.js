@@ -3,12 +3,12 @@ var API_URL = require("./api_url"),
 async function init(serverDomain) {
     $console.info(`serverDomain:${serverDomain}`);
     $ui.loading(true);
-    const timeLine = await getTimeLine(serverDomain);
+    const timeLine = await _forum.getTimeLine(serverDomain);
     $ui.loading(false);
     if (timeLine) {
         $console.info(`获取时间线成功:`);
         $console.info(timeLine);
-        _forum.showForum(timeLine);
+        _forum.showForum(timeLine, "时间线");
     } else {
         $ui.alert({
             title: "错误",

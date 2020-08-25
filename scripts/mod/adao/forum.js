@@ -6,6 +6,7 @@ async function getTimeLine(hosts) {
     $console.info(result);
     return result.data;
 }
+function getForumListOnline() {}
 async function getForum(forumId) {
     $ui.loading(true);
     const httpGet = await _API.httpGet(
@@ -34,10 +35,10 @@ async function getForum(forumId) {
         }
     }
 }
-function showForum(forumData) {
+function showForum(forumData, forumTitle = "板块") {
     $ui.push({
         props: {
-            title: "板块"
+            title: forumTitle
         },
         views: [
             {
