@@ -2,6 +2,7 @@ let sys = require("./system.js"),
     _URL = require("./api_url.js"),
     _USER = require("./user.js"),
     _GIFT = require("./gift.js"),
+    _ICU = require("./matsuri.icu"),
     appScheme = require("../app_scheme.js"),
     _UA = require("../user-agent.js");
 
@@ -666,14 +667,19 @@ function openLiveDanmuku(liveroomId) {
 
 // 直播间舰长
 function getLiveroomGuardList(roomid, uid, pageNo = 1, pageSize = 20) {
+    $ui.error("维护中");
+    
     $ui.loading(true);
+    const url=`${_URL.BILIBILI.LIVE_GUARD}?roomid=${roomid}&ruid=${uid}&page=${pageNo}&page_size=${pageSize}`;
+    $console.info(url);
     $http.get({
-        url: `${_URL.BILIBILI.LIVE_GUARD}?roomid=${roomid}&ruid=${uid}&page=${pageNo}&page_size=${pageSize}`,
+        url: url,
         header: {
             "User-agent": _UA.BILIBILI
         }
     }).then(function (resp) {
         var data = resp.data;
+        $console.info(data);
         if (data.code == 0) {
             const guardInfo = data.data.info;
             const guardList = data.data.top3.concat(data.data.list);
