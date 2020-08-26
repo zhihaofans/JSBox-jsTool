@@ -3,7 +3,6 @@ let modDir = "/scripts/mod/";
 function loadModJson() {
     const modJson = $file.read(`${modDir}mod.json`).string;
     if (modJson) {
-        $console.info(modJson);
         try {
             return JSON.parse(modJson);
         } catch (error) {

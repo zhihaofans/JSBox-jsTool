@@ -28,5 +28,15 @@
         "pref": {
           
         }
-    }
+    },
+    {
+        "file": "mofish.js",
+        "name": "摸鱼热榜",
+        "url": "",
+        "version": 1,
+        "dec": "",
+        "pref": {
+          
+        }
+			}
 ]
