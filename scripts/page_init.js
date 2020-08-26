@@ -8,7 +8,6 @@ let urlCheck = require("./api/urlCheck"),
     instagram = require("./view/instagram"),
     misc = require("./view/misc"),
     dailyCheckin = require("./view/daily_check_in"),
-    tophub = require("./view/tophub"),
     bilichat = require("./view/bilichat"),
     test = require("./view/test");
 
@@ -91,7 +90,6 @@ module.exports = {
     instagram: instagram.init,
     misc: misc.initListView,
     dailyCheckin: dailyCheckin.initView,
-    tophub: tophub.init,
     bilichat: bilichat.showHistory,
     test: test.init,
     contextOpen,

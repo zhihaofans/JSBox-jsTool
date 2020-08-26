@@ -4,7 +4,6 @@ let siteListL10n = [
     "BILIBILI",
     "INSTAGRAM",
     "每日签到",
-    "TOPHUB",
     "Bilichat历史"
 ];
 let moreListL10n = ["CDN", "IMAGE", "杂项"];
@@ -99,12 +98,8 @@ function init() {
                                             break;
                                         case 3:
                                             page.dailyCheckin();
-                                            break;
-
+                                            break;                                 
                                         case 4:
-                                            page.tophub();
-                                            break;
-                                        case 5:
                                             page.bilichat();
                                             break;
                                         default:

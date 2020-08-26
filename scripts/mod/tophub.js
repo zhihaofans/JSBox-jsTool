@@ -1,5 +1,5 @@
-let _URL = require("../api/urlData.js").TOPHUB,
-    appScheme = require("../api/app_scheme.js");
+let _URL = require("/scripts/api/urlData.js").TOPHUB,
+    appScheme = require("/scripts/api/app_scheme.js");
 let cheerio = require("cheerio");
 let cacheId="tophub_cookies_itc_center_user";
 
