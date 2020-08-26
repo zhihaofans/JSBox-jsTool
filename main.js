@@ -1,6 +1,5 @@
 let page = require("./scripts/page_init.js");
 let siteListL10n = [
-    "MO_FISH",
     "ACFUN",
     "BILIBILI",
     "INSTAGRAM",
@@ -90,25 +89,22 @@ function init() {
                                 case 0:
                                     switch (indexPath.row) {
                                         case 0:
-                                            page.mofish();
-                                            break;
-                                        case 1:
                                             page.acfun();
                                             break;
-                                        case 2:
+                                        case 1:
                                             page.bilibili();
                                             break;
-                                        case 3:
+                                        case 2:
                                             page.instagram();
                                             break;
-                                        case 4:
+                                        case 3:
                                             page.dailyCheckin();
                                             break;
 
-                                        case 5:
+                                        case 4:
                                             page.tophub();
                                             break;
-                                        case 6:
+                                        case 5:
                                             page.bilichat();
                                             break;
                                         default:

@@ -2,7 +2,6 @@ $include("./api/codePrototype");
 
 // 模块
 let urlCheck = require("./api/urlCheck"),
-    mofish = require("./view/mofish"),
     cdn = require("./view/cdn"),
     bilibili = require("./view/bilibili"),
     acfun = require("./view/acfun"),
@@ -63,9 +62,6 @@ function contextOpen(query) {
                 });
             }
             break;
-        case "mofish":
-            mofish.init(true);
-            break;
         default:
             $ui.alert({
                 title: "外部调用错误",
@@ -89,7 +85,6 @@ function scanQrcodeToGo() {
     });
 }
 module.exports = {
-    mofish: mofish.init,
     cdn: cdn.init,
     bilibili: bilibili.init,
     acfun: acfun.init,
