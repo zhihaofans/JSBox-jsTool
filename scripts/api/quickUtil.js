@@ -1,10 +1,10 @@
-let quicklookImageUrl = url => {
+function quicklookImageUrl(url) {
     $ui.loading(true);
     $quicklook.open({
         image: $image(url)
     });
     $ui.loading(false);
-};
+}
 function quicklookUrl(url) {
     $ui.loading(true);
     $quicklook.open({
