@@ -215,7 +215,7 @@ let isoyuBing = () => {
 let api66mz8_PhoneWallpaper = () => {
     $ui.preview({
         title: "66mz8/phoneWallpaper",
-        url: _url.ISOYU.BING
+        url: _url.API_66MZ8_COM.PHONE_WALLPAPER
     });
 };
 function neeemooo() {

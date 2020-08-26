@@ -6,7 +6,7 @@ let siteListL10n = [
         "每日签到",
         "Bilichat历史"
     ],
-    moreListL10n = ["CDN", "IMAGE", "杂项"];
+    moreListL10n = ["CDN", "杂项"];
 let getNavButton = () => {
     return [
         {
@@ -85,9 +85,6 @@ function loadMainView() {
                                         page.cdn();
                                         break;
                                     case 1:
-                                        page.image();
-                                        break;
-                                    case 2:
                                         page.misc();
                                         break;
                                     default:
