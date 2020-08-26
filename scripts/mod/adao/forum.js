@@ -44,7 +44,9 @@ function showForum(forumData, forumTitle = "板块") {
             {
                 type: "list",
                 props: {
-                    data: forumData.map(f => f.content)
+                    data: forumData.map(f =>
+                        f.img ? `[有图]${f.content}` : f.content
+                    )
                 },
                 layout: $layout.fill,
                 events: {
