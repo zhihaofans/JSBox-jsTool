@@ -820,6 +820,7 @@ let initWebServer = (dir, htmlStr, port = 9999) => {
 let init = () => {
     loadUserToken();
 };
+function getUserVideoWithoutBanana() {}
 module.exports = {
     login,
     logout,
