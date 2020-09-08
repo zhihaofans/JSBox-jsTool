@@ -5,7 +5,8 @@ let sys = require("./system.js"),
     _UA = require("./user-agent.js"),
     _ACFUN = _URL.ACFUN,
     _TENCENT = _URL.TENCENT,
-    urlCheck = require("./urlCheck.js");
+    urlCheck = require("./urlCheck.js"),
+    _HTTP = require("./http");
 let acVideoSiteList = [
         _ACFUN.ACFUN_DETAIL_VIDEO,
         _ACFUN.ACFUN_WWW_V_AC,
@@ -471,15 +472,14 @@ let signIn = () => {
         $ui.error("未登录");
     }
 };
-let dailyCheckin = () => {
+let dailyCheckin = async () => {
     $ui.loading(true);
-    const result = $http.get({
-        url: _ACFUN.SIGN_IN,
-        header: {
-            Cookie: getCookies(),
-            acPlatform: "IPHONE"
-        }
+    const result = _HTTP.getAwait(_ACFUN.SIGN_IN, {
+        Cookie: getCookies(),
+        acPlatform: "IPHONE"
     });
+
+    $console.info(result);
     if (result.error) {
         $ui.loading(false);
         $ui.alert({
@@ -510,6 +510,7 @@ let dailyCheckin = () => {
                           : signinResult.error_msg
                   });
         } else {
+            $ui.loading(false);
             $ui.alert({
                 title: "签到失败",
                 message: result,
@@ -911,5 +912,6 @@ module.exports = {
     _cacheKey,
     getVidFromUrl,
     getVideoPid,
-    getuidFromUrl
+    getuidFromUrl,
+    dailyCheckin
 };
