@@ -51,7 +51,7 @@ let login = (id, pwd) => {
             username: id,
             password: pwd
         },
-        handler: function (resp) {
+        handler: function(resp) {
             const acResult = resp.data;
             $console.info(acResult);
             if (acResult.result == 0) {
@@ -107,9 +107,9 @@ let loadUserToken = () => {
         acUserData.token.length > 0 &&
         acUserData.acSecurity.length > 0 &&
         acUserData.auth_key.length > 0 &&
-        acUserData.userid.length > 0 ?
-        true :
-        false;
+        acUserData.userid.length > 0
+            ? true
+            : false;
     $console.info(acUserData);
 };
 
@@ -145,15 +145,18 @@ let getUserInfo = () => {
                     url: _ACFUN.GET_USER_INFO,
                     header: thisHeaders
                 })
-                .then(function (resp) {
+                .then(function(resp) {
                     var userResult = resp.data;
                     $console.info(userResult);
                     if (userResult.result == 0) {
                         personalInfo = userResult;
                         const userInfo = userResult.info;
-                        saveCache("getUserInfo", $data({
-                            string: JSON.stringify(resp.data, null, 2)
-                        }));
+                        saveCache(
+                            "getUserInfo",
+                            $data({
+                                string: JSON.stringify(resp.data, null, 2)
+                            })
+                        );
                         var userInfoList = [
                             `昵称：${userInfo.userName}`,
                             `uid：${userInfo.userId}`,
@@ -177,80 +180,88 @@ let getUserInfo = () => {
                         $ui.push({
                             props: {
                                 title: $l10n("个人信息"),
-                                navButtons: [{
-                                    title: "打开网页版",
-                                    icon: "068", // Or you can use icon name
-                                    symbol: "checkmark.seal", // SF symbols are supported
-                                    handler: () => {
-                                        $ui.preview({
-                                            title: userInfo.userName,
-                                            url: userInfo.shareUrl
-                                        });
+                                navButtons: [
+                                    {
+                                        title: "打开网页版",
+                                        icon: "068", // Or you can use icon name
+                                        symbol: "checkmark.seal", // SF symbols are supported
+                                        handler: () => {
+                                            $ui.preview({
+                                                title: userInfo.userName,
+                                                url: userInfo.shareUrl
+                                            });
+                                        }
                                     }
-                                }]
+                                ]
                             },
-                            views: [{
-                                type: "list",
-                                props: {
-                                    data: userInfoList
-                                },
-                                layout: $layout.fill,
-                                events: {
-                                    didSelect: function (
-                                        _sender,
-                                        indexPath,
-                                        _data
-                                    ) {
-                                        const _g = _data.split("：");
-                                        switch (indexPath.row) {
-                                            case 13:
-                                                if (userInfo.headUrl) {
-                                                    $ui.preview({
-                                                        title: "头像",
-                                                        url: userInfo.headUrl
-                                                    });
-                                                }
-                                                break;
-                                            case 14:
-                                                if (userInfo.blog) {
-                                                    $ui.preview({
-                                                        title: "博客",
-                                                        url: userInfo.blog
-                                                    });
-                                                }
-                                                break;
-                                            case 16:
-                                                if (userInfo.qq) {
-                                                    $ui.preview({
-                                                        title: "QQ",
-                                                        url: _TENCENT.ADD_FRIENDS + userInfo.qq
-                                                    });
-                                                }
-                                                break;
-                                            default:
-                                                $ui.alert({
-                                                    title: _g[0],
-                                                    message: _g[1],
-                                                    actions: [{
-                                                            title: "分享",
-                                                            disabled: false, // Optional
-                                                            handler: function () {
-                                                                $share.sheet(
-                                                                    [_g[1]]
-                                                                );
+                            views: [
+                                {
+                                    type: "list",
+                                    props: {
+                                        data: userInfoList
+                                    },
+                                    layout: $layout.fill,
+                                    events: {
+                                        didSelect: function(
+                                            _sender,
+                                            indexPath,
+                                            _data
+                                        ) {
+                                            const _g = _data.split("：");
+                                            switch (indexPath.row) {
+                                                case 13:
+                                                    if (userInfo.headUrl) {
+                                                        $ui.preview({
+                                                            title: "头像",
+                                                            url:
+                                                                userInfo.headUrl
+                                                        });
+                                                    }
+                                                    break;
+                                                case 14:
+                                                    if (userInfo.blog) {
+                                                        $ui.preview({
+                                                            title: "博客",
+                                                            url: userInfo.blog
+                                                        });
+                                                    }
+                                                    break;
+                                                case 16:
+                                                    if (userInfo.qq) {
+                                                        $ui.preview({
+                                                            title: "QQ",
+                                                            url:
+                                                                _TENCENT.ADD_FRIENDS +
+                                                                userInfo.qq
+                                                        });
+                                                    }
+                                                    break;
+                                                default:
+                                                    $ui.alert({
+                                                        title: _g[0],
+                                                        message: _g[1],
+                                                        actions: [
+                                                            {
+                                                                title: "分享",
+                                                                disabled: false, // Optional
+                                                                handler: function() {
+                                                                    $share.sheet(
+                                                                        [_g[1]]
+                                                                    );
+                                                                }
+                                                            },
+                                                            {
+                                                                title: "关闭",
+                                                                disabled: false, // Optional
+                                                                handler: function() {}
                                                             }
-                                                        },
-                                                        {
-                                                            title: "关闭",
-                                                            disabled: false, // Optional
-                                                            handler: function () {}
-                                                        }
-                                                    ]
-                                                });
+                                                        ]
+                                                    });
+                                            }
                                         }
                                     }
                                 }
-                            }]
+                            ]
                         });
                     } else {
                         $ui.loading(false);
@@ -269,9 +280,9 @@ let getUserInfo = () => {
     }
 };
 let getCookies = () => {
-    return isLogin() ?
-        `acPasstoken=${acUserData.acPassToken};auth_key=${acUserData.auth_key}` :
-        "";
+    return isLogin()
+        ? `acPasstoken=${acUserData.acPassToken};auth_key=${acUserData.auth_key}`
+        : "";
 };
 
 let getVideoInfo = () => {
@@ -281,7 +292,7 @@ let getVideoInfo = () => {
         autoFontSize: true,
         placeholder: "输入vid(不带ac)",
         /* text: "12702163", */
-        handler: function (vid) {
+        handler: function(vid) {
             if (vid.length > 0) {
                 getVideoPid(vid);
             } else {
@@ -295,7 +306,7 @@ let getVideoPid = vid => {
     $ui.loading(true);
     $http.get({
         url: _ACFUN.GET_VIDEO_INFO + vid,
-        handler: function (resp) {
+        handler: function(resp) {
             var videoResult = resp.data;
             $console.info(videoResult);
             if (videoResult.result == 0) {
@@ -304,12 +315,12 @@ let getVideoPid = vid => {
                 if (partList.length == 1) {
                     pid = videoResult.videoList[0].id;
                 } else {
-                    const pidList = partList.map(function (x) {
+                    const pidList = partList.map(function(x) {
                         return x;
                     });
                     $ui.menu({
                         items: pidList,
-                        handler: function (title, idx) {
+                        handler: function(title, idx) {
                             pid = title;
                         }
                     });
@@ -332,7 +343,7 @@ let downloadVideo = (vid, pid) => {
         header: {
             /* Cookie: getCookies() */
         },
-        handler: function (resp) {
+        handler: function(resp) {
             var videoResult = resp.data;
             $console.info(videoResult);
             if (videoResult.result == 0) {
@@ -340,7 +351,7 @@ let downloadVideo = (vid, pid) => {
                 const videoData = playInfo.streams;
                 const thisVideoFile = videoData[videoData.length - 1];
                 const cdnUrl = thisVideoFile.cdnUrls;
-                const cdnTitleList = cdnUrl.map(function (x) {
+                const cdnTitleList = cdnUrl.map(function(x) {
                     const thisUrl = x.url;
                     if (thisUrl.startsWith(_URL.ACFUN.VIDEO_CDN_TXCDN)) {
                         return "腾讯源";
@@ -357,65 +368,68 @@ let downloadVideo = (vid, pid) => {
                     props: {
                         title: "下载地址"
                     },
-                    views: [{
-                        type: "list",
-                        props: {
-                            data: cdnTitleList
-                        },
-                        layout: $layout.fill,
-                        events: {
-                            didSelect: function (_sender, indexPath, _data) {
-                                const idx = indexPath.row;
-                                const videoUrl = cdnUrl[idx].url;
-                                $ui.alert({
-                                    title: cdnTitleList[idx],
-                                    message: videoUrl,
-                                    actions: [{
-                                            title: "使用Alook浏览器打开",
-                                            disabled: false,
-                                            handler: function () {
-                                                $ui.menu({
-                                                    items: [
-                                                        "网页浏览",
-                                                        "下载"
-                                                    ],
-                                                    handler: function (
-                                                        title,
-                                                        idx
-                                                    ) {
-                                                        switch (idx) {
-                                                            case 0:
-                                                                appScheme.alookBrowserOpen(
-                                                                    videoUrl
-                                                                );
-                                                                break;
-                                                            case 1:
-                                                                appScheme.alookBrowserDownload(
-                                                                    videoUrl
-                                                                );
-                                                                break;
+                    views: [
+                        {
+                            type: "list",
+                            props: {
+                                data: cdnTitleList
+                            },
+                            layout: $layout.fill,
+                            events: {
+                                didSelect: function(_sender, indexPath, _data) {
+                                    const idx = indexPath.row;
+                                    const videoUrl = cdnUrl[idx].url;
+                                    $ui.alert({
+                                        title: cdnTitleList[idx],
+                                        message: videoUrl,
+                                        actions: [
+                                            {
+                                                title: "使用Alook浏览器打开",
+                                                disabled: false,
+                                                handler: function() {
+                                                    $ui.menu({
+                                                        items: [
+                                                            "网页浏览",
+                                                            "下载"
+                                                        ],
+                                                        handler: function(
+                                                            title,
+                                                            idx
+                                                        ) {
+                                                            switch (idx) {
+                                                                case 0:
+                                                                    appScheme.alookBrowserOpen(
+                                                                        videoUrl
+                                                                    );
+                                                                    break;
+                                                                case 1:
+                                                                    appScheme.alookBrowserDownload(
+                                                                        videoUrl
+                                                                    );
+                                                                    break;
+                                                            }
                                                         }
-                                                    }
-                                                });
+                                                    });
+                                                }
+                                            },
+                                            {
+                                                title: "分享",
+                                                disabled: false,
+                                                handler: function() {
+                                                    $share.sheet([videoUrl]);
+                                                }
+                                            },
+                                            {
+                                                title: "关闭",
+                                                disabled: false,
+                                                handler: function() {}
                                             }
-                                        },
-                                        {
-                                            title: "分享",
-                                            disabled: false,
-                                            handler: function () {
-                                                $share.sheet([videoUrl]);
-                                            }
-                                        },
-                                        {
-                                            title: "关闭",
-                                            disabled: false,
-                                            handler: function () {}
-                                        }
-                                    ]
-                                });
+                                        ]
+                                    });
+                                }
                             }
                         }
-                    }]
+                    ]
                 });
             } else {
                 $ui.loading(false);
@@ -436,24 +450,78 @@ let signIn = () => {
                 Cookie: getCookies(),
                 acPlatform: "IPHONE"
             },
-            handler: function (resp) {
+            handler: function(resp) {
                 var signinResult = resp.data;
                 $console.info(signinResult);
                 $ui.loading(false);
-                signinResult.result == 0 ?
-                    $ui.alert({
-                        title: "签到成功",
-                        message: signinResult.msg
-                    }) :
-                    $ui.alert({
-                        title: `错误代码${signinResult.result}`,
-                        message: signinResult.msg ?
-                            signinResult.msg : signinResult.error_msg
-                    });
+                signinResult.result == 0
+                    ? $ui.alert({
+                          title: "签到成功",
+                          message: signinResult.msg
+                      })
+                    : $ui.alert({
+                          title: `错误代码${signinResult.result}`,
+                          message: signinResult.msg
+                              ? signinResult.msg
+                              : signinResult.error_msg
+                      });
             }
         });
     } else {
         $ui.error("未登录");
+    }
+};
+let dailyCheckin = () => {
+    $ui.loading(true);
+    const result = $http.get({
+        url: _ACFUN.SIGN_IN,
+        header: {
+            Cookie: getCookies(),
+            acPlatform: "IPHONE"
+        }
+    });
+    if (result.error) {
+        $ui.loading(false);
+        $ui.alert({
+            title: "签到发生错误",
+            message: result.error.message,
+            actions: [
+                {
+                    title: "OK",
+                    disabled: false, // Optional
+                    handler: function() {}
+                }
+            ]
+        });
+    } else {
+        const signinResult = result.data;
+        if (signinResult) {
+            $console.info(signinResult);
+            $ui.loading(false);
+            signinResult.result == 0
+                ? $ui.alert({
+                      title: "签到成功",
+                      message: signinResult.msg
+                  })
+                : $ui.alert({
+                      title: `错误代码${signinResult.result}`,
+                      message: signinResult.msg
+                          ? signinResult.msg
+                          : signinResult.error_msg
+                  });
+        } else {
+            $ui.alert({
+                title: "签到失败",
+                message: result,
+                actions: [
+                    {
+                        title: "OK",
+                        disabled: false, // Optional
+                        handler: function() {}
+                    }
+                ]
+            });
+        }
     }
 };
 let getUploaderVideo = (uid, page = 1, count = 20) => {
@@ -472,7 +540,7 @@ let getUploaderVideo = (uid, page = 1, count = 20) => {
                 status: 1
             }
         })
-        .then(function (resp) {
+        .then(function(resp) {
             var acData = resp.data;
             if (acData.result == 0) {
                 const feedList = acData.feed;
@@ -499,227 +567,234 @@ let showUploaderVideoList = acData => {
         props: {
             title: videoList[0].user.name
         },
-        views: [{
-            type: "list",
-            props: {
-                data: [{
-                        title: "结果",
-                        rows: [
-                            `全部${acData.totalNum}共个视频`,
-                            `当前第${acData.pcursor}页，有${videoList.length}个视频`
-                        ]
-                    },
-                    {
-                        title: "视频列表",
-                        rows: videoList.map(v => {
-                            if (listClickedVid) {
-                                if (listClickedVid == v.dougaId) {
-                                    return `[上次]${v.title}`;
-                                }
-                            }
-                            return v.title;
-                        })
-                    }
-                ],
-                menu: {
-                    title: "菜单",
-                    items: [{
-                            title: "打开客户端",
-                            symbol: "arrowshape.turn.up.right",
-                            handler: (sender, indexPath) => {
-                                const vid =
-                                    videoList[indexPath.row].dougaId;
-                                if (indexPath.section == 1) {
-                                    $cache.set(
-                                        _cacheKey.lastClickedVid,
-                                        vid
-                                    );
-                                    appScheme.acfunVideo(vid);
-                                } else {
-                                    $ui.error(
-                                        "这里长按无效，请在视频列表长按"
-                                    );
-                                }
-                            }
+        views: [
+            {
+                type: "list",
+                props: {
+                    data: [
+                        {
+                            title: "结果",
+                            rows: [
+                                `全部${acData.totalNum}共个视频`,
+                                `当前第${acData.pcursor}页，有${videoList.length}个视频`
+                            ]
                         },
                         {
-                            title: "分享网址",
-                            symbol: "square.and.arrow.up",
-                            handler: (sender, indexPath) => {
-                                const vid =
-                                    videoList[indexPath.row].dougaId;
-                                if (indexPath.section == 1) {
-                                    $cache.set(
-                                        _cacheKey.lastClickedVid,
-                                        vid
-                                    );
-                                    $share.sheet([
-                                        appScheme.getAcfunVideoWebUrl(vid)
-                                    ]);
-                                } else {
-                                    $ui.error(
-                                        "这里长按无效，请在视频列表长按"
-                                    );
+                            title: "视频列表",
+                            rows: videoList.map(v => {
+                                if (listClickedVid) {
+                                    if (listClickedVid == v.dougaId) {
+                                        return `[上次]${v.title}`;
+                                    }
                                 }
-                            }
-                        },
-                        {
-                            title: "分享打开客户端的链接",
-                            symbol: "square.and.arrow.up",
-                            handler: (sender, indexPath) => {
-                                const vid =
-                                    videoList[indexPath.row].dougaId;
-                                if (indexPath.section == 1) {
-                                    $cache.set(
-                                        _cacheKey.lastClickedVid,
-                                        vid
-                                    );
-                                    $share.sheet([
-                                        appScheme.getAcfunVideoUrl(vid)
-                                    ]);
-                                } else {
-                                    $ui.error(
-                                        "这里长按无效，请在视频列表长按"
-                                    );
-                                }
-                            }
-                        },
-                        {
-                            title: "分享网址(二维码)",
-                            symbol: "qrcode",
-                            handler: (sender, indexPath) => {
-                                const vid =
-                                    videoList[indexPath.row].dougaId;
-                                if (indexPath.section == 1) {
-                                    $cache.set(
-                                        _cacheKey.lastClickedVid,
-                                        vid
-                                    );
-                                    $quicklook.open({
-                                        image: appScheme
-                                            .getAcfunVideoWebUrl(vid)
-                                            .getQrcode()
-                                    });
-                                } else {
-                                    $ui.error(
-                                        "这里长按无效，请在视频列表长按"
-                                    );
-                                }
-                            }
-                        },
-                        {
-                            title: "分享打开客户端的链接(二维码)",
-                            symbol: "qrcode",
-                            handler: (sender, indexPath) => {
-                                const vid =
-                                    videoList[indexPath.row].dougaId;
-                                if (indexPath.section == 1) {
-                                    $cache.set(
-                                        _cacheKey.lastClickedVid,
-                                        vid
-                                    );
-                                    $quicklook.open({
-                                        image: appScheme
-                                            .getAcfunVideoUrl(vid)
-                                            .getQrcode()
-                                    });
-                                } else {
-                                    $ui.error(
-                                        "这里长按无效，请在视频列表长按"
-                                    );
-                                }
-                            }
-                        },
-                        {
-                            title: "视频解析",
-                            symbol: "square.and.arrow.down",
-                            handler: (sender, indexPath) => {
-                                if (indexPath.section == 1) {
+                                return v.title;
+                            })
+                        }
+                    ],
+                    menu: {
+                        title: "菜单",
+                        items: [
+                            {
+                                title: "打开客户端",
+                                symbol: "arrowshape.turn.up.right",
+                                handler: (sender, indexPath) => {
                                     const vid =
                                         videoList[indexPath.row].dougaId;
-                                    $cache.set(
-                                        _cacheKey.lastClickedVid,
-                                        vid
-                                    );
-                                    getVideoPid(
-                                        videoList[indexPath.row].dougaId
-                                    );
-                                } else {
-                                    $ui.error(
-                                        "这里长按无效，请在视频列表长按"
-                                    );
-                                }
-                            }
-                        },
-                        {
-                            title: "导出网页",
-                            symbol: "square.and.arrow.down",
-                            handler: (sender, indexPath) => {
-                                const dir = "./.output/webServer/";
-                                const fileName =
-                                    "posts-" +
-                                    videoList[0].user.id +
-                                    ".html";
-                                var html = "<html><body><ul>";
-                                for (v in videoList) {
-                                    const thisVideo = videoList[v];
-                                    var title = thisVideo.title;
-                                    if (listClickedVid) {
-                                        if (
-                                            listClickedVid ==
-                                            thisVideo.dougaId
-                                        ) {
-                                            title = `[上次]` + title;
-                                        }
+                                    if (indexPath.section == 1) {
+                                        $cache.set(
+                                            _cacheKey.lastClickedVid,
+                                            vid
+                                        );
+                                        appScheme.acfunVideo(vid);
+                                    } else {
+                                        $ui.error(
+                                            "这里长按无效，请在视频列表长按"
+                                        );
                                     }
-                                    html += `<li><a href="${appScheme.getAcfunVideoUrl(
+                                }
+                            },
+                            {
+                                title: "分享网址",
+                                symbol: "square.and.arrow.up",
+                                handler: (sender, indexPath) => {
+                                    const vid =
+                                        videoList[indexPath.row].dougaId;
+                                    if (indexPath.section == 1) {
+                                        $cache.set(
+                                            _cacheKey.lastClickedVid,
+                                            vid
+                                        );
+                                        $share.sheet([
+                                            appScheme.getAcfunVideoWebUrl(vid)
+                                        ]);
+                                    } else {
+                                        $ui.error(
+                                            "这里长按无效，请在视频列表长按"
+                                        );
+                                    }
+                                }
+                            },
+                            {
+                                title: "分享打开客户端的链接",
+                                symbol: "square.and.arrow.up",
+                                handler: (sender, indexPath) => {
+                                    const vid =
+                                        videoList[indexPath.row].dougaId;
+                                    if (indexPath.section == 1) {
+                                        $cache.set(
+                                            _cacheKey.lastClickedVid,
+                                            vid
+                                        );
+                                        $share.sheet([
+                                            appScheme.getAcfunVideoUrl(vid)
+                                        ]);
+                                    } else {
+                                        $ui.error(
+                                            "这里长按无效，请在视频列表长按"
+                                        );
+                                    }
+                                }
+                            },
+                            {
+                                title: "分享网址(二维码)",
+                                symbol: "qrcode",
+                                handler: (sender, indexPath) => {
+                                    const vid =
+                                        videoList[indexPath.row].dougaId;
+                                    if (indexPath.section == 1) {
+                                        $cache.set(
+                                            _cacheKey.lastClickedVid,
+                                            vid
+                                        );
+                                        $quicklook.open({
+                                            image: appScheme
+                                                .getAcfunVideoWebUrl(vid)
+                                                .getQrcode()
+                                        });
+                                    } else {
+                                        $ui.error(
+                                            "这里长按无效，请在视频列表长按"
+                                        );
+                                    }
+                                }
+                            },
+                            {
+                                title: "分享打开客户端的链接(二维码)",
+                                symbol: "qrcode",
+                                handler: (sender, indexPath) => {
+                                    const vid =
+                                        videoList[indexPath.row].dougaId;
+                                    if (indexPath.section == 1) {
+                                        $cache.set(
+                                            _cacheKey.lastClickedVid,
+                                            vid
+                                        );
+                                        $quicklook.open({
+                                            image: appScheme
+                                                .getAcfunVideoUrl(vid)
+                                                .getQrcode()
+                                        });
+                                    } else {
+                                        $ui.error(
+                                            "这里长按无效，请在视频列表长按"
+                                        );
+                                    }
+                                }
+                            },
+                            {
+                                title: "视频解析",
+                                symbol: "square.and.arrow.down",
+                                handler: (sender, indexPath) => {
+                                    if (indexPath.section == 1) {
+                                        const vid =
+                                            videoList[indexPath.row].dougaId;
+                                        $cache.set(
+                                            _cacheKey.lastClickedVid,
+                                            vid
+                                        );
+                                        getVideoPid(
+                                            videoList[indexPath.row].dougaId
+                                        );
+                                    } else {
+                                        $ui.error(
+                                            "这里长按无效，请在视频列表长按"
+                                        );
+                                    }
+                                }
+                            },
+                            {
+                                title: "导出网页",
+                                symbol: "square.and.arrow.down",
+                                handler: (sender, indexPath) => {
+                                    const dir = "./.output/webServer/";
+                                    const fileName =
+                                        "posts-" +
+                                        videoList[0].user.id +
+                                        ".html";
+                                    var html = "<html><body><ul>";
+                                    for (v in videoList) {
+                                        const thisVideo = videoList[v];
+                                        var title = thisVideo.title;
+                                        if (listClickedVid) {
+                                            if (
+                                                listClickedVid ==
+                                                thisVideo.dougaId
+                                            ) {
+                                                title = `[上次]` + title;
+                                            }
+                                        }
+                                        html += `<li><a href="${appScheme.getAcfunVideoUrl(
                                             thisVideo.dougaId
                                         )}">${title}</a></li>`;
-                                }
-                                html += "</ul></body></html>";
-                                if (!$file.exists(dir)) {
-                                    $file.mkdir(dir);
-                                }
-                                const saveResult = $file.write({
-                                    data: $data({
-                                        string: html
-                                    }),
-                                    path: dir + fileName
-                                });
-                                $ui.alert({
-                                    title: "保存完毕",
-                                    message: "保存" + saveResult ?
-                                        "成功" : "失败",
-                                    actions: [{
-                                            title: "启动网页服务器",
-                                            disabled: false,
-                                            handler: function () {
-                                                initWebServer(dir, html);
+                                    }
+                                    html += "</ul></body></html>";
+                                    if (!$file.exists(dir)) {
+                                        $file.mkdir(dir);
+                                    }
+                                    const saveResult = $file.write({
+                                        data: $data({
+                                            string: html
+                                        }),
+                                        path: dir + fileName
+                                    });
+                                    $ui.alert({
+                                        title: "保存完毕",
+                                        message:
+                                            "保存" + saveResult
+                                                ? "成功"
+                                                : "失败",
+                                        actions: [
+                                            {
+                                                title: "启动网页服务器",
+                                                disabled: false,
+                                                handler: function() {
+                                                    initWebServer(dir, html);
+                                                }
+                                            },
+                                            {
+                                                title: "关闭"
                                             }
-                                        },
-                                        {
-                                            title: "关闭"
-                                        }
-                                    ]
-                                });
+                                        ]
+                                    });
+                                }
                             }
+                        ]
+                    }
+                },
+                layout: $layout.fill,
+                events: {
+                    didSelect: function(_sender, indexPath, _data) {
+                        switch (indexPath.section) {
+                            case 1:
+                                const vid = videoList[indexPath.row].dougaId;
+                                $cache.set(_cacheKey.lastClickedVid, vid);
+                                appScheme.acfunVideo(vid);
+                                break;
                         }
-                    ]
-                }
-            },
-            layout: $layout.fill,
-            events: {
-                didSelect: function (_sender, indexPath, _data) {
-                    switch (indexPath.section) {
-                        case 1:
-                            const vid = videoList[indexPath.row].dougaId;
-                            $cache.set(_cacheKey.lastClickedVid, vid);
-                            appScheme.acfunVideo(vid);
-                            break;
                     }
                 }
             }
-        }]
+        ]
     });
 };
 let getVidFromUrl = url => {
@@ -789,38 +864,41 @@ let initWebServer = (dir, htmlStr, port = 9999) => {
         props: {
             title: ""
         },
-        views: [{
-            type: "list",
-            props: {
-                data: [{
-                        title: "信息",
-                        rows: [`根目录：${dir}`, `端口：${port}`]
-                    },
-                    {
-                        title: "菜单",
-                        rows: ["关闭服务器"]
-                    }
-                ]
-            },
-            layout: $layout.fill,
-            events: {
-                didSelect: function (_sender, indexPath, _data) {
-                    const section = indexPath.section;
-                    const row = indexPath.row;
-                    if (section == 1 && row == 0) {
-                        server.stop();
-                        $ui.toast("已经停止服务器");
+        views: [
+            {
+                type: "list",
+                props: {
+                    data: [
+                        {
+                            title: "信息",
+                            rows: [`根目录：${dir}`, `端口：${port}`]
+                        },
+                        {
+                            title: "菜单",
+                            rows: ["关闭服务器"]
+                        }
+                    ]
+                },
+                layout: $layout.fill,
+                events: {
+                    didSelect: function(_sender, indexPath, _data) {
+                        const section = indexPath.section;
+                        const row = indexPath.row;
+                        if (section == 1 && row == 0) {
+                            server.stop();
+                            $ui.toast("已经停止服务器");
+                        }
                     }
                 }
             }
-        }]
+        ]
     });
 };
 // init
 let init = () => {
     loadUserToken();
 };
-function getUserVideoWithoutBanana() {}
+let getUserVideoWithoutBanana = () => {};
 module.exports = {
     login,
     logout,
