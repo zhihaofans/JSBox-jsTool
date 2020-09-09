@@ -1,7 +1,66 @@
 let _BILIURL = require("./api_url.js").BILIBILI,
     _USER = require("./user.js"),
+    _HTTP = require("/scripts/api/http"),
     _UA = require("../user-agent.js");
-
+let mangaCheckin = async () => {
+    const accessKey = _USER.getAccessKey(),
+        uid = _USER.getUid(),
+        postBody = {
+            platform: "ios",
+            uid: uid,
+            access_key: accessKey
+        },
+        postHeader = {
+            "Content-Type": "application/x-www-form-urlencoded",
+            "User-Agent": _UA.BILIBILI.COMIC
+        };
+    if (accessKey && uid) {
+        $ui.loading(true);
+        const httpPost = await _HTTP.postAwait(
+            _BILIURL.MANGA_CLOCK_IN,
+            postBody,
+            postHeader
+        );
+        if (httpPost.error) {
+            $ui.loading(false);
+            $console.error(httpPost.error);
+        } else {
+            var clockinData = httpPost.data;
+            $console.info(clockinData);
+            $ui.loading(false);
+            if (clockinData) {
+                if (clockinData.code == 0) {
+                    $ui.alert({
+                        title: "签到结果",
+                        message: "签到成功"
+                    });
+                } else {
+                    $ui.alert({
+                        title: `错误：${clockinData.code}`,
+                        message: clockinData.msg
+                    });
+                }
+            } else {
+                $ui.alert({
+                    title: "签到失败",
+                    message: "服务器返回空白结果"
+                });
+            }
+        }
+    } else {
+        $ui.alert({
+            title: "哔哩哔哩漫画签到失败",
+            message: "未登录",
+            actions: [
+                {
+                    title: "OK",
+                    disabled: false, // Optional
+                    handler: function() {}
+                }
+            ]
+        });
+    }
+};
 function mangaClockin() {
     const accessKey = _USER.getAccessKey();
     const uid = _USER.getUid();
@@ -154,6 +213,7 @@ function liveCheckIn() {
 }
 module.exports = {
     mangaClockin,
+    mangaCheckin,
     silverToCoin,
     vipCheckin,
     liveCheckIn

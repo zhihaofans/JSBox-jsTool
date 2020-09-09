@@ -22,10 +22,10 @@ function initView() {
                         const row = indexPath.row;
                         switch (row) {
                             case 0:
-                                _ACFUN.signIn();
+                                _ACFUN.dailyCheckin();
                                 break;
                             case 1:
-                                _BILI.mangaClockin();
+                                _BILI.mangaCheckin();
                                 break;
                             case 2:
                                 _BILI.silverToCoin();
