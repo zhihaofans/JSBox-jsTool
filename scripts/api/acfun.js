@@ -474,7 +474,7 @@ let signIn = () => {
 };
 let dailyCheckin = async () => {
     $ui.loading(true);
-    const result = _HTTP.getAwait(_ACFUN.SIGN_IN, {
+    const result = await _HTTP.getAwait(_ACFUN.SIGN_IN, {
         Cookie: getCookies(),
         acPlatform: "IPHONE"
     });
@@ -496,7 +496,6 @@ let dailyCheckin = async () => {
     } else {
         const signinResult = result.data;
         if (signinResult) {
-            $console.info(signinResult);
             $ui.loading(false);
             signinResult.result == 0
                 ? $ui.alert({

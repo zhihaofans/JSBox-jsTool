@@ -86,7 +86,7 @@ let init = url => {
                                             : $ui.error("未登录");
                                         break;
                                     case 3:
-                                        acApi.signIn();
+                                        acApi.dailyCheckin();
                                         break;
                                     default:
                                         $ui.error("暂未支持");
