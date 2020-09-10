@@ -1,6 +1,15 @@
+let _modInfo = {
+    id: "mod_news",
+    title: "新闻模块",
+    version: 1,
+    updateLink: "",
+    modType: 1
+};
 let fileUtil = require("/scripts/api/file");
 let newsDir = "/scripts/mod/news/";
-
+function _get_mod_info_() {
+    return _modInfo;
+}
 function init() {
     const newsList = fileUtil.getFileList(newsDir, "js");
     if (newsList) {
@@ -77,5 +86,6 @@ function initMod(modName) {
     }
 }
 module.exports = {
-    init
+    init,
+    _get_mod_info_
 };
