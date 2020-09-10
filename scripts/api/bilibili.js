@@ -41,9 +41,10 @@ module.exports = {
     getWallet: _LIVE.getWallet,
     isLogin: _USER.isLogin,
     laterToWatch: _VIDEO.laterToWatch,
-    mangaClockin: _CHECKIN.mangaClockin,
+    mangaCheckin: _CHECKIN.mangaCheckin,
+    mangaClockin: _CHECKIN.mangaCheckin,
     openLiveDanmuku: _LIVE.openLiveDanmuku,
     removeLoginData: _USER.removeLoginCache,
     saveAccessKey: _USER.setAccessKey,
-    vipCheckin: _CHECKIN.vipCheckin,
+    vipCheckin: _CHECKIN.vipCheckin
 };

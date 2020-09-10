@@ -345,7 +345,7 @@ function init(url) {
                                 switch (indexPath.row) {
                                     case 0:
                                         _BILIAPI.isLogin() ?
-                                            _BILIAPI.mangaClockin() :
+                                            _BILIAPI.mangaCheckin() :
                                             $ui.error("未登录");
                                         break;
                                     default:
