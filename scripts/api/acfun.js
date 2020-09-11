@@ -1,6 +1,6 @@
 $include("./codePrototype.js");
 let sys = require("./system.js"),
-    appScheme = require("./app_scheme.js"),
+    appScheme = require("./AppScheme.js"),
     _URL = require("./urlData.js"),
     _UA = require("./user-agent.js"),
     _ACFUN = _URL.ACFUN,
