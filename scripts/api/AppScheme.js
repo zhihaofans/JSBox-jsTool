@@ -112,6 +112,15 @@ let jsboxInstall = (url, name = undefined, icon = undefined) => {
 let jsboxRun = (name, location = "local") => {
     $app.openURL(`jsbox://run?name=${encodeURI(name)}&location=${location}`);
 };
+
+// thor
+let thorLaunch = filterName => {
+    var appUrl = "thor://sniffer.gui/launch";
+    if (filterName) {
+        appUrl += `filter_name=${encodeURI(filterName)}`;
+    }
+    $app.openURL(appUrl);
+};
 module.exports = {
     alookBrowserOpen,
     chromeBrowserOpen,
@@ -135,5 +144,6 @@ module.exports = {
     workingcopyClone,
     microsoftEdgeWeb,
     jsboxInstall,
-    jsboxRun
+    jsboxRun,
+    thorLaunch
 };
