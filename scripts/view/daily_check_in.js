@@ -13,7 +13,8 @@ function initView() {
                         "Acfun",
                         "Bilibili漫画",
                         "Bilibili银瓜子兑换硬币",
-                        "Bilibili直播签到"
+                        "Bilibili直播签到",
+                        "Bilibili会员签到"
                     ]
                 },
                 layout: $layout.fill,
@@ -33,6 +34,10 @@ function initView() {
                             case 3:
                                 _BILI.liveCheckIn();
                                 break;
+                            case 4:
+                                _BILI.vipCheckin();
+                                break;
+
                             default:
                                 $ui.error("暂不支持该功能");
                         }

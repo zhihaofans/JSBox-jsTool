@@ -105,58 +105,55 @@ let silverToCoin = async () => {
     }
 };
 
-function vipCheckin() {
-    $http.post({
-        url: _BILIURL.VIP_CHECKIN,
-        header: {
-            "User-Agent": _UA.BILIBILI.VIP_CHECKIN
-        },
-        body: {
+let vipCheckin = async () => {
+    const postBody = {
             access_key: _USER.getAccessKey()
         },
-        handler: resp => {
-            var data = resp.data;
-            $console.info(data);
-        }
-    });
-}
-function liveCheckIn() {
+        postHeader = {
+            "User-Agent": _UA.BILIBILI.VIP_CHECKIN
+        };
+        $console.info(postBody);
+        $console.info(postHeader);
+    const httpPost = await _HTTP.postAwait(
+        _BILIURL.VIP_CHECKIN,
+        postBody,
+        postHeader
+    );
+    if (httpPost.error) {
+        $ui.loading(false);
+        $console.error(httpPost.error);
+    } else {
+        $console.info(httpPost.data);
+    }
+};
+let liveCheckIn = async () => {
     $ui.loading(true);
-    $http.get({
-        url: _BILIURL.LIVE_CHECK_IN + _USER.getAccessKey(),
-        handler: resp => {
-            var data = resp.data;
-            $ui.loading(false);
-            if (data) {
-                if (data.code == 0) {
-                    $ui.alert({
-                        title: "签到成功",
-                        message: data.message || "签到成功",
-                        actions: [
-                            {
-                                title: "OK",
-                                disabled: false, // Optional
-                                handler: function() {}
-                            }
-                        ]
-                    });
-                } else {
-                    $ui.alert({
-                        title: "签到失败",
-                        message: data.message || "未返回错误信息",
-                        actions: [
-                            {
-                                title: "OK",
-                                disabled: false, // Optional
-                                handler: function() {}
-                            }
-                        ]
-                    });
-                }
+    const httpGet = await _HTTP.getAwait(
+        _BILIURL.LIVE_CHECK_IN + _USER.getAccessKey()
+    );
+    if (httpGet.error) {
+        $ui.loading(false);
+        $console.error(httpGet.error);
+    } else {
+        var data = httpGet.data;
+        $ui.loading(false);
+        if (data) {
+            if (data.code == 0) {
+                $ui.alert({
+                    title: "签到成功",
+                    message: data.message || "签到成功",
+                    actions: [
+                        {
+                            title: "OK",
+                            disabled: false, // Optional
+                            handler: function() {}
+                        }
+                    ]
+                });
             } else {
                 $ui.alert({
                     title: "签到失败",
-                    message: "返回空白数据",
+                    message: data.message || "未返回错误信息",
                     actions: [
                         {
                             title: "OK",
@@ -166,9 +163,21 @@ function liveCheckIn() {
                     ]
                 });
             }
+        } else {
+            $ui.alert({
+                title: "签到失败",
+                message: "返回空白数据",
+                actions: [
+                    {
+                        title: "OK",
+                        disabled: false, // Optional
+                        handler: function() {}
+                    }
+                ]
+            });
         }
-    });
-}
+    }
+};
 module.exports = {
     mangaClockin: mangaCheckin,
     mangaCheckin,
