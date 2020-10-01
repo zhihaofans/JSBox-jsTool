@@ -90,10 +90,10 @@ let showViewerDanmu = liveData => {
     });
 };
 
-let init = () => {
+let init = (uid) => {
     $input.text({
         placeholder: "",
-        text: "",
+        text: uid,
         handler: input => {
             if (input) {
                 getViewer(input);

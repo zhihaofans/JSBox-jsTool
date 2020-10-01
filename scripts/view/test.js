@@ -1,4 +1,4 @@
-const matsuri_icu = require("../api/bilibili/matsuri.icu"),
+const matsuri_icu = require("../mod/matsuri.icu"),
     download = require("../api/download"),
     auth = require("../api/auth"),
     mod = require("../mod_index");

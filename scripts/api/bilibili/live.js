@@ -2,7 +2,7 @@ let sys = require("./system"),
     _URL = require("./api_url"),
     _USER = require("./user"),
     _GIFT = require("./gift"),
-    _ICU = require("./matsuri.icu"),
+    _ICU = require("/scripts/mod/matsuri.icu"),
     appScheme = require("/scripts/api/AppScheme"),
     _UA = require("../user-agent");
 
