@@ -6,7 +6,7 @@ let sys = require("./system.js"),
     _ACFUN = _URL.ACFUN,
     _TENCENT = _URL.TENCENT,
     urlCheck = require("./urlCheck.js"),
-    _HTTP = require("./http");
+    _HTTP = require("./libs/http");
 let acVideoSiteList = [
         _ACFUN.ACFUN_DETAIL_VIDEO,
         _ACFUN.ACFUN_WWW_V_AC,
@@ -478,7 +478,6 @@ let dailyCheckin = async () => {
         Cookie: getCookies(),
         acPlatform: "IPHONE"
     });
-
     $console.info(result);
     if (result.error) {
         $ui.loading(false);
