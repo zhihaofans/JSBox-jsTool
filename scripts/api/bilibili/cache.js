@@ -14,7 +14,7 @@ function saveAccesskey(access_key) {
 }
 // Uid
 function loadUid() {
-    return $cache.get(cacheKey.ACCESS_KEY);
+    return $cache.get(cacheKey.UID);
 }
 
 function saveUid(uid) {
