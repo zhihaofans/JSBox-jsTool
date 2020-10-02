@@ -92,7 +92,7 @@ let showViewerDanmu = liveData => {
 
 let init = (uid) => {
     $input.text({
-        placeholder: "",
+        placeholder: "输入用户id",
         text: uid,
         handler: input => {
             if (input) {

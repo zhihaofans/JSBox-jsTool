@@ -9,7 +9,8 @@ let urlCheck = require("./api/urlCheck"),
     misc = require("./view/misc"),
     dailyCheckin = require("./view/daily_check_in"),
     bilichat = require("./view/bilichat"),
-    test = require("./view/test");
+    test = require("./view/test"),
+    mod = require("./mod_index");
 
 function gotoUrl(url) {
     const newUrl = $text.URLDecode(url);
@@ -92,6 +93,7 @@ module.exports = {
     dailyCheckin: dailyCheckin.initView,
     bilichat: bilichat.showHistory,
     test: test.init,
+    mod: mod.showModList,
     contextOpen,
     gotoUrl,
     scanQrcodeToGo

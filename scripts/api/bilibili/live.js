@@ -564,10 +564,7 @@ function getOfflineLiver() {
                                                                             break;
                                                                         case 3:
                                                                             $app.openURL(
-                                                                                _URL
-                                                                                .BILIBILI
-                                                                                .BILIBILI_SPACE +
-                                                                                thisRoom.uid
+                                                                                _URL.BILIBILI.BILIBILI_SPACE +thisRoom.uid
                                                                             );
                                                                             break;
                                                                         case 4:
