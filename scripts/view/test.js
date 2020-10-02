@@ -1,7 +1,5 @@
-const matsuri_icu = require("../mod/matsuri.icu"),
-    download = require("../api/download"),
-    auth = require("../api/auth"),
-    mod = require("../mod_index");
+const download = require("../api/download"),
+    auth = require("../api/auth");
 
 function init() {
     $ui.push({
@@ -14,10 +12,8 @@ function init() {
                 data: [{
                     title: "Section 0",
                     rows: [
-                        "matsuri.icu",
                         "instagram",
-                        "Custom cache value",
-                        "mod"
+                        "Custom cache value"
                     ]
                 }]
             },
@@ -30,9 +26,6 @@ function init() {
                         case 0:
                             switch (row) {
                                 case 0:
-                                    matsuri_icu.init();
-                                    break;
-                                case 1:
                                     $input.text({
                                         type: $kbType.text,
                                         placeholder: "",
@@ -45,9 +38,8 @@ function init() {
                                             }
                                         }
                                     });
-
                                     break;
-                                case 2:
+                                case 1:
                                     $input.text({
                                         type: $kbType.text,
                                         placeholder: "",
@@ -70,9 +62,6 @@ function init() {
                                             }
                                         }
                                     });
-                                    break;
-                                case 3:
-                                    mod.showModList();
                                     break;
                             }
                             break;
