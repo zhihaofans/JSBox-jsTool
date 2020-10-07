@@ -1,10 +1,9 @@
-let $DB = require("./data_base");
+const $$http = require("/scripts/libs/http");
 module.exports = {
     Info,
     Login
 };
 class Login {
-    $DBC = new $DB.Cache();
     isLogin() {
         const access_key = this.accessKey();
         if (access_key) {
@@ -16,7 +15,7 @@ class Login {
 
     accessKey(access_key = undefined) {
         if (access_key) {
-            this.$DB.accessKey(this.cache_id.ACCESS_KEY, access_key);
+            $cache.set(this.cache_id.ACCESS_KEY, access_key);
         } else {
             return $cache.get(this.cache_id.ACCESS_KEY);
         }
