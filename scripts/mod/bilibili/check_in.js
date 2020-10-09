@@ -1,3 +1,3 @@
-class Live{
+class Manga{
   
 }

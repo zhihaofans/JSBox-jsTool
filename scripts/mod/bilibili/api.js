@@ -1,5 +1,6 @@
 let http = require("/scripts/libs/http");
 module.exports = {
+    Comic,
     getApiJson,
     getAwait: http.getAwait,
     postAwait: http.postAwait
@@ -13,3 +14,9 @@ let getApiJson = () => {
         return undefined;
     }
 };
+class Comic {
+    constructor() {
+        this.COMIC_CHECK_IN =
+            "https://manga.bilibili.com/twirp/activity.v1.Activity/ClockIn";
+    }
+}
