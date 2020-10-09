@@ -1,4 +1,4 @@
-const $$http = require("/scripts/libs/http");
+const $B_cache = require("./cache");
 module.exports = {
     Info,
     Login
@@ -22,10 +22,10 @@ class Login {
     }
 }
 class Info {
-    $$Login = new Login();
     getMyInfo() {
-        if ($$Login.isLogin()) {
-            const accessKey = this.$$Login.accessKey();
+        const $B_login = new Login();
+        if ($B_login.isLogin()) {
+            const accessKey = this.$B_login.accessKey();
             return "";
         } else {
             return undefined;

@@ -1,8 +1,10 @@
 module.exports = {
     User
 };
-let $B_api = require("./api");
-let $U_comic = new $B_api.Comic();
+let $B_api = require("./api"),
+    $B_ua = require("user_agent");
+let $U_comic = new $B_api.Comic(),
+    $UA_comic = new $B_ua.Comic();
 class User {
     async checkIn() {
         const accessKey = _USER.getAccessKey(),
@@ -14,7 +16,7 @@ class User {
             },
             postHeader = {
                 "Content-Type": "application/x-www-form-urlencoded",
-                "User-Agent": _UA.BILIBILI.COMIC
+                "User-Agent": $UA_comic
             };
         if (accessKey && uid) {
             $ui.loading(true);
