@@ -1,12 +1,12 @@
-$include("./codePrototype.js");
 let sys = require("./system.js"),
-    appScheme = require("./AppScheme.js"),
+    appScheme = require("AppScheme"),
     _URL = require("./urlData.js"),
     _UA = require("./user-agent.js"),
     _ACFUN = _URL.ACFUN,
     _TENCENT = _URL.TENCENT,
     urlCheck = require("./urlCheck.js"),
-    _HTTP = require("./libs/http");
+    _HTTP = require("../libs/http"),
+    $_str=require("../libs/string");
 let acVideoSiteList = [
         _ACFUN.ACFUN_DETAIL_VIDEO,
         _ACFUN.ACFUN_WWW_V_AC,
