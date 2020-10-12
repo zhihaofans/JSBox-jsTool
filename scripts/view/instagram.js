@@ -1,7 +1,7 @@
 $include("./codePrototype.js");
 let cheerio = require("cheerio");
-let appScheme = require("/scripts/api/AppScheme");
-let urlCheck = require("../api/urlCheck.js");
+let appScheme = require("AppScheme");
+let urlCheck = require("../api/urlCheck");
 let apiUrl = {
     instaoffline_net: "https://instaoffline.net/process/"
 };
