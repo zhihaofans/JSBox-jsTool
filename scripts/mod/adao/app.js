@@ -1,6 +1,7 @@
-function openAppThread(t){
-  $app.openURL(`adnmb://t/${t}`)
-}
+let appScheme = require("AppScheme");
+let openAppThread = t => {
+    appScheme.adaoThread(t);
+};
 module.exports = {
     openAppThread
 };

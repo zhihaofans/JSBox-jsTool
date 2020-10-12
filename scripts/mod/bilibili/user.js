@@ -1,31 +1,35 @@
-const $B_cache = require("./cache");
+let $B_database = require("./data_base");
+let $B_cache = new $B_database.Cache();
 module.exports = {
-    Info,
-    Login
+    Auth,
+    Info
 };
-class Login {
+class Auth {
     isLogin() {
         const access_key = this.accessKey();
-        if (access_key) {
-            return true;
-        } else {
-            return false;
-        }
+        return access_key ? true : false;
     }
 
     accessKey(access_key = undefined) {
         if (access_key) {
-            $cache.set(this.cache_id.ACCESS_KEY, access_key);
+            $B_cache.accessKey(access_key);
         } else {
-            return $cache.get(this.cache_id.ACCESS_KEY);
+            return $B_cache.accessKey();
+        }
+    }
+    uid(uid = undefined) {
+        if (uid) {
+            $B_cache.uid(uid);
+        } else {
+            return $B_cache.uid();
         }
     }
 }
 class Info {
     getMyInfo() {
-        const $B_login = new Login();
-        if ($B_login.isLogin()) {
-            const accessKey = this.$B_login.accessKey();
+        const $B_auth = new Auth();
+        const access_key = $B_auth.accessKey();
+        if (access_key) {
             return "";
         } else {
             return undefined;

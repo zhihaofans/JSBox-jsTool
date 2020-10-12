@@ -2,13 +2,16 @@ module.exports = {
     User
 };
 let $B_api = require("./api"),
-    $B_ua = require("user_agent");
+    $B_ua = require("./user_agent"),
+    $B_user = require("./user");
 let $U_comic = new $B_api.Comic(),
-    $UA_comic = new $B_ua.Comic();
+    $UA_comic = new $B_ua.Comic(),
+    $User_auth = new $B_user.Auth();
+
 class User {
     async checkIn() {
-        const accessKey = _USER.getAccessKey(),
-            uid = _USER.getUid(),
+        const accessKey = $User_auth.accessKey(),
+            uid = $User_auth.uid(),
             postBody = {
                 platform: "ios",
                 uid: uid,
@@ -16,7 +19,7 @@ class User {
             },
             postHeader = {
                 "Content-Type": "application/x-www-form-urlencoded",
-                "User-Agent": $UA_comic
+                "User-Agent": $UA_comic.CHECK_IN
             };
         if (accessKey && uid) {
             $ui.loading(true);
@@ -59,7 +62,7 @@ class User {
                     {
                         title: "OK",
                         disabled: false, // Optional
-                        handler: function() {}
+                        handler: function () {}
                     }
                 ]
             });
