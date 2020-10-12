@@ -1,6 +1,6 @@
 $include("./codePrototype.js");
 let cheerio = require("cheerio"),
-    appScheme = require("/scripts/api/AppScheme"),
+    appScheme = require("AppScheme"),
     _URL = require("./api_url.js"),
     _UA = require("../user-agent.js"),
     _USER = require("./user.js");

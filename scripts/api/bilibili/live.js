@@ -3,7 +3,7 @@ let sys = require("./system"),
     _USER = require("./user"),
     _GIFT = require("./gift"),
     _ICU = require("/scripts/mod/matsuri.icu"),
-    appScheme = require("/scripts/api/AppScheme"),
+    appScheme = require("AppScheme"),
     _UA = require("../user-agent");
 
 function LiveroomInfo(liveroomInfoData) {
