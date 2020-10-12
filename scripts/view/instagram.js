@@ -1,7 +1,6 @@
-$include("./codePrototype.js");
-let cheerio = require("cheerio");
-let appScheme = require("AppScheme");
-let urlCheck = require("../api/urlCheck");
+let cheerio = require("cheerio"),
+    appScheme = require("AppScheme"),
+    urlCheck = require("../api/urlCheck");
 let apiUrl = {
     instaoffline_net: "https://instaoffline.net/process/"
 };
@@ -20,7 +19,7 @@ let init = (shareUrl = $clipboard.link) => {
         type: $kbType.url,
         placeholder: "输入instagram链接",
         text: checkInsLink(shareUrl),
-        handler: function(url) {
+        handler: function (url) {
             url ? instagramOfficial(url) : $ui.error("请输入网址");
         }
     });
@@ -56,7 +55,7 @@ let showResultListView = (resultList, webLink) => {
                 },
                 layout: $layout.fill,
                 events: {
-                    didSelect: function(_sender, indexPath, _data) {
+                    didSelect: function (_sender, indexPath, _data) {
                         switch (indexPath.section) {
                             case 0:
                                 switch (indexPath.row) {
@@ -68,7 +67,7 @@ let showResultListView = (resultList, webLink) => {
                                                 {
                                                     title: "下载",
                                                     disabled: false,
-                                                    handler: function() {
+                                                    handler: function () {
                                                         saveFiles(
                                                             resultList,
                                                             0
@@ -78,7 +77,7 @@ let showResultListView = (resultList, webLink) => {
                                                 {
                                                     title: "取消",
                                                     disabled: false,
-                                                    handler: function() {}
+                                                    handler: function () {}
                                                 }
                                             ]
                                         });
@@ -91,7 +90,7 @@ let showResultListView = (resultList, webLink) => {
                                                 {
                                                     title: "确定",
                                                     disabled: false,
-                                                    handler: function() {
+                                                    handler: function () {
                                                         $quicklook.open({
                                                             list: resultList.map(
                                                                 i => i.url
@@ -102,7 +101,7 @@ let showResultListView = (resultList, webLink) => {
                                                 {
                                                     title: "取消",
                                                     disabled: false,
-                                                    handler: function() {}
+                                                    handler: function () {}
                                                 }
                                             ]
                                         });
@@ -119,7 +118,7 @@ let showResultListView = (resultList, webLink) => {
                                         "复制",
                                         "下载"
                                     ],
-                                    handler: function(title, idx) {
+                                    handler: function (title, idx) {
                                         switch (idx) {
                                             case 0:
                                                 $ui.menu({
@@ -133,7 +132,7 @@ let showResultListView = (resultList, webLink) => {
                                                         "nPlayer",
                                                         "Documents 5"
                                                     ],
-                                                    handler: function(
+                                                    handler: function (
                                                         browserTitle,
                                                         browserIndex
                                                     ) {
@@ -197,7 +196,7 @@ let showResultListView = (resultList, webLink) => {
                                             case 4:
                                                 $ui.menu({
                                                     items: ["系统预览"],
-                                                    handler: function(
+                                                    handler: function (
                                                         downtitle,
                                                         downIndex
                                                     ) {
@@ -213,7 +212,7 @@ let showResultListView = (resultList, webLink) => {
                                                                             title:
                                                                                 "确定下载",
                                                                             disabled: false, // Optional
-                                                                            handler: function() {
+                                                                            handler: function () {
                                                                                 $quicklook.open(
                                                                                     {
                                                                                         url: itemUrl
@@ -225,7 +224,7 @@ let showResultListView = (resultList, webLink) => {
                                                                             title:
                                                                                 "关闭",
                                                                             disabled: false, // Optional
-                                                                            handler: function() {}
+                                                                            handler: function () {}
                                                                         }
                                                                     ]
                                                                 });
@@ -259,7 +258,7 @@ let instaoffline = instLink => {
                     q: instLink
                 }
             })
-            .then(function(httpResp) {
+            .then(function (httpResp) {
                 const httpData = httpResp.data;
                 const strData = httpResp.rawData.toString();
                 if (strData.startsWith("{") && strData.endsWith("}")) {
@@ -273,7 +272,7 @@ let instaoffline = instLink => {
                             var resultList = [];
                             $("div.items-list")
                                 .find("a.button")
-                                .each(function(i, elem) {
+                                .each(function (i, elem) {
                                     const media_item = new MediaItem(
                                         $(this)
                                             .text()
@@ -329,10 +328,9 @@ let instagramOfficial = link => {
                 "User-Agent":
                     "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.125 Safari/537.36"
             },
-            handler: function(resp) {
+            handler: function (resp) {
                 var data = resp.data;
                 if (data) {
-              
                     const gsm = data.graphql.shortcode_media;
                     if (gsm.is_ad) {
                         $ui.alert({
@@ -401,7 +399,7 @@ let saveFiles = (resultList, index) => {
             url: thisMedia.url
         }),
         name: thisMedia.type == "video" ? "视频.mp4" : "图片.jpg",
-        handler: function() {
+        handler: function () {
             if (index == resultList.length - 1) {
                 $ui.alert({
                     title: "保存完毕",

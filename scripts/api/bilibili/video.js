@@ -1,9 +1,9 @@
-$include("./codePrototype.js");
 let cheerio = require("cheerio"),
     appScheme = require("AppScheme"),
     _URL = require("./api_url.js"),
     _UA = require("../user-agent.js"),
-    _USER = require("./user.js");
+    _USER = require("./user.js"),
+    $_str = require("../../libs/string");
 
 function getBiliobVideo(avid) {
     $ui.loading(true);
@@ -11,7 +11,7 @@ function getBiliobVideo(avid) {
         .get({
             url: _URL.BILIOB.API_VIDEO + avid
         })
-        .then(function(resp) {
+        .then(function (resp) {
             var v = resp.data;
             $ui.loading(false);
             if (v) {
@@ -48,7 +48,11 @@ function getBiliobVideo(avid) {
                             },
                             layout: $layout.fill,
                             events: {
-                                didSelect: function(_sender, indexPath, _data) {
+                                didSelect: function (
+                                    _sender,
+                                    indexPath,
+                                    _data
+                                ) {
                                     const section = indexPath.section;
                                     const row = indexPath.row;
                                     switch (section) {
@@ -96,7 +100,7 @@ function getVideo(vid, _biliData) {
     const partTitleList = partList.map(x => x.part);
     $ui.menu({
         items: partTitleList,
-        handler: function(title, idx) {
+        handler: function (title, idx) {
             //1080p以上需要带header
             if (_USER.isLogin()) {
                 getVideoData(vid, idx + 1, 116, _USER.getAccessKey());
@@ -111,14 +115,14 @@ function getVideoData(vid, page, quality, access_key) {
     $ui.loading(true);
     $http.get({
         url: `${_URL.BILIBILI.GET_VIDEO_DATA}&id=${vid}&page=${page}&quality${quality}&access_key=${access_key}`,
-        handler: function(videoResp) {
+        handler: function (videoResp) {
             var videoData = videoResp.data;
             if (videoData.status == "OK") {
                 if (videoData.url.length > 0) {
                     const copyStr = JSON.stringify(videoData.headers);
                     $http.get({
                         url: videoData.url,
-                        handler: function(biliResp) {
+                        handler: function (biliResp) {
                             var biliData = biliResp.data;
                             if (biliData.code == 0) {
                                 const downloadList = biliData.data.durl;
@@ -153,7 +157,7 @@ function getVideoData(vid, page, quality, access_key) {
                                                     },
                                                     layout: $layout.fill,
                                                     events: {
-                                                        didSelect: function(
+                                                        didSelect: function (
                                                             _sender,
                                                             indexPath,
                                                             data
@@ -201,7 +205,7 @@ function getVideoDanmuku(mid) {
         .get({
             url: `${_URL.BILIBILI.DANMUKU_LIST}${mid}.xml`
         })
-        .then(function(resp) {
+        .then(function (resp) {
             $ui.loading(false);
             const danmuXmlList = [];
             const $ = cheerio.load(resp.data, {
@@ -210,7 +214,7 @@ function getVideoDanmuku(mid) {
             });
             $console.info(resp.data);
             $console.info($.xml());
-            $("i > d").each(function(i, elem) {
+            $("i > d").each(function (i, elem) {
                 danmuXmlList.push($(elem));
             });
             const danmuStrList = danmuXmlList.map(d => d.text());
@@ -226,7 +230,7 @@ function getVideoDanmuku(mid) {
                         },
                         layout: $layout.fill,
                         events: {
-                            didSelect: function(sender, indexPath, data) {
+                            didSelect: function (sender, indexPath, data) {
                                 switch (indexPath.row) {
                                     case 0:
                                         $ui.push({
@@ -241,7 +245,7 @@ function getVideoDanmuku(mid) {
                                                     },
                                                     layout: $layout.fill,
                                                     events: {
-                                                        didSelect: function(
+                                                        didSelect: function (
                                                             _sender,
                                                             _indexPath,
                                                             _data
@@ -278,7 +282,7 @@ function getVideoInfo(input) {
         header: {
             "User-Agent": _UA.KAAASS
         },
-        handler: function(resp) {
+        handler: function (resp) {
             const data = resp.data;
             if (resp.response.statusCode == 200) {
                 if (data.status == "OK") {
@@ -343,7 +347,7 @@ function getVideoInfo(input) {
                                 },
                                 layout: $layout.fill,
                                 events: {
-                                    didSelect: function(
+                                    didSelect: function (
                                         _sender,
                                         indexPath,
                                         _data
@@ -384,7 +388,7 @@ function getVideoInfo(input) {
                                                                 items: partList.map(
                                                                     p => p.part
                                                                 ),
-                                                                handler: function(
+                                                                handler: function (
                                                                     _,
                                                                     idx
                                                                 ) {
@@ -453,7 +457,7 @@ function laterToWatch() {
                     "User-Agent": _UA.BILIBILI.APP_IPHONE
                 }
             })
-            .then(function(resp) {
+            .then(function (resp) {
                 var data = resp.data;
                 $console.info(data);
                 if (data.data) {
@@ -475,7 +479,7 @@ function laterToWatch() {
                                     },
                                     layout: $layout.fill,
                                     events: {
-                                        didSelect: function(
+                                        didSelect: function (
                                             _sender,
                                             indexPath,
                                             _data
@@ -515,21 +519,21 @@ function showVideoDownList(thisFile, copyStr) {
                 },
                 layout: $layout.fill,
                 events: {
-                    didSelect: function(_sender, idxp, _data) {
+                    didSelect: function (_sender, idxp, _data) {
                         if (copyStr) {
                             $ui.toast("请复制headers");
                             $input.text({
                                 placeholder: "",
                                 text: copyStr,
-                                handler: function(text) {
-                                    copyStr.copy();
+                                handler: function (text) {
+                                    $_str.copy(copyStr);
                                     $ui.menu({
                                         items: [
                                             "分享",
                                             "使用外部播放器打开",
                                             "使用Alook浏览器打开"
                                         ],
-                                        handler: function(title, idx) {
+                                        handler: function (title, idx) {
                                             switch (idx) {
                                                 case 0:
                                                     $share.sheet([_data]);
@@ -540,7 +544,7 @@ function showVideoDownList(thisFile, copyStr) {
                                                             "AVPlayer",
                                                             "nplayer"
                                                         ],
-                                                        handler: function(
+                                                        handler: function (
                                                             titlePlayer,
                                                             idxPlayer
                                                         ) {
@@ -591,11 +595,11 @@ function getVidFromUrl(url) {
     var newUrl = url;
     siteList.map(x => {
         if (newUrl.startsWith(x)) {
-            newUrl = newUrl.remove(x);
+            newUrl = $_str.remove(newUrl, x);
         }
     });
     if (newUrl.indexOf("?")) {
-        newUrl = newUrl.split("?")[0].remove("/");
+        newUrl = $_str.remove(newUrl.split("?")[0], "/");
     }
     return newUrl;
 }

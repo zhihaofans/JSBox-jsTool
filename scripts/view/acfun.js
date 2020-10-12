@@ -1,6 +1,6 @@
-$include("./codePrototype.js");
-let acApi = require("../api/acfun.js");
-let urlCheck = require("../api/urlCheck.js");
+let acApi = require("../api/acfun.js"),
+    urlCheck = require("../api/urlCheck.js"),
+    $_str = require("./libs/string");
 let isInit = false;
 let init = url => {
     acApi.init();
@@ -34,7 +34,7 @@ let init = url => {
                 },
                 layout: $layout.fill,
                 events: {
-                    didSelect: function(_sender, indexPath, _data) {
+                    didSelect: function (_sender, indexPath, _data) {
                         $console.info(`acApi.isLogin:${acApi.isLogin()}`);
                         switch (indexPath.section) {
                             case 0:
@@ -45,13 +45,13 @@ let init = url => {
                                             : $input.text({
                                                   autoFontSize: true,
                                                   placeholder: "输入账号",
-                                                  handler: function(userName) {
+                                                  handler: function (userName) {
                                                       if (userName.length > 0) {
                                                           $input.text({
                                                               autoFontSize: true,
                                                               placeholder:
                                                                   "输入密码",
-                                                              handler: function(
+                                                              handler: function (
                                                                   pwd
                                                               ) {
                                                                   if (
@@ -121,7 +121,7 @@ let init = url => {
             }
         ],
         events: {
-            appeared: function() {
+            appeared: function () {
                 if (acApi.isLogin() && !isInit) {
                     $ui.toast("已登录");
                 }
@@ -139,7 +139,7 @@ let getUploaderVideo = inputUid => {
         placeholder: "请输入uid",
         text:
             inputUid || $cache.get(acApi._cacheKey.uploaderVideo_lastUid) || "",
-        handler: function(uid) {
+        handler: function (uid) {
             if (uid.length > 0) {
                 $input.text({
                     type: $kbType.number,
@@ -148,7 +148,7 @@ let getUploaderVideo = inputUid => {
                         $cache.get(
                             acApi._cacheKey.uploaderVideo_lastPage + uid
                         ) || 1,
-                    handler: function(page) {
+                    handler: function (page) {
                         if (uid.length > 0) {
                             acApi.getUploaderVideo(uid, page);
                         } else {
@@ -173,14 +173,14 @@ let linkCheck = url => {
                     {
                         title: "解析视频",
                         disabled: false,
-                        handler: function() {
+                        handler: function () {
                             acApi.getVideoPid(vid);
                         }
                     },
                     {
                         title: "关闭",
                         disabled: false,
-                        handler: function() {}
+                        handler: function () {}
                     }
                 ]
             });
@@ -200,14 +200,14 @@ let linkCheck = url => {
                     {
                         title: "是",
                         disabled: false,
-                        handler: function() {
+                        handler: function () {
                             getUploaderVideo(uid);
                         }
                     },
                     {
                         title: "关闭",
                         disabled: false,
-                        handler: function() {}
+                        handler: function () {}
                     }
                 ]
             });
@@ -227,7 +227,7 @@ let linkCheck = url => {
 let qrcodeScan = () => {
     $qrcode.scan({
         handler(str) {
-            if (str.checkIfUrl()) {
+            if ($_str.checkIfUrl(str)) {
                 linkCheck(str);
             } else {
                 $ui.alert({

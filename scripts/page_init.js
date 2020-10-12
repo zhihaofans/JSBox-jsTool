@@ -1,5 +1,4 @@
-$include("./api/codePrototype");
-
+let $_str = require("./libs/string");
 // 模块
 let urlCheck = require("./api/urlCheck"),
     cdn = require("./view/cdn"),
@@ -14,7 +13,7 @@ let urlCheck = require("./api/urlCheck"),
 
 function gotoUrl(url) {
     const newUrl = $text.URLDecode(url);
-    if (newUrl.checkIfUrl()) {
+    if ($_str.checkIfUrl(newUrl)) {
         checkMod(newUrl);
     } else {
         $ui.alert({
@@ -73,7 +72,7 @@ function contextOpen(query) {
 function scanQrcodeToGo() {
     $qrcode.scan({
         handler(str) {
-            if (str.checkIfUrl()) {
+            if ($_str.checkIfUrl(str)) {
                 gotoUrl(str);
             } else {
                 $ui.error("不是链接");

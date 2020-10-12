@@ -1,4 +1,4 @@
-$include("/scripts/api/codePrototype.js");
+let $_str = require("../../libs/string");
 let cdnUrl = {
     weserv: "https://images.weserv.nl/?url=",
     github: {
@@ -17,21 +17,28 @@ let getWeserv = imageUrl => {
 };
 
 let getGithubRealRaw = sourceGithubUrl => {
-    const newUrl = sourceGithubUrl.replace("https://github.com/", "https://raw.githubusercontent.com/");
-    return sourceGithubUrl.indexOf("https://raw.githubusercontent.com/") > -1 ?
-        sourceGithubUrl :
-        newUrl.split("/")[2] == "blob" ?
-        newUrl.remove("/blob/") :
-        newUrl.remove("/raw/");
-
+    const newUrl = sourceGithubUrl.replace(
+        "https://github.com/",
+        "https://raw.githubusercontent.com/"
+    );
+    return sourceGithubUrl.indexOf("https://raw.githubusercontent.com/") > -1
+        ? sourceGithubUrl
+        : newUrl.split("/")[2] == "blob"
+        ? newUrl.remove("/blob/")
+        : newUrl.remove("/raw/");
 };
 
 let getGithubRaw = sourceGithubUrl => {
-    const list = getGithubRealRaw(sourceGithubUrl).remove("https://raw.githubusercontent.com/").split("/");
+    const list = $_str
+        .remove(
+            getGithubRealRaw(sourceGithubUrl),
+            "https://raw.githubusercontent.com/"
+        )
+        .split("/");
     var newUrl = "https://cdn.jsdelivr.net/gh";
     list.forEach(function (item, index, array) {
-        newUrl = (index == 2) ? `${newUrl}@${item}` : `${newUrl}/${item}`;
-    })
+        newUrl = index == 2 ? `${newUrl}@${item}` : `${newUrl}/${item}`;
+    });
 
     return newUrl;
 };
