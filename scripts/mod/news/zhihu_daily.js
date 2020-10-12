@@ -1,4 +1,4 @@
-let appScheme = require("/scripts/api/app_scheme.js");
+let appScheme = require("AppScheme");
 let _url = "https://news-at.zhihu.com/api/4/news/latest";
 
 let init = () => {

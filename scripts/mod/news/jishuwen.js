@@ -1,6 +1,6 @@
 let cheerio = require("cheerio"),
     _URL = require("/scripts/api/urlData.js"),
-    appScheme = require("/scripts/api/app_scheme.js");
+    appScheme = require("AppScheme");
 
 function linkItem(_title, _link) {
     this.title = _title;

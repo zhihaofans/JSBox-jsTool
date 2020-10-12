@@ -1,4 +1,4 @@
-let appScheme = require("/scripts/api/app_scheme.js");
+let appScheme = require("AppScheme");
 let init = firstInit => {
   $ui.menu({
     items: ["最新", "分类"],
