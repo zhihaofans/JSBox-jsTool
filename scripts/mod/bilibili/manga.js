@@ -58,13 +58,11 @@ class User {
             $ui.alert({
                 title: "哔哩哔哩漫画签到失败",
                 message: "未登录",
-                actions: [
-                    {
-                        title: "OK",
-                        disabled: false, // Optional
-                        handler: function () {}
-                    }
-                ]
+                actions: [{
+                    title: "OK",
+                    disabled: false, // Optional
+                    handler: function () {}
+                }]
             });
         }
     }

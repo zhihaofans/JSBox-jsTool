@@ -6,7 +6,7 @@ function showHistory() {
         .get({
             url: _URL.BILICHAT.HISTORY
         })
-        .then(function(resp) {
+        .then(function (resp) {
             var data = resp.data;
             if (data) {
                 if (data.length > 0) {
@@ -23,7 +23,7 @@ function showHistory() {
                                 },
                                 layout: $layout.fill,
                                 events: {
-                                    didSelect: function(
+                                    didSelect: function (
                                         _sender,
                                         indexPath,
                                         _data
@@ -38,7 +38,7 @@ function showHistory() {
                                                 {
                                                     title: "打开直播间",
                                                     disabled: false,
-                                                    handler: function() {
+                                                    handler: function () {
                                                         $app.openURL(
                                                             _URL.BILIBILI
                                                                 .LIVE_WEB_ROOM +
@@ -49,7 +49,7 @@ function showHistory() {
                                                 {
                                                     title: "打开个人空间",
                                                     disabled: false,
-                                                    handler: function() {
+                                                    handler: function () {
                                                         $app.openURL(
                                                             _URL.BILIBILI
                                                                 .BILIBILI_SPACE +
@@ -60,7 +60,7 @@ function showHistory() {
                                                 {
                                                     title: "关闭",
                                                     disabled: false,
-                                                    handler: function() {}
+                                                    handler: function () {}
                                                 }
                                             ]
                                         });
@@ -79,6 +79,10 @@ function showHistory() {
             }
         });
 }
+let init = () => {
+    showHistory();
+};
 module.exports = {
+    init,
     showHistory
 };

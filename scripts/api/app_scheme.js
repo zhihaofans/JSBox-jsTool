@@ -1,4 +1,4 @@
-let appScheme = require("/scripts/api/AppScheme");
+let appScheme = require("AppScheme");
 module.exports = {
     alookBrowserOpen: appScheme.alookBrowserOpen,
     chromeBrowserOpen: appScheme.chromeBrowserOpen,
