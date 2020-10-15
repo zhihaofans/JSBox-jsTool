@@ -3,6 +3,7 @@ module.exports = {
     Comic,
     Live,
     User,
+    Common,
     getApiJson,
     getAwait: http.getAwait,
     postAwait: http.postAwait
@@ -16,6 +17,11 @@ let getApiJson = () => {
         return undefined;
     }
 };
+class Common {
+    constructor() {
+        this.KAAASS_SIGN_URL = "https://api.kaaass.net/biliapi/urlgen"
+    }
+}
 class User {
     constructor() {
         this.MY_INFO = "https://app.bilibili.com/x/v2/account/mine";
@@ -23,13 +29,11 @@ class User {
 }
 class Live {
     constructor() {
-        this.SIGN_IN =
-            "https://api.live.bilibili.com/rc/v1/Sign/doSign?access_key=";
+        this.SIGN_IN = "https://api.live.bilibili.com/rc/v1/Sign/doSign?access_key=";
     }
 }
 class Comic {
     constructor() {
-        this.COMIC_CHECK_IN =
-            "https://manga.bilibili.com/twirp/activity.v1.Activity/ClockIn";
+        this.COMIC_CHECK_IN = "https://manga.bilibili.com/twirp/activity.v1.Activity/ClockIn";
     }
 }

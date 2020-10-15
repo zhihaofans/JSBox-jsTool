@@ -1,20 +1,19 @@
-let $B_database = require("./data_base"),
-    $B_api = require("./api"),
-    $B_ua = require("./user_agent");
-let $B_cache = new $B_database.Cache(),
-    $U_user = new $B_api.User(),
-    $UA_user = new $B_ua.User();
+let $B_common = require("./common"),
+    $B_cache = new $B_common.Cache(),
+    $_User = new $B_common.User(),
+    $_Common = new $B_common.Common();
 module.exports = {
     Auth,
-    Info
+    Info,
+    View
 };
 class Auth {
     async getSignUrl(host, param, android) {
-        const url = `https://api.kaaass.net/biliapi/urlgen?host=${encodeURI(host)}&param=${encodeURI(param)}&android=${android}`,
+        const url = `${$_Common._API.KAAASS_SIGN_URL}?host=${encodeURI(host)}&param=${encodeURI(param)}&android=${android}`,
             headers = {
-                "user-agent": _UA.KAAASS
+                "user-agent": $_Common._UA.KAAASS
             };
-        const $_get = await $B_api.getAwait(url, headers);
+        const $_get = await $B_common.getAwait(url, headers);
         if ($_get.error) {
             $console.error($_get.error.message);
             return undefined;
@@ -48,14 +47,14 @@ class Info {
         const $B_auth = new Auth();
         const access_key = $B_auth.accessKey();
         if (access_key) {
-            const respKaaass = $B_auth.getSignUrl($U_user.MY_INFO, `access_key=${access_key}`);
+            const respKaaass = $B_auth.getSignUrl($_User._API.MY_INFO, `access_key=${access_key}`);
             const dataKaaass = respKaaass.data;
             $console.info(dataKaaass);
             if (dataKaaass) {
                 $http.get({
                     url: dataKaaass.url,
                     header: {
-                        "User-Agent": $UA_user.APP_IPHONE
+                        "User-Agent": $_User._UA.APP_IPHONE
                     },
                     handler: respBili => {
                         var resultBili = respBili.data;
@@ -95,5 +94,22 @@ class Info {
         } else {
             return undefined;
         }
+    }
+}
+class View {
+    constructor() {
+        this._Auth = new Auth();
+    }
+    updateAccessKey() {
+        $input.text({
+            type: $kbType.text,
+            placeholder: "输入Access key",
+            text: this._Auth.accessKey() || "",
+            handler: function (access_key) {
+                if (access_key) {
+
+                }
+            }
+        });
     }
 }

@@ -2,11 +2,10 @@ module.exports = {
     User
 };
 let $B_api = require("./api"),
-    $B_ua = require("./user_agent"),
-    $B_user = require("./user");
-let $U_comic = new $B_api.Comic(),
-    $UA_comic = new $B_ua.Comic(),
-    $User_auth = new $B_user.Auth();
+    $B_user = require("./user"),
+    $B_common = require("./common"),
+    $User_auth = new $B_user.Auth(),
+    $_Comic = new $B_common.Comic();
 
 class User {
     async checkIn() {
@@ -19,12 +18,12 @@ class User {
             },
             postHeader = {
                 "Content-Type": "application/x-www-form-urlencoded",
-                "User-Agent": $UA_comic.CHECK_IN
+                "User-Agent": $_Comic._UA.CHECK_IN
             };
         if (accessKey && uid) {
             $ui.loading(true);
             const httpPost = await $B_api.postAwait(
-                $U_comic.COMIC_CHECK_IN,
+                $_Comic._API.COMIC_CHECK_IN,
                 postBody,
                 postHeader
             );
