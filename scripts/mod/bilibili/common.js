@@ -1,15 +1,6 @@
-module.exports = {
-    Comic,
-    Common,
-    Live,
-    User,
-    getAwait: $B_api.getAwait,
-    postAwait: $B_api.postAwait,
-    Cache: $_DB.Cache
-};
-let $B_useragent = require("./user_agent"),
-    $B_api = require("./api"),
-    $_DB = require("./data_base");
+let $B_useragent = require("./user_agent");
+let $B_api = require("./api");
+let $_DB = require("./data_base");
 class Comic {
     constructor() {
         this._UA = new $B_useragent.Comic();
@@ -34,3 +25,12 @@ class Common {
         this._API = new $B_api.Common();
     }
 }
+module.exports = {
+    Comic,
+    Common,
+    Live,
+    User,
+    getAwait: $B_api.getAwait,
+    postAwait: $B_api.postAwait,
+    Cache: $_DB.Cache
+};

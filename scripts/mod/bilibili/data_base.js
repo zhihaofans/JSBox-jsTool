@@ -1,28 +1,21 @@
-module.exports = {
-    Cache
-};
-class CacheId {
+class Cache {
     constructor() {
         this.ACCESS_KEY = "BILIBILI_ACCESS_KEY";
         this.UID = "BILIBILI_UID";
     }
-}
-
-class Cache {
     accessKey(access_key = undefined) {
-        const $B_cacheId = new CacheId();
         if (access_key) {
-            $cache.set($B_cacheId.ACCESS_KEY, access_key);
-        } else {
-            return $cache.get($B_cacheId.ACCESS_KEY);
+            $cache.set(this.ACCESS_KEY, access_key);
         }
+        return $cache.get(this.ACCESS_KEY);
     }
     uid(uid = undefined) {
-        const $B_cacheId = new CacheId();
         if (uid) {
-            $cache.set($B_cacheId.UID, uid);
-        } else {
-            return $cache.get($B_cacheId.UID);
+            $cache.set(this.UID, uid);
         }
+        return $cache.get(this.UID);
     }
 }
+module.exports = {
+    Cache
+};

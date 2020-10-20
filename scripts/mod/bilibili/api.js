@@ -1,13 +1,5 @@
 let http = require("../../libs/http");
-module.exports = {
-    Comic,
-    Live,
-    User,
-    Common,
-    getApiJson,
-    getAwait: http.getAwait,
-    postAwait: http.postAwait
-};
+
 let getApiJson = () => {
     try {
         const fileData = $file.read("/assets/bilibili/api.json");
@@ -19,7 +11,7 @@ let getApiJson = () => {
 };
 class Common {
     constructor() {
-        this.KAAASS_SIGN_URL = "https://api.kaaass.net/biliapi/urlgen"
+        this.KAAASS_SIGN_URL = "https://api.kaaass.net/biliapi/urlgen";
     }
 }
 class User {
@@ -35,5 +27,15 @@ class Live {
 class Comic {
     constructor() {
         this.COMIC_CHECK_IN = "https://manga.bilibili.com/twirp/activity.v1.Activity/ClockIn";
+        this.COMIC_ = "https://manga.bilibili.com/twirp/comic.v1.Comic/ComicDetail";
     }
 }
+module.exports = {
+    Comic,
+    Live,
+    User,
+    Common,
+    getApiJson,
+    getAwait: http.getAwait,
+    postAwait: http.postAwait
+};

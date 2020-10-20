@@ -1,12 +1,6 @@
-module.exports = {
-    Comic,
-    Common,
-    User
-};
 class Comic {
     constructor() {
-        this.CHECK_IN =
-            "comic-universal/802 CFNetwork/1125.2 Darwin/19.4.0 os/ios model/iPhone 11 mobi_app/iphone_comic osVer/13.4 network/2";
+        this.CHECK_IN = "comic-universal/802 CFNetwork/1125.2 Darwin/19.4.0 os/ios model/iPhone 11 mobi_app/iphone_comic osVer/13.4 network/2";
     }
 }
 class User {
@@ -19,3 +13,8 @@ class Common {
         this.KAAASS = "JSBox-jsTool/0.1 (github:zhuangzhihao-io) <zhuang@zhihao.io>"
     }
 }
+module.exports = {
+    Comic,
+    Common,
+    User
+};
