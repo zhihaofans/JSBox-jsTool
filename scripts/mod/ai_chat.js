@@ -1,0 +1,1 @@
+"http://api.qingyunke.com/api.php?key=free&appid=0&msg=%E4%BD%A0%E5%A5%BD"
