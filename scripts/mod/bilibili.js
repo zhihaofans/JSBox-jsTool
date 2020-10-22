@@ -1,5 +1,6 @@
-let $_User = require("./bilibili/user");
-let $_View = new $_User.View();
+let $_View = require("./bilibili/view");
+let $View_User = new $_View.User();
+
 let init = () => {
     $ui.push({
         props: {
@@ -10,7 +11,7 @@ let init = () => {
             props: {
                 data: [{
                     title: "",
-                    rows: ["设置Access Key"]
+                    rows: ["设置Access Key", "签到"]
                 }]
             },
             layout: $layout.fill,
@@ -20,7 +21,10 @@ let init = () => {
                         case 0:
                             switch (indexPath.row) {
                                 case 0:
-                                    $_View.updateAccessKey();
+                                    $View_User.updateAccessKey();
+                                    break;
+                                case 1:
+                                    $_View.CheckIn()
                                     break;
                             }
                             break;
