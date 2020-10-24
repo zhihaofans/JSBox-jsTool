@@ -9,7 +9,8 @@ let urlCheck = require("./api/urlCheck"),
     dailyCheckin = require("./view/daily_check_in"),
     bilichat = require("./view/bilichat"),
     test = require("./view/test"),
-    mod = require("./mod_index");
+    mod = require("./mod_index"),
+    init = require("./init");
 
 function gotoUrl(url) {
     const newUrl = $text.URLDecode(url);
@@ -83,6 +84,12 @@ function scanQrcodeToGo() {
         }
     });
 }
+let openSettingPage = () => {
+    init.initPrefs();
+    $prefs.open(() => {
+        init.updatePrefs();
+    });
+};
 module.exports = {
     cdn: cdn.init,
     bilibili: bilibili.init,
@@ -93,6 +100,9 @@ module.exports = {
     bilichat: bilichat.showHistory,
     test: test.init,
     mod: mod.showModList,
+    setting: openSettingPage,
+    initPrefs: init.initPrefs,
+    updatePrefs: init.updatePrefs,
     contextOpen,
     gotoUrl,
     scanQrcodeToGo

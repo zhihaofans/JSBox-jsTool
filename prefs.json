@@ -1,0 +1,37 @@
+{
+  "title": "设置",
+  "groups": [{
+    "title": "Mod",
+    "items": [{
+      "title": "哔哩哔哩mod",
+      "type": "child",
+      "value": {
+        "title": "哔哩哔哩mod",
+        "items": [{
+          "title": "Access key",
+          "type": "string",
+          "key": "bilibili.access_key"
+        }]
+      }
+    }]
+  }, {
+    "title": "测试",
+    "items": [ {
+        "title": "OK",
+        "type": "string",
+        "key": "user.name",
+        "value": "default user name"
+      },
+      {
+        "title": "AUTO_SAVE",
+        "type": "boolean",
+        "key": "auto.save",
+        "value": true
+      }, {
+        "title": "TEST",
+        "type": "script",
+        "value": "require('scripts/test').runTest();"
+      }
+    ]
+  }]
+}
