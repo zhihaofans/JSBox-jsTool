@@ -4,12 +4,33 @@ let $B_cache = new $B_common.Cache(),
     $_Common = new $B_common.Common();
 
 class Auth {
-    async getSignUrl(host, param, android) {
+    async getSignUrl(host, param, android = false) {
+        $console.warn(host);
+        $console.warn(param);
+        $console.warn(android);
         const url = `${$_Common._API.KAAASS_SIGN_URL}?host=${encodeURI(host)}&param=${encodeURI(param)}&android=${android}`,
             headers = {
                 "user-agent": $_Common._UA.KAAASS
             };
         const $_get = await $B_common.getAwait(url, headers);
+        $console.error($_get);
+        if ($_get.error) {
+            $console.error($_get.error.message);
+            return undefined;
+        } else {
+            return $_get.data;
+        }
+
+    }
+    async getSignUrl_A(param, android = false) {
+        $console.warn(param);
+        $console.warn(android);
+        const url = `${$_Common._API.KAAASS_SIGN_URL}?host=&param=${encodeURI(param)}&android=${android}`,
+            headers = {
+                "user-agent": $_Common._UA.KAAASS
+            };
+        const $_get = await $B_common.getAwait(url, headers);
+        $console.error($_get);
         if ($_get.error) {
             $console.error($_get.error.message);
             return undefined;
@@ -88,6 +109,50 @@ class Info {
             return undefined;
         }
     }
+    myInfo() {
+        const $B_auth = new Auth();
+        const access_key = $B_auth.accessKey();
+        if (access_key) {
+            $http.get({
+                url: $_User._API.MY_INFO + `?access_key=${access_key}`,
+                header: {
+                    "User-Agent": $_User._UA.APP_IPHONE
+                },
+                handler: respBili => {
+                    var resultBili = respBili.data;
+                    $console.warn(resultBili);
+                    if (resultBili.code == 0) {
+                        const myInfoData = resultBili.data;
+                        //saveLoginCache(_AK, myInfoData.mid);
+                        $ui.loading(false);
+                        $ui.success("已更新登录数据");
+                        $ui.alert({
+                            title: "结果",
+                            message: myInfoData,
+                            actions: [{
+                                title: "ok",
+                                disabled: false, // Optional
+                                handler: function () {}
+                            }]
+                        });
+                    } else {
+                        $ui.loading(false);
+                        $ui.alert({
+                            title: `Error ${resultBili.code}`,
+                            message: resultBili.message || "未知错误",
+                            actions: [{
+                                title: "OK",
+                                disabled: false, // Optional
+                                handler: function () {}
+                            }]
+                        });
+                    }
+                }
+            });
+        } else {
+            return undefined;
+        }
+    }
 }
 class View {
     constructor() {}
@@ -116,6 +181,10 @@ class View {
                 }
             }
         });
+    }
+    getMyInfo() {
+        const $U_info = new Info();
+        $U_info.myInfo();
     }
 }
 module.exports = {
