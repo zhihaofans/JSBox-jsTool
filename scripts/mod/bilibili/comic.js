@@ -1,6 +1,3 @@
-module.exports = {
-    User
-};
 let $B_api = require("./api"),
     $B_user = require("./user"),
     $B_common = require("./common"),
@@ -31,20 +28,29 @@ class User {
                 $ui.loading(false);
                 $console.error(httpPost.error);
             } else {
-                var clockinData = httpPost.data;
-                $console.info(clockinData);
+                var checkInData = httpPost.data;
+                $console.info(checkInData);
                 $ui.loading(false);
-                if (clockinData) {
-                    if (clockinData.code == 0) {
+                if (checkInData) {
+                    if (checkInData.code == 0) {
                         $ui.alert({
                             title: "签到结果",
                             message: "签到成功"
                         });
                     } else {
-                        $ui.alert({
-                            title: `错误：${clockinData.code}`,
-                            message: clockinData.msg
-                        });
+                        switch (checkInData.code) {
+                            case "invalid_argument":
+                                $ui.alert({
+                                    title: `错误`,
+                                    message: "今天已签到"
+                                });
+                                break;
+                            default:
+                                $ui.alert({
+                                    title: `错误：${checkInData.code}`,
+                                    message: checkInData.msg
+                                });
+                        }
                     }
                 } else {
                     $ui.alert({
@@ -66,3 +72,6 @@ class User {
         }
     }
 }
+module.exports = {
+    User
+};

@@ -11,12 +11,16 @@
           "title": "Access key",
           "type": "string",
           "key": "bilibili.access_key"
+        }, {
+          "title": "uid",
+          "type": "number",
+          "key": "bilibili.uid"
         }]
       }
     }]
   }, {
     "title": "测试",
-    "items": [ {
+    "items": [{
         "title": "OK",
         "type": "string",
         "key": "user.name",

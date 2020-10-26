@@ -20,6 +20,16 @@
         }
     },
     {
+        "file": "bilibili.js",
+        "name": "Bilibili mod ver.",
+        "url": "",
+        "version": 1,
+        "dec": "",
+        "pref": {
+          
+        }
+    },
+    {
         "file": "apple_rank.js",
         "name": "苹果排行榜",
         "url": "",
