@@ -15,7 +15,6 @@ class User {
 }
 class Live {
     constructor() {
-        this._UA = new $B_useragent.Live();
         this._API = new $B_api.Live();
     }
 }

@@ -21,7 +21,7 @@ class User {
 }
 class Live {
     constructor() {
-        this.SIGN_IN = "https://api.live.bilibili.com/rc/v1/Sign/doSign?access_key=";
+        this.CHECK_IN = "https://api.live.bilibili.com/rc/v1/Sign/doSign?access_key=";
     }
 }
 class Comic {
