@@ -22,12 +22,13 @@ class User {
 class Live {
     constructor() {
         this.CHECK_IN = "https://api.live.bilibili.com/rc/v1/Sign/doSign?access_key=";
+        this.SILVER_TO_COIN = "https://api.live.bilibili.com/pay/v1/Exchange/silver2coin";
     }
 }
 class Comic {
     constructor() {
         this.COMIC_CHECK_IN = "https://manga.bilibili.com/twirp/activity.v1.Activity/ClockIn";
-        this.COMIC_ = "https://manga.bilibili.com/twirp/comic.v1.Comic/ComicDetail";
+        this.COMIC_DETAIL = "https://manga.bilibili.com/twirp/comic.v1.Comic/ComicDetail";
     }
 }
 module.exports = {

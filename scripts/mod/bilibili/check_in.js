@@ -6,6 +6,10 @@ let _live = () => {
     const $B_comic = require("./live");
     (new $B_comic.User()).checkIn();
 }
+let _liveSilver2Coin = () => {
+    const $B_comic = require("./live");
+    (new $B_comic.User()).silver2coin();
+}
 let initView = () => {
     $ui.push({
         props: {
@@ -14,7 +18,7 @@ let initView = () => {
         views: [{
             type: "list",
             props: {
-                data: ["漫画", "直播签到"]
+                data: ["漫画", "直播签到", "直播银瓜子兑换硬币"]
             },
             layout: $layout.fill,
             events: {
@@ -25,6 +29,9 @@ let initView = () => {
                             break;
                         case 1:
                             _live();
+                            break;
+                        case 2:
+                            _liveSilver2Coin();
                             break;
                     }
                 }
