@@ -1,6 +1,6 @@
 let acApi = require("../api/acfun.js"),
     urlCheck = require("../api/urlCheck.js"),
-    $_str = require("./libs/string");
+    $_str = require("../libs/string");
 let isInit = false;
 let init = url => {
     acApi.init();

@@ -1,6 +1,6 @@
 let _BILIURL = require("./api_url.js").BILIBILI,
     _USER = require("./user.js"),
-    _HTTP = require("/scripts/api/http"),
+    _HTTP = require("../../libs/http"),
     _UA = require("/scripts/api/user-agent.js");
 let mangaCheckin = async () => {
     const accessKey = _USER.getAccessKey(),
@@ -51,13 +51,11 @@ let mangaCheckin = async () => {
         $ui.alert({
             title: "哔哩哔哩漫画签到失败",
             message: "未登录",
-            actions: [
-                {
-                    title: "OK",
-                    disabled: false, // Optional
-                    handler: function() {}
-                }
-            ]
+            actions: [{
+                title: "OK",
+                disabled: false, // Optional
+                handler: function () {}
+            }]
         });
     }
 };
@@ -112,8 +110,8 @@ let vipCheckin = async () => {
         postHeader = {
             "User-Agent": _UA.BILIBILI.VIP_CHECKIN
         };
-        $console.info(postBody);
-        $console.info(postHeader);
+    $console.info(postBody);
+    $console.info(postHeader);
     const httpPost = await _HTTP.postAwait(
         _BILIURL.VIP_CHECKIN,
         postBody,
@@ -142,38 +140,32 @@ let liveCheckIn = async () => {
                 $ui.alert({
                     title: "签到成功",
                     message: data.message || "签到成功",
-                    actions: [
-                        {
-                            title: "OK",
-                            disabled: false, // Optional
-                            handler: function() {}
-                        }
-                    ]
+                    actions: [{
+                        title: "OK",
+                        disabled: false, // Optional
+                        handler: function () {}
+                    }]
                 });
             } else {
                 $ui.alert({
                     title: "签到失败",
                     message: data.message || "未返回错误信息",
-                    actions: [
-                        {
-                            title: "OK",
-                            disabled: false, // Optional
-                            handler: function() {}
-                        }
-                    ]
+                    actions: [{
+                        title: "OK",
+                        disabled: false, // Optional
+                        handler: function () {}
+                    }]
                 });
             }
         } else {
             $ui.alert({
                 title: "签到失败",
                 message: "返回空白数据",
-                actions: [
-                    {
-                        title: "OK",
-                        disabled: false, // Optional
-                        handler: function() {}
-                    }
-                ]
+                actions: [{
+                    title: "OK",
+                    disabled: false, // Optional
+                    handler: function () {}
+                }]
             });
         }
     }
