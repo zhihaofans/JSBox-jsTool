@@ -1,12 +1,21 @@
-[
-    {
+[{
         "file": "demo.js",
         "name": "Demo",
         "url": "",
         "version": 1,
         "dec": "",
         "pref": {
-          
+
+        }
+    },
+    {
+        "file": "acfun.js",
+        "name": "AcFun",
+        "url": "",
+        "version": 1,
+        "dec": "",
+        "pref": {
+
         }
     },
     {
@@ -16,17 +25,7 @@
         "version": 1,
         "dec": "",
         "pref": {
-          
-        }
-    },
-    {
-        "file": "bilibili.js",
-        "name": "Bilibili mod ver.",
-        "url": "",
-        "version": 1,
-        "dec": "",
-        "pref": {
-          
+
         }
     },
     {
@@ -36,7 +35,17 @@
         "version": 1,
         "dec": "",
         "pref": {
-          
+
+        }
+    },
+    {
+        "file": "bilibili.js",
+        "name": "Bilibili mod ver.",
+        "url": "",
+        "version": 1,
+        "dec": "",
+        "pref": {
+
         }
     },
     {
@@ -46,7 +55,7 @@
         "version": 1,
         "dec": "",
         "pref": {
-          
+
         }
-			}
+    }
 ]
