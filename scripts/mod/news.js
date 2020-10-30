@@ -5,7 +5,7 @@ let _modInfo = {
     updateLink: "",
     modType: 1
 };
-let fileUtil = require("/scripts/api/file");
+let fileUtil = require("../api/file");
 let newsDir = "/scripts/mod/news/";
 function _get_mod_info_() {
     return _modInfo;

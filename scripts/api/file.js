@@ -14,8 +14,8 @@ function getFileList(dir, ext = undefined) {
             }
         });
         return files;
-    }else{
-      $console.error(`不存在该目录或不是目录:${dir}`);
+    } else {
+        $console.error(`不存在该目录或不是目录:${dir}`);
     }
 }
 module.exports = {
