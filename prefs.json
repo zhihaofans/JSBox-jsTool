@@ -30,6 +30,21 @@
           "title": "uid",
           "type": "number",
           "key": "mod.acfun.uid"
+        },{
+          "title": "登录",
+          "type": "child",
+          "value": {
+            "title": "登录后会清空缓存",
+            "items": [{
+              "title": "账号",
+              "type": "string",
+              "key": "mod.acfun.login.uid"
+            }, {
+              "title": "密码",
+              "type": "string",
+              "key": "mod.acfun.login.password"
+            }]
+          }
         }]
       }
     }]
