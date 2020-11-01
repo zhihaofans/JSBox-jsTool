@@ -3,18 +3,33 @@
   "groups": [{
     "title": "Mod",
     "items": [{
-      "title": "哔哩哔哩mod",
+      "title": "哔哩哔哩",
       "type": "child",
       "value": {
         "title": "哔哩哔哩mod",
         "items": [{
           "title": "Access key",
           "type": "string",
-          "key": "bilibili.access_key"
+          "key": "mod.bilibili.access_key"
         }, {
           "title": "uid",
           "type": "number",
-          "key": "bilibili.uid"
+          "key": "mod.bilibili.uid"
+        }]
+      }
+    }, {
+      "title": "Acfun",
+      "type": "child",
+      "value": {
+        "title": "Acfun mod",
+        "items": [{
+          "title": "Cookies",
+          "type": "string",
+          "key": "mod.acfun.cookies"
+        }, {
+          "title": "uid",
+          "type": "number",
+          "key": "mod.acfun.uid"
         }]
       }
     }]

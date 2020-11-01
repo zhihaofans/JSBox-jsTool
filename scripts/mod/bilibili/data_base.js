@@ -1,7 +1,7 @@
 class Cache {
     constructor() {
-        this.ACCESS_KEY = "BILIBILI_ACCESS_KEY";
-        this.UID = "BILIBILI_UID";
+        this.ACCESS_KEY = "MOD_BILIBILI_ACCESS_KEY";
+        this.UID = "MOD_BILIBILI_UID";
     }
     accessKey(access_key = undefined) {
         if (access_key) {

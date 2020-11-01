@@ -1,6 +1,8 @@
 let pref_cache_list = {
-    "bilibili.access_key": "BILIBILI_ACCESS_KEY",
-    "bilibili.uid": "BILIBILI_UID"
+    "mod.bilibili.access_key": "MOD_BILIBILI_ACCESS_KEY",
+    "mod.bilibili.uid": "MOD_BILIBILI_UID",
+    "mod.acfun.cookies": "MOD_ACFUN_COOKIES",
+    "mod.acfun.uid": "MOD_ACFUN_UID"
 };
 let initPrefs = () => {
     initPrefByList(pref_cache_list);
