@@ -36,11 +36,18 @@ let startsWithList = (str, keyList) => {
     $console.info(`hasTrue.return:${hasTrue}`);
     return hasTrue;
 };
-
+let toJson = (str) => {
+    return JSON.parse(str);
+};
+let fromJson = (json) => {
+    return JSON.stringify(json);
+};
 module.exports = {
     checkIfUrl,
     copy,
+    fromJson,
     getQrcode,
     remove,
-    startsWithList
+    startsWithList,
+    toJson
 };
