@@ -1,7 +1,9 @@
 let http = require("../../libs/http");
-let APP_VERSION = "6.33.0.433",
+let APP_VERSION = "6.33.1.436",
+    IOS_VERSION = $device.info.version,
     USER_AGENT = {
-        APP_IOS: "AcFun/6.33.0 (iPhone; iOS 14.2; Scale/2.00)"
+        //APP_IOS: "AcFun/6.33.1 (iPhone; iOS 14.2; Scale/2.00)"
+        APP_IOS: `AcFun/${APP_VERSION} (iPhone; iOS ${IOS_VERSION}; Scale/2.00)`
     };
 let HEADERS = {
     "Content-Type": "application/x-www-form-urlencoded",

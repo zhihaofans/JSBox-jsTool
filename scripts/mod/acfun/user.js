@@ -1,15 +1,18 @@
 class Auth {
-    constructor() {
-
-    }
+    constructor() {}
     loginBySetting() {
-        const _acfunLogin = {
-            uid: $prefs.get("mod.acfun.login.uid") || "",
-            password: $prefs.get("mod.acfun.login.password") || ""
+        const prefId = {
+            id: "mod.acfun.auth.login.id",
+            password: "mod.acfun.auth.login.password"
         };
+        const _acfunLogin = {
+            uid: $prefs.get(prefId.id) || "",
+            password: $prefs.get(prefId.password) || ""
+        };
+        $console.info(_acfunLogin);
         if (_acfunLogin.uid && _acfunLogin.password) {
-            $prefs.set("mod.acfun.login.uid", undefined);
-            $prefs.set("mod.acfun.login.password", undefined);
+            $prefs.set(prefId.id, undefined);
+            $prefs.set(prefId.password, undefined);
             this.login(_acfunLogin.uid, _acfunLogin.password);
         } else {
             $ui.alert({
@@ -25,7 +28,8 @@ class Auth {
     }
     async login(login_id, password) {
         $ui.loading(true);
-        const $Api = require("./api").API_USER,
+        const $localData = require("./local_data"),
+            $Api = require("./api").API_USER,
             $Common = require("./common"),
             postBody = {
                 username: login_id,
@@ -34,7 +38,7 @@ class Auth {
         const httpPost = await $Common.postAwait(
             $Api.LOGIN,
             postBody,
-            $Common.USER_AGENT
+            $Common.HEADERS
         );
         $ui.loading(false);
         if (httpPost.error) {
@@ -43,10 +47,18 @@ class Auth {
             const httpData = httpPost.data;
             $console.info(httpData);
             if (httpData.result == 0) {
-                $ui.alert({
-                    title: "登录结果",
-                    message: JSON.stringify(httpData)
-                });
+                if (httpData.result == 0) {
+                    $ui.alert({
+                        title: "登录结果",
+                        message: JSON.stringify(httpData)
+                    });
+                    $localData.saveLoginData(httpData);
+                } else {
+                    $ui.alert({
+                        title: `错误${httpData.result}`,
+                        message: httpData.error_msg,
+                    });
+                }
             } else {
                 $ui.alert({
                     title: "登录失败",

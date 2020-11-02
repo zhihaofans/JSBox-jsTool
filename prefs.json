@@ -23,26 +23,38 @@
       "value": {
         "title": "Acfun mod",
         "items": [{
-          "title": "Cookies",
+          "title": "acPasstoken",
           "type": "string",
-          "key": "mod.acfun.cookies"
+          "key": "mod.acfun.auth.acpasstoken"
         }, {
-          "title": "uid",
+          "title": "acSecurity",
+          "type": "string",
+          "key": "mod.acfun.auth.acsecurity"
+        }, {
+          "title": "token",
+          "type": "string",
+          "key": "mod.acfun.auth.token"
+        }, {
+          "title": "用户名",
+          "type": "string",
+          "key": "mod.acfun.auth.username"
+        }, {
+          "title": "用户id",
           "type": "number",
-          "key": "mod.acfun.uid"
-        },{
-          "title": "登录",
+          "key": "mod.acfun.auth.uid"
+        }, {
+          "title": "登录...",
           "type": "child",
           "value": {
-            "title": "登录后会清空缓存",
+            "title": "登录后会清空账号密码",
             "items": [{
               "title": "账号",
               "type": "string",
-              "key": "mod.acfun.login.uid"
+              "key": "mod.acfun.auth.login.id"
             }, {
               "title": "密码",
               "type": "string",
-              "key": "mod.acfun.login.password"
+              "key": "mod.acfun.auth.login.password"
             }]
           }
         }]

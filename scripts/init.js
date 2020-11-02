@@ -1,8 +1,13 @@
 let pref_cache_list = {
     "mod.bilibili.access_key": "MOD_BILIBILI_ACCESS_KEY",
     "mod.bilibili.uid": "MOD_BILIBILI_UID",
-    "mod.acfun.cookies": "MOD_ACFUN_COOKIES",
-    "mod.acfun.uid": "MOD_ACFUN_UID"
+    "mod.acfun.auth.login.id": "MOD_ACFUN_LOGIN_ID",
+    "mod.acfun.auth.login.password": "MOD_ACFUN_LOGIN_PASSWORD",
+    "mod.acfun.auth.acpasstoken": "MOD_ACFUN_AUTH_ACPASSTOKEN",
+    "mod.acfun.auth.acsecurity": "MOD_ACFUN_AUTH_ACSECURITY",
+    "mod.acfun.auth.token": "MOD_ACFUN_AUTH_TOKEN",
+    "mod.acfun.auth.username": "MOD_ACFUN_AUTH_USERNAME",
+    "mod.acfun.auth.uid": "MOD_ACFUN_AUTH_UID",
 };
 let initPrefs = () => {
     initPrefByList(pref_cache_list);
@@ -23,5 +28,6 @@ let updatePrefByList = (_list) => {
 
 module.exports = {
     initPrefs,
-    updatePrefs
+    updatePrefs,
+    pref_cache_list
 };
