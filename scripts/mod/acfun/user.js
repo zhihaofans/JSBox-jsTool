@@ -122,18 +122,6 @@ class Daily {
             }
         }
     };
-    dailyCheckIn = () => {
-        try {
-            this.checkIn();
-        } catch (_error) {
-            $console.error(_error);
-            $ui.alert({
-                title: "签到失败，发生错误",
-                message: _error.message,
-            });
-            $ui.loading(false);
-        }
-    };
 }
 module.exports = {
     Auth,
