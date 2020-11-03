@@ -1,6 +1,6 @@
 class Auth {
     constructor() {}
-    loginBySetting() {
+    loginBySetting = () => {
         const prefId = {
             id: "mod.acfun.auth.login.id",
             password: "mod.acfun.auth.login.password"
@@ -25,8 +25,8 @@ class Auth {
                 }]
             });
         }
-    }
-    async login(login_id, password) {
+    };
+    login = async (login_id, password) => {
         $ui.loading(true);
         const $Local = require("./local_data"),
             $LoginData = new $Local.Login(),
@@ -67,7 +67,10 @@ class Auth {
                 });
             }
         }
-    }
+    };
+    isLogin = () => {
+
+    };
 
 }
 class Daily {

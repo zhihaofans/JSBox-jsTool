@@ -6,6 +6,7 @@ class Login {
             $cache.set(cacheIdList["mod.acfun.auth.acpasstoken"], loginData["acPassToken"]);
             $cache.set(cacheIdList["mod.acfun.auth.uid"], loginData["userid"] || undefined);
             $cache.set(cacheIdList["mod.acfun.auth.token"], loginData["token"] || undefined);
+            $cache.set(cacheIdList["mod.acfun.auth.access_token"], loginData["token"] || undefined);
             $cache.set(cacheIdList["mod.acfun.auth.username"], loginData["username"] || undefined);
             $cache.set(cacheIdList["mod.acfun.auth.acsecurity"], loginData["acSecurity"] || undefined);
             $cache.remove(cacheIdList["mod.acfun.auth.login.id"]);
@@ -19,7 +20,7 @@ class Login {
     loadLoginData = () => {
         return {
             "acPassToken": $cache.get(cacheIdList["mod.acfun.auth.acpasstoken"]) || "",
-            "token": $cache.get(cacheIdList["mod.acfun.auth.token"]) || "",
+            "access_token": $cache.get(cacheIdList["mod.acfun.auth.access_token"]) || "",
             "userid": $cache.get(cacheIdList["mod.acfun.auth.uid"]) || "",
             "acSecurity": $cache.get(cacheIdList["mod.acfun.auth.acsecurity"]) || "",
             "username": $cache.get(cacheIdList["mod.acfun.auth.username"]) || ""

@@ -6,6 +6,7 @@ let pref_cache_list = {
     "mod.acfun.auth.acpasstoken": "MOD_ACFUN_AUTH_ACPASSTOKEN",
     "mod.acfun.auth.acsecurity": "MOD_ACFUN_AUTH_ACSECURITY",
     "mod.acfun.auth.token": "MOD_ACFUN_AUTH_TOKEN",
+    "mod.acfun.auth.access_token": "MOD_ACFUN_AUTH_ACCESSTOKEN",
     "mod.acfun.auth.username": "MOD_ACFUN_AUTH_USERNAME",
     "mod.acfun.auth.uid": "MOD_ACFUN_AUTH_UID",
 };

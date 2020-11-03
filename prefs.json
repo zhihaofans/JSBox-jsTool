@@ -31,9 +31,9 @@
           "type": "string",
           "key": "mod.acfun.auth.acsecurity"
         }, {
-          "title": "token",
+          "title": "Access token",
           "type": "string",
-          "key": "mod.acfun.auth.token"
+          "key": "mod.acfun.auth.access_token"
         }, {
           "title": "用户名",
           "type": "string",
