@@ -79,11 +79,10 @@ class Daily {
             $LoginData = new $localData.Login(),
             userData = $LoginData.loadLoginData(),
             _acPassToken = userData.acPassToken,
-            _auth_key = userData.acPassToken;
+            _userid = userData.userid;
         const headers = $Common.HEADERS;
-        headers["Cookie"] = `acPasstoken=${_acPassToken};`;
-        // headers["Cookie"] = `acPasstoken=${_acPassToken};auth_key=${_auth_key}`;
-        const result = await $Common.getAwait(_ACFUN.SIGN_IN, headers);
+        headers["Cookie"] = `acPasstoken=${_acPassToken};auth_key=${_userid}`;
+        const result = await $Common.getAwait($Api.CHECK_IN, headers);
         $console.info(result);
         if (result.error) {
             $ui.loading(false);
@@ -97,18 +96,17 @@ class Daily {
                 }]
             });
         } else {
-            const signinResult = result.data;
-            if (signinResult) {
+            const checkinResult = result.data;
+            if (checkinResult) {
                 $ui.loading(false);
-                signinResult.result == 0 ?
+                checkinResult.result == 0 ?
                     $ui.alert({
                         title: "签到成功",
-                        message: signinResult.msg
+                        message: checkinResult.msg
                     }) :
                     $ui.alert({
-                        title: `错误代码${signinResult.result}`,
-                        message: signinResult.msg ?
-                            signinResult.msg : signinResult.error_msg
+                        title: `错误代码${checkinResult.result}`,
+                        message: checkinResult.msg ? checkinResult.msg : checkinResult.error_msg
                     });
             } else {
                 $ui.loading(false);
@@ -125,7 +123,16 @@ class Daily {
         }
     };
     dailyCheckIn = () => {
-        this.checkIn();
+        try {
+            this.checkIn();
+        } catch (_error) {
+            $console.error(_error);
+            $ui.alert({
+                title: "签到失败，发生错误",
+                message: _error.message,
+            });
+            $ui.loading(false);
+        }
     };
 }
 module.exports = {

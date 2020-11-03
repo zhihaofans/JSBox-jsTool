@@ -3,7 +3,8 @@ let API_VIDEO = {
     },
     API_USER = {
         LOGIN: "https://id.app.acfun.cn/rest/app/login/signin",
-        LOGOUT: ""
+        LOGOUT: "",
+        CHECK_IN: "https://api-new.app.acfun.cn/rest/app/user/signIn"
     };
 module.exports = {
     API_VIDEO,

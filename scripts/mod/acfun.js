@@ -32,7 +32,7 @@ let init = () => {
                                     $Auth.loginBySetting();
                                     break;
                                 case 1:
-                                    $Daily.checkIn();
+                                    $Daily.dailyCheckIn();
                                     break;
                             }
                             break;
