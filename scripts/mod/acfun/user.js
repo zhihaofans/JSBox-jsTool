@@ -28,7 +28,8 @@ class Auth {
     }
     async login(login_id, password) {
         $ui.loading(true);
-        const $localData = require("./local_data"),
+        const $Local = require("./local_data"),
+            $LoginData = new $Local.Login(),
             $Api = require("./api").API_USER,
             $Common = require("./common"),
             postBody = {
@@ -52,7 +53,7 @@ class Auth {
                         title: "登录结果",
                         message: JSON.stringify(httpData)
                     });
-                    $localData.saveLoginData(httpData);
+                    $LoginData.saveLoginData(httpData);
                 } else {
                     $ui.alert({
                         title: `错误${httpData.result}`,
@@ -67,8 +68,61 @@ class Auth {
             }
         }
     }
-}
 
+}
+class Daily {
+    async checkIn() {
+        $ui.loading(true);
+        const $localData = require("./local_data"),
+            $Api = require("./api").API_USER,
+            $Common = require("./common"),
+            _acPassToken = "",
+            _auth_key = "";
+        const headers = $Common.HEADERS;
+        headers["Cookie"] = `acPasstoken=${_acPassToken};auth_key=${_auth_key}`;
+        const result = await $Common.getAwait(_ACFUN.SIGN_IN, headers);
+        $console.info(result);
+
+        if (result.error) {
+            $ui.loading(false);
+            $ui.alert({
+                title: "签到发生错误",
+                message: result.error.message,
+                actions: [{
+                    title: "OK",
+                    disabled: false, // Optional
+                    handler: function () {}
+                }]
+            });
+        } else {
+            const signinResult = result.data;
+            if (signinResult) {
+                $ui.loading(false);
+                signinResult.result == 0 ?
+                    $ui.alert({
+                        title: "签到成功",
+                        message: signinResult.msg
+                    }) :
+                    $ui.alert({
+                        title: `错误代码${signinResult.result}`,
+                        message: signinResult.msg ?
+                            signinResult.msg : signinResult.error_msg
+                    });
+            } else {
+                $ui.loading(false);
+                $ui.alert({
+                    title: "签到失败",
+                    message: result,
+                    actions: [{
+                        title: "OK",
+                        disabled: false, // Optional
+                        handler: function () {}
+                    }]
+                });
+            }
+        }
+    }
+}
 module.exports = {
     Auth
 };
