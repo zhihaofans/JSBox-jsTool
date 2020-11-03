@@ -71,18 +71,20 @@ class Auth {
 
 }
 class Daily {
-    async checkIn() {
+    checkIn = async () => {
         $ui.loading(true);
         const $localData = require("./local_data"),
             $Api = require("./api").API_USER,
             $Common = require("./common"),
-            _acPassToken = "",
-            _auth_key = "";
+            $LoginData = new $localData.Login(),
+            userData = $LoginData.loadLoginData(),
+            _acPassToken = userData.acPassToken,
+            _auth_key = userData.acPassToken;
         const headers = $Common.HEADERS;
-        headers["Cookie"] = `acPasstoken=${_acPassToken};auth_key=${_auth_key}`;
+        headers["Cookie"] = `acPasstoken=${_acPassToken};`;
+        // headers["Cookie"] = `acPasstoken=${_acPassToken};auth_key=${_auth_key}`;
         const result = await $Common.getAwait(_ACFUN.SIGN_IN, headers);
         $console.info(result);
-
         if (result.error) {
             $ui.loading(false);
             $ui.alert({
@@ -121,8 +123,12 @@ class Daily {
                 });
             }
         }
-    }
+    };
+    dailyCheckIn = () => {
+        this.checkIn();
+    };
 }
 module.exports = {
-    Auth
+    Auth,
+    Daily
 };
