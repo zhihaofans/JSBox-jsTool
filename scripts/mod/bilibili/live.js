@@ -64,7 +64,7 @@ class User {
         $console.info($_Live._API.SILVER_TO_COIN);
         $console.info(postHeader);
         $console.info(postBody);
-        const httpPost = await _HTTP.postAwait(
+        const httpPost = await $B_api.postAwait(
             $_Live._API.SILVER_TO_COIN,
             postBody,
             postHeader

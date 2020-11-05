@@ -7,8 +7,13 @@ let _live = () => {
     (new $B_comic.User()).checkIn();
 }
 let _liveSilver2Coin = () => {
-    const $B_comic = require("./live");
-    (new $B_comic.User()).silver2coin();
+    try {
+        const $B_comic = require("./live");
+        (new $B_comic.User()).silver2coin();
+    } catch (_error) {
+        $console.error(_error);
+        $ui.loading(false);
+    }
 }
 let initView = () => {
     $ui.push({
