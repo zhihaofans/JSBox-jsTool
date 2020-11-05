@@ -55,9 +55,53 @@ class Auth {
         }
         return $B_cache.uid();
     }
+
 }
 class Info {
-    getMyInfo() {
+    getMyInfoByKaaass = async () => {
+        const $B_auth = new Auth();
+        const access_key = $B_auth.accessKey();
+        if (access_key) {
+            const url = `${$_User._API.MY_INFO_KAAASS}?furtherInfo=true&access_key=${access_key}`,
+                headers = {
+                    "user-agent": $_Common._UA.KAAASS
+                },
+                $_get = await $B_common.getAwait(url, headers);
+            $console.error($_get);
+            if ($_get.error) {
+                $console.error($_get.error.message);
+                return undefined;
+            } else {
+                const kaaassData = $_get.data;
+                if (kaaassData.status == "OK") {
+                    const myInfoData = kaaassData.info;
+                    $ui.alert({
+                        title: "结果",
+                        message: myInfoData,
+                        actions: [{
+                            title: "ok",
+                            disabled: false, // Optional
+                            handler: function () {}
+                        }]
+                    });
+                } else {
+                    $ui.loading(false);
+                    $ui.alert({
+                        title: `Error ${kaaassData.code}`,
+                        message: kaaassData.message || "未知错误",
+                        actions: [{
+                            title: "OK",
+                            disabled: false, // Optional
+                            handler: function () {}
+                        }]
+                    });
+                }
+            }
+        } else {
+            return undefined;
+        }
+    };
+    getMyInfo = () => {
         const $B_auth = new Auth();
         const access_key = $B_auth.accessKey();
         if (access_key) {
@@ -108,8 +152,8 @@ class Info {
         } else {
             return undefined;
         }
-    }
-    myInfo() {
+    };
+    myInfo = () => {
         const $B_auth = new Auth();
         const access_key = $B_auth.accessKey();
         if (access_key) {
@@ -152,7 +196,7 @@ class Info {
         } else {
             return undefined;
         }
-    }
+    };
 }
 class View {
     constructor() {}
