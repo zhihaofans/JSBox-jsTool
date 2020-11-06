@@ -11,7 +11,7 @@ let init = () => {
             props: {
                 data: [{
                     title: "",
-                    rows: ["设置Access Key", "签到", "获取个人信息"]
+                    rows: ["设置Access Key", "签到", "获取个人信息", "刷新Access key"]
                 }]
             },
             layout: $layout.fill,
@@ -28,6 +28,9 @@ let init = () => {
                                     break;
                                 case 2:
                                     $View_User.getMyInfo();
+                                    break;
+                                case 3:
+                                    $View_User.refreshToken();
                                     break;
                             }
                             break;

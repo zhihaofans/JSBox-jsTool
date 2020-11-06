@@ -18,6 +18,7 @@ class User {
     constructor() {
         this.MY_INFO = "https://app.bilibili.com/x/v2/account/mine";
         this.MY_INFO_KAAASS = "https://api.kaaass.net/biliapi/user/info";
+        this.REFRESH_TOKEN = "https://api.kaaass.net/biliapi/user/refreshToken";
     }
 }
 class Live {

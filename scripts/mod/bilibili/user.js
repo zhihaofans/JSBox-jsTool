@@ -39,7 +39,7 @@ class Auth {
         }
 
     }
-    isLogin() {
+    isLogin = () => {
         return this.accessKey() ? true : false;
     }
 
@@ -55,6 +55,25 @@ class Auth {
         }
         return $B_cache.uid();
     }
+    refreshToken = async () => {
+        const access_key = this.accessKey();
+        if (access_key) {
+            const url = `${$_User._API.REFRESH_TOKEN}?access_key=${encodeURI(access_key)}`,
+                headers = {
+                    "user-agent": $_Common._UA.KAAASS
+                };
+            const $_get = await $B_common.getAwait(url, headers);
+            $console.info($_get);
+            if ($_get.error) {
+                $console.error($_get.error.message);
+                return false;
+            } else {
+                return ($_get.data.status == "OK") || false;
+            }
+        } else {
+            return false;
+        }
+    };
 
 }
 class Info {
@@ -199,8 +218,7 @@ class Info {
     };
 }
 class View {
-    constructor() {}
-    updateAccessKey() {
+    updateAccessKey = () => {
         const $_Auth = new Auth();
         $input.text({
             type: $kbType.text,
@@ -225,11 +243,25 @@ class View {
                 }
             }
         });
-    }
-    getMyInfo() {
+    };
+    getMyInfo = () => {
         const $U_info = new Info();
         $U_info.myInfo();
-    }
+    };
+    refreshToken = () => {
+        const $_Auth = new Auth();
+        if ($_Auth.refreshToken()) {
+            $ui.alert({
+                title: "刷新成功",
+                message: "",
+            });
+        } else {
+            $ui.alert({
+                title: "刷新失败",
+                message: "",
+            });
+        }
+    };
 }
 module.exports = {
     Auth,
