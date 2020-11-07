@@ -1,14 +1,12 @@
 let $B_api = require("./api"),
     $B_user = require("./user"),
-    $B_common = require("./common"),
-    $User_auth = new $B_user.Auth(),
-    $_Live = new $B_common.Live(),
-    $_User = new $B_common.User();
+    $_Static = require("./static"),
+    $User_auth = new $B_user.Auth();
 class User {
     async checkIn() {
         $ui.loading(true);
         const httpGet = await $B_api.getAwait(
-            $_Live._API.CHECK_IN + $User_auth.accessKey()
+            $_Static.URL.LIVE.CHECK_IN + $User_auth.accessKey()
         );
         if (httpGet.error) {
             $ui.loading(false);
@@ -55,17 +53,16 @@ class User {
     async silver2coin() {
         $ui.loading(true);
         const postHeader = {
-                "User-Agent": $_User._UA.APP_IPHONE,
+                "User-Agent": $_Static.UA.USER.APP_IPHONE,
                 "Content-Type": "application/x-www-form-urlencoded"
             },
             postBody = {
                 access_key: $User_auth.accessKey()
             };
-        $console.info($_Live._API.SILVER_TO_COIN);
         $console.info(postHeader);
         $console.info(postBody);
         const httpPost = await $B_api.postAwait(
-            $_Live._API.SILVER_TO_COIN,
+            $_Static.URL.LIVE.SILVER_TO_COIN,
             postBody,
             postHeader
         );

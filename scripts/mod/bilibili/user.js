@@ -1,18 +1,16 @@
-let $B_common = require("./common");
-let $B_cache = new $B_common.Cache(),
-    $_User = new $B_common.User(),
-    $_Common = new $B_common.Common();
+let $_Cache = new(require("./data_base")).Cache(),
+    $_Static = require("./static");
 
 class Auth {
     async getSignUrl(host, param, android = false) {
         $console.warn(host);
         $console.warn(param);
         $console.warn(android);
-        const url = `${$_Common._API.KAAASS_SIGN_URL}?host=${encodeURI(host)}&param=${encodeURI(param)}&android=${android}`,
+        const url = `${$_Static.URL.KAAASS.SIGN_URL}?host=${encodeURI(host)}&param=${encodeURI(param)}&android=${android}`,
             headers = {
-                "user-agent": $_Common._UA.KAAASS
+                "user-agent": $_Static.UA.KAAASS.KAAASS
             };
-        const $_get = await $B_common.getAwait(url, headers);
+        const $_get = await $_Common.getAwait(url, headers);
         $console.error($_get);
         if ($_get.error) {
             $console.error($_get.error.message);
@@ -25,11 +23,11 @@ class Auth {
     async getSignUrl_A(param, android = false) {
         $console.warn(param);
         $console.warn(android);
-        const url = `${$_Common._API.KAAASS_SIGN_URL}?host=&param=${encodeURI(param)}&android=${android}`,
+        const url = `${$_Static.URL.KAAASS.SIGN_URL}?host=&param=${encodeURI(param)}&android=${android}`,
             headers = {
-                "user-agent": $_Common._UA.KAAASS
+                "user-agent": $_Static.UA.KAAASS.KAAASS
             };
-        const $_get = await $B_common.getAwait(url, headers);
+        const $_get = await $_Common.getAwait(url, headers);
         $console.error($_get);
         if ($_get.error) {
             $console.error($_get.error.message);
@@ -45,24 +43,24 @@ class Auth {
 
     accessKey(access_key = undefined) {
         if (access_key) {
-            $B_cache.accessKey(access_key);
+            $_Cache.accessKey(access_key);
         }
-        return $B_cache.accessKey();
+        return $_Cache.accessKey();
     }
     uid(uid = undefined) {
         if (uid) {
-            $B_cache.uid(uid);
+            $_Cache.uid(uid);
         }
-        return $B_cache.uid();
+        return $_Cache.uid();
     }
     refreshToken = async () => {
         const access_key = this.accessKey();
         if (access_key) {
-            const url = `${$_User._API.REFRESH_TOKEN}?access_key=${encodeURI(access_key)}`,
+            const url = `${$_Static.URL.KAAASS.REFRESH_TOKEN}?access_key=${encodeURI(access_key)}`,
                 headers = {
-                    "user-agent": $_Common._UA.KAAASS
+                    "user-agent": $_Static.UA.KAAASS.KAAASS
                 };
-            const $_get = await $B_common.getAwait(url, headers);
+            const $_get = await $_Common.getAwait(url, headers);
             $console.info($_get);
             if ($_get.error) {
                 $console.error($_get.error.message);
@@ -81,11 +79,11 @@ class Info {
         const $B_auth = new Auth();
         const access_key = $B_auth.accessKey();
         if (access_key) {
-            const url = `${$_User._API.MY_INFO_KAAASS}?furtherInfo=true&access_key=${access_key}`,
+            const url = `${$_Static.URL.KAAASS.MY_INFO}?furtherInfo=true&access_key=${access_key}`,
                 headers = {
-                    "user-agent": $_Common._UA.KAAASS
+                    "user-agent": $_Static.UA.KAAASS.KAAASS
                 },
-                $_get = await $B_common.getAwait(url, headers);
+                $_get = await $_Common.getAwait(url, headers);
             $console.error($_get);
             if ($_get.error) {
                 $console.error($_get.error.message);
@@ -124,14 +122,14 @@ class Info {
         const $B_auth = new Auth();
         const access_key = $B_auth.accessKey();
         if (access_key) {
-            const respKaaass = $B_auth.getSignUrl($_User._API.MY_INFO, `access_key=${access_key}`);
+            const respKaaass = $B_auth.getSignUrl($_Static.URL.USER.MY_INFO, `access_key=${access_key}`);
             const dataKaaass = respKaaass.data;
             $console.info(dataKaaass);
             if (dataKaaass) {
                 $http.get({
                     url: dataKaaass.url,
                     header: {
-                        "User-Agent": $_User._UA.APP_IPHONE
+                        "User-Agent": $_Static.UA.USER.APP_IPHONE
                     },
                     handler: respBili => {
                         var resultBili = respBili.data;
@@ -177,9 +175,9 @@ class Info {
         const access_key = $B_auth.accessKey();
         if (access_key) {
             $http.get({
-                url: $_User._API.MY_INFO + `?access_key=${access_key}`,
+                url: $_Static.URL.USER.MY_INFO + `?access_key=${access_key}`,
                 header: {
-                    "User-Agent": $_User._UA.APP_IPHONE
+                    "User-Agent": $_Static.UA.USER.APP_IPHONE
                 },
                 handler: respBili => {
                     var resultBili = respBili.data;

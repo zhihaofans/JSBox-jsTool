@@ -1,8 +1,7 @@
 let $B_api = require("./api"),
     $B_user = require("./user"),
-    $B_common = require("./common"),
     $User_auth = new $B_user.Auth(),
-    $_Comic = new $B_common.Comic();
+    $_Static = require("./static");
 
 class User {
     async checkIn() {
@@ -15,12 +14,12 @@ class User {
             },
             postHeader = {
                 "Content-Type": "application/x-www-form-urlencoded",
-                "User-Agent": $_Comic._UA.CHECK_IN
+                "User-Agent": $_Static.UA.COMIC.CHECK_IN
             };
         if (accessKey && uid) {
             $ui.loading(true);
             const httpPost = await $B_api.postAwait(
-                $_Comic._API.COMIC_CHECK_IN,
+                $_Static.URL.COMIC.CHECK_IN,
                 postBody,
                 postHeader
             );
