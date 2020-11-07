@@ -3,15 +3,11 @@ let $_Cache = new(require("./data_base")).Cache(),
 
 class Auth {
     async getSignUrl(host, param, android = false) {
-        $console.warn(host);
-        $console.warn(param);
-        $console.warn(android);
         const url = `${$_Static.URL.KAAASS.SIGN_URL}?host=${encodeURI(host)}&param=${encodeURI(param)}&android=${android}`,
             headers = {
                 "user-agent": $_Static.UA.KAAASS.KAAASS
             };
         const $_get = await $_Common.getAwait(url, headers);
-        $console.error($_get);
         if ($_get.error) {
             $console.error($_get.error.message);
             return undefined;
@@ -21,14 +17,11 @@ class Auth {
 
     }
     async getSignUrl_A(param, android = false) {
-        $console.warn(param);
-        $console.warn(android);
         const url = `${$_Static.URL.KAAASS.SIGN_URL}?host=&param=${encodeURI(param)}&android=${android}`,
             headers = {
                 "user-agent": $_Static.UA.KAAASS.KAAASS
             };
         const $_get = await $_Common.getAwait(url, headers);
-        $console.error($_get);
         if ($_get.error) {
             $console.error($_get.error.message);
             return undefined;
