@@ -19,9 +19,6 @@ let ACFUN = {
     API_66MZ8_COM = {
         PHONE_WALLPAPER: "https://api.66mz8.com/api/rand.img.php?type=%E5%A3%81%E7%BA%B8"
     },
-    ISOYU = {
-        BING: "https://api.isoyu.com/bing_images.php"
-    },
     JISHUWEN = {
         MAIN: "https://www.jishuwen.com/?p="
     },
@@ -45,7 +42,6 @@ let ACFUN = {
 module.exports = {
     ACFUN,
     API_66MZ8_COM,
-    ISOYU,
     JISHUWEN,
     JSBOX,
     MEOWV,
