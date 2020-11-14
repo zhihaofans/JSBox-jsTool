@@ -5,9 +5,14 @@ let $B_api = require("./api"),
 class User {
     async checkIn() {
         $ui.loading(true);
-        const httpGet = await $B_api.getAwait(
-            $_Static.URL.LIVE.CHECK_IN + $User_auth.accessKey()
-        );
+        const header = {
+                "User-Agent": $_Static.UA.USER.APP_IPHONE,
+                "Content-Type": "application/x-www-form-urlencoded"
+            },
+            httpGet = await $B_api.getAwait(
+                $_Static.URL.LIVE.CHECK_IN + $User_auth.accessKey(),
+                header
+            );
         if (httpGet.error) {
             $ui.loading(false);
             $console.error(httpGet.error);
@@ -20,32 +25,38 @@ class User {
                     $ui.alert({
                         title: "签到成功",
                         message: data.message || "签到成功",
-                        actions: [{
-                            title: "OK",
-                            disabled: false, // Optional
-                            handler: function () {}
-                        }]
+                        actions: [
+                            {
+                                title: "OK",
+                                disabled: false, // Optional
+                                handler: function () {}
+                            }
+                        ]
                     });
                 } else {
                     $ui.alert({
                         title: `错误代码${data.code}`,
                         message: data.message || "未返回错误信息",
-                        actions: [{
-                            title: "OK",
-                            disabled: false, // Optional
-                            handler: function () {}
-                        }]
+                        actions: [
+                            {
+                                title: "OK",
+                                disabled: false, // Optional
+                                handler: function () {}
+                            }
+                        ]
                     });
                 }
             } else {
                 $ui.alert({
                     title: "签到失败",
                     message: "返回空白数据",
-                    actions: [{
-                        title: "OK",
-                        disabled: false, // Optional
-                        handler: function () {}
-                    }]
+                    actions: [
+                        {
+                            title: "OK",
+                            disabled: false, // Optional
+                            handler: function () {}
+                        }
+                    ]
                 });
             }
         }
@@ -76,13 +87,19 @@ class User {
                 const silver2coinData = httpPost.data;
                 if (silver2coinData.code == 0) {
                     $ui.alert({
-                        title: silver2coinData.data.message || silver2coinData.data.msg || "兑换成功",
+                        title:
+                            silver2coinData.data.message ||
+                            silver2coinData.data.msg ||
+                            "兑换成功",
                         message: `剩余银瓜子：${silver2coinData.data.silver}\n得到硬币：${silver2coinData.data.coin}`
                     });
                 } else {
                     $ui.alert({
                         title: `错误代码${silver2coinData.code}`,
-                        message: silver2coinData.message || silver2coinData.msg || "未知错误"
+                        message:
+                            silver2coinData.message ||
+                            silver2coinData.msg ||
+                            "未知错误"
                     });
                 }
             } else {
