@@ -3,13 +3,13 @@ let _comic = () => {
     (new $B_comic.User()).checkIn();
 };
 let _live = () => {
-    const $B_comic = require("./live");
-    (new $B_comic.User()).checkIn();
+    const $B_live = require("./live");
+    (new $B_live.User()).checkIn();
 }
 let _liveSilver2Coin = () => {
     try {
-        const $B_comic = require("./live");
-        (new $B_comic.User()).silver2coin();
+        const $B_live = require("./live");
+        (new $B_live.User()).silver2coin();
     } catch (_error) {
         $console.error(_error);
         $ui.loading(false);
