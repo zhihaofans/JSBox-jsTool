@@ -1,5 +1,6 @@
 let $_Cache = new(require("./data_base")).Cache(),
-    $_Static = require("./static");
+    $_Static = require("./static"),
+    $_Api = require("./api");
 
 class Auth {
     async getSignUrl(host, param, android = false) {
@@ -7,7 +8,7 @@ class Auth {
             headers = {
                 "user-agent": $_Static.UA.KAAASS.KAAASS
             };
-        const $_get = await $_Common.getAwait(url, headers);
+        const $_get = await $_Api.getAwait(url, headers);
         if ($_get.error) {
             $console.error($_get.error.message);
             return undefined;
@@ -21,7 +22,7 @@ class Auth {
             headers = {
                 "user-agent": $_Static.UA.KAAASS.KAAASS
             };
-        const $_get = await $_Common.getAwait(url, headers);
+        const $_get = await $_Api.getAwait(url, headers);
         if ($_get.error) {
             $console.error($_get.error.message);
             return undefined;
@@ -47,19 +48,21 @@ class Auth {
         return $_Cache.uid();
     }
     refreshToken = async () => {
+        $ui.loading(true);
         const access_key = this.accessKey();
         if (access_key) {
-            const url = `${$_Static.URL.KAAASS.REFRESH_TOKEN}?access_key=${encodeURI(access_key)}`,
+            const url = `${$_Static.URL.KAAASS.REFRESH_TOKEN}?access_key=${access_key}`,
                 headers = {
                     "user-agent": $_Static.UA.KAAASS.KAAASS
                 };
-            const $_get = await $_Common.getAwait(url, headers);
+            const $_get = await $_Api.getAwait(url, headers);
             $console.info($_get);
+            $ui.loading(false);
             if ($_get.error) {
                 $console.error($_get.error.message);
                 return false;
             } else {
-                return ($_get.data.status == "OK") || false;
+                return $_get.data.status == "OK";
             }
         } else {
             return false;
@@ -76,7 +79,7 @@ class Info {
                 headers = {
                     "user-agent": $_Static.UA.KAAASS.KAAASS
                 },
-                $_get = await $_Common.getAwait(url, headers);
+                $_get = await $_Api.getAwait(url, headers);
             $console.error($_get);
             if ($_get.error) {
                 $console.error($_get.error.message);
@@ -239,9 +242,9 @@ class View {
         const $U_info = new Info();
         $U_info.myInfo();
     };
-    refreshToken = () => {
+    refreshToken = async () => {
         const $_Auth = new Auth();
-        if ($_Auth.refreshToken()) {
+        if (await $_Auth.refreshToken()) {
             $ui.alert({
                 title: "刷新成功",
                 message: "",
