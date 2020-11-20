@@ -28,8 +28,7 @@ class Auth {
     };
     login = async (login_id, password) => {
         $ui.loading(true);
-        const $Local = require("./local_data"),
-            $LoginData = new $Local.Login(),
+        const $LoginData = require("./local_data").Login,
             $Api = require("./api").API_USER,
             $Common = require("./common"),
             postBody = {
@@ -76,10 +75,9 @@ class Auth {
 class Daily {
     checkIn = async () => {
         $ui.loading(true);
-        const $localData = require("./local_data"),
-            $Api = require("./api").API_USER,
+        const $Api = require("./api").API_USER,
             $Common = require("./common"),
-            $LoginData = new $localData.Login(),
+            $LoginData = require("./local_data").Login,
             userData = $LoginData.loadLoginData(),
             _acPassToken = userData.acPassToken,
             _userid = userData.userid;

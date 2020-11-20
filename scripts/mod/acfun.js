@@ -1,8 +1,7 @@
 let $User = require("./acfun/user"),
-    $Local = require("./acfun/local_data"),
     $Auth = new $User.Auth(),
     $Daily = new $User.Daily(),
-    $loginData = new $Local.Login();
+    $loginData = require("./acfun/local_data").Login;
 let init = () => {
     $ui.success("Acfun mod:init");
     $ui.push({
