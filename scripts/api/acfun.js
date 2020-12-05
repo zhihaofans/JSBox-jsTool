@@ -5,7 +5,8 @@ let sys = require("./system.js"),
     _ACFUN = _URL.ACFUN,
     _TENCENT = _URL.TENCENT,
     urlCheck = require("./urlCheck.js"),
-    _HTTP = require("../libs/http");
+    _HTTP = require("../libs/http"),
+    $_MOD = require("../mod/acfun/acfun");
 let acVideoSiteList = [
         _ACFUN.ACFUN_DETAIL_VIDEO,
         _ACFUN.ACFUN_WWW_V_AC,
@@ -51,7 +52,7 @@ let login = (id, pwd) => {
             username: id,
             password: pwd
         },
-        handler: function(resp) {
+        handler: function (resp) {
             const acResult = resp.data;
             $console.info(acResult);
             if (acResult.result == 0) {
@@ -145,7 +146,7 @@ let getUserInfo = () => {
                     url: _ACFUN.GET_USER_INFO,
                     header: thisHeaders
                 })
-                .then(function(resp) {
+                .then(function (resp) {
                     var userResult = resp.data;
                     $console.info(userResult);
                     if (userResult.result == 0) {
@@ -202,7 +203,7 @@ let getUserInfo = () => {
                                     },
                                     layout: $layout.fill,
                                     events: {
-                                        didSelect: function(
+                                        didSelect: function (
                                             _sender,
                                             indexPath,
                                             _data
@@ -244,7 +245,7 @@ let getUserInfo = () => {
                                                             {
                                                                 title: "分享",
                                                                 disabled: false, // Optional
-                                                                handler: function() {
+                                                                handler: function () {
                                                                     $share.sheet(
                                                                         [_g[1]]
                                                                     );
@@ -253,7 +254,7 @@ let getUserInfo = () => {
                                                             {
                                                                 title: "关闭",
                                                                 disabled: false, // Optional
-                                                                handler: function() {}
+                                                                handler: function () {}
                                                             }
                                                         ]
                                                     });
@@ -292,7 +293,7 @@ let getVideoInfo = () => {
         autoFontSize: true,
         placeholder: "输入vid(不带ac)",
         /* text: "12702163", */
-        handler: function(vid) {
+        handler: function (vid) {
             if (vid.length > 0) {
                 getVideoPid(vid);
             } else {
@@ -306,7 +307,7 @@ let getVideoPid = vid => {
     $ui.loading(true);
     $http.get({
         url: _ACFUN.GET_VIDEO_INFO + vid,
-        handler: function(resp) {
+        handler: function (resp) {
             var videoResult = resp.data;
             $console.info(videoResult);
             if (videoResult.result == 0) {
@@ -315,12 +316,12 @@ let getVideoPid = vid => {
                 if (partList.length == 1) {
                     pid = videoResult.videoList[0].id;
                 } else {
-                    const pidList = partList.map(function(x) {
+                    const pidList = partList.map(function (x) {
                         return x;
                     });
                     $ui.menu({
                         items: pidList,
-                        handler: function(title, idx) {
+                        handler: function (title, idx) {
                             pid = title;
                         }
                     });
@@ -343,7 +344,7 @@ let downloadVideo = (vid, pid) => {
         header: {
             /* Cookie: getCookies() */
         },
-        handler: function(resp) {
+        handler: function (resp) {
             var videoResult = resp.data;
             $console.info(videoResult);
             if (videoResult.result == 0) {
@@ -351,7 +352,7 @@ let downloadVideo = (vid, pid) => {
                 const videoData = playInfo.streams;
                 const thisVideoFile = videoData[videoData.length - 1];
                 const cdnUrl = thisVideoFile.cdnUrls;
-                const cdnTitleList = cdnUrl.map(function(x) {
+                const cdnTitleList = cdnUrl.map(function (x) {
                     const thisUrl = x.url;
                     if (thisUrl.startsWith(_URL.ACFUN.VIDEO_CDN_TXCDN)) {
                         return "腾讯源";
@@ -376,7 +377,11 @@ let downloadVideo = (vid, pid) => {
                             },
                             layout: $layout.fill,
                             events: {
-                                didSelect: function(_sender, indexPath, _data) {
+                                didSelect: function (
+                                    _sender,
+                                    indexPath,
+                                    _data
+                                ) {
                                     const idx = indexPath.row;
                                     const videoUrl = cdnUrl[idx].url;
                                     $ui.alert({
@@ -386,13 +391,13 @@ let downloadVideo = (vid, pid) => {
                                             {
                                                 title: "使用Alook浏览器打开",
                                                 disabled: false,
-                                                handler: function() {
+                                                handler: function () {
                                                     $ui.menu({
                                                         items: [
                                                             "网页浏览",
                                                             "下载"
                                                         ],
-                                                        handler: function(
+                                                        handler: function (
                                                             title,
                                                             idx
                                                         ) {
@@ -415,14 +420,14 @@ let downloadVideo = (vid, pid) => {
                                             {
                                                 title: "分享",
                                                 disabled: false,
-                                                handler: function() {
+                                                handler: function () {
                                                     $share.sheet([videoUrl]);
                                                 }
                                             },
                                             {
                                                 title: "关闭",
                                                 disabled: false,
-                                                handler: function() {}
+                                                handler: function () {}
                                             }
                                         ]
                                     });
@@ -450,7 +455,7 @@ let signIn = () => {
                 Cookie: getCookies(),
                 acPlatform: "IPHONE"
             },
-            handler: function(resp) {
+            handler: function (resp) {
                 var signinResult = resp.data;
                 $console.info(signinResult);
                 $ui.loading(false);
@@ -471,7 +476,7 @@ let signIn = () => {
         $ui.error("未登录");
     }
 };
-let dailyCheckin = async () => {
+let checkin = async () => {
     $ui.loading(true);
     const result = await _HTTP.getAwait(_ACFUN.SIGN_IN, {
         Cookie: getCookies(),
@@ -487,7 +492,7 @@ let dailyCheckin = async () => {
                 {
                     title: "OK",
                     disabled: false, // Optional
-                    handler: function() {}
+                    handler: function () {}
                 }
             ]
         });
@@ -515,7 +520,7 @@ let dailyCheckin = async () => {
                     {
                         title: "OK",
                         disabled: false, // Optional
-                        handler: function() {}
+                        handler: function () {}
                     }
                 ]
             });
@@ -538,7 +543,7 @@ let getUploaderVideo = (uid, page = 1, count = 20) => {
                 status: 1
             }
         })
-        .then(function(resp) {
+        .then(function (resp) {
             var acData = resp.data;
             if (acData.result == 0) {
                 const feedList = acData.feed;
@@ -765,7 +770,7 @@ let showUploaderVideoList = acData => {
                                             {
                                                 title: "启动网页服务器",
                                                 disabled: false,
-                                                handler: function() {
+                                                handler: function () {
                                                     initWebServer(dir, html);
                                                 }
                                             },
@@ -781,7 +786,7 @@ let showUploaderVideoList = acData => {
                 },
                 layout: $layout.fill,
                 events: {
-                    didSelect: function(_sender, indexPath, _data) {
+                    didSelect: function (_sender, indexPath, _data) {
                         switch (indexPath.section) {
                             case 1:
                                 const vid = videoList[indexPath.row].dougaId;
@@ -879,7 +884,7 @@ let initWebServer = (dir, htmlStr, port = 9999) => {
                 },
                 layout: $layout.fill,
                 events: {
-                    didSelect: function(_sender, indexPath, _data) {
+                    didSelect: function (_sender, indexPath, _data) {
                         const section = indexPath.section;
                         const row = indexPath.row;
                         if (section == 1 && row == 0) {
@@ -910,5 +915,5 @@ module.exports = {
     getVidFromUrl,
     getVideoPid,
     getuidFromUrl,
-    dailyCheckin
+    dailyCheckin: $_MOD.User.DailyCheckIn
 };
