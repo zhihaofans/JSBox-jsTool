@@ -1,7 +1,8 @@
 let _BILIURL = require("./api_url.js").BILIBILI,
     _USER = require("./user.js"),
     _HTTP = require("../../libs/http"),
-    _UA = require("/scripts/api/user-agent.js");
+    _UA = require("../user-agent.js"),
+    $_MOD=require("../../mod/bilibili");
 let mangaCheckin = async () => {
     const accessKey = _USER.getAccessKey(),
         uid = _USER.getUid(),
