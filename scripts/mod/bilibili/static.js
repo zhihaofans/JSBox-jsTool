@@ -19,7 +19,7 @@ let UA = {
             MY_INFO: "https://app.bilibili.com/x/v2/account/mine",
         },
         LIVE: {
-            CHECK_IN: "https://api.live.bilibili.com/rc/v1/Sign/doSign?access_key:",
+            CHECK_IN: "https://api.live.bilibili.com/rc/v1/Sign/doSign?access_key=",
             SILVER_TO_COIN: "https://api.live.bilibili.com/pay/v1/Exchange/silver2coin"
         },
         COMIC: {
