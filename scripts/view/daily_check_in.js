@@ -1,5 +1,8 @@
 let _ACFUN = require("../api/acfun.js"),
-    _BILI = require("../api/bilibili/check_in.js");
+    _BILI = require("../api/bilibili/check_in.js"),
+    _MOD = {
+        _BILI: require("../mod/bilibili/bilibili")
+    };
 function initView() {
     $ui.push({
         props: {
@@ -19,7 +22,7 @@ function initView() {
                 },
                 layout: $layout.fill,
                 events: {
-                    didSelect: function(sender, indexPath, data) {
+                    didSelect: function (sender, indexPath, data) {
                         const row = indexPath.row;
                         switch (row) {
                             case 0:
@@ -27,12 +30,13 @@ function initView() {
                                 break;
                             case 1:
                                 _BILI.mangaCheckin();
+
                                 break;
                             case 2:
-                                _BILI.silverToCoin();
+                                _MOD._BILI.Live.silver2coin();
                                 break;
                             case 3:
-                                _BILI.liveCheckIn();
+                                _MOD._BILI.Live.checkIn();
                                 break;
                             case 4:
                                 _BILI.vipCheckin();
