@@ -1,49 +1,52 @@
 let _comic = () => {
-    const $B_comic = require("./comic");
-    (new $B_comic.User()).checkIn();
-};
-let _live = () => {
-    const $B_live = require("./live");
-    (new $B_live.User()).checkIn();
-}
-let _liveSilver2Coin = () => {
-    try {
+        const $B_comic = require("./comic");
+        (new $B_comic.User()).checkIn();
+    },
+    _live = () => {
         const $B_live = require("./live");
-        (new $B_live.User()).silver2coin();
-    } catch (_error) {
-        $console.error(_error);
-        $ui.loading(false);
-    }
-}
-let initView = () => {
-    $ui.push({
-        props: {
-            title: "Bilibili 签到"
-        },
-        views: [{
-            type: "list",
+        (new $B_live.User()).checkIn();
+    },
+    _liveSilver2Coin = () => {
+        try {
+            const $B_live = require("./live");
+            (new $B_live.User()).silver2coin();
+        } catch (_error) {
+            $console.error(_error);
+            $ui.loading(false);
+        }
+    },
+    _vipCheckIn = () => {
+
+    },
+    initView = () => {
+        $ui.push({
             props: {
-                data: ["漫画", "直播签到", "直播银瓜子兑换硬币"]
+                title: "Bilibili 签到"
             },
-            layout: $layout.fill,
-            events: {
-                didSelect: function (_sender, indexPath, _data) {
-                    switch (indexPath.row) {
-                        case 0:
-                            _comic();
-                            break;
-                        case 1:
-                            _live();
-                            break;
-                        case 2:
-                            _liveSilver2Coin();
-                            break;
+            views: [{
+                type: "list",
+                props: {
+                    data: ["漫画", "直播签到", "直播银瓜子兑换硬币"]
+                },
+                layout: $layout.fill,
+                events: {
+                    didSelect: function (_sender, indexPath, _data) {
+                        switch (indexPath.row) {
+                            case 0:
+                                _comic();
+                                break;
+                            case 1:
+                                _live();
+                                break;
+                            case 2:
+                                _liveSilver2Coin();
+                                break;
+                        }
                     }
                 }
-            }
-        }]
-    });
-};
+            }]
+        });
+    };
 module.exports = {
     initView
 };

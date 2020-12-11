@@ -1,45 +1,43 @@
-let $_View = require("./bilibili/view");
-let $View_User = new $_View.User();
-
-let init = () => {
-    $ui.push({
-        props: {
-            title: "Bilibili Mod ver"
-        },
-        views: [{
-            type: "list",
+let $_View = require("./bilibili/view"),
+    init = () => {
+        $ui.push({
             props: {
-                data: [{
-                    title: "",
-                    rows: ["设置Access Key", "签到", "获取个人信息", "刷新Access key"]
-                }]
+                title: "Bilibili Mod ver"
             },
-            layout: $layout.fill,
-            events: {
-                didSelect: function (_sender, indexPath, _data) {
-                    switch (indexPath.section) {
-                        case 0:
-                            switch (indexPath.row) {
-                                case 0:
-                                    $View_User.updateAccessKey();
-                                    break;
-                                case 1:
-                                    $_View.CheckIn();
-                                    break;
-                                case 2:
-                                    $View_User.getMyInfo();
-                                    break;
-                                case 3:
-                                    $View_User.refreshToken();
-                                    break;
-                            }
-                            break;
+            views: [{
+                type: "list",
+                props: {
+                    data: [{
+                        title: "",
+                        rows: ["设置Access Key", "签到", "获取个人信息", "刷新Access key"]
+                    }]
+                },
+                layout: $layout.fill,
+                events: {
+                    didSelect: function (_sender, indexPath, _data) {
+                        switch (indexPath.section) {
+                            case 0:
+                                switch (indexPath.row) {
+                                    case 0:
+                                        $_View.User.updateAccessKey();
+                                        break;
+                                    case 1:
+                                        $_View.CheckIn();
+                                        break;
+                                    case 2:
+                                        $_View.User.getMyInfo();
+                                        break;
+                                    case 3:
+                                        $_View.User.refreshToken();
+                                        break;
+                                }
+                                break;
+                        }
                     }
                 }
-            }
-        }]
-    });
-};
+            }]
+        });
+    };
 module.exports = {
     init
 };

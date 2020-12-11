@@ -211,8 +211,8 @@ class Info {
         }
     };
 }
-class View {
-    updateAccessKey = () => {
+let View = {
+    updateAccessKey: () => {
         const $_Auth = new Auth();
         $input.text({
             type: $kbType.text,
@@ -237,12 +237,12 @@ class View {
                 }
             }
         });
-    };
-    getMyInfo = () => {
+    },
+    getMyInfo: () => {
         const $U_info = new Info();
         $U_info.myInfo();
-    };
-    refreshToken = async () => {
+    },
+    refreshToken: async () => {
         const $_Auth = new Auth();
         if (await $_Auth.refreshToken()) {
             $ui.alert({
@@ -255,8 +255,8 @@ class View {
                 message: "",
             });
         }
-    };
-}
+    }
+};
 module.exports = {
     Auth,
     Info,
