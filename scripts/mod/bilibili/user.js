@@ -1,6 +1,5 @@
 let $_Cache = require("./data_base").Cache,
-    $_Static = require("./static"),
-    $_Api = require("./api");
+    $_Static = require("./static");
 
 class Auth {
     async getSignUrl(host, param, android = false) {

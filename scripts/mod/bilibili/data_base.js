@@ -1,18 +1,18 @@
 let Cache = {
-    ACCESS_KEY = "MOD_BILIBILI_ACCESS_KEY",
-    UID = "MOD_BILIBILI_UID",
-    accessKey = (access_key = undefined) => {
+    ACCESS_KEY: "MOD_BILIBILI_ACCESS_KEY",
+    UID: "MOD_BILIBILI_UID",
+    accessKey: (access_key = undefined) => {
         if (access_key) {
-            $cache.set(this.ACCESS_KEY, access_key);
+            $cache.set(Cache.ACCESS_KEY, access_key);
         }
-        return $cache.get(this.ACCESS_KEY);
+        return $cache.get(Cache.ACCESS_KEY);
     },
-    uid = (uid = undefined) => {
+    uid: (uid = undefined) => {
         if (uid) {
-            $cache.set(this.UID, uid);
+            $cache.set(Cache.UID, uid);
         }
-        return $cache.get(this.UID);
-    };
+        return $cache.get(Cache.UID);
+    }
 };
 module.exports = {
     Cache
