@@ -1,6 +1,4 @@
 let $User = require("./acfun/user"),
-    $Auth = new $User.Auth(),
-    $Daily = new $User.Daily(),
     $loginData = require("./acfun/local_data").Login;
 let init = () => {
     $ui.success("Acfun mod:init");
@@ -28,10 +26,10 @@ let init = () => {
                         case 0:
                             switch (row) {
                                 case 0:
-                                    $Auth.loginBySetting();
+                                    $User.Auth.loginBySetting();
                                     break;
                                 case 1:
-                                    $Daily.checkIn();
+                                    $User.Daily.checkIn();
                                     break;
                             }
                             break;

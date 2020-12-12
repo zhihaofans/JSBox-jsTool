@@ -1,7 +1,6 @@
 let _User = require("./user"),
-    _Daily = new _User.Daily(),
     User = {
-        DailyCheckIn: _Daily.checkIn
+        DailyCheckIn: _User.Daily.checkIn
     };
 module.exports = {
     User
