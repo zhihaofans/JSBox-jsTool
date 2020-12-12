@@ -9,7 +9,7 @@ let $_View = require("./bilibili/view"),
                 props: {
                     data: [{
                         title: "",
-                        rows: ["设置Access Key", "签到", "获取个人信息", "刷新Access key"]
+                        rows: ["设置Access Key", "签到", "获取个人信息", "刷新Access key", "获取饼干"]
                     }]
                 },
                 layout: $layout.fill,
@@ -29,6 +29,9 @@ let $_View = require("./bilibili/view"),
                                         break;
                                     case 3:
                                         $_View.User.refreshToken();
+                                        break;
+                                    case 4:
+                                        $_View.User.getCookiesByAccessKey();
                                         break;
                                 }
                                 break;

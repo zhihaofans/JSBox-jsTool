@@ -32,7 +32,6 @@ let $_Cache = require("./data_base").Cache,
         isLogin: () => {
             return Auth.accessKey() ? true : false;
         },
-
         accessKey: (access_key = undefined) => {
             if (access_key) {
                 $_Cache.accessKey(access_key);
@@ -44,6 +43,12 @@ let $_Cache = require("./data_base").Cache,
                 $_Cache.uid(uid);
             }
             return $_Cache.uid();
+        },
+        cookies: (cookies = undefined) => {
+            if (cookies) {
+                $_Cache.cookies(cookies);
+            }
+            return $_Cache.cookies();
         },
         refreshToken: async () => {
             $ui.loading(true);
@@ -64,6 +69,36 @@ let $_Cache = require("./data_base").Cache,
                 }
             } else {
                 return false;
+            }
+        },
+        getCookiesByAccessKey: async () => {
+            $ui.loading(true);
+            const access_key = Auth.accessKey();
+            if (access_key) {
+                const url = `${$_Static.URL.KAAASS.GET_COOKIES_BY_ACCESS_KEY}?access_key=${access_key}`,
+                    headers = {
+                        "user-agent": $_Static.UA.KAAASS.KAAASS
+                    },
+                    $_get = await $_Static.HTTP.getAwait(url, headers);
+                $console.info($_get);
+                $ui.loading(false);
+                if ($_get.error) {
+                    $console.error($_get.error.message);
+                    return undefined;
+                } else {
+                    if ($_get.data.status == "OK") {
+                        const userCookies = $_get.data.cookie;
+                        if (userCookies) {
+                            Auth.cookies(userCookies);
+                            return userCookies;
+                        } else {
+                            $ui.error("获取饼干失败");
+                            return undefined;
+                        }
+                    }
+                }
+            } else {
+                return undefined;
             }
         }
     },
@@ -203,27 +238,6 @@ let $_Cache = require("./data_base").Cache,
             } else {
                 return undefined;
             }
-        },
-        vipMonthCheckIn: async () => {
-            const postBody = {
-                    access_key: Auth.accessKey()
-                },
-                postHeader = {
-                    "User-Agent": $_Static.UA.USER.VIP_CHECKIN
-                };
-            $console.info(postBody);
-            $console.info(postHeader);
-            const httpPost = await $_Static.HTTP.postAwait(
-                $_Static.URL.USER.VIP_CHECKIN,
-                postBody,
-                postHeader
-            );
-            if (httpPost.error) {
-                $ui.loading(false);
-                $console.error(httpPost.error);
-            } else {
-                $console.info(httpPost.data);
-            }
         }
     },
     View = {
@@ -253,8 +267,8 @@ let $_Cache = require("./data_base").Cache,
             });
         },
         getMyInfo: Info.myInfo,
-        refreshToken: async () => {
-            if (await Auth.refreshToken()) {
+        refreshToken: () => {
+            if (Auth.refreshToken()) {
                 $ui.alert({
                     title: "刷新成功",
                     message: "",

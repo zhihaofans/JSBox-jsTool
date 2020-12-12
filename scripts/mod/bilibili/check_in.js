@@ -2,7 +2,6 @@ let _Bilibili = require("./bilibili"),
     _comic = _Bilibili.Comic.checkIn,
     _live = _Bilibili.Live.checkIn,
     _liveSilver2Coin = _Bilibili.Live.silver2coin,
-    _vipCheckIn = _Bilibili.User.vipMonthCheckIn,
     initView = () => {
         $ui.push({
             props: {
@@ -11,7 +10,7 @@ let _Bilibili = require("./bilibili"),
             views: [{
                 type: "list",
                 props: {
-                    data: ["漫画", "直播签到", "直播银瓜子兑换硬币", "大会员每月签到"]
+                    data: ["漫画", "直播签到", "直播银瓜子兑换硬币"]
                 },
                 layout: $layout.fill,
                 events: {
@@ -25,9 +24,6 @@ let _Bilibili = require("./bilibili"),
                                 break;
                             case 2:
                                 _liveSilver2Coin();
-                                break;
-                            case 3:
-                                _vipCheckIn();
                                 break;
                             default:
                                 $ui.error("待更新");

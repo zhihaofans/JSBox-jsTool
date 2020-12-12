@@ -14,7 +14,8 @@ let UA = {
         KAAASS: {
             MY_INFO: "https://api.kaaass.net/biliapi/user/info",
             REFRESH_TOKEN: "https://api.kaaass.net/biliapi/user/refreshToken",
-            SIGN_URL: "https://api.kaaass.net/biliapi/urlgen"
+            SIGN_URL: "https://api.kaaass.net/biliapi/urlgen",
+            GET_COOKIES_BY_ACCESS_KEY: "https://api.kaaass.net/biliapi/user/sso"
         },
         USER: {
             MY_INFO: "https://app.bilibili.com/x/v2/account/mine",

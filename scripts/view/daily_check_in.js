@@ -11,8 +11,7 @@ let _MOD = require("../mod"),
                         "Acfun",
                         "Bilibili漫画",
                         "Bilibili银瓜子兑换硬币",
-                        "Bilibili直播签到",
-                        "Bilibili会员签到"
+                        "Bilibili直播签到"
                     ]
                 },
                 layout: $layout.fill,
@@ -32,9 +31,6 @@ let _MOD = require("../mod"),
                                 break;
                             case 3:
                                 _MOD.BILIBILI.Live.checkIn();
-                                break;
-                            case 4:
-                                $ui.error("暂不支持该功能");
                                 break;
                             default:
                                 $ui.error("暂不支持该功能");
