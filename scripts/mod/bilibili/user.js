@@ -247,7 +247,7 @@ let Auth = {
         }
     };
 module.exports = {
-    Auth: Auth,
+    Auth,
     Info,
     View
 };
