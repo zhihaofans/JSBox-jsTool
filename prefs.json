@@ -15,6 +15,10 @@
           "title": "uid",
           "type": "number",
           "key": "mod.bilibili.uid"
+        }, {
+          "title": "Cookies",
+          "type": "string",
+          "key": "mod.bilibili.cookies"
         }]
       }
     }, {
