@@ -165,7 +165,7 @@ let $_Cache = require("./data_base").Cache,
             const access_key = Auth.accessKey();
             if (access_key) {
                 $http.get({
-                    url: $_Static.URL.USER.MY_INFO + `?access_key=${access_key}`,
+                    url: `${$_Static.URL.USER.MY_INFO}?access_key=${access_key}`,
                     header: {
                         "User-Agent": $_Static.UA.USER.APP_IPHONE
                     },
@@ -202,6 +202,27 @@ let $_Cache = require("./data_base").Cache,
                 });
             } else {
                 return undefined;
+            }
+        },
+        vipMonthCheckIn: async () => {
+            const postBody = {
+                    access_key: Auth.accessKey()
+                },
+                postHeader = {
+                    "User-Agent": $_Static.UA.USER.VIP_CHECKIN
+                };
+            $console.info(postBody);
+            $console.info(postHeader);
+            const httpPost = await $_Static.HTTP.postAwait(
+                $_Static.URL.USER.VIP_CHECKIN,
+                postBody,
+                postHeader
+            );
+            if (httpPost.error) {
+                $ui.loading(false);
+                $console.error(httpPost.error);
+            } else {
+                $console.info(httpPost.data);
             }
         }
     },
