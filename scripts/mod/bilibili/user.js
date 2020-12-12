@@ -1,78 +1,75 @@
 let $_Cache = require("./data_base").Cache,
     $_Static = require("./static");
-
-class Auth {
-    getSignUrl = async (host, param, android = false) => {
-        const url = `${$_Static.URL.KAAASS.SIGN_URL}?host=${encodeURI(host)}&param=${encodeURI(param)}&android=${android}`,
-            headers = {
-                "user-agent": $_Static.UA.KAAASS.KAAASS
-            };
-        const $_get = await $_Static.HTTP.getAwait(url, headers);
-        if ($_get.error) {
-            $console.error($_get.error.message);
-            return undefined;
-        } else {
-            return $_get.data;
-        }
-
-    }
-    getSignUrl_A = async (param, android = false) => {
-        const url = `${$_Static.URL.KAAASS.SIGN_URL}?host=&param=${encodeURI(param)}&android=${android}`,
-            headers = {
-                "user-agent": $_Static.UA.KAAASS.KAAASS
-            };
-        const $_get = await $_Static.HTTP.getAwait(url, headers);
-        if ($_get.error) {
-            $console.error($_get.error.message);
-            return undefined;
-        } else {
-            return $_get.data;
-        }
-
-    }
-    isLogin = () => {
-        return this.accessKey() ? true : false;
-    }
-
-    accessKey = (access_key = undefined) => {
-        if (access_key) {
-            $_Cache.accessKey(access_key);
-        }
-        return $_Cache.accessKey();
-    }
-    uid = (uid = undefined) => {
-        if (uid) {
-            $_Cache.uid(uid);
-        }
-        return $_Cache.uid();
-    }
-    refreshToken = async () => {
-        $ui.loading(true);
-        const access_key = this.accessKey();
-        if (access_key) {
-            const url = `${$_Static.URL.KAAASS.REFRESH_TOKEN}?access_key=${access_key}`,
+let Auth = {
+        getSignUrl: async (host, param, android = false) => {
+            const url = `${$_Static.URL.KAAASS.SIGN_URL}?host=${encodeURI(host)}&param=${encodeURI(param)}&android=${android}`,
                 headers = {
                     "user-agent": $_Static.UA.KAAASS.KAAASS
                 };
             const $_get = await $_Static.HTTP.getAwait(url, headers);
-            $console.info($_get);
-            $ui.loading(false);
             if ($_get.error) {
                 $console.error($_get.error.message);
-                return false;
+                return undefined;
             } else {
-                return $_get.data.status == "OK";
+                return $_get.data;
             }
-        } else {
-            return false;
-        }
-    };
 
-}
-let Info = {
+        },
+        getSignUrl_A: async (param, android = false) => {
+            const url = `${$_Static.URL.KAAASS.SIGN_URL}?host=&param=${encodeURI(param)}&android=${android}`,
+                headers = {
+                    "user-agent": $_Static.UA.KAAASS.KAAASS
+                };
+            const $_get = await $_Static.HTTP.getAwait(url, headers);
+            if ($_get.error) {
+                $console.error($_get.error.message);
+                return undefined;
+            } else {
+                return $_get.data;
+            }
+
+        },
+        isLogin: () => {
+            return Auth.accessKey() ? true : false;
+        },
+
+        accessKey: (access_key = undefined) => {
+            if (access_key) {
+                $_Cache.accessKey(access_key);
+            }
+            return $_Cache.accessKey();
+        },
+        uid: (uid = undefined) => {
+            if (uid) {
+                $_Cache.uid(uid);
+            }
+            return $_Cache.uid();
+        },
+        refreshToken: async () => {
+            $ui.loading(true);
+            const access_key = Auth.accessKey();
+            if (access_key) {
+                const url = `${$_Static.URL.KAAASS.REFRESH_TOKEN}?access_key=${access_key}`,
+                    headers = {
+                        "user-agent": $_Static.UA.KAAASS.KAAASS
+                    };
+                const $_get = await $_Static.HTTP.getAwait(url, headers);
+                $console.info($_get);
+                $ui.loading(false);
+                if ($_get.error) {
+                    $console.error($_get.error.message);
+                    return false;
+                } else {
+                    return $_get.data.status == "OK";
+                }
+            } else {
+                return false;
+            }
+        }
+    },
+    Info = {
         getMyInfoByKaaass: async () => {
-            const $B_auth = new Auth();
-            const access_key = $B_auth.accessKey();
+            const access_key = Auth.accessKey();
             if (access_key) {
                 const url = `${$_Static.URL.KAAASS.MY_INFO}?furtherInfo=true&access_key=${access_key}`,
                     headers = {
@@ -114,8 +111,7 @@ let Info = {
             }
         },
         getMyInfo: () => {
-            const $B_auth = new Auth();
-            const access_key = $B_auth.accessKey();
+            const access_key = Auth.accessKey();
             if (access_key) {
                 const respKaaass = $B_auth.getSignUrl($_Static.URL.USER.MY_INFO, `access_key=${access_key}`);
                 const dataKaaass = respKaaass.data;
@@ -166,8 +162,7 @@ let Info = {
             }
         },
         myInfo: () => {
-            const $B_auth = new Auth();
-            const access_key = $B_auth.accessKey();
+            const access_key = Auth.accessKey();
             if (access_key) {
                 $http.get({
                     url: $_Static.URL.USER.MY_INFO + `?access_key=${access_key}`,
@@ -212,14 +207,13 @@ let Info = {
     },
     View = {
         updateAccessKey: () => {
-            const $_Auth = new Auth();
             $input.text({
                 type: $kbType.text,
                 placeholder: "输入Access key",
-                text: $_Auth.accessKey() || "",
+                text: Auth.accessKey() || "",
                 handler: function (access_key) {
                     if (access_key) {
-                        const new_access_key = $_Auth.accessKey(access_key);
+                        const new_access_key = Auth.accessKey(access_key);
                         if (new_access_key == access_key) {
                             $ui.success("设置成功");
                         } else {
@@ -237,13 +231,9 @@ let Info = {
                 }
             });
         },
-        getMyInfo: () => {
-            const $U_info = new Info();
-            $U_info.myInfo();
-        },
+        getMyInfo: Info.myInfo,
         refreshToken: async () => {
-            const $_Auth = new Auth();
-            if (await $_Auth.refreshToken()) {
+            if (await Auth.refreshToken()) {
                 $ui.alert({
                     title: "刷新成功",
                     message: "",
@@ -257,7 +247,7 @@ let Info = {
         }
     };
 module.exports = {
-    Auth,
+    Auth: Auth,
     Info,
     View
 };

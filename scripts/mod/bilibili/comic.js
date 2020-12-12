@@ -1,11 +1,9 @@
-let $B_api = require("./api"),
-    $B_user = require("./user"),
-    $User_auth = new $B_user.Auth(),
+let $B_user = require("./user"),
     $_Static = require("./static"),
     User = {
         checkIn: async () => {
-            const accessKey = $User_auth.accessKey(),
-                uid = $User_auth.uid(),
+            const accessKey = $B_user.Auth.accessKey(),
+                uid = $B_user.Auth.uid(),
                 postBody = {
                     platform: "ios",
                     uid: uid,

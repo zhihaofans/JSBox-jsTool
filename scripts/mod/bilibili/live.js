@@ -1,7 +1,5 @@
-let $B_api = require("./api"),
-    $B_user = require("./user"),
-    $_Static = require("./static"),
-    $User_auth = new $B_user.Auth();
+let $B_user = require("./user"),
+    $_Static = require("./static");
 class User {
     async checkIn() {
         $ui.loading(true);
@@ -10,7 +8,7 @@ class User {
                 "Content-Type": "application/x-www-form-urlencoded"
             },
             httpGet = await $_Static.HTTP.getAwait(
-                $_Static.URL.LIVE.CHECK_IN + $User_auth.accessKey(),
+                $_Static.URL.LIVE.CHECK_IN + $B_user.Auth.accessKey(),
                 header
             );
         if (httpGet.error) {
@@ -62,7 +60,7 @@ class User {
                 "Content-Type": "application/x-www-form-urlencoded"
             },
             postBody = {
-                access_key: $User_auth.accessKey()
+                access_key: $B_user.Auth.accessKey()
             };
         $console.info(postHeader);
         $console.info(postBody);
