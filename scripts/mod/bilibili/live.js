@@ -9,7 +9,7 @@ class User {
                 "User-Agent": $_Static.UA.USER.APP_IPHONE,
                 "Content-Type": "application/x-www-form-urlencoded"
             },
-            httpGet = await $B_api.getAwait(
+            httpGet = await $_Static.HTTP.getAwait(
                 $_Static.URL.LIVE.CHECK_IN + $User_auth.accessKey(),
                 header
             );

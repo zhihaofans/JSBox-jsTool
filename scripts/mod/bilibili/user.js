@@ -1,4 +1,4 @@
-let $_Cache = new(require("./data_base")).Cache(),
+let $_Cache = require("./data_base").Cache,
     $_Static = require("./static"),
     $_Api = require("./api");
 
@@ -8,7 +8,7 @@ class Auth {
             headers = {
                 "user-agent": $_Static.UA.KAAASS.KAAASS
             };
-        const $_get = await $_Api.getAwait(url, headers);
+        const $_get = await $_Static.HTTP.getAwait(url, headers);
         if ($_get.error) {
             $console.error($_get.error.message);
             return undefined;
@@ -22,7 +22,7 @@ class Auth {
             headers = {
                 "user-agent": $_Static.UA.KAAASS.KAAASS
             };
-        const $_get = await $_Api.getAwait(url, headers);
+        const $_get = await $_Static.HTTP.getAwait(url, headers);
         if ($_get.error) {
             $console.error($_get.error.message);
             return undefined;
@@ -55,7 +55,7 @@ class Auth {
                 headers = {
                     "user-agent": $_Static.UA.KAAASS.KAAASS
                 };
-            const $_get = await $_Api.getAwait(url, headers);
+            const $_get = await $_Static.HTTP.getAwait(url, headers);
             $console.info($_get);
             $ui.loading(false);
             if ($_get.error) {
@@ -79,7 +79,7 @@ class Info {
                 headers = {
                     "user-agent": $_Static.UA.KAAASS.KAAASS
                 },
-                $_get = await $_Api.getAwait(url, headers);
+                $_get = await $_Static.HTTP.getAwait(url, headers);
             $console.error($_get);
             if ($_get.error) {
                 $console.error($_get.error.message);
