@@ -1,6 +1,6 @@
 let $_Cache = require("./data_base").Cache,
-    $_Static = require("./static");
-let Auth = {
+    $_Static = require("./static"),
+    Auth = {
         getSignUrl: async (host, param, android = false) => {
             const url = `${$_Static.URL.KAAASS.SIGN_URL}?host=${encodeURI(host)}&param=${encodeURI(param)}&android=${android}`,
                 headers = {
