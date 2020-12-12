@@ -1,19 +1,12 @@
-let _comic = () => {
-        const $B_comic = require("./comic");
-        (new $B_comic.User()).checkIn();
+let _Bilibili = require("./bilibili"),
+    _comic = () => {
+        _Bilibili.Comic.checkIn();
     },
     _live = () => {
-        const $B_live = require("./live");
-        (new $B_live.User()).checkIn();
+        _Bilibili.Live.checkIn();
     },
     _liveSilver2Coin = () => {
-        try {
-            const $B_live = require("./live");
-            (new $B_live.User()).silver2coin();
-        } catch (_error) {
-            $console.error(_error);
-            $ui.loading(false);
-        }
+        _Bilibili.Live.silver2coin();
     },
     _vipCheckIn = () => {
 
