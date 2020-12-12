@@ -1,6 +1,4 @@
-let _ACFUN = require("../api/acfun"),
-    _BILI = require("../api/bilibili/check_in"),
-    _MOD = require("../mod"),
+let _MOD = require("../mod"),
     initView = () => {
         $ui.push({
             props: {
@@ -23,7 +21,7 @@ let _ACFUN = require("../api/acfun"),
                         const row = indexPath.row;
                         switch (row) {
                             case 0:
-                                _ACFUN.dailyCheckin();
+                                _MOD.ACFUN.User.DailyCheckIn();
                                 break;
                             case 1:
                                 _MOD.BILIBILI.Comic.checkIn();
@@ -36,9 +34,8 @@ let _ACFUN = require("../api/acfun"),
                                 _MOD.BILIBILI.Live.checkIn();
                                 break;
                             case 4:
-                                _BILI.vipCheckin();
+                                $ui.error("暂不支持该功能");
                                 break;
-
                             default:
                                 $ui.error("暂不支持该功能");
                         }
