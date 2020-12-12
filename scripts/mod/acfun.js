@@ -1,7 +1,6 @@
 let $User = require("./acfun/user"),
     $loginData = require("./acfun/local_data").Login;
 let init = () => {
-    $ui.success("Acfun mod:init");
     $ui.push({
         props: {
             title: "Acfun"
@@ -45,6 +44,7 @@ let init = () => {
             }
         }]
     });
+    $ui.success("Acfun mod:init");
 };
 
 module.exports = {
