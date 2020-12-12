@@ -1,7 +1,7 @@
 let $B_user = require("./user"),
     $_Static = require("./static");
-class User {
-    async checkIn() {
+let User = {
+    checkIn: async () => {
         $ui.loading(true);
         const header = {
                 "User-Agent": $_Static.UA.USER.APP_IPHONE,
@@ -52,8 +52,8 @@ class User {
                 });
             }
         }
-    }
-    async silver2coin() {
+    },
+    silver2coin: async () => {
         $ui.loading(true);
         const postHeader = {
                 "User-Agent": $_Static.UA.USER.APP_IPHONE,
@@ -100,7 +100,7 @@ class User {
             }
         }
     }
-}
+};
 
 module.exports = {
     User
