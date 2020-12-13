@@ -1,4 +1,4 @@
-function getFileList(dir, ext = undefined) {
+let getFileList = (dir, ext = undefined) => {
     if ($file.exists(dir) && $file.isDirectory(dir)) {
         var files = [];
         const fileList = $file.list(dir);
@@ -14,10 +14,10 @@ function getFileList(dir, ext = undefined) {
             }
         });
         return files;
-    }else{
-      $console.error(`不存在该目录或不是目录:${dir}`);
+    } else {
+        $console.error(`不存在该目录或不是目录:${dir}`);
     }
-}
+};
 module.exports = {
     getFileList
 };
