@@ -1,6 +1,5 @@
-let $_str = require("./libs/string");
-// 模块
-let urlCheck = require("./api/urlCheck"),
+let $_str = require("./libs/string"),
+    urlCheck = require("./api/urlCheck"),
     cdn = require("./view/cdn"),
     bilibili = require("./view/bilibili"),
     acfun = require("./view/acfun"),
