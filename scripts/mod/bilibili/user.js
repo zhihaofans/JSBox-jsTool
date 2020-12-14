@@ -280,7 +280,8 @@ let $_Cache = require("./data_base").Cache,
                     message: "",
                 });
             }
-        }
+        },
+        getCookiesByAccessKey: Auth.getCookiesByAccessKey
     };
 module.exports = {
     Auth,
