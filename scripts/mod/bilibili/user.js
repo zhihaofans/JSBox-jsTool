@@ -236,7 +236,8 @@ let $_Cache = require("./data_base").Cache,
                     }
                 });
             } else {
-                return undefined;
+                $ui.loading(false);
+                $ui.error("未登录");
             }
         }
     },
@@ -267,8 +268,8 @@ let $_Cache = require("./data_base").Cache,
             });
         },
         getMyInfo: Info.myInfo,
-        refreshToken: () => {
-            if (Auth.refreshToken()) {
+        refreshToken: async () => {
+            if (await Auth.refreshToken()) {
                 $ui.alert({
                     title: "刷新成功",
                     message: "",
