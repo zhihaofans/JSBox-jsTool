@@ -1,7 +1,4 @@
 let _Bilibili = require("./bilibili"),
-    _comic = _Bilibili.Comic.checkIn,
-    _live = _Bilibili.Live.checkIn,
-    _liveSilver2Coin = _Bilibili.Live.silver2coin,
     initView = () => {
         $ui.push({
             props: {
@@ -17,13 +14,13 @@ let _Bilibili = require("./bilibili"),
                     didSelect: function (_sender, indexPath, _data) {
                         switch (indexPath.row) {
                             case 0:
-                                _comic();
+                                _Bilibili.Comic.checkIn();
                                 break;
                             case 1:
-                                _live();
+                                _Bilibili.Live.checkIn();
                                 break;
                             case 2:
-                                _liveSilver2Coin();
+                                _Bilibili.Live.silver2coin();
                                 break;
                             default:
                                 $ui.error("待更新");
