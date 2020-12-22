@@ -1,3 +1,4 @@
+//JSBoxDialogs: https://github.com/Gandum2077/jsbox-dialogs
 module.exports = {
     plainAlert: require("./JSBoxDialogs/dialogs/plainAlert"),
     inputAlert: require("./JSBoxDialogs/dialogs/inputAlert"),
