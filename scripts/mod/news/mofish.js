@@ -1,4 +1,6 @@
-let appScheme = require("AppScheme");
+let {
+  Browser
+} = require("AppScheme");
 let init = firstInit => {
   $ui.menu({
     items: ["最新", "分类"],
@@ -54,7 +56,7 @@ let getNewest = (isFirstInit) => {
               events: {
                 didSelect: function (sender, indexPath, data) {
                   const webUrl = postList[indexPath.row].Url;
-                  appScheme.safariReadMode(webUrl.startsWith("//") ? `https:${webUrl}` : webUrl);
+                  Browser.Safari.ReadMode(webUrl.startsWith("//") ? `https:${webUrl}` : webUrl);
                 }
               }
             }]
@@ -187,7 +189,7 @@ let showNewSiteData = (newSiteInfo) => {
             events: {
               didSelect: function (sender, indexPath, data) {
                 const webUrl = contentList[indexPath.row].Url;
-                appScheme.safariReadMode(webUrl.startsWith("//") ? `https:${webUrl}` : webUrl);
+                Browser.Safari.ReadMode(webUrl.startsWith("//") ? `https:${webUrl}` : webUrl);
               }
             }
           }]

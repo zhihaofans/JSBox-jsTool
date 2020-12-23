@@ -1,7 +1,9 @@
 let _URL = require("/scripts/api/urlData.js").TOPHUB,
-    appScheme = require("AppScheme");
-let cheerio = require("cheerio");
-let cacheId="tophub_cookies_itc_center_user";
+    {
+        Browser
+    } = require("AppScheme"),
+    cheerio = require("cheerio"),
+    cacheId = "tophub_cookies_itc_center_user";
 
 function ResultItem(_title, _subtitle, _link) {
     this.title = _title;
@@ -49,7 +51,7 @@ function getWeb(authkey) {
                             didSelect: function (_sender, indexPath, _data) {
                                 const section = indexPath.section;
                                 const row = indexPath.row;
-                                appScheme.safariReadMode(resultList[row].link)
+                                Browser.Safari.ReadMode(resultList[row].link)
                             }
                         }
                     }]

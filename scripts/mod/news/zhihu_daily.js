@@ -1,7 +1,6 @@
-let appScheme = require("AppScheme");
-let _url = "https://news-at.zhihu.com/api/4/news/latest";
-
-let init = () => {
+let {
+    Browser
+} = require("AppScheme"), _url = "https://news-at.zhihu.com/api/4/news/latest", init = () => {
     $ui.loading(true);
     $http.get({
         url: _url,
@@ -35,7 +34,7 @@ let init = () => {
                                         const hint = indexPath.section == 0 ?
                                             topList[indexPath.row].hint :
                                             storyList[indexPath.row].hint;
-                                        appScheme.safariAddReadingItem(url, title, hint);
+                                        Browser.Safari.AddReadingItem(url, title, hint);
                                     }
                                 }, {
                                     title: "尝试使用阅读模式打开",
@@ -44,7 +43,7 @@ let init = () => {
                                         const url = indexPath.section == 0 ?
                                             topList[indexPath.row].url :
                                             storyList[indexPath.row].url;
-                                        appScheme.safariReadMode(url);
+                                        Browser.Safari.ReadMode(url);
                                     }
                                 }, {
                                     title: "使用[简悦 · 阅读器]打开",
