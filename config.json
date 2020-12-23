@@ -10,11 +10,11 @@
   },
   "info" : {
     "version" : "0.0.2",
-    "author" : "zhuangzhihao",
+    "author" : "zhihaofans",
     "types" : 7,
-    "website" : "https:\/\/github.com\/zhuangzhihao-io\/JSBox-jsTool",
+    "website" : "https:\/\/github.com\/zhihaofans\/JSBox-jsTool",
     "name" : "JSBox-jsTool",
-    "url" : "https:\/\/cdn.jsdelivr.net\/gh\/zhuangzhihao-io\/JSBox-jsTool@master\/download\/JSBox-jsTool.box"
+    "url" : "https:\/\/cdn.jsdelivr.net\/gh\/zhihaofans\/JSBox-jsTool@master\/download\/JSBox-jsTool.box"
   },
   "widget" : {
     "staticSize" : false,

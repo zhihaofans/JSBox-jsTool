@@ -89,7 +89,7 @@ function checkLatestVersion() {
     const current_version = JSON.parse($file.read("config.json").string).info
         .version;
     const githubUrl =
-        "https://api.github.com/repos/zhuangzhihao-io/JSBox-jsTool/releases/latest";
+        "https://api.github.com/repos/zhihaofans/JSBox-jsTool/releases/latest";
     $http.get({
         url: githubUrl,
         timeout: 10,

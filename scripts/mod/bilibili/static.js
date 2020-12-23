@@ -7,7 +7,7 @@ let UA = {
             VIP_CHECKIN: "bili-universal/9290 CFNetwork/1125.2 Darwin/19.4.0"
         },
         KAAASS: {
-            KAAASS: "JSBox-jsTool/0.1 (github:zhuangzhihao-io) <zhuang@zhihao.io>"
+            KAAASS: "JSBox-jsTool/0.1 (github:zhihaofans) <zhuang@zhihao.io>"
         }
     },
     URL = {
