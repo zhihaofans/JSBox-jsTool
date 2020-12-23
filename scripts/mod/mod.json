@@ -57,5 +57,15 @@
         "pref": {
 
         }
+    },
+    {
+        "file": "copy_manga.js",
+        "name": "拷贝漫画",
+        "url": "",
+        "version": 1,
+        "dec": "",
+        "pref": {
+
+        }
     }
 ]
