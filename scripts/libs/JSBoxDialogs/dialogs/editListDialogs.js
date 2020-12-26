@@ -1,6 +1,7 @@
-const Sheet = require("../components/sheet");
-const BaseView = require("../components/baseView");
-const inputAlert = require("./inputAlert");
+let Sheet = require("../components/sheet"),
+  BaseView = require("../components/baseView"),
+  inputAlert = require("./inputAlert"),
+  $$l10n = require("../utils/l10n");
 
 class ListView extends BaseView {
   constructor({
@@ -33,35 +34,46 @@ class ListView extends BaseView {
     const actions = []
     if (this.deleteEnabled) {
       actions.push({
-        title: $l10n("REMOVE"),
+        title: $$l10n("REMOVE"),
         color: $color("red"),
-        handler: function(sender, indexPath) {
+        handler: function (sender, indexPath) {
           const data = sender.data
           const deletedItem = data[indexPath.item]
           data.splice(indexPath.item, 1)
           sender.data = data
-          classThis.deleteHandler({deletedItem, index: indexPath.item, items: sender.data})
+          classThis.deleteHandler({
+            deletedItem,
+            index: indexPath.item,
+            items: sender.data
+          })
         }
       })
     }
     if (this.renameEnabled) {
       actions.push({
-        title: $l10n("EDIT"),
-        handler: async function(sender, indexPath) {
-          const result = await inputAlert({ title: $l10n("EDIT") })
+        title: $$l10n("EDIT"),
+        handler: async function (sender, indexPath) {
+          const result = await inputAlert({
+            title: $$l10n("EDIT")
+          })
           if (!result) {
-            $ui.error($l10n("INVALID_VALUE"));
+            $ui.error($$l10n("INVALID_VALUE"));
             return
           }
           if (!classThis.allowRepeatable && sender.data.includes(result)) {
-            $ui.error($l10n("DUPLICATE_VALUES"));
-            return 
-          } 
+            $ui.error($$l10n("DUPLICATE_VALUES"));
+            return
+          }
           const data = sender.data
           const oldItem = data[indexPath.item]
           data[indexPath.item] = result
           sender.data = data
-          classThis.renameHandler({oldItem, newItem: result, index: indexPath.item, items: sender.data})
+          classThis.renameHandler({
+            oldItem,
+            newItem: result,
+            index: indexPath.item,
+            items: sender.data
+          })
         }
       })
     }
@@ -76,8 +88,10 @@ class ListView extends BaseView {
         actions
       },
       events: {
-        reorderFinished: function(data) {
-          classThis.moveHandler({items: data})
+        reorderFinished: function (data) {
+          classThis.moveHandler({
+            items: data
+          })
         }
       }
     };
@@ -90,16 +104,22 @@ class ListView extends BaseView {
 
   async insert() {
     const classThis = this;
-    const result = await inputAlert({ title: $l10n("ADD") });
+    const result = await inputAlert({
+      title: $$l10n("ADD")
+    });
     if (!classThis.allowRepeatable && classThis.view.data.includes(result)) {
-      $ui.error($l10n("DUPLICATE_VALUES"));
-      return 
-    } 
+      $ui.error($$l10n("DUPLICATE_VALUES"));
+      return
+    }
     classThis.view.insert({
       indexPath: $indexPath(0, 0),
       value: result
     });
-    classThis.addHandler({addedItem: result, index: 0, items: classThis.view.data})
+    classThis.addHandler({
+      addedItem: result,
+      index: 0,
+      items: classThis.view.data
+    })
   }
 }
 
@@ -134,12 +154,10 @@ function presentSheet({
     presentMode,
     view: listView.definition,
     doneEvent: sender => listView.values,
-    customButton: addEnabled
-      ? {
-          symbol: "plus",
-          handler: async () => await listView.insert()
-        }
-      : undefined
+    customButton: addEnabled ? {
+      symbol: "plus",
+      handler: async () => await listView.insert()
+    } : undefined
   });
   return new Promise((resolve, reject) => {
     sheet.promisify(resolve, reject);
@@ -152,13 +170,28 @@ function listDialogs({
   items,
   allowRepeatable = false,
   addEnabled = true,
-  addHandler = ({addedItem, index, items}) => {},
+  addHandler = ({
+    addedItem,
+    index,
+    items
+  }) => {},
   moveEnabled = true,
-  moveHandler = ({items}) => {},
+  moveHandler = ({
+    items
+  }) => {},
   renameEnabled = true,
-  renameHandler = ({oldItem, newItem, index, items}) => {},
+  renameHandler = ({
+    oldItem,
+    newItem,
+    index,
+    items
+  }) => {},
   deleteEnabled = true,
-  deleteHandler = ({deletedItem, index, items}) => {},
+  deleteHandler = ({
+    deletedItem,
+    index,
+    items
+  }) => {},
   presentMode
 }) {
   if (!allowRepeatable && find_duplicate_in_array(items).length !== 0) {

@@ -1,9 +1,10 @@
-const {
+let {
   UIAlertActionStyle,
   UIAlertControllerStyle,
   UIAlertAction,
   UIAlertController
-} = require("./UIAlert");
+} = require("./UIAlert"),
+  $$l10n = require("../utils/l10n");
 
 function inputAlert({
   title = "",
@@ -11,8 +12,8 @@ function inputAlert({
   text = "",
   placeholder,
   type = 0,
-  cancelText = $l10n("CANCEL"),
-  confirmText = $l10n("OK")
+  cancelText = $$l10n("CANCEL"),
+  confirmText = $$l10n("OK")
 } = {}) {
   return new Promise((resolve, reject) => {
     const alertVC = new UIAlertController(
@@ -45,6 +46,7 @@ function inputAlert({
       const input = alertVC.getText(0);
       resolve(input);
     }
+
     function cancelEvent() {
       reject("cancel");
     }
