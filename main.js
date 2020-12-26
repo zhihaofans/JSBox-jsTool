@@ -1,5 +1,5 @@
-let page = require("/scripts/page_init"),
-    main = require("/scripts/view/main");
+let page = require("./scripts/page_init"),
+    main = require("./scripts/view/main");
 
 function checkCacheDir() {
     const cacheDir = ".cache/";
@@ -30,5 +30,4 @@ function init() {
         main.loadMainView();
     }
 }
-
 init();
