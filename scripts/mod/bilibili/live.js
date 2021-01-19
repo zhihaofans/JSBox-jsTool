@@ -1,6 +1,28 @@
 let $B_user = require("./user"),
     $_Static = require("./static"),
     User = {
+        autoCheckIn: async () => {
+            const header = {
+                    "User-Agent": $_Static.UA.USER.APP_IPHONE,
+                    "Content-Type": "application/x-www-form-urlencoded"
+                },
+                httpGet = await $_Static.HTTP.getAwait(
+                    $_Static.URL.LIVE.CHECK_IN + $B_user.Auth.accessKey(),
+                    header
+                );
+            if (httpGet.error) {
+                $console.error(httpGet.error);
+                return false;
+            } else {
+                const data = httpGet.data;
+                $console.info(data);
+                if (data) {
+                    return data.code == 0;
+                } else {
+                    return false;
+                }
+            }
+        },
         checkIn: async () => {
             $ui.loading(true);
             const header = {
@@ -105,6 +127,34 @@ let $B_user = require("./user"),
                         title: "错误",
                         message: "空白数据"
                     });
+                }
+            }
+        },
+        autoSilver2coin: async () => {
+            const postHeader = {
+                    "User-Agent": $_Static.UA.USER.APP_IPHONE,
+                    "Content-Type": "application/x-www-form-urlencoded"
+                },
+                postBody = {
+                    access_key: $B_user.Auth.accessKey()
+                };
+            $console.info(postHeader);
+            $console.info(postBody);
+            const httpPost = await $_Static.HTTP.postAwait(
+                $_Static.URL.LIVE.SILVER_TO_COIN,
+                postBody,
+                postHeader
+            );
+            $console.info(httpPost);
+            if (httpPost.error) {
+                $console.error(httpPost.error);
+                return false;
+            } else {
+                $ui.loading(false);
+                if (httpPost.data) {
+                    return httpPost.data.code == 0;
+                } else {
+                    return false;
                 }
             }
         }

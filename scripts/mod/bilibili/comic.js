@@ -1,6 +1,40 @@
 let $B_user = require("./user"),
     $_Static = require("./static"),
     User = {
+        autoCheckIn: async () => {
+            const accessKey = $B_user.Auth.accessKey(),
+                uid = $B_user.Auth.uid(),
+                postBody = {
+                    platform: "ios",
+                    uid: uid,
+                    access_key: accessKey
+                },
+                postHeader = {
+                    "Content-Type": "application/x-www-form-urlencoded",
+                    "User-Agent": $_Static.UA.COMIC.CHECK_IN
+                };
+            if (accessKey && uid) {
+                const httpPost = await $_Static.HTTP.postAwait(
+                    $_Static.URL.COMIC.CHECK_IN,
+                    postBody,
+                    postHeader
+                );
+                if (httpPost.error) {
+                    $console.error(httpPost.error);
+                    return false;
+                } else {
+                    const checkInData = httpPost.data;
+                    $console.info(checkInData);
+                    if (checkInData) {
+                        return checkInData.code == 0;
+                    } else {
+                        return false;
+                    }
+                }
+            } else {
+                return false;
+            }
+        },
         checkIn: async () => {
             const accessKey = $B_user.Auth.accessKey(),
                 uid = $B_user.Auth.uid(),
@@ -59,11 +93,13 @@ let $B_user = require("./user"),
                 $ui.alert({
                     title: "哔哩哔哩漫画签到失败",
                     message: "未登录",
-                    actions: [{
-                        title: "OK",
-                        disabled: false, // Optional
-                        handler: function () {}
-                    }]
+                    actions: [
+                        {
+                            title: "OK",
+                            disabled: false, // Optional
+                            handler: function () {}
+                        }
+                    ]
                 });
             }
         }

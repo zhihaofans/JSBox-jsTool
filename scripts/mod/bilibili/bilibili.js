@@ -3,14 +3,15 @@ let _Live = require("./live"),
     _User = require("./user"),
     Live = {
         checkIn: _Live.User.checkIn,
-        silver2coin: _Live.User.silver2coin
+        autoCheckIn: _Live.User.autoCheckIn,
+        silver2coin: _Live.User.silver2coin,
+        autoSilver2coin: _Live.User.autoSilver2coin
     },
     Comic = {
-        checkIn: _Comic.User.checkIn
+        checkIn: _Comic.User.checkIn,
+        autoCheckIn: _Comic.User.autoCheckIn
     },
-    User = {
-        vipMonthCheckIn: _User.Info.vipMonthCheckIn
-    };
+    User = {};
 module.exports = {
     Comic,
     Live,
