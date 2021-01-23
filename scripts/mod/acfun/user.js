@@ -17,11 +17,13 @@ let Auth = {
                 $ui.alert({
                     title: "Acfun登录失败",
                     message: "请确保账号密码已设置",
-                    actions: [{
-                        title: "关闭",
-                        disabled: false,
-                        handler: function () {}
-                    }]
+                    actions: [
+                        {
+                            title: "关闭",
+                            disabled: false,
+                            handler: function () {}
+                        }
+                    ]
                 });
             }
         },
@@ -55,7 +57,7 @@ let Auth = {
                     } else {
                         $ui.alert({
                             title: `错误${httpData.result}`,
-                            message: httpData.error_msg,
+                            message: httpData.error_msg
                         });
                     }
                 } else {
@@ -66,10 +68,7 @@ let Auth = {
                 }
             }
         },
-        isLogin: () => {
-
-        },
-
+        isLogin: () => {}
     },
     Daily = {
         checkIn: async () => {
@@ -81,7 +80,9 @@ let Auth = {
                 _acPassToken = userData.acPassToken,
                 _userid = userData.userid;
             const headers = $Common.HEADERS;
-            headers["Cookie"] = `acPasstoken=${_acPassToken};auth_key=${_userid}`;
+            headers[
+                "Cookie"
+            ] = `acPasstoken=${_acPassToken};auth_key=${_userid}`;
             const result = await $Common.getAwait($Api.CHECK_IN, headers);
             $console.info(result);
             if (result.error) {
@@ -89,36 +90,66 @@ let Auth = {
                 $ui.alert({
                     title: "签到发生错误",
                     message: result.error.message,
-                    actions: [{
-                        title: "OK",
-                        disabled: false, // Optional
-                        handler: function () {}
-                    }]
+                    actions: [
+                        {
+                            title: "OK",
+                            disabled: false, // Optional
+                            handler: function () {}
+                        }
+                    ]
                 });
             } else {
                 const checkinResult = result.data;
                 if (checkinResult) {
                     $ui.loading(false);
-                    checkinResult.result == 0 ?
-                        $ui.alert({
-                            title: "签到成功",
-                            message: checkinResult.msg
-                        }) :
-                        $ui.alert({
-                            title: `错误代码${checkinResult.result}`,
-                            message: checkinResult.msg ? checkinResult.msg : checkinResult.error_msg
-                        });
+                    checkinResult.result == 0
+                        ? $ui.alert({
+                              title: "签到成功",
+                              message: checkinResult.msg
+                          })
+                        : $ui.alert({
+                              title: `错误代码${checkinResult.result}`,
+                              message: checkinResult.msg
+                                  ? checkinResult.msg
+                                  : checkinResult.error_msg
+                          });
                 } else {
                     $ui.loading(false);
                     $ui.alert({
                         title: "签到失败",
                         message: result,
-                        actions: [{
-                            title: "OK",
-                            disabled: false, // Optional
-                            handler: function () {}
-                        }]
+                        actions: [
+                            {
+                                title: "OK",
+                                disabled: false, // Optional
+                                handler: function () {}
+                            }
+                        ]
                     });
+                }
+            }
+        },
+        autoCheckIn: async () => {
+            const $Api = require("./api").API_USER,
+                $Common = require("./common"),
+                $LoginData = require("./local_data").Login,
+                userData = $LoginData.loadLoginData(),
+                _acPassToken = userData.acPassToken,
+                _userid = userData.userid,
+                headers = $Common.HEADERS;
+            headers[
+                "Cookie"
+            ] = `acPasstoken=${_acPassToken};auth_key=${_userid}`;
+            const result = await $Common.getAwait($Api.CHECK_IN, headers);
+            $console.info(result);
+            if (result.error) {
+                return false;
+            } else {
+                const checkinResult = result.data;
+                if (checkinResult) {
+                    return checkinResult.result == 0;
+                } else {
+                    return false;
                 }
             }
         }
