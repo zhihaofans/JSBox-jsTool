@@ -21,7 +21,7 @@ let siteListL10n = [
                                     page.scanQrcodeToGo();
                                     break;
                                 case 1:
-                                    page.test();
+                                    page.loadModule("test");
                                     break;
                             }
                         }
@@ -60,7 +60,7 @@ let siteListL10n = [
                                 case 0:
                                     switch (indexPath.row) {
                                         case 0:
-                                            page.acfun();
+                                            page.loadModule("acfun");
                                             break;
                                         case 1:
                                             page.bilibili();

@@ -1,8 +1,23 @@
-let $_str = require("./libs/string"),
+let modules = {
+        acfun: {
+            filePath: "./view/acfun",
+            action: "init",
+            param: undefined
+        },
+        test: {
+            filePath: "./view/test",
+            action: "init",
+            param: undefined
+        }
+    },
+    loadModule = moduleId => {
+        const moduleInfo = modules[moduleId];
+        require(moduleInfo.filePath)[moduleInfo.action]();
+    },
+    $_str = require("./libs/string"),
     urlCheck = require("./api/urlCheck"),
     cdn = require("./view/cdn"),
     bilibili = require("./view/bilibili"),
-    acfun = require("./view/acfun"),
     instagram = require("./view/instagram"),
     misc = require("./view/misc"),
     dailyCheckin = require("./view/daily_check_in"),
@@ -34,9 +49,6 @@ let $_str = require("./libs/string"),
         switch (mod) {
             case "bilibili":
                 bilibili.init(url);
-                break;
-            case "acfun":
-                acfun.init(url);
                 break;
             case "instagram":
                 instagram.init(url);
@@ -87,7 +99,6 @@ let $_str = require("./libs/string"),
 module.exports = {
     cdn: cdn.init,
     bilibili: bilibili.init,
-    acfun: acfun.init,
     instagram: instagram.init,
     misc: misc.initListView,
     dailyCheckin: dailyCheckin.initView,
@@ -99,5 +110,7 @@ module.exports = {
     updatePrefs: init.updatePrefs,
     contextOpen,
     gotoUrl,
-    scanQrcodeToGo
+    scanQrcodeToGo,
+    modules,
+    loadModule
 };
