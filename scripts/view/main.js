@@ -1,11 +1,5 @@
 const page = require("../page_init");
-let siteListL10n = [
-        "ACFUN",
-        "BILIBILI",
-        "INSTAGRAM",
-        "每日签到",
-        "Bilichat历史"
-    ],
+let siteListL10n = ["ACFUN", "BILIBILI", "INSTAGRAM", "Bilichat历史"],
     moreListL10n = ["杂项", "Mod", "设置"],
     getNavButton = () => {
         return [
@@ -69,9 +63,6 @@ let siteListL10n = [
                                             page.instagram();
                                             break;
                                         case 3:
-                                            page.dailyCheckin();
-                                            break;
-                                        case 4:
                                             page.bilichat();
                                             break;
                                         default:

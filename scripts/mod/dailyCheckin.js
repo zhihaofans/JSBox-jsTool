@@ -1,4 +1,7 @@
-let _MOD = require("../mod"),
+let _MOD = {
+        ACFUN: require("./acfun/acfun"),
+        BILIBILI: require("./bilibili/bilibili")
+    },
     auto = () => {
         $ui.loading(true);
         let checkinTasks = {
@@ -26,7 +29,7 @@ let _MOD = require("../mod"),
         $ui.loading(false);
         $console.info(checkinTasks);
     },
-    initView = () => {
+    init = () => {
         $ui.push({
             props: {
                 title: "每日签到"
@@ -71,5 +74,5 @@ let _MOD = require("../mod"),
         });
     };
 module.exports = {
-    initView
+    init
 };
