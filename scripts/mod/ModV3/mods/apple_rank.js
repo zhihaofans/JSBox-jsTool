@@ -1,57 +1,64 @@
-let appleRank = require("./apple/apple_rank");
-let regionList = appleRank.getRegionCode();
-
-function rankResultItem(_title, _url, _icon = undefined) {
-    this.title = _title;
-    this.url = _url;
-    this.icon = _icon;
-}
+let appleRank = require("./apple/apple_rank"),
+    regionList = appleRank.getRegionCode(),
+    rankResultItem = (_title, _url, _icon = undefined) => {
+        this.title = _title;
+        this.url = _url;
+        this.icon = _icon;
+    };
 
 function showResultList(mode) {
     $ui.loading(true);
     $ui.menu({
-      items: regionList.map(i=>i.title),
-      handler: (title, idx) => {
-        appleRank.iosRank(mode,regionList[idx].id).then(function(resp) {
-        var data = resp.data;
-        if (data) {
-            const resultData = data.feed;
-            const rankResultList = resultData.entry.map(
-                item =>
-                    new rankResultItem(
-                        item.title.label,
-                        item.id.label,
-                        item["im:image"][0].label
-                    )
-            );
-            $ui.loading(false);
-            $ui.push({
-                props: {
-                    title: resultData.title.label.replace("iTunes Store：", "")
-                },
-                views: [
-                    {
-                        type: "list",
+        items: regionList.map(i => i.title),
+        handler: (title, idx) => {
+            appleRank.iosRank(mode, regionList[idx].id).then(function (resp) {
+                var data = resp.data;
+                if (data) {
+                    const resultData = data.feed;
+                    const rankResultList = resultData.entry.map(
+                        item =>
+                            new rankResultItem(
+                                item.title.label,
+                                item.id.label,
+                                item["im:image"][0].label
+                            )
+                    );
+                    $ui.loading(false);
+                    $ui.push({
                         props: {
-                            data: rankResultList.map(item => item.title)
+                            title: resultData.title.label.replace(
+                                "iTunes Store：",
+                                ""
+                            )
                         },
-                        layout: $layout.fill,
-                        events: {
-                            didSelect: function(_sender, indexPath, _data) {
-                                $app.openURL(rankResultList[indexPath.row].url);
+                        views: [
+                            {
+                                type: "list",
+                                props: {
+                                    data: rankResultList.map(item => item.title)
+                                },
+                                layout: $layout.fill,
+                                events: {
+                                    didSelect: function (
+                                        _sender,
+                                        indexPath,
+                                        _data
+                                    ) {
+                                        $app.openURL(
+                                            rankResultList[indexPath.row].url
+                                        );
+                                    }
+                                }
                             }
-                        }
-                    }
-                ]
+                        ]
+                    });
+                } else {
+                    $ui.loading(false);
+                    $ui.error("错误数据");
+                }
             });
-        } else {
-            $ui.loading(false);
-            $ui.error("错误数据");
         }
     });
-      }
-    });
-    
 }
 
 function init() {
@@ -72,7 +79,7 @@ function init() {
                 },
                 layout: $layout.fill,
                 events: {
-                    didSelect: function(_sender, indexPath, _data) {
+                    didSelect: function (_sender, indexPath, _data) {
                         const section = indexPath.section;
                         const row = indexPath.row;
                         switch (section) {
