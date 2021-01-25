@@ -1,6 +1,3 @@
-const init = () => {
-    require("./ModV3/loader").init();
-};
 module.exports = {
-    init
+    init: require("./ModV3/loader").init
 };
