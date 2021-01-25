@@ -1,5 +1,5 @@
-let http = require("../../libs/http");
-let APP_VERSION = "6.33.1.436",
+let http = require("$$").HTTP,
+    APP_VERSION = "6.33.1.436",
     IOS_VERSION = $device.info.version,
     USER_AGENT = {
         //APP_IOS: "AcFun/6.33.1 (iPhone; iOS 14.2; Scale/2.00)"
@@ -8,7 +8,7 @@ let APP_VERSION = "6.33.1.436",
     HEADERS = {
         "Content-Type": "application/x-www-form-urlencoded",
         "User-Agent": USER_AGENT.APP_IOS,
-        "Cookie": "",
+        Cookie: "",
         deviceType: 0,
         market: "appstore",
         acPlatform: "IPHONE",

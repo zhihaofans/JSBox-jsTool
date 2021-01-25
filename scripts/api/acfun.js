@@ -5,7 +5,7 @@ let sys = require("./system.js"),
     _ACFUN = _URL.ACFUN,
     _TENCENT = _URL.TENCENT,
     urlCheck = require("./urlCheck.js"),
-    _HTTP = require("../libs/http"),
+    _HTTP = require("$$").HTTP,
     $_MOD = require("../mod/acfun/acfun");
 let acVideoSiteList = [
         _ACFUN.ACFUN_DETAIL_VIDEO,
