@@ -18,7 +18,6 @@ let modules = {
     urlCheck = require("./api/urlCheck"),
     cdn = require("./view/cdn"),
     bilibili = require("./view/bilibili"),
-    instagram = require("./view/instagram"),
     misc = require("./view/misc"),
     test = require("./view/test"),
     mod = require("./mod_index"),
@@ -47,9 +46,6 @@ let modules = {
         switch (mod) {
             case "bilibili":
                 bilibili.init(url);
-                break;
-            case "instagram":
-                instagram.init(url);
                 break;
             default:
                 $ui.error("不支持该功能");
@@ -97,7 +93,6 @@ let modules = {
 module.exports = {
     cdn: cdn.init,
     bilibili: bilibili.init,
-    instagram: instagram.init,
     misc: misc.initListView,
     test: test.init,
     mod: mod.showModList,
