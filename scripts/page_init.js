@@ -3,11 +3,6 @@ let modules = {
             filePath: "./view/acfun",
             action: "init",
             param: undefined
-        },
-        test: {
-            filePath: "./view/test",
-            action: "init",
-            param: undefined
         }
     },
     loadModule = moduleId => {
@@ -19,7 +14,6 @@ let modules = {
     cdn = require("./view/cdn"),
     bilibili = require("./view/bilibili"),
     misc = require("./view/misc"),
-    test = require("./view/test"),
     mod = require("./mod_index"),
     init = require("./init"),
     gotoUrl = url => {
@@ -94,7 +88,6 @@ module.exports = {
     cdn: cdn.init,
     bilibili: bilibili.init,
     misc: misc.initListView,
-    test: test.init,
     mod: mod.showModList,
     setting: openSettingPage,
     initPrefs: init.initPrefs,
