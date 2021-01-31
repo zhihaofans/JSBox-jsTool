@@ -1,6 +1,6 @@
 const page = require("../page_init");
 let siteListL10n = ["ACFUN", "BILIBILI"],
-    moreListL10n = ["杂项", "Mod", "设置"],
+    moreListL10n = ["Mod", "设置"],
     getNavButton = () => {
         return [
             {
@@ -64,12 +64,9 @@ let siteListL10n = ["ACFUN", "BILIBILI"],
                                 case 1:
                                     switch (indexPath.row) {
                                         case 0:
-                                            page.misc();
-                                            break;
-                                        case 1:
                                             page.mod();
                                             break;
-                                        case 2:
+                                        case 1:
                                             page.setting();
                                             break;
                                         default:
