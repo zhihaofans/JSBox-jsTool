@@ -39,7 +39,7 @@ let UA = {
             return undefined;
         }
     },
-    HTTP = require("$$").http;
+    HTTP = require("$$").Http;
 module.exports = {
     UA,
     URL,
