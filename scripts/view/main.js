@@ -1,5 +1,5 @@
 const page = require("../page_init");
-let siteListL10n = ["ACFUN", "BILIBILI", "INSTAGRAM", "Bilichat历史"],
+let siteListL10n = ["ACFUN", "BILIBILI"],
     moreListL10n = ["杂项", "Mod", "设置"],
     getNavButton = () => {
         return [
@@ -59,12 +59,7 @@ let siteListL10n = ["ACFUN", "BILIBILI", "INSTAGRAM", "Bilichat历史"],
                                         case 1:
                                             page.bilibili();
                                             break;
-                                        case 2:
-                                            page.instagram();
-                                            break;
-                                        case 3:
-                                            page.bilichat();
-                                            break;
+
                                         default:
                                             $ui.error("错误选项");
                                     }
