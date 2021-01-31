@@ -1,4 +1,4 @@
-const page = require("../page_init");
+const page = require("./page_init");
 let siteListL10n = ["ACFUN", "BILIBILI"],
     moreListL10n = ["Mod", "设置"],
     getNavButton = () => {
