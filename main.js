@@ -1,4 +1,4 @@
-let main = require("./scripts/view/main"),
+let main = require("./scripts/main"),
     init = () => {
         main.loadMainView();
     };
