@@ -6,7 +6,7 @@ let $_Cache = require("./data_base").Cache,
                 headers = {
                     "user-agent": $_Static.UA.KAAASS.KAAASS
                 };
-            const $_get = await $_Static.HTTP.getAwait(url, headers);
+            const $_get = await $_Static.Http.getAwait(url, headers);
             if ($_get.error) {
                 $console.error($_get.error.message);
                 return undefined;
@@ -20,7 +20,7 @@ let $_Cache = require("./data_base").Cache,
                 headers = {
                     "user-agent": $_Static.UA.KAAASS.KAAASS
                 };
-            const $_get = await $_Static.HTTP.getAwait(url, headers);
+            const $_get = await $_Static.Http.getAwait(url, headers);
             if ($_get.error) {
                 $console.error($_get.error.message);
                 return undefined;
@@ -58,7 +58,7 @@ let $_Cache = require("./data_base").Cache,
                     headers = {
                         "user-agent": $_Static.UA.KAAASS.KAAASS
                     };
-                const $_get = await $_Static.HTTP.getAwait(url, headers);
+                const $_get = await $_Static.Http.getAwait(url, headers);
                 $console.info($_get);
                 $ui.loading(false);
                 if ($_get.error) {
@@ -79,7 +79,7 @@ let $_Cache = require("./data_base").Cache,
                     headers = {
                         "user-agent": $_Static.UA.KAAASS.KAAASS
                     },
-                    $_get = await $_Static.HTTP.getAwait(url, headers);
+                    $_get = await $_Static.Http.getAwait(url, headers);
                 $console.info($_get);
                 $ui.loading(false);
                 if ($_get.error) {
@@ -110,7 +110,7 @@ let $_Cache = require("./data_base").Cache,
                     headers = {
                         "user-agent": $_Static.UA.KAAASS.KAAASS
                     },
-                    $_get = await $_Static.HTTP.getAwait(url, headers);
+                    $_get = await $_Static.Http.getAwait(url, headers);
                 $console.error($_get);
                 if ($_get.error) {
                     $console.error($_get.error.message);

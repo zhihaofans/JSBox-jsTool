@@ -14,7 +14,7 @@ let $B_user = require("./user"),
                     "User-Agent": $_Static.UA.COMIC.CHECK_IN
                 };
             if (accessKey && uid) {
-                const httpPost = await $_Static.HTTP.postAwait(
+                const httpPost = await $_Static.Http.postAwait(
                     $_Static.URL.COMIC.CHECK_IN,
                     postBody,
                     postHeader
@@ -49,7 +49,7 @@ let $B_user = require("./user"),
                 };
             if (accessKey && uid) {
                 $ui.loading(true);
-                const httpPost = await $_Static.HTTP.postAwait(
+                const httpPost = await $_Static.Http.postAwait(
                     $_Static.URL.COMIC.CHECK_IN,
                     postBody,
                     postHeader

@@ -1,4 +1,4 @@
-let http = require("$$").Http,
+let http = require("/scripts/libs/http"),
     APP_VERSION = "6.33.1.436",
     IOS_VERSION = $device.info.version,
     USER_AGENT = {
