@@ -39,8 +39,8 @@
         }
     },
     {
-        "file": "mofish.js",
-        "name": "摸鱼热榜",
+        "file": "news.js",
+        "name": "新闻模块",
         "url": "",
         "version": 1,
         "dec": "",
@@ -51,6 +51,16 @@
     {
         "file": "copy_manga.js",
         "name": "拷贝漫画",
+        "url": "",
+        "version": 1,
+        "dec": "",
+        "pref": {
+
+        }
+    },
+    {
+        "file": "dailyCheckin.js",
+        "name": "每日签到",
         "url": "",
         "version": 1,
         "dec": "",
