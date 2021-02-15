@@ -3,7 +3,9 @@ let modDir = "/scripts/mod/",
         const mod = loadMod(modId);
         try {
             const modInfo = mod._get_mod_info_();
-        } catch (_ERROR) {}
+        } catch (_ERROR) {
+            $console.error(_ERROR.message);
+        }
     };
 
 function loadModJson() {
@@ -26,7 +28,10 @@ function loadMod(modName) {
 }
 
 function initMod(modName) {
-    const fileName = `${modDir}${modName}`;
+    let fileName = `${modDir}${modName}`;
+    if (!fileName.endsWith(".js")) {
+        fileName += ".js";
+    }
     if ($file.exists(fileName)) {
         if ($file.isDirectory(fileName)) {
             $ui.error("这是目录");
@@ -40,11 +45,13 @@ function initMod(modName) {
                     $ui.alert({
                         title: `${modName}加载失败`,
                         message: error.message,
-                        actions: [{
-                            title: "OK",
-                            disabled: false, // Optional
-                            handler: function () {}
-                        }]
+                        actions: [
+                            {
+                                title: "OK",
+                                disabled: false, // Optional
+                                handler: function () {}
+                            }
+                        ]
                     });
                 }
             } else {
@@ -88,45 +95,50 @@ function showModList() {
                 props: {
                     title: "Mod列表"
                 },
-                views: [{
-                    type: "list",
-                    props: {
-                        data: [{
-                                title: "常用Mod",
-                                rows: pinModList.map(
-                                    mod => modJsonObj[mod].name
-                                )
-                            },
-                            {
-                                title: "其他Mod",
-                                rows: otherModList
+                views: [
+                    {
+                        type: "list",
+                        props: {
+                            data: [
+                                {
+                                    title: "常用Mod",
+                                    rows: pinModList.map(
+                                        mod => modJsonObj[mod].name
+                                    )
+                                },
+                                {
+                                    title: "其他Mod",
+                                    rows: otherModList
+                                }
+                            ]
+                        },
+                        layout: $layout.fill,
+                        events: {
+                            didSelect: function (_sender, indexPath, _data) {
+                                const section = indexPath.section;
+                                const row = indexPath.row;
+                                $console.info(_data);
+                                initMod(
+                                    section == 0
+                                        ? pinModList[row]
+                                        : otherModList[row]
+                                );
                             }
-                        ]
-                    },
-                    layout: $layout.fill,
-                    events: {
-                        didSelect: function (_sender, indexPath, _data) {
-                            const section = indexPath.section;
-                            const row = indexPath.row;
-                            $console.info(_data);
-                            initMod(
-                                section == 0 ?
-                                pinModList[row] :
-                                otherModList[row]
-                            );
                         }
                     }
-                }]
+                ]
             });
         } else {
             $ui.alert({
                 title: "Mod列表",
                 message: "空白",
-                actions: [{
-                    title: "OK",
-                    disabled: false, // Optional
-                    handler: function () {}
-                }]
+                actions: [
+                    {
+                        title: "OK",
+                        disabled: false, // Optional
+                        handler: function () {}
+                    }
+                ]
             });
         }
     } else {

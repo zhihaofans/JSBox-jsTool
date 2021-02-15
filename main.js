@@ -1,5 +1,8 @@
 let main = require("./scripts/main"),
-    loadMod = modId => {},
+    mod = require("./scripts/mod_index"),
+    loadMod = modId => {
+        mod.initMod(modId);
+    },
     init = () => {
         const query = $context.query;
         $console.info(query);
