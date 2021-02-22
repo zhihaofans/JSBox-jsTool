@@ -14,9 +14,11 @@ let plainAlert = require("./JSBoxDialogs/dialogs/plainAlert"),
                 message: message
             });
         },
-        showInputAlert: async (title) => {
+        showInputAlert: async (title, message = "", text = "") => {
             return await inputAlert({
-                title: title
+                title: title,
+                message: message,
+                text: text,
             });
         },
         showLoginAlert: async (title) => {
