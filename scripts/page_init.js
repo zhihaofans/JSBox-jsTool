@@ -9,16 +9,16 @@ let modules = {
         const moduleInfo = modules[moduleId];
         require(moduleInfo.filePath)[moduleInfo.action]();
     },
-    $_str = require("./libs/string"),
     urlCheck = require("./api/urlCheck"),
     cdn = require("./view/cdn"),
     bilibili = require("./view/bilibili"),
     misc = require("./view/misc"),
     mod = require("./mod_index"),
     init = require("./init"),
+$$=require("$$"),
     gotoUrl = url => {
         const newUrl = $text.URLDecode(url);
-        if ($_str.checkIfUrl(newUrl)) {
+        if ($$.Str.checkIfUrl(newUrl)) {
             checkMod(newUrl);
         } else {
             $ui.alert({
@@ -67,7 +67,7 @@ let modules = {
     scanQrcodeToGo = () => {
         $qrcode.scan({
             handler(str) {
-                if ($_str.checkIfUrl(str)) {
+                if ($$.Str.checkIfUrl(str)) {
                     gotoUrl(str);
                 } else {
                     $ui.error("不是链接");

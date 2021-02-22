@@ -1,4 +1,4 @@
-let $str = require("../libs/string");
+let $$ = require("$$");
 // Bilibili
 let isBilibiliVideoUrl = url => {
     return url
@@ -30,11 +30,11 @@ let getAcfunUploaderUrlList = () => {
     return acUploaderSiteList;
 };
 let isAcfunVideoUrl = url => {
-    return $str.startsWithList(url, acVideoSiteList);
+    return $$.Str.startsWithList(url, acVideoSiteList);
     //return url.startsWithList(acVideoSiteList);
 };
 let isAcfunUploaderUrl = url => {
-    return $str.startsWithList(url, acUploaderSiteList);
+    return $$.Str.startsWithList(url, acUploaderSiteList);
     //return url.startsWithList(acUploaderSiteList);
 };
 let isAcfunUrl = url => {

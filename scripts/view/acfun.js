@@ -1,6 +1,6 @@
 let acApi = require("../api/acfun.js"),
     urlCheck = require("../api/urlCheck.js"),
-    $_str = require("../libs/string");
+    $$ = require("$$");
 let isInit = false;
 let init = url => {
     acApi.init();
@@ -227,7 +227,7 @@ let linkCheck = url => {
 let qrcodeScan = () => {
     $qrcode.scan({
         handler(str) {
-            if ($_str.checkIfUrl(str)) {
+            if ($$.Str.checkIfUrl(str)) {
                 linkCheck(str);
             } else {
                 $ui.alert({

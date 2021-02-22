@@ -1,4 +1,4 @@
-let $_str = require("../../libs/string");
+let $$ = require("$$");
 let cdnUrl = {
     weserv: "https://images.weserv.nl/?url=",
     github: {
@@ -29,12 +29,10 @@ let getGithubRealRaw = sourceGithubUrl => {
 };
 
 let getGithubRaw = sourceGithubUrl => {
-    const list = $_str
-        .remove(
-            getGithubRealRaw(sourceGithubUrl),
-            "https://raw.githubusercontent.com/"
-        )
-        .split("/");
+    const list = $$.Str.remove(
+        getGithubRealRaw(sourceGithubUrl),
+        "https://raw.githubusercontent.com/"
+    ).split("/");
     var newUrl = "https://cdn.jsdelivr.net/gh";
     list.forEach(function (item, index, array) {
         newUrl = index == 2 ? `${newUrl}@${item}` : `${newUrl}/${item}`;

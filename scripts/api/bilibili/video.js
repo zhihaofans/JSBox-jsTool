@@ -3,7 +3,7 @@ let cheerio = require("cheerio"),
     _URL = require("./api_url.js"),
     _UA = require("../user-agent.js"),
     _USER = require("./user.js"),
-    $_str = require("../../libs/string");
+    $$ = require("$$");
 
 function getBiliobVideo(avid) {
     $ui.loading(true);
@@ -526,7 +526,7 @@ function showVideoDownList(thisFile, copyStr) {
                                 placeholder: "",
                                 text: copyStr,
                                 handler: function (text) {
-                                    $_str.copy(copyStr);
+                                    $$.Str.copy(copyStr);
                                     $ui.menu({
                                         items: [
                                             "分享",
@@ -595,11 +595,11 @@ function getVidFromUrl(url) {
     var newUrl = url;
     siteList.map(x => {
         if (newUrl.startsWith(x)) {
-            newUrl = $_str.remove(newUrl, x);
+            newUrl = $$.Str.remove(newUrl, x);
         }
     });
     if (newUrl.indexOf("?")) {
-        newUrl = $_str.remove(newUrl.split("?")[0], "/");
+        newUrl = $$.Str.remove(newUrl.split("?")[0], "/");
     }
     return newUrl;
 }
