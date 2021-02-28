@@ -1,5 +1,4 @@
 let _url = require("../api/urlData.js");
-let QU = require("../api/quickUtil.js");
 let mainList = [
     "meowv/wallpaper",
     "meowv/cat",
@@ -7,7 +6,13 @@ let mainList = [
     "66mz8/phoneWallpaper",
     "neeemooo"
 ];
-
+let quicklookImageUrl = url => {
+    $ui.loading(true);
+    $quicklook.open({
+        image: $image(url)
+    });
+    $ui.loading(false);
+};
 let initListView = () => {
     $ui.push({
         props: {
@@ -21,7 +26,7 @@ let initListView = () => {
                 },
                 layout: $layout.fill,
                 events: {
-                    didSelect: function(_sender, indexPath, _data) {
+                    didSelect: function (_sender, indexPath, _data) {
                         // const section = indexPath.section;
                         const row = indexPath.row;
                         switch (_data) {
@@ -55,14 +60,14 @@ let meomvwallpaper = () => {
         .get({
             url: _url.MEOWV.WALLPAPER
         })
-        .then(function(resp) {
+        .then(function (resp) {
             var data = resp.data;
             if (data) {
                 if (data.result) {
                     let wpResult = data.result;
                     $ui.menu({
                         items: ["标题列表(快)", "直接预览(慢)"],
-                        handler: function(title, idx) {
+                        handler: function (title, idx) {
                             switch (idx) {
                                 case 0:
                                     $ui.push({
@@ -125,14 +130,14 @@ let meomvwallpaper = () => {
                                                 },
                                                 layout: $layout.fill,
                                                 events: {
-                                                    didSelect: function(
+                                                    didSelect: function (
                                                         _sender,
                                                         indexPath,
                                                         _data
                                                     ) {
                                                         const row =
                                                             indexPath.row;
-                                                        QU.quicklookImageUrl(
+                                                        quicklookImageUrl(
                                                             wpResult[row].url
                                                         );
                                                     }
@@ -181,7 +186,7 @@ let meomvSoul = () => {
                         {
                             title: "复制",
                             disabled: false, // Optional
-                            handler: function() {
+                            handler: function () {
                                 $clipboard.copy({
                                     text: data.result,
                                     ttl: 60
@@ -191,7 +196,7 @@ let meomvSoul = () => {
                         {
                             title: "关闭",
                             disabled: false, // Optional
-                            handler: function() {}
+                            handler: function () {}
                         }
                     ]
                 });
@@ -233,7 +238,6 @@ function neeemooo() {
     const fileName = images[Math.floor(Math.random() * 18)];
     const url = "https://neeemooo.com/hanon/" + encodeURI(fileName);
     $console.info(url);
-    //QU.quicklookImageUrl(url);
     $ui.preview({
         title: fileName,
         url: url

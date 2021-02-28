@@ -1,4 +1,5 @@
-let app = require("/scripts/api/app.js");
+let app = require("/scripts/api/app.js"),
+    $$ = require("$$");
 
 let docScan = () => {
     $photo.scan({
@@ -9,47 +10,55 @@ let docScan = () => {
                 if (resultList.length > 0) {
                     var imageDataList = [];
                     for (i in resultList) {
-                        imageDataList.push(resultList[i].png)
+                        imageDataList.push(resultList[i].png);
                     }
                     $ui.push({
                         props: {
                             title: $l10n("SCAN_SUCCESS")
                         },
-                        views: [{
-                            type: "list",
-                            props: {
-                                data: app.getListFromL10n(["预览全部图片", "保存全部图片"])
-                            },
-                            layout: $layout.fill,
-                            events: {
-                                didSelect: function (_sender, indexPath, _data) {
-                                    switch (indexPath.row) {
-                                        case 0:
-                                            $quicklook.open({
-                                                list: imageDataList
-                                            });
-                                            break;
-                                        default:
+                        views: [
+                            {
+                                type: "list",
+                                props: {
+                                    data: $$.Str.getListFromL10n([
+                                        "预览全部图片",
+                                        "保存全部图片"
+                                    ])
+                                },
+                                layout: $layout.fill,
+                                events: {
+                                    didSelect: function (
+                                        _sender,
+                                        indexPath,
+                                        _data
+                                    ) {
+                                        switch (indexPath.row) {
+                                            case 0:
+                                                $quicklook.open({
+                                                    list: imageDataList
+                                                });
+                                                break;
+                                            default:
+                                        }
                                     }
                                 }
                             }
-                        }]
+                        ]
                     });
                 } else {
                     $ui.alert({
                         title: $l10n("SCAN_FAILED"),
-                        message: "系统返回0个结果",
+                        message: "系统返回0个结果"
                     });
                 }
             } else {
                 $ui.alert({
                     title: $l10n("SCAN_FAILED"),
-                    message: data.error.description,
+                    message: data.error.description
                 });
             }
         }
     });
-
 };
 
 let init = () => {
@@ -57,36 +66,41 @@ let init = () => {
         props: {
             title: $l10n("IMAGE")
         },
-        views: [{
-            type: "list",
-            props: {
-                data: [{
-                    title: "",
-                    rows: []
-                }, {
-                    title: "其他",
-                    rows: app.getListFromL10n(["SCAN_DOCUMENTS"])
-                }, ]
-            },
-            layout: $layout.fill,
-            events: {
-                didSelect: function (_sender, indexPath, _data) {
-                    const section = indexPath.section;
-                    const row = indexPath.row;
-                    switch (section) {
-                        case 0:
-                            break;
-                        case 1:
-                            switch (row) {
-                                case 0:
-                                    docScan();
-                                    break;
-                            }
-                            break;
+        views: [
+            {
+                type: "list",
+                props: {
+                    data: [
+                        {
+                            title: "",
+                            rows: []
+                        },
+                        {
+                            title: "其他",
+                            rows: $$.Str.getListFromL10n(["SCAN_DOCUMENTS"])
+                        }
+                    ]
+                },
+                layout: $layout.fill,
+                events: {
+                    didSelect: function (_sender, indexPath, _data) {
+                        const section = indexPath.section;
+                        const row = indexPath.row;
+                        switch (section) {
+                            case 0:
+                                break;
+                            case 1:
+                                switch (row) {
+                                    case 0:
+                                        docScan();
+                                        break;
+                                }
+                                break;
+                        }
                     }
                 }
             }
-        }]
+        ]
     });
 };
 
