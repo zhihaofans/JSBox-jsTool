@@ -1,12 +1,10 @@
-let sys = require("../system.js"),
-    _BILIURL = require("./api_url.js").BILIBILI,
+let _BILIURL = require("./api_url.js").BILIBILI,
     _UA = require("../user-agent.js"),
     _CACHE = require("./cache.js"),
     _LIB = require("./lib.js"),
     _ACCOUNTS = require("./accounts.js");
 
 var _ACCESS_KEY = "",
-    _LOGIN_DATA = {},
     _UID = 0;
 
 // Login
@@ -19,7 +17,6 @@ function getLoginCache() {
     loadLoginCache();
     return UserLoginData(_ACCESS_KEY, _UID);
 }
-
 
 function isLogin() {
     return getAccessKey() ? true : false;
@@ -51,7 +48,8 @@ function login() {
                                 setAccessKey(inputKey);
                                 $ui.alert({
                                     title: "保存成功",
-                                    message: "由于需要用户uid，所以建议获取用户信息",
+                                    message:
+                                        "由于需要用户uid，所以建议获取用户信息"
                                 });
                             } else {
                                 $ui.error("空白key");
@@ -103,13 +101,20 @@ function loginPasswordByKaaass(userName, password) {
         handler: function (kaaassResult) {
             var kaaassData = kaaassResult.data;
             if (kaaassData.status == "OK") {
-                var success = _CACHE.saveCache("getAccessKey", kaaassResult.rawData);
+                var success = _CACHE.saveCache(
+                    "getAccessKey",
+                    kaaassResult.rawData
+                );
                 if (success) {
                     $console.info("登录成功");
                 } else {
                     $console.error("登录失败");
                 }
-                loginBilibiliBySignUrl(kaaassData.url, kaaassData.body, kaaassData.headers);
+                loginBilibiliBySignUrl(
+                    kaaassData.url,
+                    kaaassData.body,
+                    kaaassData.headers
+                );
             } else {
                 $ui.loading(false);
                 $ui.alert({
@@ -138,7 +143,10 @@ function loginBilibiliBySignUrl(loginUrl, bodyStr, headers) {
             var loginData = loginResp.data;
             $console.info(loginData);
             if (loginData.code == 0) {
-                var success = _CACHE.saveCache("bilibiliPassport", loginResp.rawData);
+                var success = _CACHE.saveCache(
+                    "bilibiliPassport",
+                    loginResp.rawData
+                );
                 $console.info(`cache:${success}`);
                 saveLoginCache(
                     loginData.data.token_info.access_token,
@@ -179,26 +187,26 @@ function checkAccessKey() {
 
 function getAccessKey() {
     if (!_ACCESS_KEY) {
-        loadLoginCache()
+        loadLoginCache();
     }
     return _ACCESS_KEY;
 }
 
 function setAccessKey(access_key) {
     _ACCESS_KEY = access_key;
-    _CACHE.saveAccesskey(access_key)
+    _CACHE.saveAccesskey(access_key);
 }
 // Uid
 function getUid() {
     if (!_UID) {
-        loadLoginCache()
+        loadLoginCache();
     }
     return _UID;
 }
 
 function setUid(uid) {
     _UID = uid;
-    _CACHE.saveUid(uid)
+    _CACHE.saveUid(uid);
 }
 // User info
 function UserInfo(_userInfo, _userFurther) {
@@ -215,57 +223,63 @@ function UserInfo(_userInfo, _userFurther) {
     this.giveCoin = _userFurther.coin_archive;
     this.likeVideo = _userFurther.like_archive;
     this.favourite = _userFurther.favourite2;
-    this.subscribeComic = _userFurther.sub_comic
+    this.subscribeComic = _userFurther.sub_comic;
 }
 
 function getMyInfo() {
     if (isLogin()) {
         const _AK = getAccessKey();
         $ui.loading(true);
-        _LIB.getSignUrl(_BILIURL.MY_INFO, "access_key=" + _AK).then(respKaaass => {
-            const dataKaaass = respKaaass.data;
-            $console.info(dataKaaass);
-            if (dataKaaass) {
-                $http.get({
-                    url: dataKaaass.url,
-                    header: {
-                        "User-Agent": _UA.BILIBILI.APP_IPHONE
-                    },
-                    handler: respBili => {
-                        var resultBili = respBili.data;
-                        if (resultBili.code == 0) {
-                            const myInfoData = resultBili.data;
-                            saveLoginCache(_AK, myInfoData.mid);
-                            $ui.loading(false);
-                            $ui.success("已更新登录数据");
-                            $ui.alert({
-                                title: "结果",
-                                message: myInfoData,
-                                actions: [{
-                                    title: "ok",
-                                    disabled: false, // Optional
-                                    handler: function () {}
-                                }]
-                            });
-                        } else {
-                            $ui.loading(false);
-                            $ui.alert({
-                                title: `Error ${resultBili.code}`,
-                                message: resultBili.message || "未知错误",
-                                actions: [{
-                                    title: "OK",
-                                    disabled: false, // Optional
-                                    handler: function () {}
-                                }]
-                            });
+        _LIB.getSignUrl(_BILIURL.MY_INFO, "access_key=" + _AK).then(
+            respKaaass => {
+                const dataKaaass = respKaaass.data;
+                $console.info(dataKaaass);
+                if (dataKaaass) {
+                    $http.get({
+                        url: dataKaaass.url,
+                        header: {
+                            "User-Agent": _UA.BILIBILI.APP_IPHONE
+                        },
+                        handler: respBili => {
+                            var resultBili = respBili.data;
+                            if (resultBili.code == 0) {
+                                const myInfoData = resultBili.data;
+                                saveLoginCache(_AK, myInfoData.mid);
+                                $ui.loading(false);
+                                $ui.success("已更新登录数据");
+                                $ui.alert({
+                                    title: "结果",
+                                    message: myInfoData,
+                                    actions: [
+                                        {
+                                            title: "ok",
+                                            disabled: false, // Optional
+                                            handler: function () {}
+                                        }
+                                    ]
+                                });
+                            } else {
+                                $ui.loading(false);
+                                $ui.alert({
+                                    title: `Error ${resultBili.code}`,
+                                    message: resultBili.message || "未知错误",
+                                    actions: [
+                                        {
+                                            title: "OK",
+                                            disabled: false, // Optional
+                                            handler: function () {}
+                                        }
+                                    ]
+                                });
+                            }
                         }
-                    }
-                });
-            } else {
-                $ui.loading(false);
-                $ui.error("获取签名url失败");
+                    });
+                } else {
+                    $ui.loading(false);
+                    $ui.error("获取签名url失败");
+                }
             }
-        });
+        );
     } else {
         $ui.error("请登录");
     }
@@ -276,7 +290,9 @@ function getUserInfo() {
     if (isLogin()) {
         $ui.loading(true);
         $http.get({
-            url: `${_BILIURL.GET_USER_INFO}&access_key=${getAccessKey()}&furtherInfo=true`,
+            url: `${
+                _BILIURL.GET_USER_INFO
+            }&access_key=${getAccessKey()}&furtherInfo=true`,
             header: {
                 "User-Agent": _UA.KAAASS
             },
@@ -306,75 +322,95 @@ function getUserInfo() {
                     $ui.push({
                         props: {
                             title: "加载成功",
-                            navButtons: [{
-                                title: "打开网页版",
-                                icon: "068", // Or you can use icon name
-                                symbol: "checkmark.seal", // SF symbols are supported
-                                handler: () => {
-                                    $ui.preview({
-                                        title: user.userName,
-                                        url: _URL.BILIBILI.BILIBILI_SPACE + user.uid
-                                    });
-                                }
-                            }]
-                        },
-                        views: [{
-                            type: "list",
-                            props: {
-                                data: [{
-                                        title: "功能",
-                                        rows: ["编辑access key"]
-                                    },
-                                    {
-                                        title: "数据",
-                                        rows: userDataList
+                            navButtons: [
+                                {
+                                    title: "打开网页版",
+                                    icon: "068", // Or you can use icon name
+                                    symbol: "checkmark.seal", // SF symbols are supported
+                                    handler: () => {
+                                        $ui.preview({
+                                            title: user.userName,
+                                            url:
+                                                _URL.BILIBILI.BILIBILI_SPACE +
+                                                user.uid
+                                        });
                                     }
-                                ]
-                            },
-                            layout: $layout.fill,
-                            events: {
-                                didSelect: function (_sender, indexPath, _data) {
-                                    switch (indexPath.section) {
-                                        case 0:
-                                            switch (indexPath.row) {
-                                                case 0:
-                                                    $input.text({
-                                                        placeholder: "access key",
-                                                        text: _userData.access_key,
-                                                        handler: function (inputKey) {
-                                                            setAccessKey(inputKey);
+                                }
+                            ]
+                        },
+                        views: [
+                            {
+                                type: "list",
+                                props: {
+                                    data: [
+                                        {
+                                            title: "功能",
+                                            rows: ["编辑access key"]
+                                        },
+                                        {
+                                            title: "数据",
+                                            rows: userDataList
+                                        }
+                                    ]
+                                },
+                                layout: $layout.fill,
+                                events: {
+                                    didSelect: function (
+                                        _sender,
+                                        indexPath,
+                                        _data
+                                    ) {
+                                        switch (indexPath.section) {
+                                            case 0:
+                                                switch (indexPath.row) {
+                                                    case 0:
+                                                        $input.text({
+                                                            placeholder:
+                                                                "access key",
+                                                            text:
+                                                                _userData.access_key,
+                                                            handler: function (
+                                                                inputKey
+                                                            ) {
+                                                                setAccessKey(
+                                                                    inputKey
+                                                                );
+                                                            }
+                                                        });
+                                                        break;
+                                                    default:
+                                                        $ui.error("不支持");
+                                                }
+                                                break;
+                                            case 1:
+                                                const _g = _data.split("：");
+                                                $ui.alert({
+                                                    title: _g[0],
+                                                    message: _g[1],
+                                                    actions: [
+                                                        {
+                                                            title: "复制",
+                                                            disabled: false, // Optional
+                                                            handler: function () {
+                                                                _g[1].copy();
+                                                                $ui.toast(
+                                                                    "已复制"
+                                                                );
+                                                            }
+                                                        },
+                                                        {
+                                                            title: "关闭",
+                                                            disabled: false, // Optional
+                                                            handler: function () {}
                                                         }
-                                                    });
-                                                    break;
-                                                default:
-                                                    $ui.error("不支持");
-                                            }
-                                            break;
-                                        case 1:
-                                            const _g = _data.split("：");
-                                            $ui.alert({
-                                                title: _g[0],
-                                                message: _g[1],
-                                                actions: [{
-                                                        title: "复制",
-                                                        disabled: false, // Optional
-                                                        handler: function () {
-                                                            _g[1].copy();
-                                                            $ui.toast("已复制");
-                                                        }
-                                                    },
-                                                    {
-                                                        title: "关闭",
-                                                        disabled: false, // Optional
-                                                        handler: function () {}
-                                                    }
-                                                ]
-                                            });
-                                            break;
+                                                    ]
+                                                });
+                                                break;
+                                        }
                                     }
                                 }
                             }
-                        }]
+                        ]
                     });
                 } else {
                     $ui.loading(false);

@@ -1,5 +1,4 @@
 let access_key_list_cacheId = `BILIBILI_ACCOUNTS_ACCESS_KEY`;
-let sys = require("../system.js");
 
 function getAccessKey(uid) {
     if (uid) {
@@ -61,7 +60,6 @@ function removeAccessKey(uid) {
     } else {
         $console.error(`access_key_list:null`);
     }
-
 }
 
 function removeAccessKeyList() {
@@ -78,14 +76,14 @@ function backupAccessKeyList(cloud = false) {
                 data: $data({
                     string: accessKeyJson
                 }),
-                name: `bilibili_accesskey_list_backup_${sys.getNowUnixTime()}.json`,
+                name: `bilibili_accesskey_list_backup_${$$.Time.getNowUnixTime()}.json`,
                 handler: function () {
                     $ui.alert({
                         title: "保存完毕",
-                        message: "请确认是否保存成功",
+                        message: "请确认是否保存成功"
                     });
                 }
-            })
+            });
         } else {
             const saveDir = "/.backup/bilibili/";
             var success = $file.mkdir(saveDir);
@@ -94,11 +92,11 @@ function backupAccessKeyList(cloud = false) {
                     data: $data({
                         string: accessKeyJson
                     }),
-                    path: `${saveDir}bilibili_accesskey_list_backup_${sys.getNowUnixTime()}.json`
+                    path: `${saveDir}bilibili_accesskey_list_backup_${$$.Time.getNowUnixTime()}.json`
                 });
                 $ui.alert({
                     title: "保存完毕",
-                    message: success ? "成功" : "失败",
+                    message: success ? "成功" : "失败"
                 });
             } else {
                 $console.error(`backup:创建文件夹失败`);

@@ -1,8 +1,7 @@
-let sys = require("./system"),
-    _URL = require("./api_url"),
+let _URL = require("./api_url"),
     _USER = require("./user"),
     _GIFT = require("./gift"),
-    _ICU = require("/scripts/mod/matsuri.icu"),
+    $$ = require("$$"),
     appScheme = require("AppScheme"),
     _UA = require("../user-agent");
 
@@ -459,7 +458,7 @@ function getOnlineLiver() {
                                                 const thisRoom =
                                                     liveRoomList[indexPath.row];
                                                 const liveTime =
-                                                    sys.getNowUnixTimeSecond() -
+                                                    $$.Time.getNowUnixTimeSecond() -
                                                     thisRoom.live_time;
                                                 $ui.push({
                                                     props: {

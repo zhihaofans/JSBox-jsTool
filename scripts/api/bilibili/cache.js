@@ -1,5 +1,4 @@
-let sys = require("../system.js"),
-    cacheKey = {
+let cacheKey = {
         ACCESS_KEY: "bilibili_access_key",
         UID: "bilibili_uid"
     },

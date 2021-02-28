@@ -1,10 +1,10 @@
-let sys = require("./system.js"),
-    appScheme = require("AppScheme"),
+let appScheme = require("AppScheme"),
     _URL = require("./urlData.js"),
     _UA = require("./user-agent.js"),
     _ACFUN = _URL.ACFUN,
     _TENCENT = _URL.TENCENT,
     urlCheck = require("./urlCheck.js"),
+    $$ = require("./$$.js"),
     _HTTP = require("$$").HTTP,
     $_MOD = require("../mod/acfun/acfun");
 let acVideoSiteList = [
@@ -84,7 +84,7 @@ let saveCache = (mode, str) => {
     $file.mkdir(_cacheDir + mode);
     return $file.write({
         data: str,
-        path: _cacheDir + mode + "/" + sys.getNowUnixTime() + ".json"
+        path: _cacheDir + mode + "/" + $$.Time.getNowUnixTime() + ".json"
     });
 };
 
