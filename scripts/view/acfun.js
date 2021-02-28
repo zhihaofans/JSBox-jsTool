@@ -18,17 +18,12 @@ let init = url => {
                             rows: [
                                 "登录账号",
                                 "注销账号",
-                                "获取用户信息",
-                                "每日签到"
+                                "获取用户信息"
                             ]
                         },
                         {
                             title: "投稿",
                             rows: ["视频解析", "查看用户投稿"]
-                        },
-                        {
-                            title: "其他",
-                            rows: ["扫二维码"]
                         }
                     ]
                 },
@@ -84,9 +79,6 @@ let init = url => {
                                         acApi.isLogin()
                                             ? acApi.getUserInfo()
                                             : $ui.error("未登录");
-                                        break;
-                                    case 3:
-                                        acApi.dailyCheckin();
                                         break;
                                     default:
                                         $ui.error("暂未支持");

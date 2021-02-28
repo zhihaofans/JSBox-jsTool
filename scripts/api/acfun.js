@@ -1,12 +1,11 @@
-let sys = require("./system.js"),
-    appScheme = require("AppScheme"),
+let appScheme = require("AppScheme"),
     _URL = require("./urlData.js"),
     _UA = require("./user-agent.js"),
     _ACFUN = _URL.ACFUN,
     _TENCENT = _URL.TENCENT,
     urlCheck = require("./urlCheck.js"),
-    _HTTP = require("$$").HTTP,
-    $_MOD = require("../mod/acfun/acfun");
+    $$ = require("./$$.js"),
+    _HTTP = require("$$").HTTP;
 let acVideoSiteList = [
         _ACFUN.ACFUN_DETAIL_VIDEO,
         _ACFUN.ACFUN_WWW_V_AC,
@@ -84,7 +83,7 @@ let saveCache = (mode, str) => {
     $file.mkdir(_cacheDir + mode);
     return $file.write({
         data: str,
-        path: _cacheDir + mode + "/" + sys.getNowUnixTime() + ".json"
+        path: _cacheDir + mode + "/" + $$.Time.getNowUnixTime() + ".json"
     });
 };
 
@@ -474,57 +473,6 @@ let signIn = () => {
         });
     } else {
         $ui.error("未登录");
-    }
-};
-let checkin = async () => {
-    $ui.loading(true);
-    const result = await _HTTP.getAwait(_ACFUN.SIGN_IN, {
-        Cookie: getCookies(),
-        acPlatform: "IPHONE"
-    });
-    $console.info(result);
-    if (result.error) {
-        $ui.loading(false);
-        $ui.alert({
-            title: "签到发生错误",
-            message: result.error.message,
-            actions: [
-                {
-                    title: "OK",
-                    disabled: false, // Optional
-                    handler: function () {}
-                }
-            ]
-        });
-    } else {
-        const signinResult = result.data;
-        if (signinResult) {
-            $ui.loading(false);
-            signinResult.result == 0
-                ? $ui.alert({
-                      title: "签到成功",
-                      message: signinResult.msg
-                  })
-                : $ui.alert({
-                      title: `错误代码${signinResult.result}`,
-                      message: signinResult.msg
-                          ? signinResult.msg
-                          : signinResult.error_msg
-                  });
-        } else {
-            $ui.loading(false);
-            $ui.alert({
-                title: "签到失败",
-                message: result,
-                actions: [
-                    {
-                        title: "OK",
-                        disabled: false, // Optional
-                        handler: function () {}
-                    }
-                ]
-            });
-        }
     }
 };
 let getUploaderVideo = (uid, page = 1, count = 20) => {
@@ -918,6 +866,5 @@ module.exports = {
     _cacheKey,
     getVidFromUrl,
     getVideoPid,
-    getuidFromUrl,
-    dailyCheckin: $_MOD.User.DailyCheckIn
+    getuidFromUrl
 };
