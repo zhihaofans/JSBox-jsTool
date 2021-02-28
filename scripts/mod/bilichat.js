@@ -28,7 +28,6 @@ function showHistory() {
                                         indexPath,
                                         _data
                                     ) {
-                                        const section = indexPath.section;
                                         const row = indexPath.row;
                                         const thisRoom = data[row];
                                         $ui.alert({
@@ -39,7 +38,7 @@ function showHistory() {
                                                     title: "打开直播间",
                                                     disabled: false,
                                                     handler: function () {
-                                                        appScheme.bilibiliLive(
+                                                        appScheme.Video.Bilibili.live(
                                                             thisRoom.room_id
                                                         );
                                                     }
@@ -48,7 +47,7 @@ function showHistory() {
                                                     title: "打开个人空间",
                                                     disabled: false,
                                                     handler: function () {
-                                                        appScheme.bilibiliVideo(
+                                                        appScheme.Video.Bilibili.video(
                                                             thisRoom.user_id
                                                         );
                                                     }

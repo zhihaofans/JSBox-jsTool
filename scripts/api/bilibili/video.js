@@ -550,12 +550,12 @@ function showVideoDownList(thisFile, copyStr) {
                                                         ) {
                                                             switch (idxPlayer) {
                                                                 case 0:
-                                                                    appScheme.avplayerVideo(
+                                                                    appScheme.Video.AVPlayer(
                                                                         _data
                                                                     );
                                                                     break;
                                                                 case 1:
-                                                                    appScheme.nplayerVideo(
+                                                                    appScheme.Video.NPlayer(
                                                                         _data
                                                                     );
                                                                     break;
@@ -564,7 +564,7 @@ function showVideoDownList(thisFile, copyStr) {
                                                     });
                                                     break;
                                                 case 2:
-                                                    appScheme.alookBrowserOpen(
+                                                    appScheme.Browser.Alook.open(
                                                         _data
                                                     );
                                                     break;

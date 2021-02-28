@@ -403,12 +403,12 @@ let downloadVideo = (vid, pid) => {
                                                         ) {
                                                             switch (idx) {
                                                                 case 0:
-                                                                    appScheme.alookBrowserOpen(
+                                                                    appScheme.Browser.Alook.open(
                                                                         videoUrl
                                                                     );
                                                                     break;
                                                                 case 1:
-                                                                    appScheme.alookBrowserDownload(
+                                                                    appScheme.Browser.Alook.download(
                                                                         videoUrl
                                                                     );
                                                                     break;
@@ -608,7 +608,7 @@ let showUploaderVideoList = acData => {
                                             _cacheKey.lastClickedVid,
                                             vid
                                         );
-                                        appScheme.acfunVideo(vid);
+                                        appScheme.Video.Acfun.video(vid);
                                     } else {
                                         $ui.error(
                                             "这里长按无效，请在视频列表长按"
@@ -628,7 +628,9 @@ let showUploaderVideoList = acData => {
                                             vid
                                         );
                                         $share.sheet([
-                                            appScheme.getAcfunVideoWebUrl(vid)
+                                            appScheme.Video.Acfun.getVideoWebUrl(
+                                                vid
+                                            )
                                         ]);
                                     } else {
                                         $ui.error(
@@ -649,7 +651,9 @@ let showUploaderVideoList = acData => {
                                             vid
                                         );
                                         $share.sheet([
-                                            appScheme.getAcfunVideoUrl(vid)
+                                            appScheme.Video.Acfun.getVideoUrl(
+                                                vid
+                                            )
                                         ]);
                                     } else {
                                         $ui.error(
@@ -746,7 +750,7 @@ let showUploaderVideoList = acData => {
                                                 title = `[上次]` + title;
                                             }
                                         }
-                                        html += `<li><a href="${appScheme.getAcfunVideoUrl(
+                                        html += `<li><a href="${appScheme.Video.Acfun.getVideoUrl(
                                             thisVideo.dougaId
                                         )}">${title}</a></li>`;
                                     }
@@ -791,7 +795,7 @@ let showUploaderVideoList = acData => {
                             case 1:
                                 const vid = videoList[indexPath.row].dougaId;
                                 $cache.set(_cacheKey.lastClickedVid, vid);
-                                appScheme.acfunVideo(vid);
+                                appScheme.Video.Acfun.video(vid);
                                 break;
                         }
                     }

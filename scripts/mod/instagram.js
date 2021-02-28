@@ -143,37 +143,37 @@ let showResultListView = (resultList, webLink) => {
                                                                 );
                                                                 break;
                                                             case 1:
-                                                                appScheme.chromeBrowserOpen(
+                                                                appScheme.Browser.Chrome(
                                                                     itemUrl
                                                                 );
                                                                 break;
                                                             case 2:
-                                                                appScheme.alookBrowserOpen(
+                                                                appScheme.Browser.Alook.open(
                                                                     itemUrl
                                                                 );
                                                                 break;
                                                             case 3:
-                                                                appScheme.qqBrowserOpen(
+                                                                appScheme.Browser.QQBrowser(
                                                                     itemUrl
                                                                 );
                                                                 break;
                                                             case 4:
-                                                                appScheme.firefoxBrowserOpen(
+                                                                appScheme.Browser.Firefox(
                                                                     itemUrl
                                                                 );
                                                                 break;
                                                             case 5:
-                                                                appScheme.avplayerVideo(
+                                                                appScheme.Video.AVPlayer(
                                                                     itemUrl
                                                                 );
                                                                 break;
                                                             case 6:
-                                                                appScheme.nplayerVideo(
+                                                                appScheme.Video.NPlayer(
                                                                     itemUrl
                                                                 );
                                                                 break;
                                                             case 7:
-                                                                appScheme.documentsOpen(
+                                                                appScheme.File.Documents.open(
                                                                     itemUrl
                                                                 );
                                                                 break;
