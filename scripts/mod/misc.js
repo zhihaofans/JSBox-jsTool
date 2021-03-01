@@ -214,29 +214,28 @@ let api66mz8_PhoneWallpaper = () => {
 };
 function neeemooo() {
     const images = [
-        "不想努力了.png",
-        "别骂了别骂了.png",
-        "发呆.png",
-        "吃瘪.png",
-        "嚣张.png",
-        "天才.png",
-        "彩色的希望.png",
-        "早上好.png",
-        "星星眼.png",
-        "晚上好.png",
-        "生气.png",
-        "疑惑.png",
-        "病娇.png",
-        "睡觉.png",
-        "砸电脑.png",
-        "线上对喷，带我一个！.png",
-        "问好.png",
-        "震撼鸟神.png",
-        "鸟神的赐福.png"
-    ];
-
-    const fileName = images[Math.floor(Math.random() * 18)];
-    const url = "https://neeemooo.com/hanon/" + encodeURI(fileName);
+            "不想努力了.png",
+            "别骂了别骂了.png",
+            "发呆.png",
+            "吃瘪.png",
+            "嚣张.png",
+            "天才.png",
+            "彩色的希望.png",
+            "早上好.png",
+            "星星眼.png",
+            "晚上好.png",
+            "生气.png",
+            "疑惑.png",
+            "病娇.png",
+            "睡觉.png",
+            "砸电脑.png",
+            "线上对喷，带我一个！.png",
+            "问好.png",
+            "震撼鸟神.png",
+            "鸟神的赐福.png"
+        ],
+        fileName = images[Math.floor(Math.random() * 18)],
+        url = "https://neeemooo.com/hanon/" + encodeURI(fileName);
     $console.info(url);
     $ui.preview({
         title: fileName,
@@ -244,5 +243,5 @@ function neeemooo() {
     });
 }
 module.exports = {
-    initListView
+    init: initListView
 };

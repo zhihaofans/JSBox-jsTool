@@ -12,10 +12,9 @@ let modules = {
     urlCheck = require("./api/urlCheck"),
     cdn = require("./view/cdn"),
     bilibili = require("./view/bilibili"),
-    misc = require("./view/misc"),
     mod = require("./mod_index"),
     init = require("./init"),
-$$=require("$$"),
+    $$ = require("$$"),
     gotoUrl = url => {
         const newUrl = $text.URLDecode(url);
         if ($$.Str.checkIfUrl(newUrl)) {
@@ -87,7 +86,6 @@ $$=require("$$"),
 module.exports = {
     cdn: cdn.init,
     bilibili: bilibili.init,
-    misc: misc.initListView,
     mod: mod.showModList,
     setting: openSettingPage,
     initPrefs: init.initPrefs,
