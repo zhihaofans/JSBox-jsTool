@@ -54,7 +54,7 @@ let siteListL10n = ["ACFUN", "BILIBILI"],
                                             page.loadModule("acfun");
                                             break;
                                         case 1:
-                                            page.bilibili();
+                                            page.loadModule("bilibili");
                                             break;
 
                                         default:

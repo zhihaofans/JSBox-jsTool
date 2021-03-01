@@ -3,18 +3,22 @@ let modules = {
             filePath: "./view/acfun",
             action: "init",
             param: undefined
+        },
+        bilibili: {
+            filePath: "./mod/bilibili",
+            action: "init",
+            param: undefined
         }
     },
+    urlCheck = require("./api/urlCheck"),
+    cdn = require("./view/cdn"),
+    mod = require("./mod_index"),
+    init = require("./init"),
+    $$ = require("$$"),
     loadModule = moduleId => {
         const moduleInfo = modules[moduleId];
         require(moduleInfo.filePath)[moduleInfo.action]();
     },
-    urlCheck = require("./api/urlCheck"),
-    cdn = require("./view/cdn"),
-    bilibili = require("./view/bilibili"),
-    mod = require("./mod_index"),
-    init = require("./init"),
-    $$ = require("$$"),
     gotoUrl = url => {
         const newUrl = $text.URLDecode(url);
         if ($$.Str.checkIfUrl(newUrl)) {
@@ -85,7 +89,6 @@ let modules = {
     };
 module.exports = {
     cdn: cdn.init,
-    bilibili: bilibili.init,
     mod: mod.showModList,
     setting: openSettingPage,
     initPrefs: init.initPrefs,
