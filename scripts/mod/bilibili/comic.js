@@ -103,7 +103,9 @@ let $B_user = require("./user"),
                 });
             }
         }
-    };
+    },
+    Ticket = { getTicketStates: () => {} };
 module.exports = {
-    User
+    User,
+    Ticket
 };
