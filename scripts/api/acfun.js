@@ -5,6 +5,8 @@ let appScheme = require("AppScheme"),
     _TENCENT = _URL.TENCENT,
     urlCheck = require("./urlCheck.js"),
     $$ = require("./$$.js"),
+    _HTTP = require("$$").HTTP;
+    $$ = require("./$$.js"),
     _HTTP = require("$$").HTTP,
     $_MOD = require("../mod/acfun/acfun");
 let acVideoSiteList = [
@@ -476,57 +478,6 @@ let signIn = () => {
         $ui.error("未登录");
     }
 };
-let checkin = async () => {
-    $ui.loading(true);
-    const result = await _HTTP.getAwait(_ACFUN.SIGN_IN, {
-        Cookie: getCookies(),
-        acPlatform: "IPHONE"
-    });
-    $console.info(result);
-    if (result.error) {
-        $ui.loading(false);
-        $ui.alert({
-            title: "签到发生错误",
-            message: result.error.message,
-            actions: [
-                {
-                    title: "OK",
-                    disabled: false, // Optional
-                    handler: function () {}
-                }
-            ]
-        });
-    } else {
-        const signinResult = result.data;
-        if (signinResult) {
-            $ui.loading(false);
-            signinResult.result == 0
-                ? $ui.alert({
-                      title: "签到成功",
-                      message: signinResult.msg
-                  })
-                : $ui.alert({
-                      title: `错误代码${signinResult.result}`,
-                      message: signinResult.msg
-                          ? signinResult.msg
-                          : signinResult.error_msg
-                  });
-        } else {
-            $ui.loading(false);
-            $ui.alert({
-                title: "签到失败",
-                message: result,
-                actions: [
-                    {
-                        title: "OK",
-                        disabled: false, // Optional
-                        handler: function () {}
-                    }
-                ]
-            });
-        }
-    }
-};
 let getUploaderVideo = (uid, page = 1, count = 20) => {
     $http
         .post({
@@ -918,6 +869,5 @@ module.exports = {
     _cacheKey,
     getVidFromUrl,
     getVideoPid,
-    getuidFromUrl,
-    dailyCheckin: $_MOD.User.DailyCheckIn
+    getuidFromUrl
 };
