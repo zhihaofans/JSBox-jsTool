@@ -4,11 +4,7 @@ let appScheme = require("AppScheme"),
     _ACFUN = _URL.ACFUN,
     _TENCENT = _URL.TENCENT,
     urlCheck = require("./urlCheck.js"),
-    $$ = require("./$$.js"),
-    _HTTP = require("$$").HTTP;
-    $$ = require("./$$.js"),
-    _HTTP = require("$$").HTTP,
-    $_MOD = require("../mod/acfun/acfun");
+    $$ = require("$$.js");
 let acVideoSiteList = [
         _ACFUN.ACFUN_DETAIL_VIDEO,
         _ACFUN.ACFUN_WWW_V_AC,
