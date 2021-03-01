@@ -1,4 +1,5 @@
-let $_View = require("./view"),
+let _User = require("./user"),
+    _CheckIn = require("./check_in"),
     init = () => {
         $ui.push({
             props: {
@@ -29,19 +30,19 @@ let $_View = require("./view"),
                                 case 0:
                                     switch (indexPath.row) {
                                         case 0:
-                                            $_View.User.updateAccessKey();
+                                            _User.View.updateAccessKey();
                                             break;
                                         case 1:
-                                            $_View.CheckIn();
+                                            _CheckIn.initView();
                                             break;
                                         case 2:
-                                            $_View.User.getMyInfo();
+                                            _User.View.getMyInfo();
                                             break;
                                         case 3:
-                                            $_View.User.refreshToken();
+                                            _User.View.refreshToken();
                                             break;
                                         case 4:
-                                            $_View.User.getCookiesByAccessKey();
+                                            _User.View.getCookiesByAccessKey();
                                             break;
                                     }
                                     break;
