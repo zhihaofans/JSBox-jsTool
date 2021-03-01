@@ -7,16 +7,7 @@ let siteListL10n = ["ACFUN", "BILIBILI"],
                 title: $l10n("MENU"),
                 icon: "067", // Or you can use icon name
                 handler: () => {
-                    $ui.menu({
-                        items: ["SCAN_QRCODE"].map(x => $l10n(x)),
-                        handler: function (title, idx) {
-                            switch (idx) {
-                                case 0:
-                                    page.scanQrcodeToGo();
-                                    break;
-                            }
-                        }
-                    });
+                    $ui.success("Hi~");
                 }
             }
         ];
