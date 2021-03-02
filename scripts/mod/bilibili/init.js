@@ -1,5 +1,6 @@
 let _User = require("./user"),
     _CheckIn = require("./check_in"),
+    _Comic = require("./comic"),
     init = () => {
         $ui.push({
             props: {
@@ -43,6 +44,9 @@ let _User = require("./user"),
                                             break;
                                         case 4:
                                             _User.View.getCookiesByAccessKey();
+                                            break;
+                                        case 5:
+                                            _Comic.Ticket.getTicketStates();
                                             break;
                                     }
                                     break;

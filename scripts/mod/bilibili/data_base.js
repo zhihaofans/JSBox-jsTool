@@ -18,7 +18,7 @@ let Cache = {
         if (cookies) {
             $cache.set(Cache.COOKIES, cookies);
         }
-        return $cache.get(Cache.COOKIES);
+        return $cache.get(Cache.COOKIES) || undefined;
     }
 };
 module.exports = {

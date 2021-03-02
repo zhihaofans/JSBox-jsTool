@@ -2,7 +2,9 @@ let $_Cache = require("./data_base").Cache,
     $_Static = require("./static"),
     Auth = {
         getSignUrl: async (host, param, android = false) => {
-            const url = `${$_Static.URL.KAAASS.SIGN_URL}?host=${encodeURI(host)}&param=${encodeURI(param)}&android=${android}`,
+            const url = `${$_Static.URL.KAAASS.SIGN_URL}?host=${encodeURI(
+                    host
+                )}&param=${encodeURI(param)}&android=${android}`,
                 headers = {
                     "user-agent": $_Static.UA.KAAASS.KAAASS
                 };
@@ -13,10 +15,11 @@ let $_Cache = require("./data_base").Cache,
             } else {
                 return $_get.data;
             }
-
         },
         getSignUrl_A: async (param, android = false) => {
-            const url = `${$_Static.URL.KAAASS.SIGN_URL}?host=&param=${encodeURI(param)}&android=${android}`,
+            const url = `${
+                    $_Static.URL.KAAASS.SIGN_URL
+                }?host=&param=${encodeURI(param)}&android=${android}`,
                 headers = {
                     "user-agent": $_Static.UA.KAAASS.KAAASS
                 };
@@ -27,7 +30,6 @@ let $_Cache = require("./data_base").Cache,
             } else {
                 return $_get.data;
             }
-
         },
         isLogin: () => {
             return Auth.accessKey() ? true : false;
@@ -43,6 +45,12 @@ let $_Cache = require("./data_base").Cache,
                 $_Cache.uid(uid);
             }
             return $_Cache.uid();
+        },
+        cookie: (cookie = undefined) => {
+            if (cookie) {
+                $_Cache.cookies(cookie);
+            }
+            return $_Cache.cookies();
         },
         cookies: (cookies = undefined) => {
             if (cookies) {
@@ -122,22 +130,26 @@ let $_Cache = require("./data_base").Cache,
                         $ui.alert({
                             title: "结果",
                             message: myInfoData,
-                            actions: [{
-                                title: "ok",
-                                disabled: false, // Optional
-                                handler: function () {}
-                            }]
+                            actions: [
+                                {
+                                    title: "ok",
+                                    disabled: false, // Optional
+                                    handler: function () {}
+                                }
+                            ]
                         });
                     } else {
                         $ui.loading(false);
                         $ui.alert({
                             title: `Error ${kaaassData.code}`,
                             message: kaaassData.message || "未知错误",
-                            actions: [{
-                                title: "OK",
-                                disabled: false, // Optional
-                                handler: function () {}
-                            }]
+                            actions: [
+                                {
+                                    title: "OK",
+                                    disabled: false, // Optional
+                                    handler: function () {}
+                                }
+                            ]
                         });
                     }
                 }
@@ -148,7 +160,10 @@ let $_Cache = require("./data_base").Cache,
         getMyInfo: () => {
             const access_key = Auth.accessKey();
             if (access_key) {
-                const respKaaass = $B_auth.getSignUrl($_Static.URL.USER.MY_INFO, `access_key=${access_key}`);
+                const respKaaass = $B_auth.getSignUrl(
+                    $_Static.URL.USER.MY_INFO,
+                    `access_key=${access_key}`
+                );
                 const dataKaaass = respKaaass.data;
                 $console.info(dataKaaass);
                 if (dataKaaass) {
@@ -167,22 +182,26 @@ let $_Cache = require("./data_base").Cache,
                                 $ui.alert({
                                     title: "结果",
                                     message: myInfoData,
-                                    actions: [{
-                                        title: "ok",
-                                        disabled: false, // Optional
-                                        handler: function () {}
-                                    }]
+                                    actions: [
+                                        {
+                                            title: "ok",
+                                            disabled: false, // Optional
+                                            handler: function () {}
+                                        }
+                                    ]
                                 });
                             } else {
                                 $ui.loading(false);
                                 $ui.alert({
                                     title: `Error ${resultBili.code}`,
                                     message: resultBili.message || "未知错误",
-                                    actions: [{
-                                        title: "OK",
-                                        disabled: false, // Optional
-                                        handler: function () {}
-                                    }]
+                                    actions: [
+                                        {
+                                            title: "OK",
+                                            disabled: false, // Optional
+                                            handler: function () {}
+                                        }
+                                    ]
                                 });
                             }
                         }
@@ -215,22 +234,26 @@ let $_Cache = require("./data_base").Cache,
                             $ui.alert({
                                 title: "结果",
                                 message: myInfoData,
-                                actions: [{
-                                    title: "ok",
-                                    disabled: false, // Optional
-                                    handler: function () {}
-                                }]
+                                actions: [
+                                    {
+                                        title: "ok",
+                                        disabled: false, // Optional
+                                        handler: function () {}
+                                    }
+                                ]
                             });
                         } else {
                             $ui.loading(false);
                             $ui.alert({
                                 title: `Error ${resultBili.code}`,
                                 message: resultBili.message || "未知错误",
-                                actions: [{
-                                    title: "OK",
-                                    disabled: false, // Optional
-                                    handler: function () {}
-                                }]
+                                actions: [
+                                    {
+                                        title: "OK",
+                                        disabled: false, // Optional
+                                        handler: function () {}
+                                    }
+                                ]
                             });
                         }
                     }
@@ -256,11 +279,13 @@ let $_Cache = require("./data_base").Cache,
                             $ui.alert({
                                 title: "设置失败",
                                 message: "",
-                                actions: [{
-                                    title: "OK",
-                                    disabled: false,
-                                    handler: function () {}
-                                }]
+                                actions: [
+                                    {
+                                        title: "OK",
+                                        disabled: false,
+                                        handler: function () {}
+                                    }
+                                ]
                             });
                         }
                     }
@@ -272,12 +297,12 @@ let $_Cache = require("./data_base").Cache,
             if (await Auth.refreshToken()) {
                 $ui.alert({
                     title: "刷新成功",
-                    message: "",
+                    message: ""
                 });
             } else {
                 $ui.alert({
                     title: "刷新失败",
-                    message: "",
+                    message: ""
                 });
             }
         },

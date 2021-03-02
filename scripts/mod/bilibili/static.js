@@ -1,9 +1,7 @@
 const UA = {
         COMIC: {
             CHECK_IN:
-                "comic-universal/802 CFNetwork/1125.2 Darwin/19.4.0 os/ios model/iPhone 11 mobi_app/iphone_comic osVer/13.4 network/2",
-            TICKET_STATES:
-                "https://manga.bilibili.com/twirp/user.v1.User/GetStates?access_key="
+                "comic-universal/802 CFNetwork/1125.2 Darwin/19.4.0 os/ios model/iPhone 11 mobi_app/iphone_comic osVer/13.4 network/2"
         },
         USER: {
             APP_IPHONE:
@@ -35,7 +33,9 @@ const UA = {
             CHECK_IN:
                 "https://manga.bilibili.com/twirp/activity.v1.Activity/ClockIn",
             COMIC_DETAIL:
-                "https://manga.bilibili.com/twirp/comic.v1.Comic/ComicDetail"
+                "https://manga.bilibili.com/twirp/comic.v1.Comic/ComicDetail",
+            TICKET_STATES:
+                "https://manga.bilibili.com/twirp/user.v1.User/GetStates?access_key="
         }
     };
 module.exports = {

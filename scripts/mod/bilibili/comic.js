@@ -1,5 +1,6 @@
 let $B_user = require("./user"),
     $_Static = require("./static"),
+    JSDialogs = require("JSDialogs"),
     User = {
         autoCheckIn: async () => {
             const accessKey = $B_user.Auth.accessKey(),
@@ -104,7 +105,37 @@ let $B_user = require("./user"),
             }
         }
     },
-    Ticket = { getTicketStates: () => {} };
+    Ticket = {
+        getTicketStates: async () => {
+            const accessKey = $B_user.Auth.accessKey,
+                cookie = $B_user.Auth.cookies(),
+                postHeader = {
+                    "Content-Type": "application/x-www-form-urlencoded",
+                    "User-Agent": $_Static.UA.COMIC.CHECK_IN,
+                    Cookie: cookie
+                };
+            $console.info(postHeader);
+            if (accessKey && cookie) {
+                const httpPost = await $_Static.Http.postAwait(
+                    $_Static.URL.COMIC.TICKET_STATES,
+                    undefined,
+                    postHeader
+                );
+                if (httpPost.error) {
+                    $console.error(httpPost.error);
+                    return undefined;
+                } else {
+                    const TicketData = httpPost.data;
+                    $console.info(TicketData);
+                    return TicketData && TicketData.code == 0
+                        ? TicketData.data
+                        : undefined;
+                }
+            } else {
+                JSDialogs.showPlainAlert("错误");
+            }
+        }
+    };
 module.exports = {
     User,
     Ticket
