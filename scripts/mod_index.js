@@ -1,12 +1,4 @@
-let modDir = "/scripts/mod/",
-    getModInfo = modId => {
-        const mod = loadMod(modId);
-        try {
-            const modInfo = mod._get_mod_info_();
-        } catch (_ERROR) {
-            $console.error(_ERROR.message);
-        }
-    };
+let modDir = "/scripts/mod/";
 
 function loadModJson() {
     const modJson = $file.read(`${modDir}mod.json`).string;
