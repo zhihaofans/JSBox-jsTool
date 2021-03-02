@@ -65,7 +65,8 @@ function initMod(modName) {
 
 function getModList() {
     var modList = [];
-    const fileList = $file.list(modDir);
+    let fileList = $file.list(modDir);
+    fileList.sort();
     fileList.map(f => {
         if (!$file.isDirectory(f)) {
             if (f.endsWith(".js")) {
