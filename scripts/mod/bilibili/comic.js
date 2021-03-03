@@ -135,8 +135,12 @@ let $B_user = require("./user"),
                 JSDialogs.showPlainAlert("错误");
             }
         }
+    },
+    View = {
+        showTicketStatesList: () => {}
     };
 module.exports = {
     User,
-    Ticket
+    Ticket,
+    View
 };
