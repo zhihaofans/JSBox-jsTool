@@ -621,9 +621,9 @@ let showUploaderVideoList = acData => {
                                             vid
                                         );
                                         $quicklook.open({
-                                            image: appScheme
-                                                .getAcfunVideoWebUrl(vid)
-                                                .getQrcode()
+                                            image: appScheme.Video.Acfun.getVideoWebUrl(
+                                                vid
+                                            ).getQrcode()
                                         });
                                     } else {
                                         $ui.error(
@@ -644,9 +644,9 @@ let showUploaderVideoList = acData => {
                                             vid
                                         );
                                         $quicklook.open({
-                                            image: appScheme
-                                                .getAcfunVideoUrl(vid)
-                                                .getQrcode()
+                                            image: appScheme.Video.Acfun.getVideoWebUrl(
+                                                vid
+                                            ).getQrcode()
                                         });
                                     } else {
                                         $ui.error(
