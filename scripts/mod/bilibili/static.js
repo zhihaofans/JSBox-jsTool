@@ -21,7 +21,8 @@ const UA = {
         },
         USER: {
             MY_INFO: "https://app.bilibili.com/x/v2/account/mine",
-            VIP_CHECKIN: "https://api.bilibili.com/x/vip/privilege/receive"
+            VIP_CHECKIN: "https://api.bilibili.com/x/vip/privilege/receive",
+            SAME_FOLLOW: "https://api.bilibili.com/x/relation/same/followings"
         },
         LIVE: {
             CHECK_IN:

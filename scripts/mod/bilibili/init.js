@@ -12,14 +12,15 @@ let _User = require("./user"),
                     props: {
                         data: [
                             {
-                                title: "",
+                                title: "Bilibili",
                                 rows: [
                                     "设置Access Key",
                                     "签到",
                                     "获取个人信息",
                                     "刷新Access key",
                                     "获取饼干",
-                                    "漫画剩余券"
+                                    "漫画剩余券",
+                                    "查看相同关注"
                                 ]
                             }
                         ]
