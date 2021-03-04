@@ -46,7 +46,7 @@ let _User = require("./user"),
                                             _User.View.getCookiesByAccessKey();
                                             break;
                                         case 5:
-                                            _Comic.Ticket.getTicketStates();
+                                            _Comic.View.showTicketStatesList();
                                             break;
                                     }
                                     break;

@@ -128,16 +128,32 @@ let $B_user = require("./user"),
                     const TicketData = httpPost.data;
                     $console.info(TicketData);
                     return TicketData && TicketData.code == 0
-                        ? TicketData.data
+                        ? TicketData
                         : undefined;
                 }
             } else {
-                JSDialogs.showPlainAlert("错误");
+                return undefined;
             }
         }
     },
     View = {
-        showTicketStatesList: () => {}
+        showTicketStatesList: async () => {
+            $ui.loading(true);
+            const ticketStatesResult = await Ticket.getTicketStates();
+            if (ticketStatesResult && ticketStatesResult.code == 0) {
+                const ticketStatesData = ticketStatesResult.data;
+                await JSDialogs.showPlainAlert(
+                    "Bilibili漫画券",
+                    JSON.stringify(ticketStatesData)
+                );
+            } else {
+                await JSDialogs.showPlainAlert(
+                    "Bilibili漫画券获取失败",
+                    ticketStatesResult.msg
+                );
+            }
+            $ui.loading(false);
+        }
     };
 module.exports = {
     User,
