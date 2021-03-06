@@ -1,45 +1,44 @@
-let $$ = require("$$");
-// Bilibili
-let isBilibiliVideoUrl = url => {
-    return url
-        ? url.startsWithList([
-              "https://www.bilibili.com/av",
-              "https://www.bilibili.com/video/av",
-              "https://b23.tv/av"
-          ])
-        : false;
-};
-let isBilibiliUrl = url => {
-    return url ? isBilibiliVideoUrl(url) : false;
-};
-// Acfun
-let acVideoSiteList = [
-    "acfun://detail/upPage/",
-    "https://www.acfun.cn/v/ac",
-    "https://m.acfun.cn/v/?"
-];
-let acUploaderSiteList = [
-    "https://www.acfun.cn/u/",
-    "https://m.acfun.cn/upPage/"
-];
-
-let getAcfunVideoUrlList = () => {
-    return acVideoSiteList;
-};
-let getAcfunUploaderUrlList = () => {
-    return acUploaderSiteList;
-};
-let isAcfunVideoUrl = url => {
-    return $$.Str.startsWithList(url, acVideoSiteList);
-    //return url.startsWithList(acVideoSiteList);
-};
-let isAcfunUploaderUrl = url => {
-    return $$.Str.startsWithList(url, acUploaderSiteList);
-    //return url.startsWithList(acUploaderSiteList);
-};
-let isAcfunUrl = url => {
-    return url ? isAcfunVideoUrl(url) || isAcfunUploaderUrl(url) : false;
-};
+let $$ = require("$$"),
+    // Bilibili
+    isBilibiliVideoUrl = url => {
+        return url
+            ? url.startsWithList([
+                  "https://www.bilibili.com/av",
+                  "https://www.bilibili.com/video/av",
+                  "https://b23.tv/av"
+              ])
+            : false;
+    },
+    isBilibiliUrl = url => {
+        return url ? isBilibiliVideoUrl(url) : false;
+    },
+    // Acfun
+    acVideoSiteList = [
+        "acfun://detail/upPage/",
+        "https://www.acfun.cn/v/ac",
+        "https://m.acfun.cn/v/?"
+    ],
+    acUploaderSiteList = [
+        "https://www.acfun.cn/u/",
+        "https://m.acfun.cn/upPage/"
+    ],
+    getAcfunVideoUrlList = () => {
+        return acVideoSiteList;
+    },
+    getAcfunUploaderUrlList = () => {
+        return acUploaderSiteList;
+    },
+    isAcfunVideoUrl = url => {
+        return $$.Str.startsWithList(url, acVideoSiteList);
+        //return url.startsWithList(acVideoSiteList);
+    },
+    isAcfunUploaderUrl = url => {
+        return $$.Str.startsWithList(url, acUploaderSiteList);
+        //return url.startsWithList(acUploaderSiteList);
+    },
+    isAcfunUrl = url => {
+        return url ? isAcfunVideoUrl(url) || isAcfunUploaderUrl(url) : false;
+    };
 module.exports = {
     isBilibiliVideoUrl,
     isBilibiliUrl,
