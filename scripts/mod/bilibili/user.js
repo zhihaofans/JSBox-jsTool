@@ -263,19 +263,18 @@ let $_Cache = require("./data_base").Cache,
                 $ui.error("未登录");
             }
         },
-        getSameFollow: uid => {
+        getSameFollow: async uid => {
             const access_key = Auth.accessKey(),
                 cookies = Auth.cookies();
             $console.warn(`access_key:${access_key}\n\ncookies:${cookies}`);
             if (access_key) {
                 const url = `${$_Static.URL.USER.SAME_FOLLOW}?access_key=${access_key}&vmid=${uid}`,
-                headers= {
-                    "User-Agent": $_Static.UA.USER.APP_IPHONE,
-                    Cookie: cookies
-                },
-                $_get = await $_Static.Http.getAwait(url, headers);
+                    headers = {
+                        "User-Agent": $_Static.UA.USER.APP_IPHONE,
+                        Cookie: cookies
+                    },
+                    $_get = await $_Static.Http.getAwait(url, headers);
                 $console.error($_get);
-                
             } else {
                 $ui.loading(false);
                 $ui.error("未登录");
