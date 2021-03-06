@@ -1,9 +1,11 @@
 let main = require("./scripts/main"),
     mod = require("./scripts/mod_index"),
+    l10nInit = require("./scripts/l10n_init"),
     loadMod = modId => {
         mod.initMod(modId);
     },
     init = () => {
+        $app.strings = l10nInit.init();
         const query = $context.query;
         $console.info(query);
         if (query) {
