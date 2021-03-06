@@ -9,12 +9,12 @@ let pref_cache_list = {
         "mod.acfun.auth.token": "MOD_ACFUN_AUTH_TOKEN",
         "mod.acfun.auth.access_token": "MOD_ACFUN_AUTH_ACCESSTOKEN",
         "mod.acfun.auth.username": "MOD_ACFUN_AUTH_USERNAME",
-        "mod.acfun.auth.uid": "MOD_ACFUN_AUTH_UID",
+        "mod.acfun.auth.uid": "MOD_ACFUN_AUTH_UID"
     },
     initPrefs = () => {
         initPrefByList(pref_cache_list);
     },
-    initPrefByList = (_list) => {
+    initPrefByList = _list => {
         Object.keys(_list).map(_k => {
             $prefs.set(_k, $cache.get(_list[_k]) || "");
         });
@@ -22,11 +22,11 @@ let pref_cache_list = {
     updatePrefs = () => {
         updatePrefByList(pref_cache_list);
     },
-    updatePrefByList = (_list) => {
+    updatePrefByList = _list => {
         Object.keys(_list).map(_k => {
             $cache.set(_list[_k], $prefs.get(_k) || "");
         });
-    }
+    };
 
 module.exports = {
     initPrefs,

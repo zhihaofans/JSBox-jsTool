@@ -20,7 +20,7 @@ let _User = require("./user"),
                                     "刷新Access key",
                                     "获取饼干",
                                     "漫画剩余券",
-                                    "查看相同关注"
+                                    "下载漫画"
                                 ]
                             }
                         ]
@@ -48,6 +48,9 @@ let _User = require("./user"),
                                             break;
                                         case 5:
                                             _Comic.View.showTicketStatesList();
+                                            break;
+                                        case 6:
+                                            _Comic.View.getComicDetail();
                                             break;
                                     }
                                     break;
