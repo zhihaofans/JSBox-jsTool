@@ -40,14 +40,10 @@ let isAcfunUploaderUrl = url => {
 let isAcfunUrl = url => {
     return url ? isAcfunVideoUrl(url) || isAcfunUploaderUrl(url) : false;
 };
-let isInstagramUrl = url => {
-    return url ? url.startsWith("https://www.instagram.com/p/") : false;
-};
 module.exports = {
     isBilibiliVideoUrl,
     isBilibiliUrl,
     isAcfunUrl,
-    isInstagramUrl,
     getAcfunUploaderUrlList,
     getAcfunVideoUrlList,
     isAcfunUploaderUrl,

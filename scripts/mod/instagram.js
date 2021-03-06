@@ -1,14 +1,12 @@
-let cheerio = require("cheerio"),
-    appScheme = require("AppScheme"),
-    urlCheck = require("../api/urlCheck");
-let apiUrl = {
-    instaoffline_net: "https://instaoffline.net/process/"
-};
-
-let checkInsLink = shareUrl => {
-    const url = shareUrl || $clipboard.link;
-    return url ? (urlCheck.isInstagramUrl(url) ? url : "") : "";
-};
+let appScheme = require("AppScheme"),
+    checkInsLink = shareUrl => {
+        const url = shareUrl || $clipboard.link;
+        return url
+            ? /https:\/\/www.instagram.com\/p\/(.+)/.test(url)
+                ? url
+                : ""
+            : "";
+    };
 
 function MediaItem(type, url) {
     this.type = type;
@@ -246,7 +244,7 @@ let showResultListView = (resultList, webLink) => {
     });
 };
 let instagramOfficial = link => {
-    if (urlCheck.isInstagramUrl(link)) {
+    if (/https:\/\/www.instagram.com\/p\/(.+)/.test(link)) {
         const insUrl =
             link.indexOf("?") > -1 ? `${link}&__a=1` : `${link}?__a=1`;
         $http.get({
