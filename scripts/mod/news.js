@@ -5,13 +5,13 @@ let _modInfo = {
         updateLink: "",
         modType: 1
     },
-    fileUtil = require("../libs/file"),
+    $$ = require("$$"),
     newsDir = "/scripts/mod/news/",
     _get_mod_info_ = () => {
         return _modInfo;
     },
     init = () => {
-        const newsList = fileUtil.getFileList(newsDir, "js");
+        const newsList = $$.File.getFileList(newsDir, "js");
         if (newsList) {
             if (newsList.length > 0) {
                 $console.info(newsList);
@@ -19,20 +19,25 @@ let _modInfo = {
                     props: {
                         title: "新闻模块"
                     },
-                    views: [{
-                        type: "list",
-                        props: {
-                            data: newsList
-                        },
-                        layout: $layout.fill,
-                        events: {
-                            didSelect: function (_sender, indexPath, _data) {
-                                const section = indexPath.section;
-                                const row = indexPath.row;
-                                initMod(newsList[row]);
+                    views: [
+                        {
+                            type: "list",
+                            props: {
+                                data: newsList
+                            },
+                            layout: $layout.fill,
+                            events: {
+                                didSelect: function (
+                                    _sender,
+                                    indexPath,
+                                    _data
+                                ) {
+                                    const row = indexPath.row;
+                                    initMod(newsList[row]);
+                                }
                             }
                         }
-                    }]
+                    ]
                 });
             } else {
                 $ui.error("0个新闻模组");
@@ -41,15 +46,17 @@ let _modInfo = {
             $ui.alert({
                 title: "获取新闻模组列表失败",
                 message: "得到未知的列表数据",
-                actions: [{
-                    title: "OK",
-                    disabled: false, // Optional
-                    handler: function () {}
-                }]
+                actions: [
+                    {
+                        title: "OK",
+                        disabled: false, // Optional
+                        handler: function () {}
+                    }
+                ]
             });
         }
     },
-    initMod = (modName) => {
+    initMod = modName => {
         const fileName = `${newsDir}${modName}`;
         if ($file.exists(fileName)) {
             if ($file.isDirectory(fileName)) {
@@ -64,11 +71,13 @@ let _modInfo = {
                         $ui.alert({
                             title: `${modName}加载失败`,
                             message: error.message,
-                            actions: [{
-                                title: "OK",
-                                disabled: false, // Optional
-                                handler: function () {}
-                            }]
+                            actions: [
+                                {
+                                    title: "OK",
+                                    disabled: false, // Optional
+                                    handler: function () {}
+                                }
+                            ]
                         });
                     }
                 } else {
