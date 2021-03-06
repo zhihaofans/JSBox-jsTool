@@ -1,13 +1,10 @@
 let $$ = require("$$"),
     // Bilibili
     isBilibiliVideoUrl = url => {
-        return url
-            ? url.startsWithList([
-                  "https://www.bilibili.com/av",
-                  "https://www.bilibili.com/video/av",
-                  "https://b23.tv/av"
-              ])
-            : false;
+        return (
+            /https:\/\/www.bilibili.com\/av(.+?)/.test(url) ||
+            /https:\/\/www.bilibili.com\/video\/av(.+?)/.test(url)
+        );
     },
     isBilibiliUrl = url => {
         return url ? isBilibiliVideoUrl(url) : false;
