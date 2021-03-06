@@ -17,5 +17,8 @@ module.exports = {
     SCAN_QRCODE: { "zh-Hans": "扫描二维码", en: "Scan qrcode" },
     WEB: { "zh-Hans": "网页", en: "Web" },
     BING_DAILY_IMAGE: { "zh-Hans": "必应每日图片", en: "Bing daily image" },
-    TOPHUB: { "zh-Hans": "今日热榜", en: "Tophub" }
+    TOPHUB: { "zh-Hans": "今日热榜", en: "Tophub" },
+    MOD: { "zh-Hans": "模组", en: "Mod" },
+    SETTING: { "zh-Hans": "设置", en: "Setting" },
+    ACFUN: { "zh-Hans": "AcFun", en: "AcFun" }
 };
