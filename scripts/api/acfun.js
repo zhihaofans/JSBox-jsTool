@@ -1,11 +1,31 @@
 let appScheme = require("AppScheme"),
     _URL = require("./urlData.js"),
     _UA = require("./user-agent.js"),
-    _ACFUN = _URL.ACFUN,
-    _TENCENT = _URL.TENCENT,
     urlCheck = require("./urlCheck.js"),
-    $$ = require("$$.js");
-let acVideoSiteList = [
+    $$ = require("$$.js"),
+    _ACFUN = {
+        LOGIN: "https://id.app.acfun.cn/rest/app/login/signin",
+        GET_USER_INFO:
+            "https://api-new.app.acfun.cn/rest/app/user/personalInfo",
+        DOWNLOAD_VIDEO:
+            "https://api-new.app.acfun.cn/rest/app/play/playInfo/mp4",
+        GET_VIDEO_INFO:
+            "https://api-new.app.acfun.cn/rest/app/douga/info?dougaId=",
+        SIGN_IN: "https://api-new.app.acfun.cn/rest/app/user/signIn",
+        GET_UPLOADER_VIDEO:
+            "https://api-new.app.acfun.cn/rest/app/user/resource/query",
+        ACFUN_DETAIL_VIDEO: "acfun://detail/video/",
+        ACFUN_WWW_V_AC: "https://www.acfun.cn/v/ac",
+        ACFUN_M_V_AC: "https://m.acfun.cn/v/?",
+        ACFUN_DETAIL_UPPAGE: "acfun://detail/upPage/",
+        ACFUN_WWW_UPPAGE: "https://www.acfun.cn/u/",
+        ACFUN_M_UPPAGE: "https://m.acfun.cn/upPage/",
+        VIDEO_CDN_ALICDN: "http://ali-video.acfun.cn/",
+        VIDEO_CDN_TXCDN: "http://tx-video.acfun.cn/",
+        ADD_FRIENDS: "https://wpa.qq.com/msgrd?v=3&site=acfun.cn&menu=yes&uin=",
+        ACFUN_DETAIL_UPLOADER: "acfun://detail/uploader/"
+    },
+    acVideoSiteList = [
         _ACFUN.ACFUN_DETAIL_VIDEO,
         _ACFUN.ACFUN_WWW_V_AC,
         _ACFUN.ACFUN_M_V_AC
@@ -229,9 +249,7 @@ let getUserInfo = () => {
                                                     if (userInfo.qq) {
                                                         $ui.preview({
                                                             title: "QQ",
-                                                            url:
-                                                                _TENCENT.ADD_FRIENDS +
-                                                                userInfo.qq
+                                                            url: `https://wpa.qq.com/msgrd?v=3&site=acfun.cn&menu=yes&uin=${userInfo.qq}`
                                                         });
                                                     }
                                                     break;

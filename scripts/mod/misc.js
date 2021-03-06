@@ -1,5 +1,4 @@
-let _url = require("../api/urlData.js"),
-    mainList = ["66mz8/phoneWallpaper", "neeemooo"],
+let mainList = ["66mz8/phoneWallpaper", "neeemooo"],
     initListView = () => {
         $ui.push({
             props: {
@@ -33,7 +32,8 @@ let _url = require("../api/urlData.js"),
     api66mz8_PhoneWallpaper = () => {
         $ui.preview({
             title: "66mz8/phoneWallpaper",
-            url: _url.API_66MZ8_COM.PHONE_WALLPAPER
+            url:
+                "https://api.66mz8.com/api/rand.img.php?type=%E5%A3%81%E7%BA%B8"
         });
     },
     neeemooo = () => {

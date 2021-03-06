@@ -1,8 +1,5 @@
 let cheerio = require("cheerio"),
-    _URL = require("/scripts/api/urlData.js"),
-    {
-        Browser
-    } = require("AppScheme");
+    { Browser } = require("AppScheme");
 
 function linkItem(_title, _link) {
     this.title = _title;
@@ -12,7 +9,7 @@ let getList = (page = 1) => {
     $ui.loading(true);
     $http
         .get({
-            url: _URL.JISHUWEN.MAIN + page
+            url: `https://www.jishuwen.com/?p=${page}`
         })
         .then(function (resp) {
             if (resp.error) {
@@ -27,11 +24,9 @@ let getList = (page = 1) => {
                         i,
                         elem
                     ) {
-                        const thisLink = $(elem)
-                            .attr("href")
-                            .startsWith("/d/") ?
-                            `https://www.jishuwen.com${$(elem).attr("href")}` :
-                            $(elem).attr("href");
+                        const thisLink = $(elem).attr("href").startsWith("/d/")
+                            ? `https://www.jishuwen.com${$(elem).attr("href")}`
+                            : $(elem).attr("href");
                         linkList.push(new linkItem($(elem).text(), thisLink));
                     });
                     $console.info(linkList);
@@ -40,60 +35,63 @@ let getList = (page = 1) => {
                         props: {
                             title: "技术文"
                         },
-                        views: [{
-                            type: "list",
-                            props: {
-                                data: linkList.map(i => i.title),
-                                menu: {
-                                    title: "测试功能",
-                                    items: [{
-                                            title: "添加到Safari阅读列表",
-                                            symbol: "book",
-                                            handler: (
-                                                sender,
-                                                indexPath
-                                            ) => {
-                                                const thisItem =
-                                                    linkList[indexPath.row];
-                                                Browser.Safari.AddReadingItem(
-                                                    thisItem.link,
-                                                    thisItem.title,
-                                                    thisItem.title
-                                                );
+                        views: [
+                            {
+                                type: "list",
+                                props: {
+                                    data: linkList.map(i => i.title),
+                                    menu: {
+                                        title: "测试功能",
+                                        items: [
+                                            {
+                                                title: "添加到Safari阅读列表",
+                                                symbol: "book",
+                                                handler: (
+                                                    sender,
+                                                    indexPath
+                                                ) => {
+                                                    const thisItem =
+                                                        linkList[indexPath.row];
+                                                    Browser.Safari.AddReadingItem(
+                                                        thisItem.link,
+                                                        thisItem.title,
+                                                        thisItem.title
+                                                    );
+                                                }
+                                            },
+                                            {
+                                                title: "预览模式",
+                                                symbol: "book",
+                                                handler: (
+                                                    sender,
+                                                    indexPath
+                                                ) => {
+                                                    const thisItem =
+                                                        linkList[indexPath.row];
+                                                    $ui.preview({
+                                                        title: "技术文",
+                                                        url: thisItem.link
+                                                    });
+                                                }
                                             }
-                                        },
-                                        {
-                                            title: "预览模式",
-                                            symbol: "book",
-                                            handler: (
-                                                sender,
-                                                indexPath
-                                            ) => {
-                                                const thisItem =
-                                                    linkList[indexPath.row];
-                                                $ui.preview({
-                                                    title: "技术文",
-                                                    url: thisItem.link
-                                                });
-                                            }
-                                        }
-                                    ]
-                                }
-                            },
-                            layout: $layout.fill,
-                            events: {
-                                didSelect: function (
-                                    _sender,
-                                    indexPath,
-                                    _data
-                                ) {
-                                    const thisItem =
-                                        linkList[indexPath.row];
-                                    $console.info(thisItem.link);
-                                    Browser.Safari.ReadMode(thisItem.link);
+                                        ]
+                                    }
+                                },
+                                layout: $layout.fill,
+                                events: {
+                                    didSelect: function (
+                                        _sender,
+                                        indexPath,
+                                        _data
+                                    ) {
+                                        const thisItem =
+                                            linkList[indexPath.row];
+                                        $console.info(thisItem.link);
+                                        Browser.Safari.ReadMode(thisItem.link);
+                                    }
                                 }
                             }
-                        }]
+                        ]
                     });
                 } else {
                     $ui.loading(false);
