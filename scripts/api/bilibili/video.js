@@ -124,7 +124,7 @@ function getVideoData(vid, page, quality, access_key) {
                         url: videoData.url,
                         handler: function (biliResp) {
                             var biliData = biliResp.data;
-                            if (biliData.code == 0) {
+                            if (biliData.code === 0) {
                                 const downloadList = biliData.data.durl;
                                 switch (downloadList.length) {
                                     case 0:
@@ -284,7 +284,7 @@ function getVideoInfo(input) {
         },
         handler: function (resp) {
             const data = resp.data;
-            if (resp.response.statusCode == 200) {
+            if (resp.response.statusCode === 200) {
                 if (data.status == "OK") {
                     const _biliData = data.data;
                     const allow_download = _biliData.allow_download
@@ -378,7 +378,8 @@ function getVideoInfo(input) {
                                                         const partList =
                                                             _biliData.list;
                                                         if (
-                                                            partList.length == 1
+                                                            partList.length ===
+                                                            1
                                                         ) {
                                                             getVideoDanmuku(
                                                                 partList[0].cid

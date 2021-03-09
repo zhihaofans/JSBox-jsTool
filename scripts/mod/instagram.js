@@ -327,7 +327,7 @@ let saveFiles = (resultList, index) => {
         }),
         name: thisMedia.type == "video" ? "视频.mp4" : "图片.jpg",
         handler: function () {
-            if (index == resultList.length - 1) {
+            if (index === resultList.length - 1) {
                 $ui.alert({
                     title: "保存完毕",
                     message: "请检查"

@@ -112,7 +112,7 @@ function showModList() {
                                 const row = indexPath.row;
                                 $console.info(_data);
                                 initMod(
-                                    section == 0
+                                    section === 0
                                         ? pinModList[row]
                                         : otherModList[row]
                                 );

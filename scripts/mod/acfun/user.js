@@ -47,8 +47,8 @@ let Auth = {
             } else {
                 const httpData = httpPost.data;
                 $console.info(httpData);
-                if (httpData.result == 0) {
-                    if (httpData.result == 0) {
+                if (httpData.result === 0) {
+                    if (httpData.result === 0) {
                         $ui.alert({
                             title: "登录结果",
                             message: JSON.stringify(httpData)
@@ -102,17 +102,19 @@ let Auth = {
                 const checkinResult = result.data;
                 if (checkinResult) {
                     $ui.loading(false);
-                    checkinResult.result == 0
-                        ? $ui.alert({
-                              title: "签到成功",
-                              message: checkinResult.msg
-                          })
-                        : $ui.alert({
-                              title: `错误代码${checkinResult.result}`,
-                              message: checkinResult.msg
-                                  ? checkinResult.msg
-                                  : checkinResult.error_msg
-                          });
+                    if (checkinResult.result === 0) {
+                        $ui.alert({
+                            title: "签到成功",
+                            message: checkinResult.msg
+                        });
+                    } else {
+                        $ui.alert({
+                            title: `错误代码${checkinResult.result}`,
+                            message: checkinResult.msg
+                                ? checkinResult.msg
+                                : checkinResult.error_msg
+                        });
+                    }
                 } else {
                     $ui.loading(false);
                     $ui.alert({
@@ -147,7 +149,7 @@ let Auth = {
             } else {
                 const checkinResult = result.data;
                 if (checkinResult) {
-                    return checkinResult.result == 0;
+                    return checkinResult.result === 0;
                 } else {
                     return false;
                 }

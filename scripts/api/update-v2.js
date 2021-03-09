@@ -54,7 +54,7 @@ function compareVersion(v1, v2) {
         _v2 = v2.split("."),
         _r = _v1[0] - _v2[0];
 
-    return _r == 0 && v1 != v2
+    return _r === 0 && v1 != v2
         ? compareVersion(_v1.splice(1).join("."), _v2.splice(1).join("."))
         : _r;
 }

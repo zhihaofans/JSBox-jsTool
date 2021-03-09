@@ -17,7 +17,7 @@ let $B_user = require("./user"),
                 const data = httpGet.data;
                 $console.info(data);
                 if (data) {
-                    return data.code == 0;
+                    return data.code === 0;
                 } else {
                     return false;
                 }
@@ -41,7 +41,7 @@ let $B_user = require("./user"),
                 $console.info(data);
                 $ui.loading(false);
                 if (data) {
-                    if (data.code == 0) {
+                    if (data.code === 0) {
                         $ui.alert({
                             title: "签到成功",
                             message: data.message || "签到成功",
@@ -105,7 +105,7 @@ let $B_user = require("./user"),
                 $ui.loading(false);
                 if (httpPost.data) {
                     const silver2coinData = httpPost.data;
-                    if (silver2coinData.code == 0) {
+                    if (silver2coinData.code === 0) {
                         $ui.alert({
                             title:
                                 silver2coinData.data.message ||
@@ -152,7 +152,7 @@ let $B_user = require("./user"),
             } else {
                 $ui.loading(false);
                 if (httpPost.data) {
-                    return httpPost.data.code == 0;
+                    return httpPost.data.code === 0;
                 } else {
                     return false;
                 }

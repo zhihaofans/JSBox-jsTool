@@ -47,7 +47,7 @@ function getFansMedalList() {
             .then(function (resp) {
                 var data = resp.data;
                 $console.info(data);
-                if (data.code == 0) {
+                if (data.code === 0) {
                     $ui.toast(data.message || data.msg || "已拥有的粉丝勋章");
                     const medalData = data.data;
                     const medalList = medalData.list;
@@ -188,7 +188,7 @@ function getFansMedalList() {
                                                         sender,
                                                         indexPath
                                                     ) => {
-                                                        /*  const liveData = indexPath.section == 0 ? onlineList[indexPath.row] : offlineList[indexPath.row];
+                                                        /*  const liveData = indexPath.section === 0 ? onlineList[indexPath.row] : offlineList[indexPath.row];
                                                 if (liveData.day_limit - liveData.today_feed > 0) {
                                                     _GIFT.getLiveGiftList(liveData);
                                                 } else {
@@ -316,7 +316,7 @@ function getWallet() {
                 var data = resp.data;
                 $console.info(data);
                 if (data) {
-                    if (data.code == 0) {
+                    if (data.code === 0) {
                         let walletData = data.data;
                         const canCoin =
                             walletData.silver_2_coin_left > 0 &&
@@ -329,12 +329,12 @@ function getWallet() {
                                 `银瓜子：${walletData.silver}\n` +
                                 `硬币：${walletData.coin}\n` +
                                 `vip(老爷?)：${
-                                    walletData.vip == 1 ? "已开通" : "未开通"
+                                    walletData.vip === 1 ? "已开通" : "未开通"
                                 }\n` +
                                 `硬币换银瓜子额度：${walletData.coin_2_silver_left}\n` +
                                 `银瓜子换硬币额度：${walletData.silver_2_coin_left}\n` +
                                 `银瓜子换硬币：${
-                                    walletData.status == 1 ? "允许" : "不允许"
+                                    walletData.status === 1 ? "允许" : "不允许"
                                 }`,
                             actions: [
                                 {
@@ -359,7 +359,7 @@ function getWallet() {
                                                     var data = resp.data;
                                                     $console.info(data);
                                                     if (data) {
-                                                        if (data.code == 0) {
+                                                        if (data.code === 0) {
                                                             let silver2coinData =
                                                                 data.data;
                                                             $ui.alert({
@@ -431,7 +431,7 @@ function getOnlineLiver() {
             .then(function (resp) {
                 var data = resp.data;
                 if (data) {
-                    if (data.code == 0) {
+                    if (data.code === 0) {
                         const rData = data.data;
                         if (rData.total_count > 0) {
                             const liveRoomList = rData.rooms;
@@ -596,7 +596,7 @@ function getOfflineLiver() {
             .then(function (resp) {
                 var data = resp.data;
                 if (data) {
-                    if (data.code == 0) {
+                    if (data.code === 0) {
                         const rData = data.data;
                         if (rData.total_count > 0) {
                             const liveRoomList = rData.rooms;
@@ -786,7 +786,8 @@ function getVtbLiveroomInfo(mid) {
                                                 `人气：${liveroomInfo.online}`,
                                                 `投稿视频：${liveroomInfo.video}个`,
                                                 `直播：${
-                                                    liveroomInfo.liveStatus == 1
+                                                    liveroomInfo.liveStatus ===
+                                                    1
                                                         ? "直播中"
                                                         : "未直播"
                                                 }`,
@@ -902,7 +903,7 @@ function getLiveroomGuardList(roomid, uid, pageNo = 1, pageSize = 20) {
         .then(function (resp) {
             var data = resp.data;
             $console.info(data);
-            if (data.code == 0) {
+            if (data.code === 0) {
                 const guardInfo = data.data.info;
                 const guardList = data.data.top3.concat(data.data.list);
                 if (guardInfo.num > 0 && guardList.length > 0) {

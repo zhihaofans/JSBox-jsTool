@@ -29,7 +29,7 @@ let mangaCheckin = async () => {
             $console.info(clockinData);
             $ui.loading(false);
             if (clockinData) {
-                if (clockinData.code == 0) {
+                if (clockinData.code === 0) {
                     $ui.alert({
                         title: "签到结果",
                         message: "签到成功"
@@ -84,7 +84,7 @@ let silverToCoin = async () => {
         $ui.loading(false);
         $console.info(data);
         if (data) {
-            if (data.code == 0) {
+            if (data.code === 0) {
                 let silver2coinData = data.data;
                 $ui.alert({
                     title: data.message || data.msg || "兑换成功",
@@ -138,7 +138,7 @@ let liveCheckIn = async () => {
         var data = httpGet.data;
         $ui.loading(false);
         if (data) {
-            if (data.code == 0) {
+            if (data.code === 0) {
                 $ui.alert({
                     title: "签到成功",
                     message: data.message || "签到成功",

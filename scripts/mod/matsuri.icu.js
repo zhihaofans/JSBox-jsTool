@@ -9,17 +9,19 @@ let getViewer = uid => {
             var result = resp.data;
             $console.info(result);
             $ui.loading(false);
-            if (result.status == 0) {
+            if (result.status === 0) {
                 showViewerList(result.data);
             } else {
                 $ui.alert({
                     title: "错误",
                     message: result.message || "未知错误",
-                    actions: [{
-                        title: "OK",
-                        disabled: false, // Optional
-                        handler: function () {}
-                    }]
+                    actions: [
+                        {
+                            title: "OK",
+                            disabled: false, // Optional
+                            handler: function () {}
+                        }
+                    ]
                 });
             }
         }
@@ -33,37 +35,39 @@ let showViewerList = viewerData => {
         props: {
             title: userInfo.username || `uid:${userInfo.user_id}`
         },
-        views: [{
-            type: "list",
-            props: {
-                data: viewerData.map(x => {
-                    return {
-                        title: x.clip_info.name,
-                        rows: [x.clip_info.title]
-                    };
-                })
-            },
-            layout: $layout.fill,
-            events: {
-                didSelect: function (_sender, indexPath, _data) {
-                    const section = indexPath.section;
-                    const row = indexPath.row;
-                    const thisLive = viewerData[section];
-                    //                        $ui.alert({
-                    //                            title: "",
-                    //                            message: thisLive,
-                    //                            actions: [
-                    //                                {
-                    //                                    title: "OK",
-                    //                                    disabled: false, // Optional
-                    //                                    handler: function() {}
-                    //                                }
-                    //                            ]
-                    //                        });
-                    showViewerDanmu(thisLive);
+        views: [
+            {
+                type: "list",
+                props: {
+                    data: viewerData.map(x => {
+                        return {
+                            title: x.clip_info.name,
+                            rows: [x.clip_info.title]
+                        };
+                    })
+                },
+                layout: $layout.fill,
+                events: {
+                    didSelect: function (_sender, indexPath, _data) {
+                        const section = indexPath.section;
+                        const row = indexPath.row;
+                        const thisLive = viewerData[section];
+                        //                        $ui.alert({
+                        //                            title: "",
+                        //                            message: thisLive,
+                        //                            actions: [
+                        //                                {
+                        //                                    title: "OK",
+                        //                                    disabled: false, // Optional
+                        //                                    handler: function() {}
+                        //                                }
+                        //                            ]
+                        //                        });
+                        showViewerDanmu(thisLive);
+                    }
                 }
             }
-        }]
+        ]
     });
 };
 
@@ -74,23 +78,25 @@ let showViewerDanmu = liveData => {
         props: {
             title: clipData.title
         },
-        views: [{
-            type: "list",
-            props: {
-                data: danmuList.map(danmu => danmu.text)
-            },
-            layout: $layout.fill,
-            events: {
-                didSelect: function (_sender, indexPath, _data) {
-                    const section = indexPath.section;
-                    const row = indexPath.row;
+        views: [
+            {
+                type: "list",
+                props: {
+                    data: danmuList.map(danmu => danmu.text)
+                },
+                layout: $layout.fill,
+                events: {
+                    didSelect: function (_sender, indexPath, _data) {
+                        const section = indexPath.section;
+                        const row = indexPath.row;
+                    }
                 }
             }
-        }]
+        ]
     });
 };
 
-let init = (uid) => {
+let init = uid => {
     $input.text({
         placeholder: "输入用户id",
         text: uid,

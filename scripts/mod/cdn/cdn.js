@@ -35,7 +35,7 @@ let getGithubRaw = sourceGithubUrl => {
     ).split("/");
     var newUrl = "https://cdn.jsdelivr.net/gh";
     list.forEach(function (item, index, array) {
-        newUrl = index == 2 ? `${newUrl}@${item}` : `${newUrl}/${item}`;
+        newUrl = index === 2 ? `${newUrl}@${item}` : `${newUrl}/${item}`;
     });
 
     return newUrl;

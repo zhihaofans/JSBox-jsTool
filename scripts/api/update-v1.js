@@ -9,7 +9,8 @@ function checkUpdate(jsonUrl, appId) {
     $ui.alert({
         title: "你要检测更新吗?",
         message: "你点了检测更新的按钮",
-        actions: [{
+        actions: [
+            {
                 title: "好的",
                 disabled: false, // Optional
                 handler: function () {
@@ -23,8 +24,13 @@ function checkUpdate(jsonUrl, appId) {
                                 $console.info("更新：发现更新");
                                 $ui.alert({
                                     title: "发现新版本",
-                                    message: "版本号：" + _app.version_name + "\n你要更新吗?\n更新内容：\n" + _app.update_note,
-                                    actions: [{
+                                    message:
+                                        "版本号：" +
+                                        _app.version_name +
+                                        "\n你要更新吗?\n更新内容：\n" +
+                                        _app.update_note,
+                                    actions: [
+                                        {
                                             title: "好的",
                                             disabled: false, // Optional
                                             handler: function () {
@@ -56,12 +62,13 @@ function checkUpdate(jsonUrl, appId) {
         ]
     });
 }
-let checkUpdateV2 = (appId) => {
+let checkUpdateV2 = appId => {
     const appVersion = getConfig().info.version;
     $ui.alert({
         title: "你要检测更新吗?",
         message: "你点了检测更新的按钮",
-        actions: [{
+        actions: [
+            {
                 title: "好的",
                 disabled: false, // Optional
                 handler: function () {
@@ -75,8 +82,13 @@ let checkUpdateV2 = (appId) => {
                                 $console.info("更新：发现更新");
                                 $ui.alert({
                                     title: "发现新版本",
-                                    message: "版本号：" + _app.version_name + "\n你要更新吗?\n更新内容：\n" + _app.update_note,
-                                    actions: [{
+                                    message:
+                                        "版本号：" +
+                                        _app.version_name +
+                                        "\n你要更新吗?\n更新内容：\n" +
+                                        _app.update_note,
+                                    actions: [
+                                        {
                                             title: "好的",
                                             disabled: false, // Optional
                                             handler: function () {
@@ -131,7 +143,9 @@ let compareVersion = (v1, v2) => {
     var _v1 = v1.split("."),
         _v2 = v2.split("."),
         _r = _v1[0] - _v2[0];
-    return _r == 0 && v1 != v2 ? compareVersion(_v1.splice(1).join("."), _v2.splice(1).join(".")) : _r;
+    return _r === 0 && v1 != v2
+        ? compareVersion(_v1.splice(1).join("."), _v2.splice(1).join("."))
+        : _r;
 };
 module.exports = {
     checkUpdate,

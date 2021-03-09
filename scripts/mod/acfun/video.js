@@ -17,7 +17,7 @@ let getUserPostWithoutBanana = uid => {
             })
             .then(function (resp) {
                 var acData = resp.data;
-                if (acData.result == 0) {
+                if (acData.result === 0) {
                     const feedList = acData.feed;
                     if (feedList.length > 0) {
                         saveCache("getUploaderVideo", resp.rawData);
@@ -56,7 +56,7 @@ let getUserPostWithoutBanana = uid => {
             })
             .then(function (resp) {
                 var acData = resp.data;
-                if (acData.result == 0) {
+                if (acData.result === 0) {
                     const feedList = acData.feed;
                     if (feedList.length > 0) {
                         saveCache("getUploaderVideo", resp.rawData);
@@ -95,7 +95,7 @@ let getUserPostWithoutBanana = uid => {
             })
             .then(function (resp) {
                 var acData = resp.data;
-                if (acData.result == 0) {
+                if (acData.result === 0) {
                     const feedList = acData.feed;
                     if (feedList.length > 0) {
                         saveCache("getUploaderVideo", resp.rawData);

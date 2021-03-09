@@ -174,7 +174,7 @@ let $_Cache = require("./data_base").Cache,
                         },
                         handler: respBili => {
                             var resultBili = respBili.data;
-                            if (resultBili.code == 0) {
+                            if (resultBili.code === 0) {
                                 const myInfoData = resultBili.data;
                                 //saveLoginCache(_AK, myInfoData.mid);
                                 $ui.loading(false);
@@ -226,7 +226,7 @@ let $_Cache = require("./data_base").Cache,
                     handler: respBili => {
                         var resultBili = respBili.data;
                         $console.warn(resultBili);
-                        if (resultBili.code == 0) {
+                        if (resultBili.code === 0) {
                             const myInfoData = resultBili.data;
                             //saveLoginCache(_AK, myInfoData.mid);
                             $ui.loading(false);

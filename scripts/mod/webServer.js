@@ -25,7 +25,8 @@ let init = () => {
         return {
             type: "data", // default, data, file, error
             props: {
-                html: "<html><body style='font-size: 300px'>Hello!</body></html>"
+                html:
+                    "<html><body style='font-size: 300px'>Hello!</body></html>"
                 // json: {
                 //   "status": 1,
                 //   "values": ["a", "b", "c"]
@@ -38,32 +39,34 @@ let init = () => {
         props: {
             title: ""
         },
-        views: [{
-            type: "list",
-            props: {
-                data: [{
-                    title: "信息",
-                    rows: [
-                        `根目录：${dir}`,
-                        `端口：${port}`
+        views: [
+            {
+                type: "list",
+                props: {
+                    data: [
+                        {
+                            title: "信息",
+                            rows: [`根目录：${dir}`, `端口：${port}`]
+                        },
+                        {
+                            title: "菜单",
+                            rows: ["关闭服务器"]
+                        }
                     ]
-                }, {
-                    title: "菜单",
-                    rows: ["关闭服务器"]
-                }]
-            },
-            layout: $layout.fill,
-            events: {
-                didSelect: function (_sender, indexPath, _data) {
-                    const section = indexPath.section;
-                    const row = indexPath.row;
-                    if (section == 1 && row == 0) {
-                        server.stop();
-                        $ui.toast("已经停止服务器");
+                },
+                layout: $layout.fill,
+                events: {
+                    didSelect: function (_sender, indexPath, _data) {
+                        const section = indexPath.section;
+                        const row = indexPath.row;
+                        if (section === 1 && row === 0) {
+                            server.stop();
+                            $ui.toast("已经停止服务器");
+                        }
                     }
                 }
             }
-        }]
+        ]
     });
 };
 

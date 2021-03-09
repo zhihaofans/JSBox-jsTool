@@ -59,7 +59,7 @@ let $B_user = require("./user"),
                     const checkInData = httpPost.data;
                     $console.info(checkInData);
                     if (checkInData) {
-                        return checkInData.code == 0;
+                        return checkInData.code === 0;
                     } else {
                         return false;
                     }
@@ -95,7 +95,7 @@ let $B_user = require("./user"),
                     $console.info(checkInData);
                     $ui.loading(false);
                     if (checkInData) {
-                        if (checkInData.code == 0) {
+                        if (checkInData.code === 0) {
                             $ui.alert({
                                 title: "签到结果",
                                 message: "签到成功"
@@ -159,7 +159,7 @@ let $B_user = require("./user"),
                 } else {
                     const TicketData = httpPost.data;
                     $console.info(TicketData);
-                    return TicketData && TicketData.code == 0
+                    return TicketData && TicketData.code === 0
                         ? TicketData
                         : undefined;
                 }
@@ -172,7 +172,7 @@ let $B_user = require("./user"),
         showTicketStatesList: async () => {
             $ui.loading(true);
             const ticketStatesResult = await Ticket.getTicketStates();
-            if (ticketStatesResult && ticketStatesResult.code == 0) {
+            if (ticketStatesResult && ticketStatesResult.code === 0) {
                 const ticketStatesData = ticketStatesResult.data;
                 await JSDialogs.showPlainAlert(
                     "Bilibili漫画券",

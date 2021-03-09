@@ -73,7 +73,7 @@ let login = (id, pwd) => {
         handler: function (resp) {
             const acResult = resp.data;
             $console.info(acResult);
-            if (acResult.result == 0) {
+            if (acResult.result === 0) {
                 saveCache(
                     "loginAcfun",
                     $data({
@@ -167,7 +167,7 @@ let getUserInfo = () => {
                 .then(function (resp) {
                     var userResult = resp.data;
                     $console.info(userResult);
-                    if (userResult.result == 0) {
+                    if (userResult.result === 0) {
                         personalInfo = userResult;
                         const userInfo = userResult.info;
                         saveCache(
@@ -326,10 +326,10 @@ let getVideoPid = vid => {
         handler: function (resp) {
             var videoResult = resp.data;
             $console.info(videoResult);
-            if (videoResult.result == 0) {
+            if (videoResult.result === 0) {
                 const partList = videoResult.videoList;
                 var pid = -1;
-                if (partList.length == 1) {
+                if (partList.length === 1) {
                     pid = videoResult.videoList[0].id;
                 } else {
                     const pidList = partList.map(function (x) {
@@ -363,7 +363,7 @@ let downloadVideo = (vid, pid) => {
         handler: function (resp) {
             var videoResult = resp.data;
             $console.info(videoResult);
-            if (videoResult.result == 0) {
+            if (videoResult.result === 0) {
                 const playInfo = videoResult.playInfo;
                 const videoData = playInfo.streams;
                 const thisVideoFile = videoData[videoData.length - 1];
@@ -475,7 +475,7 @@ let signIn = () => {
                 var signinResult = resp.data;
                 $console.info(signinResult);
                 $ui.loading(false);
-                signinResult.result == 0
+                signinResult.result === 0
                     ? $ui.alert({
                           title: "签到成功",
                           message: signinResult.msg
@@ -510,7 +510,7 @@ let getUploaderVideo = (uid, page = 1, count = 20) => {
         })
         .then(function (resp) {
             var acData = resp.data;
-            if (acData.result == 0) {
+            if (acData.result === 0) {
                 const feedList = acData.feed;
                 if (feedList.length > 0) {
                     saveCache("getUploaderVideo", resp.rawData);
@@ -568,7 +568,7 @@ let showUploaderVideoList = acData => {
                                 handler: (sender, indexPath) => {
                                     const vid =
                                         videoList[indexPath.row].dougaId;
-                                    if (indexPath.section == 1) {
+                                    if (indexPath.section === 1) {
                                         $cache.set(
                                             _cacheKey.lastClickedVid,
                                             vid
@@ -587,7 +587,7 @@ let showUploaderVideoList = acData => {
                                 handler: (sender, indexPath) => {
                                     const vid =
                                         videoList[indexPath.row].dougaId;
-                                    if (indexPath.section == 1) {
+                                    if (indexPath.section === 1) {
                                         $cache.set(
                                             _cacheKey.lastClickedVid,
                                             vid
@@ -610,7 +610,7 @@ let showUploaderVideoList = acData => {
                                 handler: (sender, indexPath) => {
                                     const vid =
                                         videoList[indexPath.row].dougaId;
-                                    if (indexPath.section == 1) {
+                                    if (indexPath.section === 1) {
                                         $cache.set(
                                             _cacheKey.lastClickedVid,
                                             vid
@@ -633,7 +633,7 @@ let showUploaderVideoList = acData => {
                                 handler: (sender, indexPath) => {
                                     const vid =
                                         videoList[indexPath.row].dougaId;
-                                    if (indexPath.section == 1) {
+                                    if (indexPath.section === 1) {
                                         $cache.set(
                                             _cacheKey.lastClickedVid,
                                             vid
@@ -656,7 +656,7 @@ let showUploaderVideoList = acData => {
                                 handler: (sender, indexPath) => {
                                     const vid =
                                         videoList[indexPath.row].dougaId;
-                                    if (indexPath.section == 1) {
+                                    if (indexPath.section === 1) {
                                         $cache.set(
                                             _cacheKey.lastClickedVid,
                                             vid
@@ -677,7 +677,7 @@ let showUploaderVideoList = acData => {
                                 title: "视频解析",
                                 symbol: "square.and.arrow.down",
                                 handler: (sender, indexPath) => {
-                                    if (indexPath.section == 1) {
+                                    if (indexPath.section === 1) {
                                         const vid =
                                             videoList[indexPath.row].dougaId;
                                         $cache.set(
@@ -856,7 +856,7 @@ let initWebServer = (dir, htmlStr, port = 9999) => {
                     didSelect: function (_sender, indexPath, _data) {
                         const section = indexPath.section;
                         const row = indexPath.row;
-                        if (section == 1 && row == 0) {
+                        if (section === 1 && row === 0) {
                             server.stop();
                             $ui.toast("已经停止服务器");
                         }

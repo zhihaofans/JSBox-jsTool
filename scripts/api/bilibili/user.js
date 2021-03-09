@@ -142,7 +142,7 @@ function loginBilibiliBySignUrl(loginUrl, bodyStr, headers) {
         handler: function (loginResp) {
             var loginData = loginResp.data;
             $console.info(loginData);
-            if (loginData.code == 0) {
+            if (loginData.code === 0) {
                 var success = _CACHE.saveCache(
                     "bilibiliPassport",
                     loginResp.rawData
@@ -242,7 +242,7 @@ function getMyInfo() {
                         },
                         handler: respBili => {
                             var resultBili = respBili.data;
-                            if (resultBili.code == 0) {
+                            if (resultBili.code === 0) {
                                 const myInfoData = resultBili.data;
                                 saveLoginCache(_AK, myInfoData.mid);
                                 $ui.loading(false);
