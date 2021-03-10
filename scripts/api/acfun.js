@@ -2,7 +2,6 @@ let appScheme = require("AppScheme"),
     _URL = require("./urlData.js"),
     _UA = require("./user-agent.js"),
     urlCheck = require("./urlCheck.js"),
-    $$ = require("$$.js"),
     _ACFUN = {
         LOGIN: "https://id.app.acfun.cn/rest/app/login/signin",
         GET_USER_INFO:
@@ -35,7 +34,6 @@ let appScheme = require("AppScheme"),
         _ACFUN.ACFUN_WWW_V_AC,
         _ACFUN.ACFUN_M_V_AC
     ],
-    _cacheDir = ".cache/acfun/",
     acHeaders = {
         "Content-Type": "application/x-www-form-urlencoded",
         "User-Agent": _UA.ACFUN.APP_IOS,
@@ -74,12 +72,6 @@ let login = (id, pwd) => {
             const acResult = resp.data;
             $console.info(acResult);
             if (acResult.result === 0) {
-                saveCache(
-                    "loginAcfun",
-                    $data({
-                        string: JSON.stringify(resp.data, null, 2)
-                    })
-                );
                 saveUserToken(acResult);
                 loadUserToken();
                 $ui.loading(false);
@@ -95,14 +87,6 @@ let login = (id, pwd) => {
                 });
             }
         }
-    });
-};
-
-let saveCache = (mode, str) => {
-    $file.mkdir(_cacheDir + mode);
-    return $file.write({
-        data: str,
-        path: _cacheDir + mode + "/" + $$.Time.getNowUnixTime() + ".json"
     });
 };
 
@@ -138,7 +122,7 @@ let logout = () => {
     $cache.remove(_cacheKey.acSecurity);
     $cache.remove(_cacheKey.auth_key);
     $cache.remove(_cacheKey.userid);
-    personalInfo = {};
+    acUserData = {};
     $ui.alert({
         title: "已退出",
         message: "退出成功"
@@ -168,14 +152,8 @@ let getUserInfo = () => {
                     var userResult = resp.data;
                     $console.info(userResult);
                     if (userResult.result === 0) {
-                        personalInfo = userResult;
+                        acUserData = userResult;
                         const userInfo = userResult.info;
-                        saveCache(
-                            "getUserInfo",
-                            $data({
-                                string: JSON.stringify(resp.data, null, 2)
-                            })
-                        );
                         var userInfoList = [
                             `昵称：${userInfo.userName}`,
                             `uid：${userInfo.userId}`,
@@ -513,7 +491,6 @@ let getUploaderVideo = (uid, page = 1, count = 20) => {
             if (acData.result === 0) {
                 const feedList = acData.feed;
                 if (feedList.length > 0) {
-                    saveCache("getUploaderVideo", resp.rawData);
                     $cache.set(_cacheKey.uploaderVideo_lastUid, uid);
                     $cache.set(_cacheKey.uploaderVideo_lastPage + uid, page);
                     showUploaderVideoList(acData);
@@ -704,7 +681,7 @@ let showUploaderVideoList = acData => {
                                         videoList[0].user.id +
                                         ".html";
                                     var html = "<html><body><ul>";
-                                    for (v in videoList) {
+                                    for (let v in videoList) {
                                         const thisVideo = videoList[v];
                                         var title = thisVideo.title;
                                         if (listClickedVid) {
@@ -758,9 +735,9 @@ let showUploaderVideoList = acData => {
                     didSelect: function (_sender, indexPath, _data) {
                         switch (indexPath.section) {
                             case 1:
-                                const vid = videoList[indexPath.row].dougaId;
-                                $cache.set(_cacheKey.lastClickedVid, vid);
-                                appScheme.Video.Acfun.video(vid);
+                                const _vid = videoList[indexPath.row].dougaId;
+                                $cache.set(_cacheKey.lastClickedVid, _vid);
+                                appScheme.Video.Acfun.video(_vid);
                                 break;
                         }
                     }
@@ -870,7 +847,6 @@ let initWebServer = (dir, htmlStr, port = 9999) => {
 let init = () => {
     loadUserToken();
 };
-let getUserVideoWithoutBanana = () => {};
 module.exports = {
     login,
     logout,
