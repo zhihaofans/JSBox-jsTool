@@ -15,7 +15,7 @@ let init = url => {
                     data: [
                         {
                             title: "账号",
-                            rows: ["登录账号", "注销账号", "获取用户信息"]
+                            rows: ["登录账号", "注销账号"]
                         },
                         {
                             title: "投稿",
@@ -69,11 +69,6 @@ let init = url => {
                                     case 1:
                                         acApi.isLogin()
                                             ? acApi.logout()
-                                            : $ui.error("未登录");
-                                        break;
-                                    case 2:
-                                        acApi.isLogin()
-                                            ? acApi.getUserInfo()
                                             : $ui.error("未登录");
                                         break;
                                     default:
