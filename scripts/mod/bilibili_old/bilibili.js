@@ -1,18 +1,16 @@
-let _BILIURL = require("./bilibili/api_url").BILIBILI,
-    _urlCheck = require("../../api/urlCheck"),
+const _urlCheck = require("../../api/urlCheck"),
     _AVBV = require("./bilibili/av_bv"),
     _CHECKIN = require("./bilibili/check_in"),
     _GIFT = require("./bilibili/gift"),
     _LIVE = require("./bilibili/live"),
     _USER = require("./bilibili/user"),
     _VIDEO = require("./bilibili/video"),
-    _ACCOUNTS = require("./bilibili/accounts");
-
-let DEBUG_DEFAULT = {
-    BVID: "BV17x411w7KC",
-    VID: "90035938",
-    VIDEO_LINK: _BILIURL.B23_TV_VIDEO + "90035938"
-};
+    _ACCOUNTS = require("./bilibili/accounts"),
+    DEBUG_DEFAULT = {
+        BVID: "BV17x411w7KC",
+        VID: "90035938",
+        VIDEO_LINK: "https://b23.tv/av90035938"
+    };
 
 module.exports = {
     checkAccessKey: _USER.isLogin,

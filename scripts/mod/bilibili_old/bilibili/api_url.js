@@ -1,4 +1,4 @@
-let BILIBILI = {
+const BILIBILI = {
         GET_VIDEO_INFO:
             "https://api.kaaass.net/biliapi/video/info?jsonerr=true&id=",
         GET_ACCESS_KEY:
