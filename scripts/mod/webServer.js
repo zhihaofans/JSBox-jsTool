@@ -18,10 +18,10 @@ let init = () => {
         didCompleteBonjourRegistration: server => {},
         didUpdateNATPortMapping: server => {}
     });
-    var handler = {};
+    let handler = {};
     handler.response = request => {
-        var method = request.method;
-        var url = request.url;
+        let method = request.method;
+        let url = request.url;
         return {
             type: "data", // default, data, file, error
             props: {

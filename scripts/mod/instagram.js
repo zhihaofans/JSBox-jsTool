@@ -256,7 +256,7 @@ let instagramOfficial = link => {
                     "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.125 Safari/537.36"
             },
             handler: function (resp) {
-                var data = resp.data;
+                let data = resp.data;
                 if (data) {
                     const gsm = data.graphql.shortcode_media;
                     if (gsm.is_ad) {

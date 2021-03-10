@@ -11,7 +11,7 @@ const cheerio = require("cheerio"),
                 url: _URL.BILIOB.API_VIDEO + avid
             })
             .then(function (resp) {
-                var v = resp.data;
+                let v = resp.data;
                 $ui.loading(false);
                 if (v) {
                     $ui.push({
@@ -114,14 +114,14 @@ const cheerio = require("cheerio"),
         $http.get({
             url: `${_URL.BILIBILI.GET_VIDEO_DATA}&id=${vid}&page=${page}&quality${quality}&access_key=${access_key}`,
             handler: function (videoResp) {
-                var videoData = videoResp.data;
+                let videoData = videoResp.data;
                 if (videoData.status == "OK") {
                     if (videoData.url.length > 0) {
                         const copyStr = JSON.stringify(videoData.headers);
                         $http.get({
                             url: videoData.url,
                             handler: function (biliResp) {
-                                var biliData = biliResp.data;
+                                let biliData = biliResp.data;
                                 if (biliData.code === 0) {
                                     const downloadList = biliData.data.durl;
                                     switch (downloadList.length) {
@@ -136,7 +136,7 @@ const cheerio = require("cheerio"),
                                             );
                                             break;
                                         default:
-                                            var dList = [];
+                                            let dList = [];
                                             for (i in downloadList) {
                                                 dList.push(
                                                     `第${(
@@ -293,7 +293,7 @@ const cheerio = require("cheerio"),
                         const allow_download = _biliData.allow_download
                             ? "是"
                             : "否";
-                        var videoInfoList = [
+                        let videoInfoList = [
                             "标题：" + _biliData.title,
                             "描述：" + _biliData.description,
                             "作者：" + _biliData.author,
@@ -470,7 +470,7 @@ const cheerio = require("cheerio"),
                     }
                 })
                 .then(function (resp) {
-                    var data = resp.data;
+                    let data = resp.data;
                     $console.info(data);
                     if (data.data) {
                         if (data.data.count > 0) {
@@ -517,7 +517,7 @@ const cheerio = require("cheerio"),
     },
     // 显示可下载视频文件列表
     showVideoDownList = (thisFile, copyStr) => {
-        var urlList = [thisFile.url];
+        let urlList = [thisFile.url];
         urlList = urlList.concat(thisFile.backup_url);
         $ui.push({
             props: {
@@ -606,7 +606,7 @@ const cheerio = require("cheerio"),
             "www.bilibili.com/",
             "av"
         ];
-        var newUrl = url;
+        let newUrl = url;
         siteList.map(x => {
             if (newUrl.startsWith(x)) {
                 newUrl = $$.Str.remove(newUrl, x);
@@ -623,7 +623,7 @@ const cheerio = require("cheerio"),
             url: _URL.GALMOE.COVER_GALMOE + vid
         });
         /* .then(function (resp) {
-          var data = resp.data;
+          let data = resp.data;
 
       }); */
     };

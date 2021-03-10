@@ -20,14 +20,14 @@ function getWeb(authkey) {
             }
         })
         .then(function (resp) {
-            var httpData = resp.data;
+            let httpData = resp.data;
             if (httpData) {
                 const $ = cheerio.load(httpData);
-                var resultList = [];
+                let resultList = [];
                 $("div.weui-panel__bd")
                     .find("a.weui-media-box.weui-media-box_appmsg")
                     .each(function (i, elem) {
-                        var sub = $(this).find("p.weui-media-box__desc").text();
+                        let sub = $(this).find("p.weui-media-box__desc").text();
                         sub = sub.substring(1, sub.indexOf(" ", 1));
                         const media_item = new ResultItem(
                             $(this)

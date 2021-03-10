@@ -8,7 +8,7 @@ let docScan = () => {
             if (data.status) {
                 const resultList = data.results;
                 if (resultList.length > 0) {
-                    var imageDataList = [];
+                    let imageDataList = [];
                     for (i in resultList) {
                         imageDataList.push(resultList[i].png);
                     }

@@ -34,7 +34,7 @@ function checkUpdate(CDN = true) {
 }
 
 async function getRemoteConfigFromCDN() {
-    var resp = await $http.get({
+    let resp = await $http.get({
         url: URL.JSBOX.APP_CONFIG
     });
     $console.info(resp.data);
@@ -42,7 +42,7 @@ async function getRemoteConfigFromCDN() {
 }
 
 async function getRemoteConfigFromGithub() {
-    var resp = await $http.get({
+    let resp = await $http.get({
         url: URL.JSBOX.APP_CONFIG_GITHUB
     });
     $console.info(resp.data);
@@ -50,7 +50,7 @@ async function getRemoteConfigFromGithub() {
 }
 // 版本号对比来自：https://gist.github.com/puterjam/8518259
 function compareVersion(v1, v2) {
-    var _v1 = v1.split("."),
+    let _v1 = v1.split("."),
         _v2 = v2.split("."),
         _r = _v1[0] - _v2[0];
 
@@ -71,7 +71,7 @@ function compareVersion1(v1 = "", v2 = "") {
 }
 
 function installApp(updateUrl, updateName = "", updateIcon = "") {
-    var installUrl = `jsbox://import?url=${$text.URLEncode(updateUrl)}`;
+    let installUrl = `jsbox://import?url=${$text.URLEncode(updateUrl)}`;
     if (updateName) {
         installUrl += `&name=${$text.URLEncode(updateName)}`;
     }

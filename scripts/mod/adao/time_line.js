@@ -1,4 +1,4 @@
-var API_URL = require("./api_url"),
+let API_URL = require("./api_url"),
     _forum = require("./forum");
 async function init(serverDomain) {
     $console.info(`serverDomain:${serverDomain}`);
@@ -17,7 +17,7 @@ async function init(serverDomain) {
                 {
                     title: "OK",
                     disabled: false,
-                    handler: function() {}
+                    handler: function () {}
                 }
             ]
         });

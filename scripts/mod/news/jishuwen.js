@@ -16,7 +16,7 @@ let getList = (page = 1) => {
                 $ui.loading(false);
                 $ui.error("加载失败!");
             } else {
-                var data = resp.data;
+                let data = resp.data;
                 if (data) {
                     const $ = cheerio.load(data);
                     let linkList = [];

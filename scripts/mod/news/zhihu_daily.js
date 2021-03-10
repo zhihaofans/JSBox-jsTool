@@ -5,7 +5,7 @@ let { Browser } = require("AppScheme"),
         $http.get({
             url: _url,
             handler: function (resp) {
-                var zhihu = resp.data;
+                let zhihu = resp.data;
                 if (zhihu) {
                     const topList = zhihu.top_stories;
                     const storyList = zhihu.stories;

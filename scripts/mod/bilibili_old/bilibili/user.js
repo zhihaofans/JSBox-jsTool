@@ -4,7 +4,7 @@ let _BILIURL = require("./api_url.js").BILIBILI,
     _LIB = require("./lib.js"),
     _ACCOUNTS = require("./accounts.js");
 
-var _ACCESS_KEY = "",
+let _ACCESS_KEY = "",
     _UID = 0;
 
 // Login
@@ -99,7 +99,7 @@ function loginPasswordByKaaass(userName, password) {
             passwd: password
         },
         handler: function (kaaassResult) {
-            var kaaassData = kaaassResult.data;
+            let kaaassData = kaaassResult.data;
             if (kaaassData.status == "OK") {
                 loginBilibiliBySignUrl(
                     kaaassData.url,
@@ -119,7 +119,7 @@ function loginPasswordByKaaass(userName, password) {
 
 function loginBilibiliBySignUrl(loginUrl, bodyStr, headers) {
     // 通过加密后的链接登录
-    var passportBody = {};
+    let passportBody = {};
     const bodyList = bodyStr.split("&");
     for (b in bodyList) {
         const thisBody = bodyList[b];
@@ -131,7 +131,7 @@ function loginBilibiliBySignUrl(loginUrl, bodyStr, headers) {
         header: headers,
         body: bodyStr,
         handler: function (loginResp) {
-            var loginData = loginResp.data;
+            let loginData = loginResp.data;
             $console.info(loginData);
             if (loginData.code === 0) {
                 saveLoginCache(
@@ -227,7 +227,7 @@ function getMyInfo() {
                             "User-Agent": _UA.BILIBILI.APP_IPHONE
                         },
                         handler: respBili => {
-                            var resultBili = respBili.data;
+                            let resultBili = respBili.data;
                             if (resultBili.code === 0) {
                                 const myInfoData = resultBili.data;
                                 saveLoginCache(_AK, myInfoData.mid);
@@ -283,7 +283,7 @@ function getUserInfo() {
                 "User-Agent": _UA.KAAASS
             },
             handler: function (userResp) {
-                var userData = userResp.data;
+                let userData = userResp.data;
                 if (userData.status == "OK") {
                     // 用户数据
                     const user = UserInfo(userData.info, userData.further);

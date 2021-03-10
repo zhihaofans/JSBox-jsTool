@@ -45,7 +45,7 @@ function getFansMedalList() {
                 url: link
             })
             .then(function (resp) {
-                var data = resp.data;
+                let data = resp.data;
                 $console.info(data);
                 if (data.code === 0) {
                     $ui.toast(data.message || data.msg || "已拥有的粉丝勋章");
@@ -288,7 +288,7 @@ function wearFanMedal(media_id) {
         },
         body: {},
         handler: resp => {
-            var data = resp.data;
+            let data = resp.data;
             $console.info(data);
             $ui.alert({
                 title: "",
@@ -313,7 +313,7 @@ function getWallet() {
                 url: _URL.BILIBILI.GET_WALLET + _USER.getAccessKey()
             })
             .then(function (resp) {
-                var data = resp.data;
+                let data = resp.data;
                 $console.info(data);
                 if (data) {
                     if (data.code === 0) {
@@ -356,7 +356,7 @@ function getWallet() {
                                                     access_key: _USER.getAccessKey()
                                                 },
                                                 handler: function (resp) {
-                                                    var data = resp.data;
+                                                    let data = resp.data;
                                                     $console.info(data);
                                                     if (data) {
                                                         if (data.code === 0) {
@@ -429,7 +429,7 @@ function getOnlineLiver() {
                 url: _URL.BILIBILI.LIVE_ONLINE + _USER.getAccessKey()
             })
             .then(function (resp) {
-                var data = resp.data;
+                let data = resp.data;
                 if (data) {
                     if (data.code === 0) {
                         const rData = data.data;
@@ -594,7 +594,7 @@ function getOfflineLiver() {
                 url: _URL.BILIBILI.LIVE_OFFLINE + _USER.getAccessKey()
             })
             .then(function (resp) {
-                var data = resp.data;
+                let data = resp.data;
                 if (data) {
                     if (data.code === 0) {
                         const rData = data.data;
@@ -901,7 +901,7 @@ function getLiveroomGuardList(roomid, uid, pageNo = 1, pageSize = 20) {
             }
         })
         .then(function (resp) {
-            var data = resp.data;
+            let data = resp.data;
             $console.info(data);
             if (data.code === 0) {
                 const guardInfo = data.data.info;
@@ -929,7 +929,7 @@ function getLiveroomGuardList(roomid, uid, pageNo = 1, pageSize = 20) {
                                         {
                                             title: "在看的",
                                             rows: aliveGuardList.map(guard => {
-                                                var text = guard.username;
+                                                let text = guard.username;
                                                 switch (guard.guard_level) {
                                                     case 1:
                                                         text = `[总督]${text}`;
@@ -949,7 +949,7 @@ function getLiveroomGuardList(roomid, uid, pageNo = 1, pageSize = 20) {
                                         {
                                             title: "没看的",
                                             rows: otherGuardList.map(guard => {
-                                                var text = guard.username;
+                                                let text = guard.username;
                                                 switch (guard.guard_level) {
                                                     case 1:
                                                         text = `[总督]${text}`;

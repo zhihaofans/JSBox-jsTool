@@ -91,7 +91,7 @@ let $B_user = require("./user"),
                     $ui.loading(false);
                     $console.error(httpPost.error);
                 } else {
-                    var checkInData = httpPost.data;
+                    let checkInData = httpPost.data;
                     $console.info(checkInData);
                     $ui.loading(false);
                     if (checkInData) {

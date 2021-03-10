@@ -7,7 +7,7 @@ function showHistory() {
             url: "https://bilichat.3shain.com/api/history"
         })
         .then(function (resp) {
-            var data = resp.data;
+            let data = resp.data;
             if (data) {
                 if (data.length > 0) {
                     $ui.loading(false);

@@ -58,7 +58,7 @@ function showResultList(mode) {
         items: regionList.map(i => i.title),
         handler: (title, idx) => {
             iosRank(mode, regionList[idx].id).then(function (resp) {
-                var data = resp.data;
+                let data = resp.data;
                 if (data) {
                     const resultData = data.feed;
                     const rankResultList = resultData.entry.map(

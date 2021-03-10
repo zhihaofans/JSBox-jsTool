@@ -140,7 +140,7 @@ let installJs = (updateUrl, updateName, updateIcon) => {
 let compareVersion = (v1, v2) => {
     // 比较NaN
     // 感谢：https://gist.github.com/puterjam/8518259
-    var _v1 = v1.split("."),
+    let _v1 = v1.split("."),
         _v2 = v2.split("."),
         _r = _v1[0] - _v2[0];
     return _r === 0 && v1 != v2

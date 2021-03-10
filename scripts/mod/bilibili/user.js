@@ -173,7 +173,7 @@ let $_Cache = require("./data_base").Cache,
                             "User-Agent": $_Static.UA.USER.APP_IPHONE
                         },
                         handler: respBili => {
-                            var resultBili = respBili.data;
+                            let resultBili = respBili.data;
                             if (resultBili.code === 0) {
                                 const myInfoData = resultBili.data;
                                 //saveLoginCache(_AK, myInfoData.mid);
@@ -224,7 +224,7 @@ let $_Cache = require("./data_base").Cache,
                         "User-Agent": $_Static.UA.USER.APP_IPHONE
                     },
                     handler: respBili => {
-                        var resultBili = respBili.data;
+                        let resultBili = respBili.data;
                         $console.warn(resultBili);
                         if (resultBili.code === 0) {
                             const myInfoData = resultBili.data;

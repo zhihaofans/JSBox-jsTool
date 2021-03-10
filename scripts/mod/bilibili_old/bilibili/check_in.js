@@ -25,7 +25,7 @@ const _BILIURL = require("./api_url.js").BILIBILI,
                 $ui.loading(false);
                 $console.error(httpPost.error);
             } else {
-                var clockinData = httpPost.data;
+                let clockinData = httpPost.data;
                 $console.info(clockinData);
                 $ui.loading(false);
                 if (clockinData) {
@@ -79,7 +79,7 @@ const _BILIURL = require("./api_url.js").BILIBILI,
             $ui.loading(false);
             $console.error(httpPost.error);
         } else {
-            var data = httpPost.data;
+            let data = httpPost.data;
             $ui.loading(false);
             $console.info(data);
             if (data) {
@@ -131,7 +131,7 @@ const _BILIURL = require("./api_url.js").BILIBILI,
             $ui.loading(false);
             $console.error(httpGet.error);
         } else {
-            var data = httpGet.data;
+            let data = httpGet.data;
             $ui.loading(false);
             if (data) {
                 if (data.code === 0) {

@@ -163,11 +163,11 @@ let getVideoPid = vid => {
     $http.get({
         url: _ACFUN.GET_VIDEO_INFO + vid,
         handler: function (resp) {
-            var videoResult = resp.data;
+            let videoResult = resp.data;
             $console.info(videoResult);
             if (videoResult.result === 0) {
                 const partList = videoResult.videoList;
-                var pid = -1;
+                let pid = -1;
                 if (partList.length === 1) {
                     pid = videoResult.videoList[0].id;
                 } else {
@@ -200,7 +200,7 @@ let downloadVideo = (vid, pid) => {
             /* Cookie: getCookies() */
         },
         handler: function (resp) {
-            var videoResult = resp.data;
+            let videoResult = resp.data;
             $console.info(videoResult);
             if (videoResult.result === 0) {
                 const playInfo = videoResult.playInfo;
@@ -311,7 +311,7 @@ let signIn = () => {
                 acPlatform: "IPHONE"
             },
             handler: function (resp) {
-                var signinResult = resp.data;
+                let signinResult = resp.data;
                 $console.info(signinResult);
                 $ui.loading(false);
                 signinResult.result === 0
@@ -348,7 +348,7 @@ let getUploaderVideo = (uid, page = 1, count = 20) => {
             }
         })
         .then(function (resp) {
-            var acData = resp.data;
+            let acData = resp.data;
             if (acData.result === 0) {
                 const feedList = acData.feed;
                 if (feedList.length > 0) {
@@ -541,10 +541,10 @@ let showUploaderVideoList = acData => {
                                         "posts-" +
                                         videoList[0].user.id +
                                         ".html";
-                                    var html = "<html><body><ul>";
+                                    let html = "<html><body><ul>";
                                     for (let v in videoList) {
                                         const thisVideo = videoList[v];
-                                        var title = thisVideo.title;
+                                        let title = thisVideo.title;
                                         if (listClickedVid) {
                                             if (
                                                 listClickedVid ==
@@ -608,11 +608,11 @@ let showUploaderVideoList = acData => {
     });
 };
 let getVidFromUrl = url => {
-    var vid = undefined;
+    let vid = undefined;
     if (urlCheck.isAcfunVideoUrl(url)) {
         acVideoSiteList.map(s => {
             if (s == _URL.ACFUN.ACFUN_M_V_AC) {
-                var newUrl = url.remove(s);
+                let newUrl = url.remove(s);
                 const paramsList = newUrl.split("&");
                 paramsList.map(p => {
                     if (p.startsWith("ac=")) {
@@ -628,7 +628,7 @@ let getVidFromUrl = url => {
     return vid;
 };
 let getuidFromUrl = url => {
-    var uid = undefined;
+    let uid = undefined;
     if (urlCheck.isAcfunUploaderUrl(url)) {
         acUploaderSiteList.map(s => {
             if (url.startsWith(s)) {
@@ -658,10 +658,10 @@ let initWebServer = (dir, htmlStr, port = 9999) => {
         didCompleteBonjourRegistration: server => {},
         didUpdateNATPortMapping: server => {}
     });
-    var handler = {};
+    let handler = {};
     handler.response = request => {
-        //var method = request.method;
-        //var url = request.url;
+        //let method = request.method;
+        //let url = request.url;
         return {
             type: "data", // default, data, file, error
             props: {

@@ -16,9 +16,9 @@ function getGiftListByExp(giftData, exp) {
     if (exp === 0) {
         return [];
     }
-    var needExp = exp;
+    let needExp = exp;
     $console.info(`needExp.start:${needExp}`);
-    var giftList = [];
+    let giftList = [];
     for (g in giftData) {
         if (needExp === 0) {
             return giftList;
@@ -28,7 +28,7 @@ function getGiftListByExp(giftData, exp) {
             if (thisGift.corner_mark == "永久") {
                 $console.error("跳过永久礼物");
             } else {
-                var giftNum = 0;
+                let giftNum = 0;
                 switch (thisGift.gift_id) {
                     case 6:
                         if (needExp >= 10) {
@@ -104,7 +104,7 @@ function getGiftListByExp(giftData, exp) {
 }
 
 function getLiveGiftList(liveData = undefined, mode = 0) {
-    var sendGiftToUid, sendGiftToRoom, needExp;
+    let sendGiftToUid, sendGiftToRoom, needExp;
     if (liveData) {
         sendGiftToUid = liveData.target_id;
         sendGiftToRoom = liveData.room_id;
@@ -334,7 +334,7 @@ function sendLiveGift(
     gift_number = 1
 ) {
     $ui.loading(true);
-    var url = `${
+    let url = `${
         _BILIURL.LIVE_GIFT_SEND
     }?access_key=${_USER.getAccessKey()}&biz_id=${room_id}&gift_id=${gift_type}&gift_num=${gift_number}&ruid=${user_id}`;
     if (gift_id) {
@@ -345,7 +345,7 @@ function sendLiveGift(
             url: url
         })
         .then(function (resp) {
-            var data = resp.data;
+            let data = resp.data;
             if (data.code === 0) {
                 const resultData = data.data;
                 $ui.loading(false);
@@ -383,7 +383,7 @@ function sendLiveGiftList(liveData, giftList, index = 0) {
                 url: url
             })
             .then(function (resp) {
-                var data = resp.data;
+                let data = resp.data;
                 if (data.code === 0) {
                     const resultData = data.data;
                     $console.info(
@@ -393,7 +393,7 @@ function sendLiveGiftList(liveData, giftList, index = 0) {
                     );
                     if (index === giftList.length - 1) {
                         $ui.loading(false);
-                        var giftNameList = {};
+                        let giftNameList = {};
                         for (_g in liveData) {
                             const thisGift = liveData[_g];
                             const thisGiftName = thisGift.gift_name;
@@ -405,7 +405,7 @@ function sendLiveGiftList(liveData, giftList, index = 0) {
                                 giftNameList[thisGiftName] = thisGiftNumber;
                             }
                         }
-                        var giftNameListStr = "共送了这些礼物：";
+                        let giftNameListStr = "共送了这些礼物：";
                         Object.keys(giftNameList).map(g => {
                             giftNameListStr += `\n${g}:${giftNameList[g]}个`;
                         });

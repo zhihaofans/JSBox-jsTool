@@ -33,7 +33,7 @@ let getGithubRaw = sourceGithubUrl => {
         getGithubRealRaw(sourceGithubUrl),
         "https://raw.githubusercontent.com/"
     ).split("/");
-    var newUrl = "https://cdn.jsdelivr.net/gh";
+    let newUrl = "https://cdn.jsdelivr.net/gh";
     list.forEach(function (item, index, array) {
         newUrl = index === 2 ? `${newUrl}@${item}` : `${newUrl}/${item}`;
     });

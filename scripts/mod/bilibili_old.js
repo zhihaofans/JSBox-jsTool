@@ -362,7 +362,7 @@ function init(url) {
                                                                 .then(function (
                                                                     resp
                                                                 ) {
-                                                                    var data =
+                                                                    let data =
                                                                         resp.data;
                                                                     $ui.loading(
                                                                         false
@@ -561,7 +561,7 @@ function login() {
                     //                    const uidList = _BILIAPI.getUidList();
                     //                    if (uidList.length > 0) {
                     //                        $console.info(uidList)
-                    //                        var result = await $ui.menu({
+                    //                        let result = await $ui.menu({
                     //                            items: uidList
                     //                        })
                     //                        $input.text({

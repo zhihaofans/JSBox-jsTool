@@ -1,4 +1,4 @@
-var serverDomain = "https://adnmb2.com";
+let serverDomain = "https://adnmb2.com";
 const _API = require("./adao/api"),
     _PAGE = require("./adao/page");
 async function init() {
