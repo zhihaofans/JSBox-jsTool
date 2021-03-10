@@ -1,7 +1,7 @@
 let appScheme = require("AppScheme"),
-    _URL = require("./urlData.js"),
-    _UA = require("./user-agent.js"),
-    urlCheck = require("./urlCheck.js"),
+    _URL = require("../../api/urlData.js"),
+    _UA = require("../../api/user-agent.js"),
+    urlCheck = require("../../api/urlCheck.js"),
     _ACFUN = {
         LOGIN: "https://id.app.acfun.cn/rest/app/login/signin",
         GET_USER_INFO:
