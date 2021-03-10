@@ -20,7 +20,6 @@ let getUserPostWithoutBanana = uid => {
                 if (acData.result === 0) {
                     const feedList = acData.feed;
                     if (feedList.length > 0) {
-                        saveCache("getUploaderVideo", resp.rawData);
                         $cache.set(_cacheKey.uploaderVideo_lastUid, uid);
                         $cache.set(
                             _cacheKey.uploaderVideo_lastPage + uid,
@@ -59,7 +58,6 @@ let getUserPostWithoutBanana = uid => {
                 if (acData.result === 0) {
                     const feedList = acData.feed;
                     if (feedList.length > 0) {
-                        saveCache("getUploaderVideo", resp.rawData);
                         $cache.set(_cacheKey.uploaderVideo_lastUid, uid);
                         $cache.set(
                             _cacheKey.uploaderVideo_lastPage + uid,
@@ -98,7 +96,6 @@ let getUserPostWithoutBanana = uid => {
                 if (acData.result === 0) {
                     const feedList = acData.feed;
                     if (feedList.length > 0) {
-                        saveCache("getUploaderVideo", resp.rawData);
                         $cache.set(_cacheKey.uploaderVideo_lastUid, uid);
                         $cache.set(
                             _cacheKey.uploaderVideo_lastPage + uid,
