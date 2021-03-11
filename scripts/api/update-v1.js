@@ -1,5 +1,3 @@
-let urlData = require("./urlData.js");
-
 let getConfig = () => {
     return JSON.parse($file.read("/config.json"));
 };
@@ -73,7 +71,8 @@ let checkUpdateV2 = appId => {
                 disabled: false, // Optional
                 handler: function () {
                     $http.get({
-                        url: urlData.JSBOX.APP_CONFIG,
+                        url:
+                            "https://cdn.jsdelivr.net/gh/zhihaofans/JSBox-jsTool@master/config.json",
                         handler: function (_resp) {
                             const updateData = _resp.data;
                             $console.info("更新：获取服务器数据成功");

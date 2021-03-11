@@ -3,7 +3,7 @@ let _URL = require("./api_url"),
     _GIFT = require("./gift"),
     $$ = require("$$"),
     appScheme = require("AppScheme"),
-    _UA = require("../user-agent");
+    _UA = require("./lib").UA;
 
 function LiveroomInfo(liveroomInfoData) {
     // https://api.vtbs.moe/v1/detail/:mid
@@ -897,7 +897,7 @@ function getLiveroomGuardList(roomid, uid, pageNo = 1, pageSize = 20) {
         .get({
             url: url,
             header: {
-                "User-agent": _UA.BILIBILI
+                "User-agent": _UA.BILIBILI.APP_IPHONE
             }
         })
         .then(function (resp) {

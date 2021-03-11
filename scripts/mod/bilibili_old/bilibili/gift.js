@@ -1,7 +1,6 @@
 let _BILIURL = require("./api_url.js").BILIBILI,
-    _UA = require("../user-agent.js"),
-    _USER = require("./user.js"),
-    _CACHE = require("./cache.js");
+    _UA = require("./lib").UA,
+    _USER = require("./user.js");
 
 function GiftData(_giftId, _bagId, _number, _giftName) {
     this.giftId = _giftId;
@@ -9,8 +8,6 @@ function GiftData(_giftId, _bagId, _number, _giftName) {
     this.number = _number;
     this.gift_name = _giftName;
 }
-
-function getGiftListByGiftId(giftData, giftId) {}
 
 function getGiftListByExp(giftData, exp) {
     if (exp === 0) {

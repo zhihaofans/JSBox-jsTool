@@ -1,7 +1,6 @@
 let appScheme = require("AppScheme"),
-    _URL = require("../../api/urlData.js"),
-    _UA = require("../../api/user-agent.js"),
-    urlCheck = require("../../api/urlCheck.js"),
+    _UA = require("./common").USER_AGENT,
+    urlCheck = require("../../api/urlCheck"),
     _ACFUN = {
         LOGIN: "https://id.app.acfun.cn/rest/app/login/signin",
         GET_USER_INFO:
@@ -36,7 +35,7 @@ let appScheme = require("AppScheme"),
     ],
     acHeaders = {
         "Content-Type": "application/x-www-form-urlencoded",
-        "User-Agent": _UA.ACFUN.APP_IOS,
+        "User-Agent": _UA.APP_IOS,
         deviceType: 0,
         market: "appstore",
         appVersion: "6.17.0.349"
@@ -209,11 +208,9 @@ let downloadVideo = (vid, pid) => {
                 const cdnUrl = thisVideoFile.cdnUrls;
                 const cdnTitleList = cdnUrl.map(function (x) {
                     const thisUrl = x.url;
-                    if (thisUrl.startsWith(_URL.ACFUN.VIDEO_CDN_TXCDN)) {
+                    if (thisUrl.startsWith(_ACFUN.VIDEO_CDN_TXCDN)) {
                         return "腾讯源";
-                    } else if (
-                        thisUrl.startsWith(_URL.ACFUN.VIDEO_CDN_ALICDN)
-                    ) {
+                    } else if (thisUrl.startsWith(_ACFUN.VIDEO_CDN_ALICDN)) {
                         return "阿里源";
                     } else {
                         return "未知源";
@@ -611,7 +608,7 @@ let getVidFromUrl = url => {
     let vid = undefined;
     if (urlCheck.isAcfunVideoUrl(url)) {
         acVideoSiteList.map(s => {
-            if (s == _URL.ACFUN.ACFUN_M_V_AC) {
+            if (s == _ACFUN.ACFUN_M_V_AC) {
                 let newUrl = url.remove(s);
                 const paramsList = newUrl.split("&");
                 paramsList.map(p => {

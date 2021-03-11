@@ -1,4 +1,13 @@
-let URL = require("./urlData.js");
+let URL = {
+    APP_CONFIG:
+        "https://cdn.jsdelivr.net/gh/zhihaofans/JSBox-jsTool@master/config.json",
+    APP_CONFIG_GITHUB:
+        "https://github.com/zhihaofans/JSBox-jsTool/raw/master/config.json",
+    APP_ICON:
+        "https://cdn.jsdelivr.net/gh/zhihaofans/JSBox-jsTool@master/assets/icon.png",
+    APP_ICON_GITHUB:
+        "https://github.com/zhihaofans/JSBox-jsTool/raw/master/assets/icon.png"
+};
 
 function UpdateData(name, version, icon, hasUpdate = false, updateUrl = null) {
     this.name = name;
@@ -16,7 +25,7 @@ function checkUpdate(CDN = true) {
         const newVersion = remoteFile.info.version;
         const newBox = remoteFile.info.url;
         const newName = remoteFile.info.name;
-        const appIcon = CDN ? URL.JSBOX.APP_ICON : URL.JSBOX.APP_ICON_GITHUB;
+        const appIcon = CDN ? URL.APP_ICON : URL.APP_ICON_GITHUB;
         const localConfig = getLocalConfig();
         if (newVersion && newName && localConfig) {
             if (
@@ -35,7 +44,7 @@ function checkUpdate(CDN = true) {
 
 async function getRemoteConfigFromCDN() {
     let resp = await $http.get({
-        url: URL.JSBOX.APP_CONFIG
+        url: URL.APP_CONFIG
     });
     $console.info(resp.data);
     return resp.data;
@@ -43,7 +52,7 @@ async function getRemoteConfigFromCDN() {
 
 async function getRemoteConfigFromGithub() {
     let resp = await $http.get({
-        url: URL.JSBOX.APP_CONFIG_GITHUB
+        url: URL.APP_CONFIG_GITHUB
     });
     $console.info(resp.data);
     return resp.data;

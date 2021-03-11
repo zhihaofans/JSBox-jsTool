@@ -1,7 +1,7 @@
 const cheerio = require("cheerio"),
     appScheme = require("AppScheme"),
     _URL = require("./api_url.js"),
-    _UA = require("../../../api/user-agent.js"),
+    _UA = require("./lib").UA,
     _USER = require("./user.js"),
     $$ = require("$$"),
     getBiliobVideo = avid => {

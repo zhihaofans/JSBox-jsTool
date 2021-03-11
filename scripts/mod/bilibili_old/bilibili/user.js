@@ -1,7 +1,7 @@
 let _BILIURL = require("./api_url.js").BILIBILI,
-    _UA = require("../../../api/user-agent.js"),
     _CACHE = require("./cache.js"),
     _LIB = require("./lib.js"),
+    _UA = _LIB.UA,
     _ACCOUNTS = require("./accounts.js");
 
 let _ACCESS_KEY = "",
