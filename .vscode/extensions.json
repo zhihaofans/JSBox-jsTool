@@ -1,3 +1,3 @@
 {
-    "recommendations": ["esbenp.prettier-vscode", "ying.jsbox"]
+    "recommendations": ["esbenp.prettier-vscode", "ying.jsbox", "hookyqr.beautify"]
 }
