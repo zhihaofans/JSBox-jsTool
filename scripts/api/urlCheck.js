@@ -1,9 +1,10 @@
-let $$ = require("$$"),
+const $$ = require("$$"),
     // Bilibili
     isBilibiliVideoUrl = url => {
         return (
-            /https:\/\/www.bilibili.com\/av(.+?)/.test(url) ||
-            /https:\/\/www.bilibili.com\/video\/av(.+?)/.test(url)
+            url &&
+            (/https:\/\/www.bilibili.com\/av(.+?)/.test(url) ||
+                /https:\/\/www.bilibili.com\/video\/av(.+?)/.test(url))
         );
     },
     isBilibiliUrl = url => {
@@ -34,7 +35,7 @@ let $$ = require("$$"),
         //return url.startsWithList(acUploaderSiteList);
     },
     isAcfunUrl = url => {
-        return url ? isAcfunVideoUrl(url) || isAcfunUploaderUrl(url) : false;
+        return url && (isAcfunVideoUrl(url) || isAcfunUploaderUrl(url));
     };
 module.exports = {
     isBilibiliVideoUrl,
