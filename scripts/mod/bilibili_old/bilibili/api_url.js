@@ -30,7 +30,6 @@ const BILIBILI = {
         B23_TV_VIDEO: "https://b23.tv/av",
         MY_INFO: "https://app.bilibili.com/x/v2/account/mine",
         GET_SIGN_URL: "https://api.kaaass.net/biliapi/urlgene",
-        BILICHAT: "https://bilichat.3shain.com/gkd/",
         LIVE_ONLINE:
             "https://api.live.bilibili.com/xlive/app-interface/v1/relation/liveAnchor?access_key=",
         LIVE_OFFLINE:
@@ -45,10 +44,6 @@ const BILIBILI = {
             "https://api.live.bilibili.com/xlive/app-room/v1/fansMedal/fans_medal_info?access_key=",
         LIVE_CHECK_IN:
             "https://api.live.bilibili.com/rc/v1/Sign/doSign?access_key="
-    },
-    BILICHAT = {
-        HISTORY: "https://bilichat.3shain.com/api/history",
-        DANMUKU: "https://bilichat.3shain.com/gkd/"
     },
     BILIOB = {
         VIDEO: "https://www.biliob.com/video/av",
@@ -74,7 +69,6 @@ const BILIBILI = {
 
 module.exports = {
     BILIBILI,
-    BILICHAT,
     BILIOB,
     GALMOE,
     KAAASS,

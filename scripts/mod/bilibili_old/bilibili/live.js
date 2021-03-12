@@ -485,7 +485,6 @@ function getOnlineLiver() {
                                                                             "操作",
                                                                         rows: [
                                                                             "观看直播",
-                                                                            "实时弹幕",
                                                                             "查看封面",
                                                                             "个人空间",
                                                                             "我觉得这是vtb"
@@ -514,11 +513,6 @@ function getOnlineLiver() {
                                                                                     );
                                                                                     break;
                                                                                 case 1:
-                                                                                    openLiveDanmuku(
-                                                                                        thisRoom.roomid
-                                                                                    );
-                                                                                    break;
-                                                                                case 2:
                                                                                     $ui.preview(
                                                                                         {
                                                                                             title:
@@ -528,7 +522,7 @@ function getOnlineLiver() {
                                                                                         }
                                                                                     );
                                                                                     break;
-                                                                                case 3:
+                                                                                case 2:
                                                                                     $app.openURL(
                                                                                         _URL
                                                                                             .BILIBILI
@@ -536,7 +530,7 @@ function getOnlineLiver() {
                                                                                             thisRoom.uid
                                                                                     );
                                                                                     break;
-                                                                                case 4:
+                                                                                case 3:
                                                                                     getVtbLiveroomInfo(
                                                                                         thisRoom.uid
                                                                                     );
@@ -645,7 +639,6 @@ function getOfflineLiver() {
                                                                             "操作",
                                                                         rows: [
                                                                             "进入直播间",
-                                                                            "实时弹幕",
                                                                             "查看封面",
                                                                             "个人空间",
                                                                             "我觉得这是vtb"
@@ -674,11 +667,6 @@ function getOfflineLiver() {
                                                                                     );
                                                                                     break;
                                                                                 case 1:
-                                                                                    openLiveDanmuku(
-                                                                                        thisRoom.roomid
-                                                                                    );
-                                                                                    break;
-                                                                                case 2:
                                                                                     $ui.preview(
                                                                                         {
                                                                                             title:
@@ -688,7 +676,7 @@ function getOfflineLiver() {
                                                                                         }
                                                                                     );
                                                                                     break;
-                                                                                case 3:
+                                                                                case 2:
                                                                                     $app.openURL(
                                                                                         _URL
                                                                                             .BILIBILI
@@ -696,7 +684,7 @@ function getOfflineLiver() {
                                                                                             thisRoom.uid
                                                                                     );
                                                                                     break;
-                                                                                case 4:
+                                                                                case 3:
                                                                                     getVtbLiveroomInfo(
                                                                                         thisRoom.uid
                                                                                     );
@@ -877,13 +865,6 @@ function getVtbLiveroomInfo(mid) {
                 }
             }
         });
-}
-// Bilichat
-function openLiveDanmuku(liveroomId) {
-    $ui.preview({
-        title: "BiliChat",
-        url: _URL.BILIBILI.BILICHAT + liveroomId
-    });
 }
 
 // 直播间舰长
