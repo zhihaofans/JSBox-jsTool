@@ -1,4 +1,4 @@
-const page = require("./page_init");
+const init = require("./init");
 let siteListL10n = ["ACFUN", "BILIBILI"],
     moreListL10n = ["MOD", "SETTING"],
     getNavButton = () => {
@@ -42,10 +42,10 @@ let siteListL10n = ["ACFUN", "BILIBILI"],
                                 case 0:
                                     switch (indexPath.row) {
                                         case 0:
-                                            page.loadModule("acfun");
+                                            init.loadModule("acfun");
                                             break;
                                         case 1:
-                                            page.loadModule("bilibili");
+                                            init.loadModule("bilibili");
                                             break;
 
                                         default:
@@ -55,10 +55,10 @@ let siteListL10n = ["ACFUN", "BILIBILI"],
                                 case 1:
                                     switch (indexPath.row) {
                                         case 0:
-                                            page.mod();
+                                            init.mod();
                                             break;
                                         case 1:
-                                            page.setting();
+                                            init.setting();
                                             break;
                                         default:
                                             $ui.error("错误选项");

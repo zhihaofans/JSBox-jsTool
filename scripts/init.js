@@ -1,4 +1,4 @@
-let pref_cache_list = {
+const pref_cache_list = {
         "mod.bilibili.access_key": "MOD_BILIBILI_ACCESS_KEY",
         "mod.bilibili.uid": "MOD_BILIBILI_UID",
         "mod.bilibili.cookies": "MOD_BILIBILI_COOKIES",
@@ -26,10 +26,37 @@ let pref_cache_list = {
         Object.keys(_list).map(_k => {
             $cache.set(_list[_k], $prefs.get(_k) || "");
         });
+    },
+    modules = {
+        acfun: {
+            filePath: "./mod/acfun",
+            action: "init",
+            param: undefined
+        },
+        bilibili: {
+            filePath: "./mod/bilibili",
+            action: "init",
+            param: undefined
+        }
+    },
+    mod = require("./mod_index"),
+    loadModule = moduleId => {
+        const moduleInfo = modules[moduleId];
+        require(moduleInfo.filePath)[moduleInfo.action]();
+    },
+    openSettingPage = () => {
+        initPrefs();
+        $prefs.open(() => {
+            updatePrefs();
+        });
     };
 
 module.exports = {
     initPrefs,
     updatePrefs,
-    pref_cache_list
+    pref_cache_list,
+    mod: mod.showModList,
+    setting: openSettingPage,
+    modules,
+    loadModule
 };
