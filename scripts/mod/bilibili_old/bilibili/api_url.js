@@ -1,4 +1,5 @@
-const BILIBILI = {
+module.exports = {
+    BILIBILI: {
         GET_VIDEO_INFO:
             "https://api.kaaass.net/biliapi/video/info?jsonerr=true&id=",
         GET_ACCESS_KEY:
@@ -45,14 +46,14 @@ const BILIBILI = {
         LIVE_CHECK_IN:
             "https://api.live.bilibili.com/rc/v1/Sign/doSign?access_key="
     },
-    BILIOB = {
+    BILIOB: {
         VIDEO: "https://www.biliob.com/video/av",
         API_VIDEO: "https://www.biliob.com/api/video/v2/av"
     },
-    GALMOE = {
+    GALMOE: {
         COVER_GALMOE: "https://www.galmoe.com/t.php?aid="
     },
-    KAAASS = {
+    KAAASS: {
         GET_VIDEO_INFO:
             "https://api.kaaass.net/biliapi/video/info?jsonerr=true&id=",
         GET_ACCESS_KEY:
@@ -62,15 +63,8 @@ const BILIBILI = {
             "https://api.kaaass.net/biliapi/video/resolve?jsonerr=true&direct=true",
         GET_SIGN_URL: "https://api.kaaass.net/biliapi/urlgene"
     },
-    VTBS_MOE = {
+    VTBS_MOE: {
         V1_DETAIL: "https://api.vtbs.moe/v1/detail/",
         WEB_DETAIL: "https://vtbs.moe/detail/"
-    };
-
-module.exports = {
-    BILIBILI,
-    BILIOB,
-    GALMOE,
-    KAAASS,
-    VTBS_MOE
+    }
 };
