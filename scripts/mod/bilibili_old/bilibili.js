@@ -1,4 +1,15 @@
-const _urlCheck = require("../../api/urlCheck"),
+const _urlCheck = {
+        isBilibiliVideoUrl: url => {
+            return (
+                url &&
+                (/https:\/\/www.bilibili.com\/av(.+?)/.test(url) ||
+                    /https:\/\/www.bilibili.com\/video\/av(.+?)/.test(url))
+            );
+        },
+        isBilibiliUrl: url => {
+            return url ? isBilibiliVideoUrl(url) : false;
+        }
+    },
     _AVBV = require("./bilibili/av_bv"),
     _CHECKIN = require("./bilibili/check_in"),
     _GIFT = require("./bilibili/gift"),

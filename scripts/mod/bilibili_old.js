@@ -1,4 +1,4 @@
-let _BILIAPI = require("../api/bilibili.js");
+let _BILIAPI = require("./bilibili_old/bilibili");
 
 function init(url) {
     if (url) {
