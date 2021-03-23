@@ -1,30 +1,30 @@
 function initView() {
-    $ui.push({
+  $ui.push({
+    props: {
+      title: "CDN"
+    },
+    views: [
+      {
+        type: "list",
         props: {
-            title: "CDN"
-        },
-        views: [
+          data: [
             {
-                type: "list",
-                props: {
-                    data: [
-                        {
-                            title: "Github",
-                            rows: ["0-0"]
-                        }
-                    ]
-                },
-                layout: $layout.fill,
-                events: {
-                    didSelect: function(_sender, indexPath, _data) {
-                        const section = indexPath.section;
-                        const row = indexPath.row;
-                    }
-                }
+              title: "Github",
+              rows: ["0-0"]
             }
-        ]
-    });
+          ]
+        },
+        layout: $layout.fill,
+        events: {
+          didSelect: function (_sender, indexPath, _data) {
+            const section = indexPath.section;
+            const row = indexPath.row;
+          }
+        }
+      }
+    ]
+  });
 }
 module.exports = {
-    init: initView
+  init: initView
 };

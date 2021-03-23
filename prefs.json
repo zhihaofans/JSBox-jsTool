@@ -1,87 +1,109 @@
 {
   "title": "设置",
-  "groups": [{
-    "title": "Mod",
-    "items": [{
-      "title": "哔哩哔哩",
-      "type": "child",
-      "value": {
-        "title": "哔哩哔哩mod",
-        "items": [{
-          "title": "Access key",
-          "type": "string",
-          "key": "mod.bilibili.access_key"
-        }, {
-          "title": "uid",
-          "type": "number",
-          "key": "mod.bilibili.uid"
-        }, {
-          "title": "Cookies",
-          "type": "string",
-          "key": "mod.bilibili.cookies"
-        }]
-      }
-    }, {
-      "title": "Acfun",
-      "type": "child",
-      "value": {
-        "title": "Acfun mod",
-        "items": [{
-          "title": "acPasstoken",
-          "type": "string",
-          "key": "mod.acfun.auth.acpasstoken"
-        }, {
-          "title": "acSecurity",
-          "type": "string",
-          "key": "mod.acfun.auth.acsecurity"
-        }, {
-          "title": "Access token",
-          "type": "string",
-          "key": "mod.acfun.auth.access_token"
-        }, {
-          "title": "用户名",
-          "type": "string",
-          "key": "mod.acfun.auth.username"
-        }, {
-          "title": "用户id",
-          "type": "number",
-          "key": "mod.acfun.auth.uid"
-        }, {
-          "title": "登录...",
+  "groups": [
+    {
+      "title": "Mod",
+      "items": [
+        {
+          "title": "哔哩哔哩",
           "type": "child",
           "value": {
-            "title": "登录后会清空账号密码",
-            "items": [{
-              "title": "账号",
-              "type": "string",
-              "key": "mod.acfun.auth.login.id"
-            }, {
-              "title": "密码",
-              "type": "string",
-              "key": "mod.acfun.auth.login.password"
-            }]
+            "title": "哔哩哔哩mod",
+            "items": [
+              {
+                "title": "Access key",
+                "type": "string",
+                "key": "mod.bilibili.access_key"
+              },
+              {
+                "title": "uid",
+                "type": "number",
+                "key": "mod.bilibili.uid"
+              },
+              {
+                "title": "Cookies",
+                "type": "string",
+                "key": "mod.bilibili.cookies"
+              }
+            ]
           }
-        }]
-      }
-    }]
-  }, {
-    "title": "测试",
-    "items": [{
-        "title": "OK",
-        "type": "string",
-        "key": "user.name",
-        "value": "default user name"
-      },
-      {
-        "title": "AUTO_SAVE",
-        "type": "boolean",
-        "key": "auto.save",
-        "value": true
-      }, {
-        "title": "TEST",
-        "type": "script",
-        "value": "require('scripts/test').runTest();"
-      }
-    ]
-  }]
+        },
+        {
+          "title": "Acfun",
+          "type": "child",
+          "value": {
+            "title": "Acfun mod",
+            "items": [
+              {
+                "title": "acPasstoken",
+                "type": "string",
+                "key": "mod.acfun.auth.acpasstoken"
+              },
+              {
+                "title": "acSecurity",
+                "type": "string",
+                "key": "mod.acfun.auth.acsecurity"
+              },
+              {
+                "title": "Access token",
+                "type": "string",
+                "key": "mod.acfun.auth.access_token"
+              },
+              {
+                "title": "用户名",
+                "type": "string",
+                "key": "mod.acfun.auth.username"
+              },
+              {
+                "title": "用户id",
+                "type": "number",
+                "key": "mod.acfun.auth.uid"
+              },
+              {
+                "title": "登录...",
+                "type": "child",
+                "value": {
+                  "title": "登录后会清空账号密码",
+                  "items": [
+                    {
+                      "title": "账号",
+                      "type": "string",
+                      "key": "mod.acfun.auth.login.id"
+                    },
+                    {
+                      "title": "密码",
+                      "type": "string",
+                      "key": "mod.acfun.auth.login.password"
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "title": "测试",
+      "items": [
+        {
+          "title": "OK",
+          "type": "string",
+          "key": "user.name",
+          "value": "default user name"
+        },
+        {
+          "title": "AUTO_SAVE",
+          "type": "boolean",
+          "key": "auto.save",
+          "value": true
+        },
+        {
+          "title": "TEST",
+          "type": "script",
+          "value": "require('scripts/test').runTest();"
+        }
+      ]
+    }
+  ]
 }

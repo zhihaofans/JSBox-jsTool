@@ -1,3 +1,3 @@
 module.exports = {
-    init: require("./modV3/loader").init
+  init: require("./modV3/loader").init
 };

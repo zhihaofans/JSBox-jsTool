@@ -1,7 +1,5 @@
-let init = () => {
-
-}
+let init = () => {};
 
 module.exports = {
-    init
+  init
 };

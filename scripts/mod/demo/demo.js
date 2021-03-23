@@ -1,4 +1,4 @@
 module.exports = {
-    gallery: require("./gallery"),
-    http: require("./http")
+  gallery: require("./gallery"),
+  http: require("./http")
 };

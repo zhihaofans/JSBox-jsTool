@@ -1,3 +1,3 @@
 module.exports = {
-    init: require("./bilibili/init").init
+  init: require("./bilibili/init").init
 };
