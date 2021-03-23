@@ -2,3 +2,4 @@
 .cache/
 .output/
 assets/.files/
+node_modules/
