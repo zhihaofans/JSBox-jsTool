@@ -1,4 +1,4 @@
-let init = () => {};
+const init = () => {};
 
 module.exports = {
   init
