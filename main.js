@@ -7,7 +7,6 @@ let main = require("./scripts/main"),
   init = () => {
     $app.strings = l10nInit.init();
     const query = $context.query;
-    $console.info(query);
     if (query) {
       switch (query.type) {
         case "mod":
