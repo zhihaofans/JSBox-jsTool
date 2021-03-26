@@ -1,6 +1,6 @@
 const _Comic = require("./comic"),
   Comic = {
-    getDetails:  () => {
+    getDetails: async () => {
       try {
         await _Comic.getDetails("gigant");
       } catch (error) {
