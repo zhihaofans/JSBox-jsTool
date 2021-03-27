@@ -1,4 +1,4 @@
-const View = require("./copyManga/View"),
+const View = require("./copyManga/view"),
   init = () => {
     $ui.push({
       props: {
