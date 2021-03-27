@@ -11,7 +11,7 @@ const $$ = require("$$"),
         title: "Error",
         message: JSON.stringify(httpGet.error)
       });
-      $ui.loading(true);
+      $ui.loading(false);
     } else {
       const resultData = httpGet.data;
       $console.info(resultData);
@@ -19,7 +19,7 @@ const $$ = require("$$"),
         title: "",
         message: JSON.stringify(resultData)
       });
-      $ui.loading(true);
+      $ui.loading(false);
     }
   };
 module.exports = {
