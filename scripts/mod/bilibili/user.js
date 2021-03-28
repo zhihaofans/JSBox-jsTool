@@ -350,9 +350,9 @@ let $_Cache = require("./data_base").Cache,
         });
       }
     },
-    getLaterToWatch: () => {
+    getLaterToWatch: async () => {
       $ui.loading(true);
-      const httpData = Info.getLaterToWatch();
+      const httpData = await Info.getLaterToWatch();
       if (httpData) {
         if (httpData.code === 0) {
           const later2watch = httpData.data,
@@ -384,7 +384,14 @@ let $_Cache = require("./data_base").Cache,
                       const section = indexPath.section,
                         row = indexPath.row,
                         thisVideo = later2watchList[section];
-                      $app.openURL(thisVideo.uri);
+                      switch (row) {
+                        case 0:
+                          $app.openURL(thisVideo.uri);
+                          break;
+                        case 1:
+                          $app.openURL(`bilibili://video/${thisVideo.bvid}`);
+                          break;
+                      }
                     }
                   }
                 }
