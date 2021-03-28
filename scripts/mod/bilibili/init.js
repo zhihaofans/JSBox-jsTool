@@ -20,7 +20,8 @@ let _User = require("./user"),
                   "刷新Access key",
                   "获取饼干",
                   "漫画剩余券",
-                  "下载漫画"
+                  "下载漫画",
+                  "稍后再看"
                 ]
               }
             ]
@@ -51,6 +52,13 @@ let _User = require("./user"),
                       break;
                     case 6:
                       _Comic.View.getComicDetail();
+                      break;
+                    case 7:
+                      try {
+                        _User.View.getLaterToWatch();
+                      } catch (error) {
+                        $console.error(error);
+                      }
                       break;
                   }
                   break;

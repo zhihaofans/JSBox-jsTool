@@ -160,7 +160,7 @@ let $_Cache = require("./data_base").Cache,
     getMyInfo: () => {
       const access_key = Auth.accessKey();
       if (access_key) {
-        const respKaaass = $B_auth.getSignUrl(
+        const respKaaass = Auth.getSignUrl(
           $_Static.URL.USER.MY_INFO,
           `access_key=${access_key}`
         );
@@ -264,6 +264,7 @@ let $_Cache = require("./data_base").Cache,
       }
     },
     getSameFollow: async uid => {
+      // TODO
       const access_key = Auth.accessKey(),
         cookies = Auth.cookies();
       $console.warn(`access_key:${access_key}\n\ncookies:${cookies}`);
@@ -279,9 +280,36 @@ let $_Cache = require("./data_base").Cache,
         $ui.loading(false);
         $ui.error("未登录");
       }
+    },
+    getLaterToWatch: async () => {
+      const _cookies = Auth.cookies(),
+        _headers = {
+          "User-Agent": $_Static.UA.USER.APP_IPHONE,
+          Cookies: _cookies
+        },
+        httpResult = await $_Static.Http.getAwait(
+          $_Static.URL.USER.LATER_TO_WATCH,
+          _headers
+        );
+      $console.info(_headers);
+      $console.info(httpResult);
+      if (httpResult.error) {
+        $console.error(httpResult.error);
+      } else if (httpResult.data) {
+        const httpData = httpResult.data;
+        if (httpData.code !== 0) {
+          $console.error(
+            `Bilibili.getLaterToWatch:(${httpData.code})${httpData.message}`
+          );
+        }
+        return httpData || undefined;
+      }
+      return undefined;
     }
   },
   View = {
+    getCookiesByAccessKey: Auth.getCookiesByAccessKey,
+    getMyInfo: Info.myInfo,
     updateAccessKey: () => {
       $input.text({
         type: $kbType.text,
@@ -309,7 +337,6 @@ let $_Cache = require("./data_base").Cache,
         }
       });
     },
-    getMyInfo: Info.myInfo,
     refreshToken: async () => {
       if (await Auth.refreshToken()) {
         $ui.alert({
@@ -323,7 +350,61 @@ let $_Cache = require("./data_base").Cache,
         });
       }
     },
-    getCookiesByAccessKey: Auth.getCookiesByAccessKey
+    getLaterToWatch: () => {
+      $ui.loading(true);
+      const httpData = Info.getLaterToWatch();
+      if (httpData) {
+        if (httpData.code === 0) {
+          const later2watch = httpData.data,
+            later2watchList = later2watch.list;
+          if (later2watch.count === 0 || later2watchList.length === 0) {
+            $ui.alert({
+              title: "稍后再看为空，请添加内容",
+              message: "later2watch.count = 0"
+            });
+          } else {
+            $ui.push({
+              props: {
+                title: ""
+              },
+              views: [
+                {
+                  type: "list",
+                  props: {
+                    data: later2watchList.map(video => {
+                      return {
+                        title: `@${video.owner.name}`,
+                        rows: [video.title, `av${video.aid}/${video.bvid}`]
+                      };
+                    })
+                  },
+                  layout: $layout.fill,
+                  events: {
+                    didSelect: function (_sender, indexPath, _data) {
+                      const section = indexPath.section,
+                        row = indexPath.row,
+                        thisVideo = later2watchList[section];
+                      $app.openURL(thisVideo.uri);
+                    }
+                  }
+                }
+              ]
+            });
+          }
+        } else {
+          $ui.alert({
+            title: `错误代码${httpData.code}`,
+            message: httpData.message
+          });
+        }
+      } else {
+        $ui.alert({
+          title: "未知错误",
+          message: "返回空白数据，请检查网络是否正常"
+        });
+      }
+      $ui.loading(false);
+    }
   };
 module.exports = {
   Auth,
