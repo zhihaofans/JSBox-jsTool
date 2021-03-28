@@ -282,10 +282,10 @@ let $_Cache = require("./data_base").Cache,
       }
     },
     getLaterToWatch: async () => {
-      const _cookies = Auth.cookies(),
+      const _cookie = Auth.cookies(),
         _headers = {
           "User-Agent": $_Static.UA.USER.APP_IPHONE,
-          Cookies: _cookies
+          Cookie: _cookie
         },
         httpResult = await $_Static.Http.getAwait(
           $_Static.URL.USER.LATER_TO_WATCH,
