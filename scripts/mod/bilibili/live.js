@@ -156,7 +156,8 @@ let $B_user = require("./user"),
         }
       }
     }
-  };
+  },
+  Liver = {};
 
 module.exports = {
   User

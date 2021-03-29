@@ -28,7 +28,9 @@ const UA = {
     LIVE: {
       CHECK_IN: "https://api.live.bilibili.com/rc/v1/Sign/doSign?access_key=",
       SILVER_TO_COIN:
-        "https://api.live.bilibili.com/pay/v1/Exchange/silver2coin"
+        "https://api.live.bilibili.com/pay/v1/Exchange/silver2coin",
+      LIVER_ONLINE:
+        "https://api.live.bilibili.com/xlive/app-interface/v1/relation/liveAnchor?access_key="
     },
     COMIC: {
       CHECK_IN: "https://manga.bilibili.com/twirp/activity.v1.Activity/ClockIn",
