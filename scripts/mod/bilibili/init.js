@@ -54,11 +54,7 @@ let _User = require("./user"),
                       _Comic.View.getComicDetail();
                       break;
                     case 7:
-                      try {
-                        _User.View.getLaterToWatch();
-                      } catch (error) {
-                        $console.error(error);
-                      }
+                      _User.View.getLaterToWatch();
                       break;
                   }
                   break;
