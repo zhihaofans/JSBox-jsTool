@@ -1,4 +1,4 @@
-let $B_user = require("./user"),
+const $B_user = require("./user"),
   $_Static = require("./static"),
   User = {
     autoCheckIn: async () => {
@@ -157,7 +157,102 @@ let $B_user = require("./user"),
       }
     }
   },
-  Liver = {};
+  Liver = {
+    onlineFollower: async () => {
+      const _cookie = Auth.cookies(),
+        _headers = {
+          "User-Agent": $_Static.UA.USER.APP_IPHONE,
+          Cookie: _cookie
+        },
+        httpResult = await $_Static.Http.getAwait(
+          $_Static.URL.LIVE.LIVER_ONLINE,
+          _headers
+        );
+      $console.info(_headers);
+      $console.info(httpResult);
+      if (httpResult.error) {
+        $console.error(httpResult.error);
+      } else if (httpResult.data) {
+        const httpData = httpResult.data;
+        if (httpData.code !== 0) {
+          $console.error(
+            `Bilibili.onlineFollower:(${httpData.code})${httpData.message}`
+          );
+        }
+        return httpData || undefined;
+      }
+      return undefined;
+    }
+  },
+  View = {
+    myFollower: async () => {
+      $ui.loading(true);
+      $ui.menu({
+        items: [],
+        handler: function (title, idx) {}
+      });
+      $ui.loading(false);
+      const httpData = await Liver.onlineFollower();
+      if (httpData) {
+        if (httpData.code === 0) {
+          const later2watch = httpData.data,
+            later2watchList = later2watch.list;
+          if (later2watch.count === 0 || later2watchList.length === 0) {
+            $ui.alert({
+              title: "稍后再看为空，请添加内容",
+              message: "later2watch.count = 0"
+            });
+          } else {
+            $ui.push({
+              props: {
+                title: ""
+              },
+              views: [
+                {
+                  type: "list",
+                  props: {
+                    data: later2watchList.map(video => {
+                      return {
+                        title: `@${video.owner.name}`,
+                        rows: [video.title, `av${video.aid}/${video.bvid}`]
+                      };
+                    })
+                  },
+                  layout: $layout.fill,
+                  events: {
+                    didSelect: function (_sender, indexPath, _data) {
+                      const section = indexPath.section,
+                        row = indexPath.row,
+                        thisVideo = later2watchList[section];
+                      switch (row) {
+                        case 0:
+                          $app.openURL(thisVideo.uri);
+                          break;
+                        case 1:
+                          $app.openURL(`bilibili://video/${thisVideo.bvid}`);
+                          break;
+                      }
+                    }
+                  }
+                }
+              ]
+            });
+          }
+        } else {
+          $ui.alert({
+            title: `错误代码${httpData.code}`,
+            message: httpData.message
+          });
+        }
+      } else {
+        $ui.alert({
+          title: "未知错误",
+          message: "返回空白数据，请检查网络是否正常"
+        });
+      }
+      $ui.loading(false);
+    }
+  };
 
 module.exports = {
   User
