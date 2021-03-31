@@ -308,7 +308,21 @@ let $_Cache = require("./data_base").Cache,
     }
   },
   View = {
-    getCookiesByAccessKey: Auth.getCookiesByAccessKey,
+    getCookiesByAccessKey: async () => {
+      const newCookie = await Auth.getCookiesByAccessKey();
+      if (newCookie) {
+        $input.text({
+          type: $kbType.text,
+          placeholder: newCookie,
+          text: newCookie
+        });
+      } else {
+        $ui.alert({
+          title: "获取Cookies失败",
+          message: newCookie || "undefined"
+        });
+      }
+    },
     getMyInfo: Info.myInfo,
     updateAccessKey: () => {
       $input.text({
@@ -319,7 +333,23 @@ let $_Cache = require("./data_base").Cache,
           if (access_key) {
             const new_access_key = Auth.accessKey(access_key);
             if (new_access_key == access_key) {
-              $ui.success("设置成功");
+              $ui.alert({
+                title: "设置成功",
+                message: "是否顺便更新cookies",
+                actions: [
+                  {
+                    title: "更新",
+                    disabled: false,
+                    handler: function () {
+                      View.getCookiesByAccessKey();
+                    }
+                  },
+                  {
+                    title: "不了",
+                    disabled: false
+                  }
+                ]
+              });
             } else {
               $ui.alert({
                 title: "设置失败",
