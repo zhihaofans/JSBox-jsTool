@@ -1,11 +1,25 @@
-const UA = {
+const APP_VERSION = {
+    BILI_UNIVERSAl: "62105010",
+    COMIC_UNIVERSAl: "802",
+    CFNETWORK: "1237",
+    DARWIN: "20.4.0",
+    OS: "ios",
+    MODEL: "iPhone 11",
+    OSVER: "14.5",
+    BUILD: "62105010",
+    NETWORK: "2",
+    CHANNEL: "AppStore"
+  },
+  UA = {
+    BILIBILI: `bili-universal/${APP_VERSION.BILI_UNIVERSAl} CFNetwork/${APP_VERSION.CFNETWORK} Darwin/${APP_VERSION.DARWIN} os/${APP_VERSION.OS} model/${APP_VERSION.MODEL} mobi_app/iphone build/${APP_VERSION.BUILD} osVer/${APP_VERSION.OSVER} network/${APP_VERSION.NETWORK} channel/${APP_VERSION.CHANNEL}`,
+    BILIBILI_COMIC: `comic-universal/${APP_VERSION.COMIC_UNIVERSAl} CFNetwork/${APP_VERSION.CFNETWORK} Darwin/${APP_VERSION.DARWIN} os/${APP_VERSION.OS} model/${APP_VERSION.MODEL} mobi_app/iphone build/${APP_VERSION.BUILD} osVer/${APP_VERSION.OSVER} network/${APP_VERSION.NETWORK} channel/${APP_VERSION.CHANNEL}`,
     COMIC: {
       CHECK_IN:
         "comic-universal/802 CFNetwork/1125.2 Darwin/19.4.0 os/ios model/iPhone 11 mobi_app/iphone_comic osVer/13.4 network/2"
     },
     USER: {
       APP_IPHONE:
-        "bili-universal/9320 CFNetwork/1125.2 Darwin/19.5.0 os/ios model/iPhone 11 mobi_app/iphone osVer/13.4.5 network/1",
+        "bili-universal/62105010 CFNetwork/1237 Darwin/20.4.0 os/ios model/iPhone 11 mobi_app/iphone build/62105010 osVer/14.5 network/2 channel/AppStore",
       VIP_CHECKIN: "bili-universal/9290 CFNetwork/1125.2 Darwin/19.4.0"
     },
     KAAASS: {
