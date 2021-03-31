@@ -1,6 +1,7 @@
 let _User = require("./user"),
   _CheckIn = require("./check_in"),
   _Comic = require("./comic"),
+  _Live = require("./live"),
   init = () => {
     $ui.push({
       props: {
@@ -56,6 +57,9 @@ let _User = require("./user"),
                       break;
                     case 7:
                       _User.View.getLaterToWatch();
+                      break;
+                    case 8:
+                      _Live.View.myFollow();
                       break;
                   }
                   break;

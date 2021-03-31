@@ -159,17 +159,15 @@ const $B_user = require("./user"),
   },
   Liver = {
     onlineFollower: async () => {
-      const _cookie = Auth.cookies(),
+      const ACCESS_KEY = $B_user.Auth.accessKey(),
+        _url = $_Static.URL.LIVE.LIVER_ONLINE + ACCESS_KEY,
         _headers = {
-          "User-Agent": $_Static.UA.USER.APP_IPHONE,
-          Cookie: _cookie
+          "User-Agent": $_Static.UA.BILIBILI
         },
-        httpResult = await $_Static.Http.getAwait(
-          $_Static.URL.LIVE.LIVER_ONLINE,
-          _headers
-        );
+        httpResult = await $_Static.Http.getAwait(_url, _headers);
+      $console.info(_url);
       $console.info(_headers);
-      $console.info(httpResult);
+      $console.info(httpResult.data);
       if (httpResult.error) {
         $console.error(httpResult.error);
       } else if (httpResult.data) {
@@ -182,27 +180,87 @@ const $B_user = require("./user"),
         return httpData || undefined;
       }
       return undefined;
+    },
+    offlineFollower: async () => {
+      const ACCESS_KEY = $B_user.Auth.accessKey(),
+        _url = $_Static.URL.LIVE.LIVER_OFFLINE + ACCESS_KEY,
+        _headers = {
+          "User-Agent": $_Static.UA.BILIBILI
+        },
+        httpResult = await $_Static.Http.getAwait(_url, _headers);
+      $console.info(_url);
+      $console.info(_headers);
+      if (httpResult.error) {
+        $console.error(httpResult.error);
+      } else if (httpResult.data) {
+        const httpData = httpResult.data;
+        if (httpData.code !== 0) {
+          $console.error(
+            `Bilibili.offlineFollower:(${httpData.code})${httpData.message}`
+          );
+        }
+        return httpData || undefined;
+      }
+      return undefined;
     }
   },
   View = {
-    myFollower: async () => {
+    myFollow: async () => {
       $ui.loading(true);
       $ui.menu({
-        items: [],
-        handler: function (title, idx) {}
+        items: ["在播", "未播"],
+        handler: function (title, idx) {
+          switch (idx) {
+            case 0:
+              try {
+                View.showMyFollower(true);
+                $ui.loading(false);
+              } catch (error) {
+                $ui.loading(false);
+                $console.error(error);
+                $ui.alert({
+                  title: "发生意外错误",
+                  message: error.message
+                });
+              }
+              break;
+            case 1:
+              try {
+                View.showMyFollower(false);
+                $ui.loading(false);
+              } catch (error) {
+                $ui.loading(false);
+                $console.error(error);
+                $ui.alert({
+                  title: "发生意外错误",
+                  message: error.message
+                });
+              }
+              break;
+            default:
+              $ui.loading(false);
+          }
+        }
       });
-      $ui.loading(false);
-      const httpData = await Liver.onlineFollower();
+    },
+    showMyFollower: async (online = true) => {
+      const httpData = online
+        ? await Liver.onlineFollower()
+        : await Liver.offlineFollower();
       if (httpData) {
         if (httpData.code === 0) {
-          const later2watch = httpData.data,
-            later2watchList = later2watch.list;
-          if (later2watch.count === 0 || later2watchList.length === 0) {
+          const myFollowData = httpData.data,
+            myFollowList = myFollowData.data.rooms;
+          if (
+            myFollowData.data.total_count === 0 ||
+            myFollowList.length === 0
+          ) {
             $ui.alert({
-              title: "稍后再看为空，请添加内容",
-              message: "later2watch.count = 0"
+              title: "关注列表为空，请登陆或关注主播",
+              message: `showMyFollower.count = 0(online=${online})`
             });
           } else {
+            $ui.loading(false);
             $ui.push({
               props: {
                 title: ""
@@ -211,10 +269,21 @@ const $B_user = require("./user"),
                 {
                   type: "list",
                   props: {
-                    data: later2watchList.map(video => {
+                    data: myFollowList.map(liveRoom => {
                       return {
-                        title: `@${video.owner.name}`,
-                        rows: [video.title, `av${video.aid}/${video.bvid}`]
+                        title: `@${liveRoom.uname}`,
+                        rows: [
+                          online
+                            ? liveRoom.title
+                            : liveRoom.announcement_content,
+                          `直播间id:${liveRoom.roomid}`,
+                          online
+                            ? `直播间封面:${liveRoom.cover.repleace(
+                                "http://i0.hdslb.com/bfs/live/new_room_cover/",
+                                ""
+                              )}`
+                            : `${liveRoom.live_desc}播了`
+                        ]
                       };
                     })
                   },
@@ -223,13 +292,23 @@ const $B_user = require("./user"),
                     didSelect: function (_sender, indexPath, _data) {
                       const section = indexPath.section,
                         row = indexPath.row,
-                        thisVideo = later2watchList[section];
+                        thisRoom = myFollowList[section];
                       switch (row) {
                         case 0:
-                          $app.openURL(thisVideo.uri);
+                          $app.openURL(thisRoom.link);
                           break;
                         case 1:
-                          $app.openURL(`bilibili://video/${thisVideo.bvid}`);
+                          $app.openURL(`bilibili://live/${thisRoom.roomid}`);
+                          break;
+                        case 2:
+                          if (online) {
+                            $quicklook.open({
+                              url: thisRoom.cover,
+                              handler: function () {
+                                $console.info(thisRoom.cover);
+                              }
+                            });
+                          }
                           break;
                       }
                     }
@@ -239,21 +318,23 @@ const $B_user = require("./user"),
             });
           }
         } else {
+          $ui.loading(false);
           $ui.alert({
             title: `错误代码${httpData.code}`,
             message: httpData.message
           });
         }
       } else {
+        $ui.loading(false);
         $ui.alert({
           title: "未知错误",
           message: "返回空白数据，请检查网络是否正常"
         });
       }
-      $ui.loading(false);
     }
   };
 
 module.exports = {
-  User
+  User,
+  View
 };

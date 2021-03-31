@@ -44,7 +44,9 @@ const APP_VERSION = {
       SILVER_TO_COIN:
         "https://api.live.bilibili.com/pay/v1/Exchange/silver2coin",
       LIVER_ONLINE:
-        "https://api.live.bilibili.com/xlive/app-interface/v1/relation/liveAnchor?access_key="
+        "https://api.live.bilibili.com/xlive/app-interface/v1/relation/liveAnchor?access_key=",
+      LIVER_OFFLINE:
+        "https://api.live.bilibili.com/xlive/app-interface/v1/relation/unliveAnchor?pagesize=999&page=1&access_key="
     },
     COMIC: {
       CHECK_IN: "https://manga.bilibili.com/twirp/activity.v1.Activity/ClockIn",
