@@ -54,7 +54,8 @@ const APP_VERSION = {
         "https://manga.bilibili.com/twirp/comic.v1.Comic/ComicDetail",
       TICKET_STATES:
         "https://manga.bilibili.com/twirp/user.v1.User/GetStates?access_key="
-    }
+    },
+    AV_BV_ONLINE: "http://api.bilibili.com/x/web-interface/archive/stat"
   };
 module.exports = {
   UA,

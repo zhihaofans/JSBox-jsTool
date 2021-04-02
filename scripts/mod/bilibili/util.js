@@ -1,4 +1,5 @@
-const table = "fZodR9XQDSUm21yCkr6zBqiveYah8bt4xsWpHnJE7jL5VG3guMTKNPAwcF",
+const _Static = require("./static"),
+  table = "fZodR9XQDSUm21yCkr6zBqiveYah8bt4xsWpHnJE7jL5VG3guMTKNPAwcF",
   tr = new Object(),
   s = [11, 10, 3, 8, 4, 6],
   xor = 177451812,
@@ -23,7 +24,7 @@ const table = "fZodR9XQDSUm21yCkr6zBqiveYah8bt4xsWpHnJE7jL5VG3guMTKNPAwcF",
       // bvid: resp.data.data.bvid,
       // aid: resp.data.data.aid
       return $http.get({
-        url: `${_BILIBILI.AV_BV_ONLINE}?${type}id=${id}`
+        url: `${_Static.URL.AV_BV_ONLINE}?${type}id=${id}`
       });
     },
     getAvOnline: bv => {
