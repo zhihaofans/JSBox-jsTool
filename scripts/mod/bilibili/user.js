@@ -1,5 +1,7 @@
 let $_Cache = require("./data_base").Cache,
   $_Static = require("./static"),
+  $$ = require("$$"),
+  BiliScheme = require("AppScheme").Video.Bilibili,
   Auth = {
     getSignUrl: async (host, param, android = false) => {
       const url = `${$_Static.URL.KAAASS.SIGN_URL}?host=${encodeURI(
@@ -381,7 +383,6 @@ let $_Cache = require("./data_base").Cache,
       }
     },
     getLaterToWatch: async () => {
-      // TODO
       $ui.loading(true);
       const httpData = await Info.getLaterToWatch();
       if (httpData) {
@@ -396,7 +397,7 @@ let $_Cache = require("./data_base").Cache,
           } else {
             $ui.push({
               props: {
-                title: ""
+                title: `稍后再看：${later2watch.count || 0}个`
               },
               views: [
                 {
@@ -404,8 +405,14 @@ let $_Cache = require("./data_base").Cache,
                   props: {
                     data: later2watchList.map(video => {
                       return {
-                        title: `@${video.owner.name}`,
-                        rows: [video.title, `av${video.aid}/${video.bvid}`]
+                        title: `@${video.owner.name} (uid:${video.owner.mid})`,
+                        rows: [
+                          video.title,
+                          `av${video.aid}/${video.bvid}`,
+                          "视频封面",
+                          "个人空间",
+                          "头像"
+                        ]
                       };
                     })
                   },
@@ -420,8 +427,19 @@ let $_Cache = require("./data_base").Cache,
                           $app.openURL(thisVideo.uri);
                           break;
                         case 1:
-                          $app.openURL(`bilibili://video/${thisVideo.bvid}`);
+                          BiliScheme.video(thisVideo.bvid);
                           break;
+                        case 2:
+                          $$.Image.single.showImageMenu(thisVideo.pic);
+                          break;
+                        case 3:
+                          BiliScheme.space(thisVideo.owner.mid);
+                          break;
+                        case 4:
+                          $$.Image.single.showImageMenu(thisVideo.owner.face);
+                          break;
+                        default:
+                          $ui.error("?");
                       }
                     }
                   }
