@@ -158,6 +158,9 @@ const $B_user = require("./user"),
     }
   },
   Liver = {
+    getFollower: (online = true) => {
+      return online ? Liver.onlineFollower() : Liver.offlineFollower();
+    },
     onlineFollower: async () => {
       const ACCESS_KEY = $B_user.Auth.accessKey(),
         _url = $_Static.URL.LIVE.LIVER_ONLINE + ACCESS_KEY,
@@ -205,7 +208,8 @@ const $B_user = require("./user"),
     }
   },
   View = {
-    myFollow: async () => {
+    //TODO
+    myFollow: () => {
       $ui.loading(true);
       $ui.menu({
         items: ["在播", "未播"],
@@ -214,7 +218,6 @@ const $B_user = require("./user"),
             case 0:
               try {
                 View.showMyFollower(true);
-                $ui.loading(false);
               } catch (error) {
                 $ui.loading(false);
                 $console.error(error);
@@ -244,13 +247,12 @@ const $B_user = require("./user"),
       });
     },
     showMyFollower: async (online = true) => {
-      const httpData = online
-        ? await Liver.onlineFollower()
-        : await Liver.offlineFollower();
+      const httpData = await Liver.getFollower(online);
       if (httpData) {
         if (httpData.code === 0) {
           const myFollowData = httpData.data,
             myFollowList = myFollowData.data.rooms;
+          $console.warn(myFollowData);
           if (
             myFollowData.data.total_count === 0 ||
             myFollowList.length === 0
@@ -259,6 +261,7 @@ const $B_user = require("./user"),
               title: "关注列表为空，请登陆或关注主播",
               message: `showMyFollower.count = 0(online=${online})`
             });
+            $ui.loading(false);
           } else {
             $ui.loading(false);
             $ui.push({
@@ -319,6 +322,7 @@ const $B_user = require("./user"),
           }
         } else {
           $ui.loading(false);
+          $console.error(httpData);
           $ui.alert({
             title: `错误代码${httpData.code}`,
             message: httpData.message
@@ -326,6 +330,7 @@ const $B_user = require("./user"),
         }
       } else {
         $ui.loading(false);
+        $console.error("返回空白数据，请检查网络是否正常");
         $ui.alert({
           title: "未知错误",
           message: "返回空白数据，请检查网络是否正常"
