@@ -24,3 +24,4 @@ let main = require("./scripts/main"),
     }
   };
 init();
+$console.info("start");
