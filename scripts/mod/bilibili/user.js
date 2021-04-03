@@ -489,35 +489,31 @@ let $_Cache = require("./data_base").Cache,
       if (inputResult) {
         $ui.loading(true);
         const httpData = await Info.getSameFollow(inputResult);
-        $console.warn("getSameFollow");
         if (httpData) {
           if (httpData.code === 0) {
             const sameFollowData = httpData.data,
               sameFollowList = sameFollowData.list;
-            if (sameFollowData.count === 0 || sameFollowList.length === 0) {
+            if (sameFollowData.total === 0 || sameFollowList.length === 0) {
               $ui.alert({
                 title: "共同关注为空，请添加内容",
-                message: "later2watch.count = 0"
+                message: "sameFollowList.total = 0"
               });
             } else {
+              $console.warn("getSameFollow");
               $ui.push({
                 props: {
-                  title: `共同关注：${sameFollowData.count || 0}个`
+                  title: `共同关注：${
+                    sameFollowData.total || sameFollowList.length || 0
+                  }个`
                 },
                 views: [
                   {
                     type: "list",
                     props: {
-                      data: sameFollowList.map(video => {
+                      data: sameFollowList.map(user => {
                         return {
-                          title: `@${video.owner.name} (uid:${video.owner.mid})`,
-                          rows: [
-                            video.title,
-                            `av${video.aid}/${video.bvid}`,
-                            "视频封面",
-                            "个人空间",
-                            "头像"
-                          ]
+                          title: `@${user.uname} (uid:${user.mid})`,
+                          rows: [user.sign, "个人空间", "头像"]
                         };
                       })
                     },
@@ -526,24 +522,10 @@ let $_Cache = require("./data_base").Cache,
                       didSelect: function (_sender, indexPath, _data) {
                         const section = indexPath.section,
                           row = indexPath.row,
-                          thisVideo = sameFollowList[section];
+                          thisUser = sameFollowList[section];
                         switch (row) {
-                          case 0:
-                            $app.openURL(thisVideo.uri);
-                            break;
-                          case 1:
-                            BiliScheme.video(thisVideo.bvid);
-                            break;
-                          case 2:
-                            $$.Image.single.showImageMenu(thisVideo.pic);
-                            break;
-                          case 3:
-                            BiliScheme.space(thisVideo.owner.mid);
-                            break;
-                          case 4:
-                            $$.Image.single.showImageMenu(thisVideo.owner.face);
-                            break;
                           default:
+                            BiliScheme.space(thisUser.mid);
                             $ui.error("?");
                         }
                       }
