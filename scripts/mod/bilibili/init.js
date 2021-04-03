@@ -23,7 +23,8 @@ let _User = require("./user"),
                   "漫画剩余券",
                   "下载漫画",
                   "稍后再看",
-                  "我关注的直播"
+                  "我关注的直播",
+                  "查看共同关注"
                 ]
               }
             ]
@@ -60,6 +61,9 @@ let _User = require("./user"),
                       break;
                     case 8:
                       _Live.View.myFollow();
+                      break;
+                    case 9:
+                      _User.View.getSameFollow();
                       break;
                   }
                   break;
