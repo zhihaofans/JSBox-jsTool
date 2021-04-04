@@ -499,7 +499,6 @@ let $_Cache = require("./data_base").Cache,
                 message: "sameFollowList.total = 0"
               });
             } else {
-              $console.warn("getSameFollow");
               $ui.push({
                 props: {
                   title: `共同关注：${
