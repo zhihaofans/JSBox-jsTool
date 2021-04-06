@@ -1,4 +1,5 @@
-const startDownload = (url, handler, progress) => {
+const $$ = require("$$"),
+  startDownload = (url, handler, progress) => {
     return $http.download({
       url: url,
       showsProgress: progress ? true : false,
@@ -19,7 +20,9 @@ const startDownload = (url, handler, progress) => {
         if (saveToAlbum) {
           $photo.save({
             data: resp.data,
-            handler: function (success) {}
+            handler: function (success) {
+              $$.Console.auto(success, "string");
+            }
           });
         } else {
           $share.sheet(resp.data);
@@ -27,3 +30,5 @@ const startDownload = (url, handler, progress) => {
       }
     });
   };
+
+module.exports = { startDownload, downloadImage };
