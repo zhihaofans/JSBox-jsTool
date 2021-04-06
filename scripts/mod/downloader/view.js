@@ -1,4 +1,6 @@
-const main = () => {},
+const main = () => {
+    // TODO
+  },
   init = () => {
     main();
   };
