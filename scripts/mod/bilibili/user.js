@@ -523,8 +523,33 @@ let $_Cache = require("./data_base").Cache,
                           row = indexPath.row,
                           thisUser = sameFollowList[section];
                         switch (row) {
-                          default:
+                          case 0:
+                            $ui.alert({
+                              title: "个性签名",
+                              message: thisUser.sign,
+                              actions: [
+                                {
+                                  title: "分享",
+                                  disabled: false,
+                                  handler: function () {
+                                    $share.sheet([thisUser.sign]);
+                                  }
+                                },
+                                {
+                                  title: "关闭",
+                                  disabled: false,
+                                  handler: function () {}
+                                }
+                              ]
+                            });
+                            break;
+                          case 1:
                             BiliScheme.space(thisUser.mid);
+                            break;
+                          case 2:
+                            $$.Image.single.showImageMenu(thisUser.face);
+                            break;
+                          default:
                             $ui.error("?");
                         }
                       }
