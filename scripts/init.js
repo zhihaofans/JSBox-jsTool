@@ -172,7 +172,6 @@ const pref_cache_list = {
       param: undefined
     }
   },
-  mod = require("./mod_index"),
   loadModule = moduleId => {
     const moduleInfo = modules[moduleId];
     require(moduleInfo.filePath)[moduleInfo.action]();
@@ -188,7 +187,6 @@ module.exports = {
   initPrefs,
   updatePrefs,
   pref_cache_list,
-  mod: mod.showModList,
   ModLoader: ModLoader,
   setting: openSettingPage,
   modules,
