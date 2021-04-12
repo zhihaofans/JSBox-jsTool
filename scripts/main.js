@@ -55,7 +55,13 @@ let siteListL10n = ["ACFUN", "BILIBILI"],
                 case 1:
                   switch (indexPath.row) {
                     case 0:
-                      init.mod();
+                      try {
+                        const ModLoader = new init.ModLoader();
+                        ModLoader.showModList();
+                      } catch (_error) {
+                        $console.error(_error);
+                        $ui.error("ModLoader:init failed");
+                      }
                       break;
                     case 1:
                       init.setting();
