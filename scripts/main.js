@@ -1,5 +1,5 @@
-const init = require("./init");
-let siteListL10n = ["ACFUN", "BILIBILI"],
+const init = require("./init"),
+  siteListL10n = ["ACFUN", "BILIBILI"],
   moreListL10n = ["MOD", "SETTING"],
   getNavButton = () => {
     return [
@@ -56,7 +56,7 @@ let siteListL10n = ["ACFUN", "BILIBILI"],
                   switch (indexPath.row) {
                     case 0:
                       try {
-                        const ModLoader = new init.ModLoader();
+                        const ModLoader = new init.ModLoader("/scripts/mod/");
                         ModLoader.showModList();
                       } catch (_error) {
                         $console.error(_error);
