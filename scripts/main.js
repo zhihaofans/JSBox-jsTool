@@ -47,7 +47,6 @@ const init = require("./init"),
                     case 1:
                       init.loadModule("bilibili");
                       break;
-
                     default:
                       $ui.error("错误选项");
                   }
@@ -55,13 +54,7 @@ const init = require("./init"),
                 case 1:
                   switch (indexPath.row) {
                     case 0:
-                      try {
-                        const ModLoader = new init.ModLoader("/scripts/mod/");
-                        ModLoader.showModList();
-                      } catch (_error) {
-                        $console.error(_error);
-                        $ui.error("ModLoader:init failed");
-                      }
+                      init.mod();
                       break;
                     case 1:
                       init.setting();

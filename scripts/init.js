@@ -181,6 +181,15 @@ const pref_cache_list = {
     $prefs.open(() => {
       updatePrefs();
     });
+  },
+  initModLoader = () => {
+    try {
+      const _ModLoader = new ModLoader("/scripts/mod/");
+      _ModLoader.showModList();
+    } catch (_error) {
+      $console.error(_error);
+      $ui.error("ModLoader:init failed");
+    }
   };
 
 module.exports = {
@@ -189,6 +198,7 @@ module.exports = {
   pref_cache_list,
   ModLoader: ModLoader,
   setting: openSettingPage,
+  mod: initModLoader,
   modules,
   loadModule
 };
