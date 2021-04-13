@@ -80,6 +80,7 @@ class ModLoader {
         modList.map(mod => {
           modJsonObj[mod] ? pinModList.push(mod) : otherModList.push(mod);
         });
+        const $this = this;
         $ui.push({
           props: {
             title: "Mod列表"
@@ -105,7 +106,7 @@ class ModLoader {
                   const section = indexPath.section;
                   const row = indexPath.row;
                   $console.info(_data);
-                  this.initMod(
+                  $this.initMod(
                     section === 0 ? pinModList[row] : otherModList[row]
                   );
                 }
