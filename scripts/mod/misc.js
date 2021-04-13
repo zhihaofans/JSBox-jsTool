@@ -1,4 +1,6 @@
-let mainList = ["66mz8/phoneWallpaper", "neeemooo"],
+const httpLib = require("/scripts/libs/http"),
+  $$ = require("$$"),
+  mainList = ["66mz8/phoneWallpaper", "neeemooo", "wallhaven"],
   initListView = () => {
     $ui.push({
       props: {
@@ -19,6 +21,9 @@ let mainList = ["66mz8/phoneWallpaper", "neeemooo"],
                   break;
                 case "neeemooo":
                   neeemooo();
+                  break;
+                case "wallhaven":
+                  wallhaven();
                   break;
                 default:
                   $ui.toast("暂不支持该功能，请等待更新");
@@ -64,6 +69,59 @@ let mainList = ["66mz8/phoneWallpaper", "neeemooo"],
       title: fileName,
       url: url
     });
+  },
+  wallhaven = async () => {
+    $ui.loading(true);
+    const cacheId = "mod.misc.wallhaven.next_seed",
+      query = `id%3A5type:png`,
+      sorting = `random`,
+      randomSeed = $cache.get(cacheId) || `XekqJ6`,
+      page = 1,
+      url = `https://wallhaven.cc/api/v1/search?q=${query}&sorting=${sorting}&seed=${randomSeed}&page=${page}`,
+      httpResult = await httpLib.getAwait(url);
+    if (httpResult.error) {
+      $console.error(httpResult.error);
+      $ui.loading(false);
+      $ui.alert({
+        title: "misc.wallhaven.error",
+        message: httpResult.error.message
+      });
+    } else if (httpResult.data) {
+      const httpData = httpResult.data,
+        apiData = httpData.data,
+        apiMeta = httpData.meta,
+        nextRandomSeed = apiMeta.seed;
+      $console.info(httpData);
+      $cache.set(cacheId, nextRandomSeed || randomSeed);
+      $ui.loading(false);
+      if (apiData && apiMeta) {
+        $ui.push({
+          props: {
+            title: apiMeta.query.tag
+          },
+          views: [
+            {
+              type: "list",
+              props: {
+                data: apiData.map(
+                  item => `${item.category} | ${item.purity} | ${item.id}`
+                )
+              },
+              layout: $layout.fill,
+              events: {
+                didSelect: function (_sender, indexPath, _data) {
+                  const section = indexPath.section;
+                  const row = indexPath.row;
+                  $$.Image.single.showImageMenu(apiData[row].path);
+                }
+              }
+            }
+          ]
+        });
+      } else {
+        $console.error(`misc.wallhaven:(${httpData.code})${httpData.message}`);
+      }
+    }
   };
 module.exports = {
   init: initListView
