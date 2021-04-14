@@ -91,7 +91,6 @@ const httpLib = require("/scripts/libs/http"),
         apiData = httpData.data,
         apiMeta = httpData.meta,
         nextRandomSeed = apiMeta.seed;
-      $console.info(httpData);
       $cache.set(cacheId, nextRandomSeed || randomSeed);
       $ui.loading(false);
       if (apiData && apiMeta) {
@@ -110,9 +109,7 @@ const httpLib = require("/scripts/libs/http"),
               layout: $layout.fill,
               events: {
                 didSelect: function (_sender, indexPath, _data) {
-                  const section = indexPath.section;
-                  const row = indexPath.row;
-                  $$.Image.single.showImageMenu(apiData[row].path);
+                  $$.Image.single.showImageMenu(apiData[indexPath.row].path);
                 }
               }
             }
