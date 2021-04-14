@@ -65,10 +65,7 @@ const httpLib = require("/scripts/libs/http"),
       fileName = images[Math.floor(Math.random() * 18)],
       url = "https://neeemooo.com/hanon/" + encodeURI(fileName);
     $console.info(url);
-    $ui.preview({
-      title: fileName,
-      url: url
-    });
+    $$.Image.single.showImageMenu(url);
   },
   wallhaven = async () => {
     $ui.loading(true);
