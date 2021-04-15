@@ -1,4 +1,4 @@
-let main = require("./scripts/main"),
+const main = require("./scripts/main"),
   l10nInit = require("./strings/l10n_init"),
   init = () => {
     $app.strings = l10nInit.init();
