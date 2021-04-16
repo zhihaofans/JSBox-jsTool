@@ -125,7 +125,7 @@ let showResultListView = (resultList, webLink) => {
                                 $app.openURL(itemUrl);
                                 break;
                               case 1:
-                                appScheme.Browser.Chrome(itemUrl);
+                                appScheme.Browser.Chrome.jsbox(itemUrl);
                                 break;
                               case 2:
                                 appScheme.Browser.Alook.open(itemUrl);
