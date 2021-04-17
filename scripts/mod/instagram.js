@@ -134,7 +134,7 @@ let showResultListView = (resultList, webLink) => {
                                 appScheme.Browser.QQBrowser(itemUrl);
                                 break;
                               case 4:
-                                appScheme.Browser.Firefox(itemUrl);
+                                appScheme.Browser.FirefoxWeb(itemUrl);
                                 break;
                               case 5:
                                 appScheme.Video.AVPlayer(itemUrl);
