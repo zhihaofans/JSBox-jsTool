@@ -1,5 +1,9 @@
-const init = () => {},
-  animeRandom = async (sfw = true) => {
+const $$ = require("$$"),
+  httpLib = require("/scripts/libs/http"),
+  init = () => {
+    animeRandom();
+  },
+  animeRandom = async () => {
     $ui.loading(true);
     const cacheId = "mod.misc.wallhaven.next_seed",
       query = `id%3A5type:png`,
