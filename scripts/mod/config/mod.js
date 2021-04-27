@@ -1,0 +1,1 @@
+const getConfig = id => [];
