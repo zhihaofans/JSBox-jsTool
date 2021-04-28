@@ -171,6 +171,11 @@ const pref_cache_list = {
       filePath: "./mod/bilibili",
       action: "init",
       param: undefined
+    },
+    config: {
+      filePath: "./mod/config",
+      action: "init",
+      param: undefined
     }
   },
   loadModule = moduleId => {

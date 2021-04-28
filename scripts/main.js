@@ -57,7 +57,7 @@ const init = require("./init"),
                       init.mod();
                       break;
                     case 1:
-                      init.setting();
+                      init.loadModule("config");
                       break;
                     default:
                       $ui.error("错误选项");

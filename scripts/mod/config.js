@@ -1,5 +1,5 @@
 const init = () => {
-  require("/scripts/init").setting();
+  require("./config/view").initView();
 };
 module.exports = {
   init

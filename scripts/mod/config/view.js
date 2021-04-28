@@ -19,6 +19,14 @@ const pref_cache_list = {
       $prefs.set(_k, $cache.get(_list[_k]) || "");
     });
   },
+  updatePrefs = () => {
+    updatePrefByList(pref_cache_list);
+  },
+  updatePrefByList = _list => {
+    Object.keys(_list).map(_k => {
+      $cache.set(_list[_k], $prefs.get(_k) || "");
+    });
+  },
   initView = () => {
     initPrefs();
     $prefs.open(() => {
@@ -30,5 +38,5 @@ module.exports = {
   initPrefs,
   updatePrefs,
   pref_cache_list,
-  openSettingPage: initView
+  initView
 };
