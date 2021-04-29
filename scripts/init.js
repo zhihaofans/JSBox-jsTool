@@ -1,12 +1,12 @@
 class ModLoader {
   constructor(modDir = "/scripts/mod/") {
-    this.modDir = modDir;
+    this.MOD_DIR = modDir;
   }
   loadMod(modName) {
-    return require(`${this.modDir}${modName}`);
+    return require(`${this.MOD_DIR}${modName}`);
   }
   initMod(modName) {
-    let fileName = `${this.modDir}${modName}`;
+    let fileName = `${this.MOD_DIR}${modName}`;
     if (!fileName.endsWith(".js")) {
       fileName += ".js";
     }
@@ -42,7 +42,7 @@ class ModLoader {
   }
   getModList() {
     let modList = [],
-      fileList = $file.list(this.modDir);
+      fileList = $file.list(this.MOD_DIR);
     fileList.sort();
     fileList.map(f => {
       if (!$file.isDirectory(f)) {
@@ -55,7 +55,7 @@ class ModLoader {
   }
   loadModJson() {
     try {
-      const modJson = $file.read(`${this.modDir}mod.json`).string;
+      const modJson = $file.read(`${this.MOD_DIR}mod.json`).string;
       return modJson ? JSON.parse(modJson) : undefined;
     } catch (error) {
       $console.error("loadModJson:failed");
