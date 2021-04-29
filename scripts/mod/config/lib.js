@@ -46,5 +46,45 @@ class SQLite {
     this.update(`CREATE TABLE ${table_id}(${args})`);
   }
 }
-
-module.exports = { SQLite };
+class Cache {
+  constructor(key) {
+    this.CACHE_KEY = key;
+  }
+  set(value) {
+    $cache.set(this.CACHE_KEY, value);
+  }
+  setAsync(value, handler) {
+    $cache.setAsync({
+      key: this.CACHE_KEY,
+      value: value,
+      handler: handler
+    });
+  }
+  get() {
+    $cache.get(this.CACHE_KEY);
+  }
+  getAsync(handler) {
+    $cache.getAsync({
+      key: this.CACHE_KEY,
+      handler: handler
+    });
+  }
+  remove() {
+    $cache.remove(this.CACHE_KEY);
+  }
+  removeAsync(handler) {
+    $cache.removeAsync({
+      key: this.CACHE_KEY,
+      handler: handler
+    });
+  }
+  clear() {
+    $cache.clear();
+  }
+  clearAsync(handler) {
+    $cache.clearAsync({
+      handler: handler
+    });
+  }
+}
+module.exports = { SQLite, Cache };
