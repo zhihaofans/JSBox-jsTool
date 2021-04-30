@@ -87,4 +87,15 @@ class Cache {
     });
   }
 }
-module.exports = { SQLite, Cache };
+class Prefs {
+  constructor(key) {
+    this.PREFS_KEY = key;
+  }
+  get() {
+    return $prefs.get(this.PREFS_KEY);
+  }
+  set(value) {
+    return $prefs.set(this.PREFS_KEY, value);
+  }
+}
+module.exports = { SQLite, Cache, Prefs };
