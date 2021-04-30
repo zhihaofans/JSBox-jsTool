@@ -1,4 +1,6 @@
-let $_Cache = require("./data_base").Cache,
+const DataBase = require("./data_base"),
+  SQLite = DataBase.SQLite,
+  $_Cache = DataBase.Cache,
   $_Static = require("./static"),
   $$ = require("$$"),
   JSDialogs = require("JSDialogs"),
@@ -577,6 +579,18 @@ let $_Cache = require("./data_base").Cache,
         $ui.loading(false);
       } else {
         await JSDialogs.showPlainAlert("错误", "请输入对方的uid");
+      }
+    },
+    getAccessKeyInSQL: () => {},
+    setAccessKeyInSQL: () => {
+      const access_key = Auth.accessKey();
+      try {
+        const result_create = SQLite.createTable();
+        $console.warn(result_create);
+        const result = SQLite.setAccessKey(access_key);
+        $console.warn(result);
+      } catch (_ERROR) {
+        $console.error(_ERROR.message);
       }
     }
   };
