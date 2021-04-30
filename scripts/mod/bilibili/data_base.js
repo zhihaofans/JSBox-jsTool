@@ -1,4 +1,4 @@
-let Cache = {
+const Cache = {
   ACCESS_KEY: "MOD_BILIBILI_ACCESS_KEY",
   UID: "MOD_BILIBILI_UID",
   COOKIES: "MOD_BILIBILI_COOKIES",
