@@ -10,7 +10,7 @@ class Mod {
   }
   setCache(key, value) {
     const Cache = new Lib.Cache(`MOD_${this.MOD_ID}_${key}`.toUpperCase());
-    return Cache.set(value);
+    Cache.set(value);
   }
   getPref(key) {
     const Prefs = new Lib.Prefs(`mod.${this.MOD_ID}.${key}`);
@@ -18,8 +18,8 @@ class Mod {
   }
   setPref(key, value) {
     const Prefs = new Lib.Prefs(`mod.${this.MOD_ID}.${key}`);
-    return Prefs.set(value);
+    Prefs.set(value);
   }
 }
 
-module.exports = Mod;
+module.exports = { Mod };
