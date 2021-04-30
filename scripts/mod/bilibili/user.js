@@ -581,7 +581,16 @@ const DataBase = require("./data_base"),
         await JSDialogs.showPlainAlert("错误", "请输入对方的uid");
       }
     },
-    getAccessKeyInSQL: () => {},
+    getAccessKeyInSQL: () => {
+      const result = SQLite.getAccessKey();
+      $console.warn(result);
+      // try {
+      //   const result = SQLite.getAccessKey();
+      //   $console.warn(result);
+      // } catch (_ERROR) {
+      //   $console.error(_ERROR.message);
+      // }
+    },
     setAccessKeyInSQL: () => {
       const access_key = Auth.accessKey();
       try {

@@ -39,17 +39,26 @@ const Cache = {
       db.update(sql);
       db.close();
     },
-    getAccessKey: handler => {
-      const db = $sqlite.open("/assets/mods.db");
-      db.query("SELECT value FROM bilibili where id = 'access_key'", handler);
-      db.query("SELECT * FROM User", (rs, err) => {
-        while (rs.next()) {
-          const values = rs.values;
-          const name = rs.get("name"); // Or rs.get(0);
-        }
-        rs.close();
-      });
-      db.close();
+    parse: result => {
+      if (result.error !== null) {
+        $console.error(result.error);
+        return undefined;
+      }
+      const data = [];
+      while (result.result.next()) {
+        data.push({
+          id: result.result.get("id"),
+          value: result.result.get("value")
+        });
+      }
+      result.result.close();
+      return data;
+    },
+    getAccessKey: () => {
+      const db = $sqlite.open("/assets/mods.db"),
+        result = db.query("SELECT * FROM bilibili WHERE id = 'access_key'"),
+        sql_data = SQLite.parse(result);
+      return sql_data.length == 1 ? sql_data[0].value : undefined;
     },
     setAccessKey: access_key => {
       $console.info(access_key);
