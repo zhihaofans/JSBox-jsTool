@@ -12,10 +12,6 @@ class Mod {
     const Cache = new Lib.Cache(`mod.${this.MOD_ID}.${key}`);
     return Cache.set(value);
   }
-  getSQL() {
-    const SQLite = new Lib.SQLite(this.MOD_DATABASE_ID);
-    //`mod.${this.MOD_ID}.${key}`
-  }
 }
 
 module.exports = Mod;
