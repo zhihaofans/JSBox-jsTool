@@ -595,11 +595,12 @@ const DataBase = require("./data_base"),
       const access_key = Auth.accessKey();
       try {
         const result_create = SQLite.createTable();
-        $console.warn(result_create);
-        const result = SQLite.setAccessKey(access_key);
-        $console.warn(result);
+        SQLite.setAccessKey(access_key)
+          ? $ui.success("success")
+          : $ui.error("error");
       } catch (_ERROR) {
-        $console.error(_ERROR.message);
+        $console.error(_ERROR);
+        $ui.error(_ERROR.message);
       }
     }
   };

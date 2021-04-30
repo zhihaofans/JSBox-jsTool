@@ -23,7 +23,7 @@ const Cache = {
   },
   SQLite = {
     init: () => {
-      return $sqlite.open("/assets/mods.db");
+      return $sqlite.open("/assets/.files/mods.db");
     },
     update: (sql, args) => {
       const db = SQLite.init();
@@ -34,7 +34,7 @@ const Cache = {
       db.close();
     },
     createTable: () => {
-      const db = $sqlite.open("/assets/mods.db"),
+      const db = SQLite.init(),
         sql = `CREATE TABLE IF NOT EXISTS bilibili(id TEXT PRIMARY KEY NOT NULL, value TEXT)`;
       db.update(sql);
       db.close();
@@ -55,18 +55,29 @@ const Cache = {
       return data;
     },
     getAccessKey: () => {
-      const db = $sqlite.open("/assets/mods.db"),
+      SQLite.createTable();
+      const db = SQLite.init(),
         result = db.query("SELECT * FROM bilibili WHERE id = 'access_key'"),
         sql_data = SQLite.parse(result);
       return sql_data.length == 1 ? sql_data[0].value : undefined;
     },
     setAccessKey: access_key => {
-      $console.info(access_key);
-      const db = $sqlite.open("/assets/mods.db");
-      db.update({
-        sql: "INSERT INTO bilibili (id,value) VALUES ('access_key', '?')",
-        args: [access_key]
-      });
+      SQLite.createTable();
+      if (access_key) {
+        const db = SQLite.init(),
+          sql = SQLite.getAccessKey()
+            ? "UPDATE bilibili SET value=? WHERE id=?"
+            : "INSERT INTO bilibili (value,id) VALUES (?, ?)";
+
+        const update_result = db.update({
+          sql: sql,
+          args: [access_key, "access_key"]
+        });
+        db.close();
+        return update_result.result || false;
+      } else {
+        return false;
+      }
     }
   };
 module.exports = {
