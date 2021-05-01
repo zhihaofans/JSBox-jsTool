@@ -16,6 +16,7 @@ const DataBase = require("./data_base"),
             obj[obj_list[0]] = obj_list[1];
           }
         });
+        return obj;
       } else {
         return undefined;
       }
@@ -126,6 +127,7 @@ const DataBase = require("./data_base"),
             const userCookies = $_get.data.cookie;
             if (userCookies) {
               const cookies_obj = Auth.parseCookies(userCookies);
+              $console.info(cookies_obj);
               try {
                 if (cookies_obj["DedeUserID"]) {
                   Auth.uid(cookies_obj.DedeUserID);

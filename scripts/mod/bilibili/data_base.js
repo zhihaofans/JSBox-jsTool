@@ -94,17 +94,7 @@ const Cache = {
     setAccessKey: access_key => {
       SQLite.createTable();
       if (access_key) {
-        const db = SQLite.init(),
-          sql = SQLite.getAccessKey()
-            ? "UPDATE bilibili SET value=? WHERE id=?"
-            : "INSERT INTO bilibili (value,id) VALUES (?, ?)";
-
-        const update_result = db.update({
-          sql: sql,
-          args: [access_key, "access_key"]
-        });
-        db.close();
-        return update_result.result || false;
+        return SQLite.setData("access_key", access_key);
       } else {
         return false;
       }
@@ -112,11 +102,7 @@ const Cache = {
     setUid: uid => {
       SQLite.createTable();
       if (uid) {
-        const sql = SQLite.getUid()
-          ? "UPDATE bilibili SET value=? WHERE id=?"
-          : "INSERT INTO bilibili (value,id) VALUES (?, ?)";
-        const update_result = SQLite.update(sql, [uid, "uid"]);
-        return update_result.result || false;
+        return SQLite.setData("uid", uid);
       } else {
         return false;
       }
