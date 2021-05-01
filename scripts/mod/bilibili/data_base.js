@@ -34,10 +34,14 @@ const Cache = {
       db.close();
     },
     createTable: () => {
-      const db = SQLite.init(),
-        sql = `CREATE TABLE IF NOT EXISTS bilibili(id TEXT PRIMARY KEY NOT NULL, value TEXT)`;
-      db.update(sql);
-      db.close();
+      try {
+        const db = SQLite.init(),
+          sql = `CREATE TABLE IF NOT EXISTS bilibili(id TEXT PRIMARY KEY NOT NULL, value TEXT)`;
+        db.update(sql);
+        db.close();
+      } catch (_ERROR) {
+        $console.error(_ERROR);
+      }
     },
     parse: result => {
       if (result.error !== null) {
@@ -65,6 +69,24 @@ const Cache = {
         }),
         sql_data = SQLite.parse(result);
       return sql_data.length == 1 ? sql_data[0].value : undefined;
+    },
+    setData: (key, value) => {
+      SQLite.createTable();
+      if (key) {
+        const db = SQLite.init(),
+          sql = SQLite.getData(key)
+            ? "UPDATE bilibili SET value=? WHERE id=?"
+            : "INSERT INTO bilibili (value,id) VALUES (?, ?)";
+
+        const update_result = db.update({
+          sql: sql,
+          args: [value, key]
+        });
+        db.close();
+        return update_result.result || false;
+      } else {
+        return false;
+      }
     },
     getAccessKey: () => {
       return SQLite.getData("access_key");
@@ -101,6 +123,9 @@ const Cache = {
     },
     getUid: () => {
       return SQLite.getData("uid");
+    },
+    setCookies: cookies => {
+      return SQLite.setData("cookies", cookies);
     },
     getCookies: () => {
       return SQLite.getData("cookies");

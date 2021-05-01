@@ -6,6 +6,20 @@ const DataBase = require("./data_base"),
   JSDialogs = require("JSDialogs"),
   BiliScheme = require("AppScheme").Video.Bilibili,
   Auth = {
+    parseCookies: cookies => {
+      if (cookies) {
+        const list = cookies.split("; "),
+          obj = {};
+        list.map(list_item => {
+          const obj_list = list_item.split("=");
+          if (obj_list.length === 2) {
+            obj[obj_list[0]] = obj_list[1];
+          }
+        });
+      } else {
+        return undefined;
+      }
+    },
     getSignUrl: async (host, param, android = false) => {
       const url = `${$_Static.URL.KAAASS.SIGN_URL}?host=${encodeURI(
           host
@@ -56,12 +70,14 @@ const DataBase = require("./data_base"),
     cookie: (cookies = undefined) => {
       if (cookies) {
         $_Cache.cookies(cookies);
+        SQLite.setCookies(cookies);
       }
       return $_Cache.cookies();
     },
     cookies: (cookies = undefined) => {
       if (cookies) {
         $_Cache.cookies(cookies);
+        SQLite.setCookies(cookies);
       }
       return $_Cache.cookies();
     },
@@ -80,7 +96,12 @@ const DataBase = require("./data_base"),
           $console.error($_get.error.message);
           return false;
         } else {
-          return $_get.data.status == "OK";
+          if ($_get.data.status == "OK") {
+            Auth.accessKey(access_key);
+            return true;
+          } else {
+            return false;
+          }
         }
       } else {
         return false;
@@ -104,6 +125,14 @@ const DataBase = require("./data_base"),
           if ($_get.data.status == "OK") {
             const userCookies = $_get.data.cookie;
             if (userCookies) {
+              const cookies_obj = Auth.parseCookies(userCookies);
+              try {
+                if (cookies_obj["DedeUserID"]) {
+                  Auth.uid(cookies_obj.DedeUserID);
+                }
+              } catch (_ERROR) {
+                $console.error(_ERROR);
+              }
               Auth.cookies(userCookies);
               return userCookies;
             } else {
