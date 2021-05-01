@@ -59,28 +59,21 @@ const DataBase = require("./data_base"),
         $_Cache.accessKey(access_key);
         SQLite.setAccessKey(access_key);
       }
-      return $_Cache.accessKey();
+      return SQLite.getAccessKey();
     },
     uid: (uid = undefined) => {
       if (uid) {
         $_Cache.uid(uid);
         SQLite.setUid(uid);
       }
-      return $_Cache.uid();
-    },
-    cookie: (cookies = undefined) => {
-      if (cookies) {
-        $_Cache.cookies(cookies);
-        SQLite.setCookies(cookies);
-      }
-      return $_Cache.cookies();
+      return SQLite.getUid();
     },
     cookies: (cookies = undefined) => {
       if (cookies) {
         $_Cache.cookies(cookies);
         SQLite.setCookies(cookies);
       }
-      return $_Cache.cookies();
+      return SQLite.getCookies();
     },
     refreshToken: async () => {
       $ui.loading(true);
@@ -615,14 +608,18 @@ const DataBase = require("./data_base"),
       }
     },
     getAccessKeyInSQL: () => {
-      const result = SQLite.getAccessKey();
-      $console.warn(result);
-      // try {
-      //   const result = SQLite.getAccessKey();
-      //   $console.warn(result);
-      // } catch (_ERROR) {
-      //   $console.error(_ERROR.message);
-      // }
+      try {
+        const access_key = SQLite.getAccessKey();
+        $console.warn(access_key);
+        $input.text({
+          type: $kbType.text,
+          placeholder: "access_key",
+          text: access_key || "",
+          handler: text => {}
+        });
+      } catch (_ERROR) {
+        $console.error(_ERROR.message);
+      }
     },
     setAccessKeyInSQL: () => {
       const access_key = Auth.accessKey();
