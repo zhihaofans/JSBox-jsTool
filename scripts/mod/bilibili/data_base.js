@@ -54,12 +54,20 @@ const Cache = {
       result.result.close();
       return data;
     },
-    getAccessKey: () => {
+    getData: key => {
       SQLite.createTable();
       const db = SQLite.init(),
-        result = db.query("SELECT * FROM bilibili WHERE id = 'access_key'"),
+        sql = "SELECT * FROM bilibili WHERE id = ?",
+        args = [key],
+        result = db.query({
+          sql: sql,
+          args: args
+        }),
         sql_data = SQLite.parse(result);
       return sql_data.length == 1 ? sql_data[0].value : undefined;
+    },
+    getAccessKey: () => {
+      return SQLite.getData("access_key");
     },
     setAccessKey: access_key => {
       SQLite.createTable();
@@ -78,6 +86,24 @@ const Cache = {
       } else {
         return false;
       }
+    },
+    setUid: uid => {
+      SQLite.createTable();
+      if (uid) {
+        const sql = SQLite.getUid()
+          ? "UPDATE bilibili SET value=? WHERE id=?"
+          : "INSERT INTO bilibili (value,id) VALUES (?, ?)";
+        const update_result = SQLite.update(sql, [uid, "uid"]);
+        return update_result.result || false;
+      } else {
+        return false;
+      }
+    },
+    getUid: () => {
+      return SQLite.getData("uid");
+    },
+    getCookies: () => {
+      return SQLite.getData("cookies");
     }
   };
 module.exports = {

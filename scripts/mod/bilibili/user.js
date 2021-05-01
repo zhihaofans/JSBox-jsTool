@@ -42,12 +42,14 @@ const DataBase = require("./data_base"),
     accessKey: (access_key = undefined) => {
       if (access_key) {
         $_Cache.accessKey(access_key);
+        SQLite.setAccessKey(access_key);
       }
       return $_Cache.accessKey();
     },
     uid: (uid = undefined) => {
       if (uid) {
         $_Cache.uid(uid);
+        SQLite.setUid(uid);
       }
       return $_Cache.uid();
     },
@@ -594,7 +596,7 @@ const DataBase = require("./data_base"),
     setAccessKeyInSQL: () => {
       const access_key = Auth.accessKey();
       try {
-        const result_create = SQLite.createTable();
+        SQLite.createTable();
         SQLite.setAccessKey(access_key)
           ? $ui.success("success")
           : $ui.error("error");
