@@ -3,6 +3,7 @@ const SQLite = {
     return $sqlite.open("/assets/.files/mods.db");
   },
   update: (sql, args) => {
+    SQLite.createTable();
     const db = SQLite.init();
     db.update({
       sql: sql,
@@ -53,37 +54,34 @@ const SQLite = {
       const db = SQLite.init(),
         sql = SQLite.getData(key)
           ? "UPDATE acfun SET value=? WHERE id=?"
-          : "INSERT INTO acfun (value,id) VALUES (?, ?)";
-
-      const update_result = db.update({
-        sql: sql,
-        args: [value, key]
-      });
+          : "INSERT INTO acfun (value,id) VALUES (?, ?)",
+        update_result = db.update({
+          sql: sql,
+          args: [value, key]
+        });
       db.close();
       return update_result.result || false;
     } else {
       return false;
     }
   },
-  acSecurity: (value = undefined) => {
-    const sql_key = "acSecurity";
-    SQLite.createTable();
+  autoData: (sql_key, value = undefined) => {
+    if (!sql_key) {
+      return undefined;
+    }
     if (value) {
       SQLite.setData(sql_key, value);
     }
     return SQLite.getData(sql_key) || undefined;
   },
+  acSecurity: (value = undefined) => {
+    return SQLite.autoData("acSecurity");
+  },
   acPassToken: (value = undefined) => {
-    const sql_key = "acPassToken";
-    SQLite.createTable();
-    if (value) {
-      SQLite.setData(sql_key, value);
-    }
-    return SQLite.getData(sql_key) || undefined;
+    return SQLite.autoData("acPassToken");
   },
   token: (value = undefined) => {
     const sql_key = "token";
-    SQLite.createTable();
     if (value) {
       SQLite.setData(sql_key, value);
     }
@@ -91,7 +89,6 @@ const SQLite = {
   },
   access_token: (value = undefined) => {
     const sql_key = "access_token";
-    SQLite.createTable();
     if (value) {
       SQLite.setData(sql_key, value);
     }
@@ -99,10 +96,12 @@ const SQLite = {
   },
   username: (value = undefined) => {
     const sql_key = "username";
-    SQLite.createTable();
     if (value) {
       SQLite.setData(sql_key, value);
     }
     return SQLite.getData(sql_key) || undefined;
   }
+};
+module.exports = {
+  SQLite
 };
