@@ -1,14 +1,17 @@
 const $$ = require("$$"),
-  httpLib = require("/scripts/libs/http"),
+  httpLib = require("../libs/http"),
+  Config = require("./config/mod"),
+  ModConfig = new Config("wallhaven"),
   init = () => {
     animeRandom();
   },
   animeRandom = async () => {
     $ui.loading(true);
-    const cacheId = "mod.misc.wallhaven.next_seed",
+    const next_seed_id = "nextseed",
+      cacheId = ModConfig.getModKey(next_seed_id),
       query = `id%3A5type:png`,
       sorting = `random`,
-      randomSeed = $cache.get(cacheId) || `XekqJ6`,
+      randomSeed = ModConfig.getSql(next_seed_id) || `XekqJ6`,
       page = 1,
       url = `https://wallhaven.cc/api/v1/search?q=${query}&sorting=${sorting}&seed=${randomSeed}&page=${page}`,
       httpResult = await httpLib.getAwait(url);
@@ -24,7 +27,8 @@ const $$ = require("$$"),
         apiData = httpData.data,
         apiMeta = httpData.meta,
         nextRandomSeed = apiMeta.seed;
-      $cache.set(cacheId, nextRandomSeed || randomSeed);
+      $console.info(`nextRandomSeed:${nextRandomSeed}`);
+      ModConfig.setSql(next_seed_id, nextRandomSeed || randomSeed);
       $ui.loading(false);
       if (apiData && apiMeta) {
         $ui.push({
