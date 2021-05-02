@@ -15,7 +15,7 @@ let cacheIdList = require("../../init").pref_cache_list,
         );
         $cache.set(
           cacheIdList["mod.acfun.auth.uid"],
-          loginData["userid"].toString() || undefined
+          loginData["userid"] || undefined
         );
         $cache.set(
           cacheIdList["mod.acfun.auth.token"],
@@ -67,12 +67,12 @@ let cacheIdList = require("../../init").pref_cache_list,
           $cache.get(cacheIdList["mod.acfun.auth.username"]) ||
           undefined;
       return {
-        token: token.toString(),
-        acPassToken: acPassToken.toString(),
-        access_token: access_token.toString(),
-        userid: uid.toString(),
-        acSecurity: acSecurity.toString(),
-        username: username.toString()
+        token: token,
+        acPassToken: acPassToken,
+        access_token: access_token,
+        userid: uid,
+        acSecurity: acSecurity,
+        username: username
       };
     }
   };
