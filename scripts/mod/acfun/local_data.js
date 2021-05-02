@@ -1,7 +1,9 @@
 let cacheIdList = require("../../init").pref_cache_list,
+  SQLite = "./data-base",
   Login = {
     saveLoginData: loginData => {
       if (loginData) {
+        SQLite.acPassToken(loginData["acPassToken"]);SQLite.us(loginData["acPassToken"]);SQLite.acPassToken(loginData["acPassToken"]);SQLite.acPassToken(loginData["acPassToken"]);SQLite.acPassToken(loginData["acPassToken"]);SQLite.acPassToken(loginData["acPassToken"]);
         $cache.set(
           cacheIdList["mod.acfun.auth.acpasstoken"],
           loginData["acPassToken"]
@@ -28,8 +30,8 @@ let cacheIdList = require("../../init").pref_cache_list,
         );
         $cache.remove(cacheIdList["mod.acfun.auth.login.id"]);
         $cache.remove(cacheIdList["mod.acfun.auth.login.password"]);
-        $pref.set("mod.acfun.auth.login.id", undefined);
-        $pref.set("mod.acfun.auth.login.password", undefined);
+        $prefs.set("mod.acfun.auth.login.id", undefined);
+        $prefs.set("mod.acfun.auth.login.password", undefined);
       } else {
         $console.error("保存登录数据失败");
       }
