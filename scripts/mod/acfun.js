@@ -10,8 +10,8 @@ let $User = require("./acfun/user"),
           props: {
             data: [
               {
-                title: "",
-                rows: ["登录", "签到"]
+                title: "Acfun",
+                rows: ["登录", "签到", "同步数据库"]
               }
             ]
           },
@@ -24,6 +24,9 @@ let $User = require("./acfun/user"),
                   break;
                 case 1:
                   $User.Daily.checkIn();
+                  break;
+                case 2:
+                  $User.Auth.syncDatabase();
                   break;
               }
             }

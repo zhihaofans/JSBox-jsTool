@@ -68,7 +68,11 @@ let Auth = {
         }
       }
     },
-    isLogin: () => {}
+    syncDatabase: () => {
+      const LocalData = require("./local_data"),
+        userData = LocalData.Login.loadLoginData();
+      LocalData.Login.saveLoginData(userData);
+    }
   },
   Daily = {
     checkIn: async () => {
@@ -78,8 +82,8 @@ let Auth = {
         $LoginData = require("./local_data").Login,
         userData = $LoginData.loadLoginData(),
         _acPassToken = userData.acPassToken,
-        _userid = userData.userid;
-      const headers = $Common.HEADERS;
+        _userid = userData.userid,
+        headers = $Common.HEADERS;
       headers["Cookie"] = `acPasstoken=${_acPassToken};auth_key=${_userid}`;
       const result = await $Common.getAwait($Api.CHECK_IN, headers);
       $console.info(result);

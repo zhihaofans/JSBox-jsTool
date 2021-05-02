@@ -1,9 +1,14 @@
 let cacheIdList = require("../../init").pref_cache_list,
-  SQLite = "./data-base",
+  SQLite = require("./data-base").SQLite,
   Login = {
     saveLoginData: loginData => {
       if (loginData) {
-        SQLite.acPassToken(loginData["acPassToken"]);SQLite.us(loginData["acPassToken"]);SQLite.acPassToken(loginData["acPassToken"]);SQLite.acPassToken(loginData["acPassToken"]);SQLite.acPassToken(loginData["acPassToken"]);SQLite.acPassToken(loginData["acPassToken"]);
+        SQLite.acPassToken(loginData["acPassToken"]);
+        SQLite.uid(loginData["userid"]);
+        SQLite.token(loginData["token"]);
+        SQLite.access_token(loginData["token"]);
+        SQLite.username(loginData["username"]);
+        SQLite.acsecurity(loginData["acsecurity"]);
         $cache.set(
           cacheIdList["mod.acfun.auth.acpasstoken"],
           loginData["acPassToken"]
@@ -37,14 +42,37 @@ let cacheIdList = require("../../init").pref_cache_list,
       }
     },
     loadLoginData: () => {
+      const token =
+          SQLite.token() ||
+          $cache.get(cacheIdList["mod.acfun.auth.token"]) ||
+          undefined,
+        acPassToken =
+          SQLite.acPassToken() ||
+          $cache.get(cacheIdList["mod.acfun.auth.acpasstoken"]) ||
+          undefined,
+        access_token =
+          SQLite.access_token() ||
+          $cache.get(cacheIdList["mod.acfun.auth.access_token"]) ||
+          undefined,
+        userid =
+          SQLite.userid() ||
+          $cache.get(cacheIdList["mod.acfun.auth.uid"]) ||
+          undefined,
+        acSecurity =
+          SQLite.acSecurity() ||
+          $cache.get(cacheIdList["mod.acfun.auth.acsecurity"]) ||
+          undefined,
+        username =
+          SQLite.username() ||
+          $cache.get(cacheIdList["mod.acfun.auth.username"]) ||
+          undefined;
       return {
-        acPassToken:
-          $cache.get(cacheIdList["mod.acfun.auth.acpasstoken"]) || "",
-        access_token:
-          $cache.get(cacheIdList["mod.acfun.auth.access_token"]) || "",
-        userid: $cache.get(cacheIdList["mod.acfun.auth.uid"]) || "",
-        acSecurity: $cache.get(cacheIdList["mod.acfun.auth.acsecurity"]) || "",
-        username: $cache.get(cacheIdList["mod.acfun.auth.username"]) || ""
+        token: token,
+        acPassToken: acPassToken,
+        access_token: access_token,
+        userid: userid,
+        acSecurity: acSecurity,
+        username: username
       };
     }
   };

@@ -65,32 +65,37 @@ const SQLite = {
       return false;
     }
   },
-  autoData: (sql_key, value = undefined) => {
+  auto: (sql_key, value = undefined) => {
     if (!sql_key) {
       return undefined;
     }
-    if (value) {
-      SQLite.setData(sql_key, value);
+    try {
+      if (value) {
+        SQLite.setData(sql_key, value);
+      }
+      return SQLite.getData(sql_key) || undefined;
+    } catch (_ERROR) {
+      $console.error(_ERROR);
+      return undefined;
     }
-    return SQLite.getData(sql_key) || undefined;
   },
   acSecurity: (value = undefined) => {
-    return SQLite.autoData("acSecurity");
+    return SQLite.auto("acSecurity", value);
   },
   acPassToken: (value = undefined) => {
-    return SQLite.autoData("acPassToken");
+    return SQLite.auto("acPassToken", value);
   },
   token: (value = undefined) => {
-    return SQLite.autoData("token");
+    return SQLite.auto("token", value);
   },
   access_token: (value = undefined) => {
-    return SQLite.autoData("access_token");
+    return SQLite.auto("access_token", value);
   },
   username: (value = undefined) => {
-    return SQLite.autoData("username");
+    return SQLite.auto("username", value);
   },
   uid: (value = undefined) => {
-    return SQLite.autoData("uid");
+    return SQLite.auto("uid", value);
   }
 };
 module.exports = {
