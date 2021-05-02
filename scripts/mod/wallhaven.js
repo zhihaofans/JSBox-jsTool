@@ -8,7 +8,6 @@ const $$ = require("$$"),
   animeRandom = async () => {
     $ui.loading(true);
     const next_seed_id = "nextseed",
-      cacheId = ModConfig.getModKey(next_seed_id),
       query = `id%3A5type:png`,
       sorting = `random`,
       randomSeed = ModConfig.getSql(next_seed_id) || `XekqJ6`,
