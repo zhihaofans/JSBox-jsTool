@@ -3,16 +3,40 @@ const $$ = require("$$"),
   Config = require("./config/mod"),
   ModConfig = new Config("wallhaven"),
   init = () => {
-    animeRandom();
+    try {
+      animeRandomAll();
+    } catch (_ERROR) {
+      $console.error(_ERROR);
+      $ui.alert({
+        title: "wallhaven.init",
+        message: _ERROR.message
+      });
+      $ui.loading(false);
+    }
   },
-  animeRandom = async () => {
+  animeRandomAll = () => {
+    const api_key = ModConfig.getSql("api_key");
+    $input.text({
+      type: $kbType.text,
+      placeholder: "",
+      text: api_key,
+      handler: function (input) {
+        if (input) {
+          ModConfig.setSql("api_key", input);
+        }
+        animeRandom(input);
+      }
+    });
+  },
+  animeRandom = async (api_key = undefined) => {
     $ui.loading(true);
     const next_seed_id = "nextseed",
       query = `id%3A5type:png`,
       sorting = `random`,
       randomSeed = ModConfig.getSql(next_seed_id) || `XekqJ6`,
       page = 1,
-      url = `https://wallhaven.cc/api/v1/search?q=${query}&sorting=${sorting}&seed=${randomSeed}&page=${page}`,
+      purity = "111",
+      url = `https://wallhaven.cc/api/v1/search?q=${query}&sorting=${sorting}&seed=${randomSeed}&page=${page}&purity=${purity}&apikey=${api_key}`,
       httpResult = await httpLib.getAwait(url);
     if (httpResult.error) {
       $console.error(httpResult.error);
