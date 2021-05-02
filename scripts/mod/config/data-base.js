@@ -63,7 +63,7 @@ class SQLite {
         args: args
       }),
       sql_data = this.parseSimpleQuery(result);
-    return sql_data.length == 1 ? sql_data[0].value : undefined;
+    return sql_data.length === 1 ? sql_data[0].value : undefined;
   }
   setSimpleData(table, key, value) {
     this.createSimpleTable(table);

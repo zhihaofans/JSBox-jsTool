@@ -68,7 +68,7 @@ const Cache = {
           args: args
         }),
         sql_data = SQLite.parse(result);
-      return sql_data.length == 1 ? sql_data[0].value : undefined;
+      return sql_data.length === 1 ? sql_data[0].value : undefined;
     },
     setData: (key, value) => {
       SQLite.createTable();
