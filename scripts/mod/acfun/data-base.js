@@ -81,25 +81,16 @@ const SQLite = {
     return SQLite.autoData("acPassToken");
   },
   token: (value = undefined) => {
-    const sql_key = "token";
-    if (value) {
-      SQLite.setData(sql_key, value);
-    }
-    return SQLite.getData(sql_key) || undefined;
+    return SQLite.autoData("token");
   },
   access_token: (value = undefined) => {
-    const sql_key = "access_token";
-    if (value) {
-      SQLite.setData(sql_key, value);
-    }
-    return SQLite.getData(sql_key) || undefined;
+    return SQLite.autoData("access_token");
   },
   username: (value = undefined) => {
-    const sql_key = "username";
-    if (value) {
-      SQLite.setData(sql_key, value);
-    }
-    return SQLite.getData(sql_key) || undefined;
+    return SQLite.autoData("username");
+  },
+  uid: (value = undefined) => {
+    return SQLite.autoData("uid");
   }
 };
 module.exports = {
