@@ -4,7 +4,7 @@ const $$ = require("$$"),
   ModConfig = new Config("wallhaven"),
   init = () => {
     try {
-      animeRandomAll();
+      animeRandom();
     } catch (_ERROR) {
       $console.error(_ERROR);
       $ui.alert({
@@ -14,21 +14,7 @@ const $$ = require("$$"),
       $ui.loading(false);
     }
   },
-  animeRandomAll = () => {
-    const api_key = ModConfig.getSql("api_key");
-    $input.text({
-      type: $kbType.text,
-      placeholder: "",
-      text: api_key,
-      handler: function (input) {
-        if (input) {
-          ModConfig.setSql("api_key", input);
-        }
-        animeRandom(input);
-      }
-    });
-  },
-  animeRandom = async (api_key = undefined) => {
+  animeRandom = async () => {
     $ui.loading(true);
     const next_seed_id = "nextseed",
       query = `id%3A5type:png`,
@@ -36,6 +22,7 @@ const $$ = require("$$"),
       randomSeed = ModConfig.getSql(next_seed_id) || `XekqJ6`,
       page = 1,
       purity = "111",
+      api_key = ModConfig.getSql("api_key") || "",
       url = `https://wallhaven.cc/api/v1/search?q=${query}&sorting=${sorting}&seed=${randomSeed}&page=${page}&purity=${purity}&apikey=${api_key}`,
       httpResult = await httpLib.getAwait(url);
     if (httpResult.error) {
@@ -56,7 +43,26 @@ const $$ = require("$$"),
       if (apiData && apiMeta) {
         $ui.push({
           props: {
-            title: apiMeta.query.tag
+            title: apiMeta.query.tag,
+            navButtons: [
+              {
+                title: "api_key",
+                symbol: "person", // SF symbols are supported
+                handler: sender => {
+                  const api_key = ModConfig.getSql("api_key");
+                  $input.text({
+                    type: $kbType.text,
+                    placeholder: "api_key",
+                    text: api_key,
+                    handler: function (input) {
+                      if (input) {
+                        ModConfig.setSql("api_key", input);
+                      }
+                    }
+                  });
+                }
+              }
+            ]
           },
           views: [
             {
