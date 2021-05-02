@@ -17,7 +17,7 @@
               },
               {
                 "title": "uid",
-                "type": "number",
+                "type": "string",
                 "key": "mod.bilibili.uid"
               },
               {
@@ -45,9 +45,14 @@
                 "key": "mod.acfun.auth.acsecurity"
               },
               {
-                "title": "Access token",
+                "title": "access_token",
                 "type": "string",
                 "key": "mod.acfun.auth.access_token"
+              },
+              {
+                "title": "token",
+                "type": "string",
+                "key": "mod.acfun.auth.token"
               },
               {
                 "title": "用户名",
@@ -56,7 +61,7 @@
               },
               {
                 "title": "用户id",
-                "type": "number",
+                "type": "string",
                 "key": "mod.acfun.auth.uid"
               },
               {
@@ -80,28 +85,6 @@
               }
             ]
           }
-        }
-      ]
-    },
-    {
-      "title": "测试",
-      "items": [
-        {
-          "title": "OK",
-          "type": "string",
-          "key": "user.name",
-          "value": "default user name"
-        },
-        {
-          "title": "AUTO_SAVE",
-          "type": "boolean",
-          "key": "auto.save",
-          "value": true
-        },
-        {
-          "title": "TEST",
-          "type": "script",
-          "value": "require('scripts/test').runTest();"
         }
       ]
     }

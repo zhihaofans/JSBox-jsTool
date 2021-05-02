@@ -12,7 +12,7 @@ let Auth = {
       if (_acfunLogin.uid && _acfunLogin.password) {
         $prefs.set(prefId.id, undefined);
         $prefs.set(prefId.password, undefined);
-        this.login(_acfunLogin.uid, _acfunLogin.password);
+        Auth.login(_acfunLogin.uid, _acfunLogin.password);
       } else {
         $ui.alert({
           title: "Acfun登录失败",

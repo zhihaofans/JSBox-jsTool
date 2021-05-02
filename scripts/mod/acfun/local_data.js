@@ -8,14 +8,14 @@ let cacheIdList = require("../../init").pref_cache_list,
         SQLite.token(loginData["token"]);
         SQLite.access_token(loginData["token"]);
         SQLite.username(loginData["username"]);
-        SQLite.acsecurity(loginData["acsecurity"]);
+        SQLite.acSecurity(loginData["acSecurity"]);
         $cache.set(
           cacheIdList["mod.acfun.auth.acpasstoken"],
           loginData["acPassToken"]
         );
         $cache.set(
           cacheIdList["mod.acfun.auth.uid"],
-          loginData["userid"] || undefined
+          loginData["userid"].toString() || undefined
         );
         $cache.set(
           cacheIdList["mod.acfun.auth.token"],
@@ -54,8 +54,8 @@ let cacheIdList = require("../../init").pref_cache_list,
           SQLite.access_token() ||
           $cache.get(cacheIdList["mod.acfun.auth.access_token"]) ||
           undefined,
-        userid =
-          SQLite.userid() ||
+        uid =
+          SQLite.uid() ||
           $cache.get(cacheIdList["mod.acfun.auth.uid"]) ||
           undefined,
         acSecurity =
@@ -67,12 +67,12 @@ let cacheIdList = require("../../init").pref_cache_list,
           $cache.get(cacheIdList["mod.acfun.auth.username"]) ||
           undefined;
       return {
-        token: token,
-        acPassToken: acPassToken,
-        access_token: access_token,
-        userid: userid,
-        acSecurity: acSecurity,
-        username: username
+        token: token.toString(),
+        acPassToken: acPassToken.toString(),
+        access_token: access_token.toString(),
+        userid: uid.toString(),
+        acSecurity: acSecurity.toString(),
+        username: username.toString()
       };
     }
   };

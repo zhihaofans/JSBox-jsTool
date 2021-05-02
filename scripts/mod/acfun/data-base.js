@@ -71,7 +71,8 @@ const SQLite = {
     }
     try {
       if (value) {
-        SQLite.setData(sql_key, value);
+        $console.warn(`${sql_key}:${value.toString()}`);
+        SQLite.setData(sql_key, value.toString());
       }
       return SQLite.getData(sql_key) || undefined;
     } catch (_ERROR) {
