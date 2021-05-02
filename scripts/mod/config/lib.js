@@ -1,90 +1,101 @@
 class SQLite {
-  constructor(date_base) {
-    this.DATE_BASE_ID = date_base;
-    this.DB = $sqlite.open(this.DATE_BASE_ID);
+  constructor(_dataBaseFile) {
+    this.DATABASEFILE = _dataBaseFile;
   }
-  open(NEW_DATE_BASE_ID = undefined) {
-    if (NEW_DATE_BASE_ID) {
-      this.DATE_BASE_ID = NEW_DATE_BASE_ID;
+  init() {
+    return $sqlite.open(this.DATABASEFILE);
+  }
+  update(sql, args = undefined) {
+    this.createSimpleTable();
+    const db = this.init();
+    db.update(
+      args
+        ? sql
+        : {
+            sql: sql,
+            args: args
+          }
+    );
+    db.close();
+  }
+  createSimpleTable(table_id) {
+    if (table_id) {
+      try {
+        const db = this.init(),
+          sql = `CREATE TABLE IF NOT EXISTS ?(id TEXT PRIMARY KEY NOT NULL, value TEXT)`,
+          args = [table_id];
+        db.update(sql, args);
+        db.close();
+      } catch (_ERROR) {
+        $console.error(_ERROR);
+      }
+    } else {
+      $console.error("createSimpleTable:table_id = undefined");
     }
-    this.DB = $sqlite.open(this.DATE_BASE_ID);
   }
-  close() {
+  parseSimpleQuery(result) {
+    if (result) {
+      if (result.error !== null) {
+        $console.error(result.error);
+        return undefined;
+      }
+      const sqlResult = result.result,
+        data = [];
+      while (sqlResult.next()) {
+        data.push({
+          id: sqlResult.get("id"),
+          value: sqlResult.get("value")
+        });
+      }
+      sqlResult.close();
+      return data;
+    } else {
+      return undefined;
+    }
+  }
+  getSimpleData(table, key) {
+    this.createSimpleTable(table);
+    const db = this.init(),
+      sql = "SELECT * FROM ? WHERE id = ?",
+      args = [table, key],
+      result = db.query({
+        sql: sql,
+        args: args
+      }),
+      sql_data = this.parseSimpleQuery(result);
+    return sql_data.length === 1 ? sql_data[0].value : undefined;
+  }
+  setSimpleData(table, key, value) {
+    this.createSimpleTable(table);
+    if (key) {
+      const db = this.init(),
+        sql = this.getSimpleData(table, key)
+          ? "UPDATE ? SET value=? WHERE id=?"
+          : "INSERT INTO ? (value,id) VALUES (?, ?)",
+        update_result = db.update({
+          sql: sql,
+          args: [table, value, key]
+        });
+      db.close();
+      return update_result.result || false;
+    } else {
+      return false;
+    }
+  }
+  auto(table, sql_key, value = undefined) {
+    if (!sql_key) {
+      return undefined;
+    }
     try {
-      this.DB.close();
+      if (value) {
+        $console.warn(`${sql_key}:${value.toString()}`);
+        this.setSimpleData(table, sql_key, value.toString());
+      }
+      return this.getSimpleData(table, sql_key) || undefined;
     } catch (_ERROR) {
       $console.error(_ERROR);
-      $sqlite.close(this.DB);
+      return undefined;
     }
-    this.DB = undefined;
-  }
-  update(sql) {
-    try {
-      return this.DB.update(sql);
-    } catch (_ERROR) {
-      $console.error(_ERROR);
-    }
-    return undefined;
-  }
-  updateByArgList(sql, argList) {
-    this.DB.update({
-      sql: sql,
-      args: argList
-    });
-    try {
-      return this.DB.update(sql);
-    } catch (_ERROR) {
-      $console.error(_ERROR);
-    }
-    return undefined;
-  }
-  createTableByStr(table_id, args) {
-    this.update(`CREATE TABLE ${table_id}(${args})`);
-  }
-  createTableByList(table_id, args) {
-    const demo = [{ key: "arg_id", value: "" }];
-    this.update(`CREATE TABLE ${table_id}(${args})`);
-  }
-}
-class Cache {
-  constructor(key) {
-    this.CACHE_KEY = key;
-  }
-  set(value) {
-    $cache.set(this.CACHE_KEY, value);
-  }
-  setAsync(value, handler) {
-    $cache.setAsync({
-      key: this.CACHE_KEY,
-      value: value,
-      handler: handler
-    });
-  }
-  get() {
-    $cache.get(this.CACHE_KEY);
-  }
-  getAsync(handler) {
-    $cache.getAsync({
-      key: this.CACHE_KEY,
-      handler: handler
-    });
-  }
-  remove() {
-    $cache.remove(this.CACHE_KEY);
-  }
-  removeAsync(handler) {
-    $cache.removeAsync({
-      key: this.CACHE_KEY,
-      handler: handler
-    });
-  }
-  clear() {
-    $cache.clear();
-  }
-  clearAsync(handler) {
-    $cache.clearAsync({
-      handler: handler
-    });
   }
 }
 class Prefs {
@@ -98,4 +109,4 @@ class Prefs {
     return $prefs.set(this.PREFS_KEY, value);
   }
 }
-module.exports = { SQLite, Cache, Prefs };
+module.exports = { SQLite, Prefs };
