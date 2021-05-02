@@ -22,8 +22,9 @@ const $$ = require("$$"),
       randomSeed = ModConfig.getSql(next_seed_id) || `XekqJ6`,
       page = 1,
       purity = "111",
+      categories = "010",
       api_key = ModConfig.getSql("api_key") || "",
-      url = `https://wallhaven.cc/api/v1/search?q=${query}&sorting=${sorting}&seed=${randomSeed}&page=${page}&purity=${purity}&apikey=${api_key}`,
+      url = `https://wallhaven.cc/api/v1/search?q=${query}&sorting=${sorting}&seed=${randomSeed}&page=${page}&purity=${purity}&categories=${categories}&apikey=${api_key}`,
       httpResult = await httpLib.getAwait(url);
     if (httpResult.error) {
       $console.error(httpResult.error);
