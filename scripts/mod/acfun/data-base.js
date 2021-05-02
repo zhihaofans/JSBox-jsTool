@@ -69,16 +69,11 @@ const SQLite = {
     if (!sql_key) {
       return undefined;
     }
-    try {
-      if (value) {
-        $console.warn(`${sql_key}:${value.toString()}`);
-        SQLite.setData(sql_key, value.toString());
-      }
-      return SQLite.getData(sql_key) || undefined;
-    } catch (_ERROR) {
-      $console.error(_ERROR);
-      return undefined;
+    if (value) {
+      $console.warn(`${sql_key}:${value.toString()}`);
+      SQLite.setData(sql_key, value.toString());
     }
+    return SQLite.getData(sql_key) || undefined;
   },
   acSecurity: (value = undefined) => {
     return SQLite.auto("acSecurity", value);
