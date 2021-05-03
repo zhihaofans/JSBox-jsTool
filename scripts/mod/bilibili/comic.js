@@ -184,8 +184,8 @@ let $B_user = require("./user"),
       }
       $ui.loading(false);
     },
-    getComicDetail: () => {
-      const comicData = Comic.getDetail(28654);
+    getComicDetail: async () => {
+      const comicData = await Comic.getDetail(28654);
       $console.info(comicData);
     }
   };

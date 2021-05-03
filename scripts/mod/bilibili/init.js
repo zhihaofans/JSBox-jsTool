@@ -42,7 +42,8 @@ let _User = require("./user"),
                       _CheckIn.initView();
                       break;
                     case 2:
-                      _User.View.getMyInfo();
+                      // _User.View.getMyInfo();
+                      $ui.error("skip");
                       break;
                     case 3:
                       _User.View.refreshToken();
