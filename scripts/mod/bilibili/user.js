@@ -1,6 +1,6 @@
 const DataBase = require("./data_base"),
   SQLite = DataBase.SQLite,
-  $_Cache = DataBase.Cache,
+  Cache = DataBase.Cache,
   $_Static = require("./static"),
   $$ = require("$$"),
   JSDialogs = require("JSDialogs"),
@@ -56,21 +56,21 @@ const DataBase = require("./data_base"),
     },
     accessKey: (access_key = undefined) => {
       if (access_key) {
-        $_Cache.accessKey(access_key);
+        Cache.accessKey(access_key);
         SQLite.setAccessKey(access_key);
       }
       return SQLite.getAccessKey();
     },
     uid: (uid = undefined) => {
       if (uid) {
-        $_Cache.uid(uid);
+        Cache.uid(uid);
         SQLite.setUid(uid);
       }
       return SQLite.getUid();
     },
     cookies: (cookies = undefined) => {
       if (cookies) {
-        $_Cache.cookies(cookies);
+        Cache.cookies(cookies);
         SQLite.setCookies(cookies);
       }
       return SQLite.getCookies();

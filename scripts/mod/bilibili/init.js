@@ -24,9 +24,7 @@ let _User = require("./user"),
                   "下载漫画",
                   "稍后再看",
                   "我关注的直播",
-                  "查看共同关注",
-                  "SQLite - getAccessKey",
-                  "SQLite - setAccessKey"
+                  "查看共同关注"
                 ]
               }
             ]
@@ -66,12 +64,6 @@ let _User = require("./user"),
                       break;
                     case 9:
                       _User.View.getSameFollow();
-                      break;
-                    case 10:
-                      _User.View.getAccessKeyInSQL();
-                      break;
-                    case 11:
-                      _User.View.setAccessKeyInSQL();
                       break;
                   }
                   break;
