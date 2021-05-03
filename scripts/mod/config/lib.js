@@ -112,7 +112,7 @@ class SQLite {
       }
       return this.getSimpleData(table, sql_key) || undefined;
     } catch (_ERROR) {
-      $console.error(`Config.lib.auto:${_ERROR.message}`);
+      $console.error(`Config.lib.SQLite.auto:${_ERROR.message}`);
       return undefined;
     }
   }
@@ -121,11 +121,23 @@ class Prefs {
   constructor(key) {
     this.PREFS_KEY = key;
   }
-  get() {
+  getData() {
     return $prefs.get(this.PREFS_KEY);
   }
-  set(value) {
+  setData(value) {
     return $prefs.set(this.PREFS_KEY, value);
   }
 }
-module.exports = { SQLite, Prefs };
+class Cache {
+  constructor(key) {
+    this.KEY = key;
+  }
+  get() {
+    return $cache.get(this.KEY)
+  }
+  set(value) {
+    return $cache.set(this.KEY, value);
+  }
+}
+
+module.exports = { SQLite, Prefs, Cache };
