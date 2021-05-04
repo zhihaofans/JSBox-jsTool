@@ -1,5 +1,6 @@
-const $$ = require("$$");
+const $_ = require("$_"),
+  Http = new $_.Http();
 module.exports = {
-  getAwait: $$.Http.getAwait,
-  postAwait: $$.Http.postAwait
+  getAwait: Http.get,
+  postAwait: Http.post
 };
