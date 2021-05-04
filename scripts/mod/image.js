@@ -1,4 +1,5 @@
-const $$ = require("$$"),
+const $_ = require("$_"),
+  Str = new $_.String(),
   docScan = () => {
     $photo.scan({
       handler: data => {
@@ -18,10 +19,7 @@ const $$ = require("$$"),
                 {
                   type: "list",
                   props: {
-                    data: $$.Str.getListFromL10n([
-                      "预览全部图片",
-                      "保存全部图片"
-                    ])
+                    data: Str.getListFromL10n(["预览全部图片", "保存全部图片"])
                   },
                   layout: $layout.fill,
                   events: {
@@ -71,7 +69,7 @@ let init = () => {
             },
             {
               title: "其他",
-              rows: $$.Str.getListFromL10n(["SCAN_DOCUMENTS"])
+              rows: Str.getListFromL10n(["SCAN_DOCUMENTS"])
             }
           ]
         },
