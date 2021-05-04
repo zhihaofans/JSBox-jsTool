@@ -449,12 +449,14 @@ const DataBase = require("./data_base"),
                 {
                   type: "list",
                   props: {
+                    autoRowHeight: true,
+                    estimatedRowHeight: 10,
                     data: later2watchList.map(video => {
                       return {
                         title: `@${video.owner.name} (uid:${video.owner.mid})`,
                         rows: [
                           video.title,
-                          `av${video.aid}/${video.bvid}`,
+                          `av${video.aid} / ${video.bvid}`,
                           "视频封面",
                           "个人空间",
                           "头像"
