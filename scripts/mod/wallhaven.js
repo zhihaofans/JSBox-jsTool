@@ -4,7 +4,16 @@ const $$ = require("$$"),
   ModConfig = new Config("wallhaven"),
   init = () => {
     try {
-      animeRandom();
+      $ui.menu({
+        items: ["随机"],
+        handler: function (title, idx) {
+          switch (idx) {
+            case 0:
+              animeRandom();
+              break;
+          }
+        }
+      });
     } catch (_ERROR) {
       $console.error(_ERROR);
       $ui.alert({
@@ -69,6 +78,15 @@ const $$ = require("$$"),
             {
               type: "list",
               props: {
+                menu: {
+                  title: "Context Menu",
+                  items: [
+                    {
+                      title: "查看全部",
+                      handler: sender => {}
+                    }
+                  ]
+                },
                 data: apiData.map(
                   item => `${item.category} | ${item.purity} | ${item.id}`
                 )
