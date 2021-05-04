@@ -1,4 +1,5 @@
-const $$ = require("$$"),
+const $_ = require("$_"),
+  View = new $_.View(),
   httpLib = require("../libs/http"),
   Config = require("./config/mod"),
   ModConfig = new Config("wallhaven"),
@@ -94,7 +95,7 @@ const $$ = require("$$"),
               layout: $layout.fill,
               events: {
                 didSelect: function (_sender, indexPath, _data) {
-                  $$.Image.single.showImageMenu(apiData[indexPath.row].path);
+                  View.Image.showSingleMenu(apiData[indexPath.row].path);
                 }
               }
             }
