@@ -46,7 +46,9 @@ const APP_VERSION = {
       LIVER_ONLINE:
         "https://api.live.bilibili.com/xlive/app-interface/v1/relation/liveAnchor?access_key=",
       LIVER_OFFLINE:
-        "https://api.live.bilibili.com/xlive/app-interface/v1/relation/unliveAnchor?pagesize=999&page=1&access_key="
+        "https://api.live.bilibili.com/xlive/app-interface/v1/relation/unliveAnchor?pagesize=999&page=1&access_key=",
+      LOTTERY_LIST:
+        "https://api.live.bilibili.com/lottery/v1/Award/award_list?access_key="
     },
     COMIC: {
       CHECK_IN: "https://manga.bilibili.com/twirp/activity.v1.Activity/ClockIn",
@@ -60,5 +62,5 @@ const APP_VERSION = {
 module.exports = {
   UA,
   URL,
-  Http: require("/scripts/libs/http")
+  Http: require("/scripts/libs/http"),
 };
