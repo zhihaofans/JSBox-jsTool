@@ -1,6 +1,5 @@
 let _Live = require("./live"),
   _Comic = require("./comic"),
-  _User = require("./user"),
   Live = {
     checkIn: _Live.User.checkIn,
     autoCheckIn: _Live.User.autoCheckIn,
