@@ -1,9 +1,10 @@
-let _Live = require("./live"),
+const _Live = require("./live"),
+  liveUser = require("./live/user"),
   _Comic = require("./comic"),
   Live = {
-    checkIn: _Live.User.checkIn,
+    checkIn: liveUser.checkIn,
     autoCheckIn: _Live.User.autoCheckIn,
-    silver2coin: _Live.User.silver2coin,
+    silver2coin: liveUser.silver2coin,
     autoSilver2coin: _Live.User.autoSilver2coin
   },
   Comic = {
