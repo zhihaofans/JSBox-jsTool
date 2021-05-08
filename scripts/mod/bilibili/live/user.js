@@ -1,5 +1,55 @@
 const Lib = require("../lib"),
   Static = require("../static"),
+  autoCheckIn = async () => {
+    const header = {
+        "User-Agent": Static.UA.USER.APP_IPHONE,
+        "Content-Type": "application/x-www-form-urlencoded"
+      },
+      httpGet = await Lib.Http.get(
+        Static.URL.LIVE.CHECK_IN + Lib.Auth.getAccesskey(),
+        header
+      );
+    if (httpGet.error) {
+      $console.error(httpGet.error);
+      return false;
+    } else {
+      const data = httpGet.data;
+      $console.info(data);
+      if (data) {
+        return data.code === 0;
+      } else {
+        return false;
+      }
+    }
+  },
+  autoSilver2coin = async () => {
+    const postHeader = {
+        "User-Agent": Static.UA.USER.APP_IPHONE,
+        "Content-Type": "application/x-www-form-urlencoded"
+      },
+      postBody = {
+        access_key: Lib.Auth.getAccesskey()
+      };
+    $console.info(postHeader);
+    $console.info(postBody);
+    const httpPost = await Lib.Http.post(
+      Static.URL.LIVE.SILVER_TO_COIN,
+      postBody,
+      postHeader
+    );
+    $console.info(httpPost);
+    if (httpPost.error) {
+      $console.error(httpPost.error);
+      return false;
+    } else {
+      $ui.loading(false);
+      if (httpPost.data) {
+        return httpPost.data.code === 0;
+      } else {
+        return false;
+      }
+    }
+  },
   checkIn = async () => {
     $ui.loading(true);
     const header = {
@@ -106,4 +156,4 @@ const Lib = require("../lib"),
     }
   };
 
-module.exports = { checkIn, silver2coin };
+module.exports = { autoCheckIn, autoSilver2coin, checkIn, silver2coin };

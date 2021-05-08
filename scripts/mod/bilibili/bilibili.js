@@ -1,19 +1,16 @@
-const _Live = require("./live"),
-  liveUser = require("./live/user"),
+const liveUser = require("./live/user"),
   _Comic = require("./comic"),
   Live = {
     checkIn: liveUser.checkIn,
-    autoCheckIn: _Live.User.autoCheckIn,
+    autoCheckIn: liveUser.autoCheckIn,
     silver2coin: liveUser.silver2coin,
-    autoSilver2coin: _Live.User.autoSilver2coin
+    autoSilver2coin: liveUser.autoSilver2coin
   },
   Comic = {
     checkIn: _Comic.User.checkIn,
     autoCheckIn: _Comic.User.autoCheckIn
-  },
-  User = {};
+  };
 module.exports = {
   Comic,
-  Live,
-  User
+  Live
 };
