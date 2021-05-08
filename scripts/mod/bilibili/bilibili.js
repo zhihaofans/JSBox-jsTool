@@ -1,5 +1,5 @@
 const liveUser = require("./live/user"),
-  _Comic = require("./comic"),
+  comicUser = require("./comic/user"),
   Live = {
     checkIn: liveUser.checkIn,
     autoCheckIn: liveUser.autoCheckIn,
@@ -7,8 +7,8 @@ const liveUser = require("./live/user"),
     autoSilver2coin: liveUser.autoSilver2coin
   },
   Comic = {
-    checkIn: _Comic.User.checkIn,
-    autoCheckIn: _Comic.User.autoCheckIn
+    checkIn: comicUser.checkIn,
+    autoCheckIn: comicUser.autoCheckIn
   };
 module.exports = {
   Comic,
