@@ -1,6 +1,7 @@
 let _User = require("./user"),
   _CheckIn = require("./check_in"),
   _Comic = require("./comic"),
+  comicTicket = require("./comic/ticket"),
   _Live = require("./live/view"),
   init = () => {
     $ui.push({
@@ -41,7 +42,7 @@ let _User = require("./user"),
                   _User.View.getCookiesByAccessKey();
                   break;
                 case 5:
-                  _Comic.View.showTicketStatesList();
+                  comicTicket.showTicketStatesList();
                   break;
                 case 6:
                   _Comic.View.getComicDetail();

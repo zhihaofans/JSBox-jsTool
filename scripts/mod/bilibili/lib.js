@@ -9,11 +9,14 @@ const Database = require("./data_base"),
     getUid: SQLite.getUid,
     setUid: SQLite.setUid
   },
+  Dialogs = require("JSDialogs"),
   Http = {
     get: _http.getAwait,
     post: _http.postAwait
   };
+
 module.exports = {
   Auth,
+  Dialogs,
   Http
 };
