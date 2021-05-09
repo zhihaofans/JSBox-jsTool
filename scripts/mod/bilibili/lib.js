@@ -9,7 +9,7 @@ const Database = require("./data_base"),
     getUid: SQLite.getUid,
     setUid: SQLite.setUid
   },
-  Dialogs = require("JSDialogs"),
+  Dialogs = require("../../libs/dialogs"),
   Http = {
     get: _http.getAwait,
     post: _http.postAwait

@@ -33,15 +33,9 @@ const Lib = require("../lib"),
     const ticketStatesResult = await getTicketStates();
     if (ticketStatesResult && ticketStatesResult.code === 0) {
       const ticketStatesData = ticketStatesResult.data;
-      await JSDialogs.showPlainAlert(
-        "Bilibili漫画券",
-        JSON.stringify(ticketStatesData)
-      );
+      await JSDialogs.alert("Bilibili漫画券", JSON.stringify(ticketStatesData));
     } else {
-      await JSDialogs.showPlainAlert(
-        "Bilibili漫画券获取失败",
-        ticketStatesResult.msg
-      );
+      await JSDialogs.alert("Bilibili漫画券获取失败", ticketStatesResult.msg);
     }
     $ui.loading(false);
   };

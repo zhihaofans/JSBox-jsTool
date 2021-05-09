@@ -1,4 +1,5 @@
-let $User = require("./acfun/user"),
+const $User = require("./acfun/user"),
+  dialogs = require("../libs/dialogs"),
   init = () => {
     $ui.push({
       props: {
@@ -20,7 +21,9 @@ let $User = require("./acfun/user"),
             didSelect: function (_sender, indexPath, _data) {
               switch (indexPath.row) {
                 case 0:
-                  $User.Auth.loginBySetting();
+                  const result = dialogs.loginAlert("登录", "输入帐号密码");
+                  // $console.info(result);
+                  // $User.Auth.loginBySetting();
                   break;
                 case 1:
                   $User.Daily.checkIn();
