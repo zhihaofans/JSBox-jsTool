@@ -3,7 +3,7 @@ const DataBase = require("./data_base"),
   Cache = DataBase.Cache,
   $_Static = require("./static"),
   $$ = require("$$"),
-  JSDialogs = require("JSDialogs"),
+  Dialogs = require("./lib").Dialogs,
   BiliScheme = require("AppScheme").Video.Bilibili,
   Auth = {
     parseCookies: cookies => {
@@ -511,7 +511,7 @@ const DataBase = require("./data_base"),
     },
     getSameFollow: async () => {
       // TODO
-      const inputResult = await JSDialogs.showInputAlert(
+      const inputResult = await Dialogs.input(
         "共同关注",
         "请输入对方的uid",
         "70093"
@@ -593,20 +593,14 @@ const DataBase = require("./data_base"),
               title: `错误代码${httpData.code}`,
               message: httpData.message
             });
-            await JSDialogs.showPlainAlert(
-              `错误代码${httpData.code}`,
-              httpData.message
-            );
+            await Dialogs.alert(`错误代码${httpData.code}`, httpData.message);
           }
         } else {
-          await JSDialogs.showPlainAlert(
-            "未知错误",
-            "返回空白数据，请检查网络是否正常"
-          );
+          await Dialogs.alert("未知错误", "返回空白数据，请检查网络是否正常");
         }
         $ui.loading(false);
       } else {
-        await JSDialogs.showPlainAlert("错误", "请输入对方的uid");
+        await Dialogs.alert("错误", "请输入对方的uid");
       }
     },
     getAccessKeyInSQL: () => {
