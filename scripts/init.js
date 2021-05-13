@@ -174,13 +174,15 @@ const pref_cache_list = {
     },
     config: {
       filePath: "./mod/config",
-      action: "init",
-      param: undefined
+      action: "init"
+    },
+    dailyCheckin: {
+      filePath: "./mod/dailyCheckin",
     }
   },
   loadModule = moduleId => {
     const moduleInfo = modules[moduleId];
-    require(moduleInfo.filePath)[moduleInfo.action]();
+    require(moduleInfo.filePath)[moduleInfo.action || "init"]();
   },
   openSettingPage = () => {
     initPrefs();

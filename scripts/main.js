@@ -1,5 +1,5 @@
 const init = require("./init"),
-  siteListL10n = ["ACFUN", "BILIBILI"],
+  siteListL10n = ["ACFUN", "BILIBILI", "一键签到"],
   moreListL10n = ["MOD", "SETTING"],
   getNavButton = () => {
     return [
@@ -46,6 +46,9 @@ const init = require("./init"),
                       break;
                     case 1:
                       init.loadModule("bilibili");
+                      break;
+                    case 2:
+                      init.loadModule("dailyCheckin");
                       break;
                     default:
                       $ui.error("错误选项");
