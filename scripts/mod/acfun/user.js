@@ -1,4 +1,22 @@
-let Auth = {
+const Dialogs = require("../../libs/dialogs"),
+  Auth = {
+    loginByInput: async () => {
+      const login_data = await Dialogs.login(
+        "Acfun登录",
+        "请输入帐号密码",
+        "登录",
+        "取消"
+      );
+      if (login_data) {
+        if (login_data.username && login_data.password) {
+          Auth.login(login_data.username, login_data.password);
+        } else {
+          await Dialogs.alert("Acfun登录失败", "请确保账号密码已输入");
+        }
+      } else {
+        await Dialogs.alert("Acfun登录失败", "请确保输入了内容");
+      }
+    },
     loginBySetting: () => {
       const prefId = {
         id: "mod.acfun.auth.login.id",
