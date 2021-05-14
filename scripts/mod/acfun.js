@@ -21,8 +21,6 @@ const $User = require("./acfun/user"),
             didSelect: function (_sender, indexPath, _data) {
               switch (indexPath.row) {
                 case 0:
-                  //                  const result = await dialogs.login("登录", "输入帐号密码");
-                  // $console.info(result);
                   $User.Auth.loginByInput();
                   break;
                 case 1:
