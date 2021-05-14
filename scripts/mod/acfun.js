@@ -1,6 +1,6 @@
 const $User = require("./acfun/user"),
   dialogs = require("../libs/dialogs"),
-  init = () => {
+  init = async () => {
     $ui.push({
       props: {
         title: "Acfun"
@@ -21,7 +21,7 @@ const $User = require("./acfun/user"),
             didSelect: function (_sender, indexPath, _data) {
               switch (indexPath.row) {
                 case 0:
-                  const result = dialogs.loginAlert("登录", "输入帐号密码");
+                  //                  const result = await dialogs.login("登录", "输入帐号密码");
                   // $console.info(result);
                   // $User.Auth.loginBySetting();
                   break;
