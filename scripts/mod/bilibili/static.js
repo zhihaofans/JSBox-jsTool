@@ -57,10 +57,13 @@ const APP_VERSION = {
       TICKET_STATES:
         "https://manga.bilibili.com/twirp/user.v1.User/GetStates?access_key="
     },
+    VIDEO: {
+      GET_PLAY_URL: "http://api.bilibili.com/x/player/playurl"
+    },
     AV_BV_ONLINE: "http://api.bilibili.com/x/web-interface/archive/stat"
   };
 module.exports = {
   UA,
   URL,
-  Http: require("/scripts/libs/http"),
+  Http: require("/scripts/libs/http")
 };
