@@ -58,6 +58,7 @@ const APP_VERSION = {
         "https://manga.bilibili.com/twirp/user.v1.User/GetStates?access_key="
     },
     VIDEO: {
+      GET_INFO: "http://api.bilibili.com/x/web-interface/view",
       GET_PLAY_URL: "http://api.bilibili.com/x/player/playurl"
     },
     AV_BV_ONLINE: "http://api.bilibili.com/x/web-interface/archive/stat"
