@@ -1,15 +1,15 @@
 const CORE_VERSION = 1,
   SQLITE_FILE = "/assets/.files/mods.db";
 class Core {
-  constructor({
-    title,
+  constructor(
+    mod_name,
     version,
     author,
     need_database,
     database_id,
     need_core_version
-  }) {
-    this.MOD_NAME = title ?? "core";
+  ) {
+    this.MOD_NAME = mod_name ?? "core";
     this.MOD_VERSION = version ?? 1;
     this.MOD_AUTHOR = author ?? "zhihaofans";
     this.NEED_DATABASE = need_database ?? false;
@@ -48,6 +48,23 @@ class Core {
   }
   setSql(key, value) {
     return this.SQLITE.setSimpleData(this.DATABASE_ID, key, value);
+  }
+  async getAwait(url, header) {
+    const result = await $http.get({
+      url: url,
+      timeout: this.TIMEOUT,
+      header: header
+    });
+    return url ? result : undefined;
+  }
+  async postAwait(url, postBody, header = undefined) {
+    const result = await $http.post({
+      url: url,
+      header: header,
+      timeout: this.TIMEOUT,
+      body: postBody
+    });
+    return url ? result : undefined;
   }
 }
 class Result {

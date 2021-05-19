@@ -49,11 +49,7 @@ class ModLoader {
       if ($file.isDirectory(fileName)) {
         $ui.error("这是目录");
       } else {
-        const loadData = require(fileName),
-          mod = new loadData(),
-          runMod = mod.run;
-        $console.warn(fileName);
-        $console.warn(runMod);
+        const runMod = require(fileName).run;
         if (typeof runMod === "function") {
           try {
             runMod();

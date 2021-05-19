@@ -1,45 +1,18 @@
-const Core = require("../core"),
-  MOD_NAME = "Wallhaven",
-  MOD_VERSION = 1,
-  MOD_AUTHOR = "zhihaofans",
-  NEED_DATABASE = true,
-  DATABASE_ID = "wallhaven",
-  NEED_CORE_VERSION = 1;
+const Core = require("../core");
 class Wallhaven extends Core {
   constructor() {
-    super({
-      title: MOD_NAME,
-      version: MOD_VERSION,
-      author: MOD_AUTHOR,
-      need_database: NEED_DATABASE,
-      database_id: DATABASE_ID,
-      need_core_version: NEED_CORE_VERSION
-    });
-  }
-  run() {
-    const ver = this.checkCoreVersion();
-    if (ver === 0) {
-      this.initView();
-      return new this.Result({
-        success: true,
-        code: 0
-      });
-    } else {
-      return new this.Result({
-        success: false,
-        code: 1,
-        error_message: `need update core.js(${ver})`
-      });
-    }
+    super("Wallhaven", 1, "zhihaofans", true, "wallhaven", 1);
+    this;
   }
   initView() {
+    const SuperThis = this;
     try {
       $ui.menu({
         items: ["随机"],
         handler: function (title, idx) {
           switch (idx) {
             case 0:
-              // animeRandom();
+              SuperThis.animeRandom();
               break;
           }
         }
@@ -65,7 +38,7 @@ class Wallhaven extends Core {
       categories = "010",
       api_key = this.getSql("api_key") || "",
       url = `https://wallhaven.cc/api/v1/search?q=${query}&sorting=${sorting}&seed=${randomSeed}&page=${page}&purity=${purity}&categories=${categories}&apikey=${api_key}`,
-      httpResult = await this.HttpLib.getAwait(url);
+      httpResult = await this.getAwait(url);
     if (httpResult.error) {
       $console.error(httpResult.error);
       $ui.loading(false);
@@ -144,4 +117,22 @@ class Wallhaven extends Core {
     }
   }
 }
-module.exports = Wallhaven;
+const run = () => {
+  const _wallhaven = new Wallhaven();
+  const ver = _wallhaven.checkCoreVersion();
+  if (ver === 0) {
+    _wallhaven.initView();
+    return new _wallhaven.Result({
+      success: true,
+      code: 0
+    });
+  } else {
+    return new _wallhaven.Result({
+      success: false,
+      code: 1,
+      error_message: `need update core.js(${ver})`
+    });
+  }
+};
+
+module.exports = { Wallhaven, run };
