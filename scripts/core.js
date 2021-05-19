@@ -54,24 +54,23 @@ class Result {
     this.error_message = success ? undefined : error_message;
   }
 }
-/*
-<Core.js use guide>
-const run = () => {
-  const _core = new Core();
-  const ver = _core.checkCoreVersion();
-  if (ver === 0) {
-    _core.initView();
-    return new _core.Result({
-      success: true,
-      code: 0
-    });
-  } else {
-    return new _core.Result({
-      success: false,
-      code: 1,
-      error_message: `need update core.js(${ver})`
-    });
-  }
-};
-*/
-module.exports = { Core, Result };
+// <Core.js use guide>
+const _SUPPORT_COREJS_ = 1,
+  run = () => {
+    const _core = new Core();
+    const ver = _core.checkCoreVersion();
+    if (ver === 0) {
+      _core.initView();
+      return new _core.Result({
+        success: true,
+        code: 0
+      });
+    } else {
+      return new _core.Result({
+        success: false,
+        code: 1,
+        error_message: `need update core.js(${ver})`
+      });
+    }
+  };
+module.exports = { Core, Result, _SUPPORT_COREJS_, run };
