@@ -18,7 +18,6 @@ class ZhihuDaily extends Core {
     });
   }
   async init() {
-    const SuperThis = this;
     $ui.loading(true);
     const url = "https://news-at.zhihu.com/api/4/news/latest",
       httpResult = await this.HttpLib.get(url);
@@ -79,7 +78,7 @@ class ZhihuDaily extends Core {
                           indexPath.section === 0
                             ? topList[indexPath.row].url
                             : storyList[indexPath.row].url;
-                        Browser.Safari.ReadMode(url);
+                        this.AppScheme.Browser.Safari.ReadMode(url);
                       }
                     },
                     {
