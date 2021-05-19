@@ -2,23 +2,31 @@ const CORE_VERSION = 1,
   SQLITE_FILE = "/assets/.files/mods.db";
 class Core {
   constructor({
-    name,
+    title,
     version,
     author,
     need_database,
     database_id,
     need_core_version
   }) {
-    this.MOD_NAME = name ?? "core";
+    this.MOD_NAME = title ?? "core";
     this.MOD_VERSION = version ?? 1;
     this.MOD_AUTHOR = author ?? "zhihaofans";
     this.NEED_DATABASE = need_database ?? false;
-    this.DATABASE_ID = need_database ? database_id : "core";
+    this.DATABASE_ID = need_database ? database_id : undefined;
     this.NEED_CORE_VERSION = need_core_version ?? 0;
     this.SQLITE = this.initSQLite();
+    this.$$ = require("$$");
+    this.$_ = require("$_");
+    this.HttpLib = new this.$_.Http();
+    this.Result = Result;
+  }
+  run() {
+    $console.info("Core: run");
+    return;
   }
   checkCoreVersion() {
-    if (CORE_VERSION == this.NEED_CORE_VERSION) {
+    if (CORE_VERSION === this.NEED_CORE_VERSION) {
       return 0;
     }
     if (CORE_VERSION > this.NEED_CORE_VERSION) {
@@ -29,21 +37,25 @@ class Core {
       return 1;
     }
   }
-  async httpRequest({ method, url, header, body }) {
-    return await $http.request({
-      method: method,
-      url: url,
-      header: header,
-      body: body
-    });
-  }
-  parseData(_data) {}
   initSQLite() {
     const DataBase = require("DataBase"),
       SQLite = new DataBase.SQLite(SQLITE_FILE);
     SQLite.createSimpleTable(this.DATABASE_ID);
     return SQLite;
   }
+  getSql(key) {
+    return this.SQLITE.getSimpleData(this.DATABASE_ID, key);
+  }
+  setSql(key, value) {
+    return this.SQLITE.setSimpleData(this.DATABASE_ID, key, value);
+  }
 }
-
+class Result {
+  constructor({ success, code, data, error_message }) {
+    this.success = success ?? false;
+    this.data = data;
+    this.code = code ?? -1;
+    this.error = success ? undefined : error_message;
+  }
+}
 module.exports = Core;
