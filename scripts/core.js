@@ -55,8 +55,11 @@ class Result {
   }
 }
 // <Core.js use guide>
-const _SUPPORT_COREJS_ = 1,
-  run = () => {
+module.exports = {
+  Core,
+  Result,
+  _SUPPORT_COREJS_: 1,
+  run: () => {
     const _core = new Core();
     const ver = _core.checkCoreVersion();
     if (ver === 0) {
@@ -72,5 +75,5 @@ const _SUPPORT_COREJS_ = 1,
         error_message: `need update core.js(${ver})`
       });
     }
-  };
-module.exports = { Core, Result, _SUPPORT_COREJS_, run };
+  }
+};
