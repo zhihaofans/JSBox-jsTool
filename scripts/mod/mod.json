@@ -48,7 +48,16 @@
   },
   {
     "file": "wallhaven.js",
-    "name": "wallhaven",
+    "name": "Wallhaven",
+    "core": true,
+    "url": "",
+    "version": 2,
+    "dec": "",
+    "pref": {}
+  },
+  {
+    "file": "zhihuDaily.js",
+    "name": "知乎日报",
     "core": true,
     "url": "",
     "version": 2,
