@@ -113,12 +113,13 @@ class ModLoader {
     }
   }
   showModList() {
-    let modList = this.getModList(),
+    const modList = this.getModList(),
       modJson = this.loadModJson(),
       modJsonObj = {},
       coreModList = [],
       pinModList = [],
-      otherModList = [];
+      otherModList = [],
+      $this = this;
     if (modJson) {
       modJson.map(mod => {
         modJsonObj[mod.file] = mod;
@@ -138,7 +139,6 @@ class ModLoader {
             otherModList.push(mod);
           }
         });
-        const $this = this;
         $ui.push({
           props: {
             title: "Mod列表"
