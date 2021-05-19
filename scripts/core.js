@@ -12,6 +12,7 @@ class Core {
     this.$$ = require("$$");
     this.$_ = require("$_");
     this.DataBase = require("DataBase");
+    this.AppScheme = require("AppScheme");
     this.HttpLib = new this.$_.Http();
     this.MOD_NAME = mod_name ?? "core";
     this.MOD_VERSION = version ?? 1;
