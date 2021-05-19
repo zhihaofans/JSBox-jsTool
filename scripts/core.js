@@ -20,7 +20,6 @@ class Core {
     this.DATABASE_ID = need_database ? database_id : undefined;
     this.NEED_CORE_VERSION = need_core_version ?? 0;
     this.SQLITE = this.initSQLite();
-    $console.warn(this.HttpLib);
   }
   checkCoreVersion() {
     if (CORE_VERSION === this.NEED_CORE_VERSION) {
