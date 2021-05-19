@@ -54,10 +54,65 @@ class Result {
     this.error_message = success ? undefined : error_message;
   }
 }
+class CoreChecker {
+  constructor(mod_dir) {
+    this.MOD_DIR = mod_dir;
+  }
+  runMod(mod) {
+    let fileName = `${this.MOD_DIR}${mod.file}`;
+    if (!fileName.endsWith(".js")) {
+      fileName += ".js";
+    }
+    if ($file.exists(fileName)) {
+      if ($file.isDirectory(fileName)) {
+        $ui.error("这是目录");
+      } else {
+        const runMod = require(fileName).run;
+        if (typeof runMod === "function") {
+          try {
+            const runResult = runMod();
+            if (runResult.success === true) {
+              $console.info(`(core.js)Mod加载完毕:${mod.name}`);
+            } else {
+              $ui.alert({
+                title: `Core.js加载[${mod.name}]失败(${runResult.code})`,
+                message: runResult.error_message,
+                actions: [
+                  {
+                    title: "OK",
+                    disabled: false, // Optional
+                    handler: function () {}
+                  }
+                ]
+              });
+            }
+          } catch (error) {
+            $ui.alert({
+              title: `${mod.name}加载失败(catch)`,
+              message: error.message,
+              actions: [
+                {
+                  title: "OK",
+                  disabled: false, // Optional
+                  handler: function () {}
+                }
+              ]
+            });
+          }
+        } else {
+          $ui.error("请确认是否为支持core.js的mod文件");
+        }
+      }
+    } else {
+      $ui.error("不存在该文件");
+    }
+  }
+}
 // <Core.js use guide>
 module.exports = {
   Core,
   Result,
+  CoreChecker,
   _SUPPORT_COREJS_: 1,
   run: () => {
     const _core = new Core();

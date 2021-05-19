@@ -40,55 +40,6 @@ class ModLoader {
       $ui.error("不存在该文件");
     }
   }
-  initModWithCore(mod) {
-    let fileName = `${this.MOD_DIR}${mod.file}`;
-    if (!fileName.endsWith(".js")) {
-      fileName += ".js";
-    }
-    if ($file.exists(fileName)) {
-      if ($file.isDirectory(fileName)) {
-        $ui.error("这是目录");
-      } else {
-        const runMod = require(fileName).run;
-        if (typeof runMod === "function") {
-          try {
-            const runResult = runMod();
-            if (runResult.success === true) {
-              $console.info(`(core.js)Mod加载完毕:${mod.name}`);
-            } else {
-              $ui.alert({
-                title: `Core.js加载[${mod.name}]失败(${runResult.code})`,
-                message: runResult.error_message,
-                actions: [
-                  {
-                    title: "OK",
-                    disabled: false, // Optional
-                    handler: function () {}
-                  }
-                ]
-              });
-            }
-          } catch (error) {
-            $ui.alert({
-              title: `${mod.name}加载失败(catch)`,
-              message: error.message,
-              actions: [
-                {
-                  title: "OK",
-                  disabled: false, // Optional
-                  handler: function () {}
-                }
-              ]
-            });
-          }
-        } else {
-          $ui.error("请确认是否为支持core.js的mod文件");
-        }
-      }
-    } else {
-      $ui.error("不存在该文件");
-    }
-  }
   getModList() {
     let modList = [],
       fileList = $file.list(this.MOD_DIR);
@@ -113,7 +64,9 @@ class ModLoader {
     }
   }
   showModList() {
-    const modList = this.getModList(),
+    const Core = require("./core"),
+      CoreChecker = new Core.CoreChecker(this.MOD_DIR),
+      modList = this.getModList(),
       modJson = this.loadModJson(),
       modJsonObj = {},
       coreModList = [],
@@ -170,7 +123,7 @@ class ModLoader {
                   $console.info(_data);
                   switch (section) {
                     case 0:
-                      $this.initModWithCore(coreModList[row]);
+                      CoreChecker.runMod(coreModList[row]);
                       break;
                     case 1:
                       $this.initMod(pinModList[row]);
