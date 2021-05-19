@@ -1,8 +1,21 @@
-const Core = require("../core");
+const Core = require("../core").Core,
+  Result = require("../core").Result,
+  MOD_NAME = "Wallhaven",
+  MOD_VERSION = 1,
+  MOD_AUTHOR = "zhihaofans",
+  NEED_DATABASE = true,
+  DATABASE_ID = "wallhaven",
+  NEED_CORE_VERSION = 1;
 class Wallhaven extends Core {
   constructor() {
-    super("Wallhaven", 1, "zhihaofans", true, "wallhaven", 1);
-    this;
+    super({
+      title: MOD_NAME,
+      version: MOD_VERSION,
+      author: MOD_AUTHOR,
+      need_database: NEED_DATABASE,
+      database_id: DATABASE_ID,
+      need_core_version: NEED_CORE_VERSION
+    });
   }
   initView() {
     const SuperThis = this;
@@ -38,7 +51,7 @@ class Wallhaven extends Core {
       categories = "010",
       api_key = this.getSql("api_key") || "",
       url = `https://wallhaven.cc/api/v1/search?q=${query}&sorting=${sorting}&seed=${randomSeed}&page=${page}&purity=${purity}&categories=${categories}&apikey=${api_key}`,
-      httpResult = await this.getAwait(url);
+      httpResult = await this.HttpLib.get(url);
     if (httpResult.error) {
       $console.error(httpResult.error);
       $ui.loading(false);
@@ -122,12 +135,12 @@ const run = () => {
   const ver = _wallhaven.checkCoreVersion();
   if (ver === 0) {
     _wallhaven.initView();
-    return new _wallhaven.Result({
+    return new Result({
       success: true,
       code: 0
     });
   } else {
-    return new _wallhaven.Result({
+    return new Result({
       success: false,
       code: 1,
       error_message: `need update core.js(${ver})`
