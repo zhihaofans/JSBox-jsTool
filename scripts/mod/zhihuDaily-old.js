@@ -24,7 +24,7 @@ let { Browser } = require("AppScheme"),
                     title: "菜单",
                     items: [
                       {
-                        title: "添加到Safari阅读列表",
+                        title: "添到Safari阅读列表",
                         symbol: "book",
                         handler: (sender, indexPath) => {
                           const url =
