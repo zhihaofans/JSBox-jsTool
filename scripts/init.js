@@ -52,11 +52,25 @@ class ModLoader {
         const runMod = require(fileName).run;
         if (typeof runMod === "function") {
           try {
-            runMod();
-            $console.info(`(core.js)Mod加载完毕:${modName}`);
+            const runResult = runMod();
+            if (runResult.success === true) {
+              $console.info(`(core.js)Mod加载完毕:${modName}`);
+            } else {
+              $ui.alert({
+                title: `Core.js加载[${modName}]失败(${runResult.code})`,
+                message: runResult.error_message,
+                actions: [
+                  {
+                    title: "OK",
+                    disabled: false, // Optional
+                    handler: function () {}
+                  }
+                ]
+              });
+            }
           } catch (error) {
             $ui.alert({
-              title: `${modName}加载失败`,
+              title: `${modName}加载失败(catch)`,
               message: error.message,
               actions: [
                 {
