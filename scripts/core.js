@@ -17,10 +17,10 @@ class Core {
     this.MOD_NAME = mod_name ?? "core";
     this.MOD_VERSION = version ?? 1;
     this.MOD_AUTHOR = author ?? "zhihaofans";
-    this.NEED_DATABASE = need_database ?? false;
-    this.DATABASE_ID = need_database ? database_id : undefined;
     this.NEED_CORE_VERSION = need_core_version ?? 0;
-    this.SQLITE = this.initSQLite();
+    this.NEED_DATABASE = need_database ?? false;
+    this.DATABASE_ID = this.NEED_DATABASE ? database_id : undefined;
+    this.SQLITE = this.NEED_DATABASE ? this.initSQLite() : undefined;
   }
   checkCoreVersion() {
     if (CORE_VERSION === this.NEED_CORE_VERSION) {
