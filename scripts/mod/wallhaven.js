@@ -135,4 +135,4 @@ const run = () => {
   }
 };
 
-module.exports = { Wallhaven, run };
+module.exports = { run };
