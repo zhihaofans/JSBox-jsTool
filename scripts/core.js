@@ -1,14 +1,18 @@
 const CORE_VERSION = 1,
   SQLITE_FILE = "/assets/.files/mods.db";
 class Core {
-  constructor(
+  constructor({
     mod_name,
     version,
     author,
     need_database,
     database_id,
     need_core_version
-  ) {
+  }) {
+    this.$$ = require("$$");
+    this.$_ = require("$_");
+    this.DataBase = require("DataBase");
+    this.HttpLib = new this.$_.Http();
     this.MOD_NAME = mod_name ?? "core";
     this.MOD_VERSION = version ?? 1;
     this.MOD_AUTHOR = author ?? "zhihaofans";
@@ -16,10 +20,7 @@ class Core {
     this.DATABASE_ID = need_database ? database_id : undefined;
     this.NEED_CORE_VERSION = need_core_version ?? 0;
     this.SQLITE = this.initSQLite();
-    this.$$ = require("$$");
-    this.$_ = require("$_");
-    this.HttpLib = new this.$_.Http();
-    this.Result = Result;
+    $console.warn(this.HttpLib);
   }
   checkCoreVersion() {
     if (CORE_VERSION === this.NEED_CORE_VERSION) {
@@ -34,8 +35,7 @@ class Core {
     }
   }
   initSQLite() {
-    const DataBase = require("DataBase"),
-      SQLite = new DataBase.SQLite(SQLITE_FILE);
+    const SQLite = new this.DataBase.SQLite(SQLITE_FILE);
     SQLite.createSimpleTable(this.DATABASE_ID);
     return SQLite;
   }
@@ -44,23 +44,6 @@ class Core {
   }
   setSql(key, value) {
     return this.SQLITE.setSimpleData(this.DATABASE_ID, key, value);
-  }
-  async getAwait(url, header) {
-    const result = await $http.get({
-      url: url,
-      timeout: this.TIMEOUT,
-      header: header
-    });
-    return url ? result : undefined;
-  }
-  async postAwait(url, postBody, header = undefined) {
-    const result = await $http.post({
-      url: url,
-      header: header,
-      timeout: this.TIMEOUT,
-      body: postBody
-    });
-    return url ? result : undefined;
   }
 }
 class Result {
@@ -91,4 +74,4 @@ const run = () => {
   }
 };
 */
-module.exports = Core;
+module.exports = { Core, Result };
