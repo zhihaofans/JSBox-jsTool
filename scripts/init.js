@@ -40,8 +40,8 @@ class ModLoader {
       $ui.error("不存在该文件");
     }
   }
-  initModWithCore(modName) {
-    let fileName = `${this.MOD_DIR}${modName}`;
+  initModWithCore(mod) {
+    let fileName = `${this.MOD_DIR}${mod.file}`;
     if (!fileName.endsWith(".js")) {
       fileName += ".js";
     }
@@ -54,10 +54,10 @@ class ModLoader {
           try {
             const runResult = runMod();
             if (runResult.success === true) {
-              $console.info(`(core.js)Mod加载完毕:${modName}`);
+              $console.info(`(core.js)Mod加载完毕:${mod.name}`);
             } else {
               $ui.alert({
-                title: `Core.js加载[${modName}]失败(${runResult.code})`,
+                title: `Core.js加载[${mod.name}]失败(${runResult.code})`,
                 message: runResult.error_message,
                 actions: [
                   {
@@ -70,7 +70,7 @@ class ModLoader {
             }
           } catch (error) {
             $ui.alert({
-              title: `${modName}加载失败(catch)`,
+              title: `${mod.name}加载失败(catch)`,
               message: error.message,
               actions: [
                 {
@@ -130,7 +130,7 @@ class ModLoader {
         modList.map(mod => {
           if (modJsonObj[mod]) {
             if (modJsonObj[mod].core === true) {
-              coreModList.push(mod);
+              coreModList.push(modJsonObj[mod]);
             } else {
               pinModList.push(mod);
             }
@@ -149,8 +149,8 @@ class ModLoader {
               props: {
                 data: [
                   {
-                    title: "Core.js",
-                    rows: coreModList
+                    title: "支持Core.js",
+                    rows: coreModList.map(core_mod => core_mod.name)
                   },
                   {
                     title: "常用Mod",
