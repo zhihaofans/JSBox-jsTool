@@ -40,6 +40,45 @@ class ModLoader {
       $ui.error("不存在该文件");
     }
   }
+  initModWithCore(modName) {
+    let fileName = `${this.MOD_DIR}${modName}`;
+    if (!fileName.endsWith(".js")) {
+      fileName += ".js";
+    }
+    if ($file.exists(fileName)) {
+      if ($file.isDirectory(fileName)) {
+        $ui.error("这是目录");
+      } else {
+        const loadData = require(fileName),
+          mod = new loadData(),
+          runMod = mod.run;
+        $console.warn(fileName);
+        $console.warn(runMod);
+        if (typeof runMod === "function") {
+          try {
+            runMod();
+            $console.info(`(core.js)Mod加载完毕:${modName}`);
+          } catch (error) {
+            $ui.alert({
+              title: `${modName}加载失败`,
+              message: error.message,
+              actions: [
+                {
+                  title: "OK",
+                  disabled: false, // Optional
+                  handler: function () {}
+                }
+              ]
+            });
+          }
+        } else {
+          $ui.error("请确认是否为支持core.js的mod文件");
+        }
+      }
+    } else {
+      $ui.error("不存在该文件");
+    }
+  }
   getModList() {
     let modList = [],
       fileList = $file.list(this.MOD_DIR);
@@ -67,6 +106,7 @@ class ModLoader {
     let modList = this.getModList(),
       modJson = this.loadModJson(),
       modJsonObj = {},
+      coreModList = [],
       pinModList = [],
       otherModList = [];
     if (modJson) {
@@ -78,7 +118,15 @@ class ModLoader {
     if (modList) {
       if (modList.length > 0) {
         modList.map(mod => {
-          modJsonObj[mod] ? pinModList.push(mod) : otherModList.push(mod);
+          if (modJsonObj[mod]) {
+            if (modJsonObj[mod].core === true) {
+              coreModList.push(mod);
+            } else {
+              pinModList.push(mod);
+            }
+          } else {
+            otherModList.push(mod);
+          }
         });
         const $this = this;
         $ui.push({
@@ -91,11 +139,12 @@ class ModLoader {
               props: {
                 data: [
                   {
+                    title: "Core.js",
+                    rows: coreModList
+                  },
+                  {
                     title: "常用Mod",
-                    rows: pinModList.map(mod => {
-                      const thisMod = modJsonObj[mod];
-                      return thisMod.core ? `©${thisMod.name}` : thisMod.name;
-                    })
+                    rows: pinModList
                   },
                   {
                     title: "其他Mod",
@@ -109,9 +158,17 @@ class ModLoader {
                   const section = indexPath.section;
                   const row = indexPath.row;
                   $console.info(_data);
-                  $this.initMod(
-                    section === 0 ? pinModList[row] : otherModList[row]
-                  );
+                  switch (section) {
+                    case 0:
+                      $this.initModWithCore(coreModList[row]);
+                      break;
+                    case 1:
+                      $this.initMod(pinModList[row]);
+                      break;
+                    case 2:
+                      $this.initMod(otherModList[row]);
+                      break;
+                  }
                 }
               }
             }
