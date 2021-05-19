@@ -92,7 +92,10 @@ class ModLoader {
                 data: [
                   {
                     title: "常用Mod",
-                    rows: pinModList.map(mod => modJsonObj[mod].name)
+                    rows: pinModList.map(mod => {
+                      const thisMod = modJsonObj[mod];
+                      return thisMod.core ? `©${thisMod.name}` : thisMod.name;
+                    })
                   },
                   {
                     title: "其他Mod",
@@ -177,7 +180,7 @@ const pref_cache_list = {
       action: "init"
     },
     dailyCheckin: {
-      filePath: "./mod/dailyCheckin",
+      filePath: "./mod/dailyCheckin"
     }
   },
   loadModule = moduleId => {
