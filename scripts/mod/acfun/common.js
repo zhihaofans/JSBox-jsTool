@@ -1,5 +1,5 @@
 let http = require("/scripts/libs/http"),
-  APP_VERSION = "6.33.1.436",
+  APP_VERSION = "6.45.1.523",
   IOS_VERSION = $device.info.version,
   USER_AGENT = {
     //APP_IOS: "AcFun/6.33.1 (iPhone; iOS 14.2; Scale/2.00)"
