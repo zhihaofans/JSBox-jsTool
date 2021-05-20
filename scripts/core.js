@@ -108,11 +108,11 @@ class CoreChecker {
     }
   }
 }
-// <Core.js use guide>
 module.exports = {
   Core,
   Result,
   CoreChecker,
+  // <Core.js use guide>
   _SUPPORT_COREJS_: 1,
   run: () => {
     const _core = new Core();
