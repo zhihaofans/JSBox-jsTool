@@ -67,8 +67,10 @@ class CoreChecker {
       if ($file.isDirectory(fileName)) {
         $ui.error("这是目录");
       } else {
-        const runMod = require(fileName).run;
-        if (typeof runMod === "function") {
+        const coreMod = require(fileName),
+          runMod = coreMod.run,
+          _SUPPORT_COREJS_ = coreMod._SUPPORT_COREJS_;
+        if (typeof runMod === "function" && _SUPPORT_COREJS_ === 1) {
           try {
             const runResult = runMod();
             if (runResult.success === true) {
@@ -100,7 +102,24 @@ class CoreChecker {
             });
           }
         } else {
-          $ui.error("请确认是否为支持core.js的mod文件");
+          $ui.alert({
+            title: `请确认是否为支持core.js的mod文件`,
+            message: "是否用旧版加载模式？",
+            actions: [
+              {
+                title: "YES",
+                disabled: false, // Optional
+                handler: function () {
+                  coreMod.init();
+                }
+              },
+              {
+                title: "NO",
+                disabled: false, // Optional
+                handler: function () {}
+              }
+            ]
+          });
         }
       }
     } else {

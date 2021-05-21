@@ -24,9 +24,10 @@
   },
   {
     "file": "bilibili.js",
-    "name": "Bilibili mod ver.",
+    "name": "Bilibili",
     "url": "",
-    "version": 1,
+    "core": true,
+    "version": 2,
     "dec": "",
     "pref": {}
   },
