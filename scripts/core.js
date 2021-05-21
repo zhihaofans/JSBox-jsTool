@@ -103,7 +103,7 @@ class CoreChecker {
           }
         } else {
           $ui.alert({
-            title: `请确认是否为支持core.js的mod文件`,
+            title: `该Mod不支持core.js`,
             message: "是否用旧版加载模式？",
             actions: [
               {

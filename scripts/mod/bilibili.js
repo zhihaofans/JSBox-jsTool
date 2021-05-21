@@ -23,10 +23,10 @@ module.exports = {
   init: require("./bilibili/init").init,
   _SUPPORT_COREJS_: 0,
   run: () => {
-    const _wallhaven = new Wallhaven();
-    const ver = _wallhaven.checkCoreVersion();
+    const _mod = new Bilibili();
+    const ver = _mod.checkCoreVersion();
     if (ver === 0) {
-      _wallhaven.initView();
+      _mod.initView();
       return new Result({
         success: true,
         code: 0
