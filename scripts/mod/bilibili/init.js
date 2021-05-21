@@ -1,4 +1,4 @@
-let _User = require("./user"),
+const _User = require("./user"),
   _CheckIn = require("./check_in"),
   _Comic = require("./comic"),
   comicTicket = require("./comic/ticket"),

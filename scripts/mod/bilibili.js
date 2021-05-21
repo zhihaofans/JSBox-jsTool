@@ -1,6 +1,6 @@
 const coreFile = require("../core"),
-  Core = new coreFile.Core(),
-  Result = require("../core").Result,
+  Core = coreFile.Core,
+  Result = coreFile.Result,
   MOD_NAME = "Bilibili",
   MOD_VERSION = 1,
   MOD_AUTHOR = "zhihaofans",
@@ -17,11 +17,12 @@ class Bilibili extends Core {
       database_id: DATABASE_ID,
       need_core_version: NEED_CORE_VERSION
     });
+    this.initView = require("./bilibili/init").init;
   }
 }
 module.exports = {
   init: require("./bilibili/init").init,
-  _SUPPORT_COREJS_: 0,
+  _SUPPORT_COREJS_: 1,
   run: () => {
     const _mod = new Bilibili();
     const ver = _mod.checkCoreVersion();
