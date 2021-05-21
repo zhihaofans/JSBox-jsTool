@@ -3,7 +3,8 @@ const _User = require("./user"),
   _Comic = require("./comic"),
   comicTicket = require("./comic/ticket"),
   _Live = require("./live/view"),
-  init = () => {
+  Video = require("./video/view"),
+  init = coreFile => {
     $ui.push({
       props: {
         title: "Bilibili"
@@ -22,7 +23,8 @@ const _User = require("./user"),
               "下载漫画",
               "稍后再看",
               "我关注的直播",
-              "查看共同关注"
+              "查看共同关注",
+              "查看视频信息"
             ]
           },
           layout: $layout.fill,
@@ -55,6 +57,9 @@ const _User = require("./user"),
                   break;
                 case 9:
                   _User.View.getSameFollow();
+                  break;
+                case 10:
+                  Video.init(coreFile);
                   break;
                 default:
                   $ui.error("skip");

@@ -17,7 +17,9 @@ class Bilibili extends Core {
       database_id: DATABASE_ID,
       need_core_version: NEED_CORE_VERSION
     });
-    this.initView = require("./bilibili/init").init;
+  }
+  initView(coreFile) {
+    require("./bilibili/init").init(coreFile);
   }
 }
 module.exports = {
@@ -27,7 +29,7 @@ module.exports = {
     const _mod = new Bilibili();
     const ver = _mod.checkCoreVersion();
     if (ver === 0) {
-      _mod.initView();
+      _mod.initView(coreFile);
       return new Result({
         success: true,
         code: 0
