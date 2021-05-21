@@ -25,11 +25,28 @@ const Lib = require("../lib"),
       const httpData = httpResult.data;
       if (httpData.code !== 0) {
         $console.error(`getVideoInfo:(${httpData.code})${httpData.message}`);
+        let error_msg = httpData.message;
+        switch (httpData.code) {
+          case -400:
+            error_msg = "请求错误";
+            break;
+          case -403:
+            error_msg = "权限不足";
+            break;
+          case -404:
+            error_msg = "无视频";
+            break;
+          case 62002:
+            error_msg = "稿件不可见";
+            break;
+          default:
+            error_msg = httpData.message;
+        }
         return new coreFile.Result({
           success: false,
           code: httpData.code,
           data: httpData,
-          error_message: httpData.message
+          error_message: error_msg
         });
       } else {
         return new coreFile.Result({
