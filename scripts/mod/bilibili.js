@@ -29,7 +29,7 @@ module.exports = {
     const _mod = new Bilibili();
     const ver = _mod.checkCoreVersion();
     if (ver === 0) {
-      _mod.initView(coreFile);
+      _mod.initView(CoreJs);
       return new Result({
         success: true,
         code: 0
