@@ -1,5 +1,6 @@
-const Core = require("../core").Core,
-  Result = require("../core").Result,
+const CoreJs = require("../../Core.js/core"),
+  Core = CoreJs.Core,
+  Result = CoreJs.Result,
   MOD_NAME = "Wallhaven",
   MOD_VERSION = 1,
   MOD_AUTHOR = "zhihaofans",
