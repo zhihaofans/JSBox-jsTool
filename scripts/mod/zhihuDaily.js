@@ -1,4 +1,4 @@
-const CoreJs = require("../../Core.js/core"),
+const CoreJs = require("../core"),
   Core = CoreJs.Core,
   Result = CoreJs.Result,
   MOD_NAME = "知乎日报",
